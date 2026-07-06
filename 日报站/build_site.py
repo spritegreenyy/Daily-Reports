@@ -159,6 +159,11 @@ TEMPLATE = r"""<!DOCTYPE html>
   header .brand { font-size: 18px; font-weight: 700; letter-spacing: 3px; color: var(--green-dark); }
   header .brand span { color: var(--red); }
   header .sub { font-size: 13px; color: var(--muted); }
+  header .navlink {
+    font-size: 13px; color: var(--green); text-decoration: none;
+    border: 1px solid var(--line); border-radius: 20px; padding: 4px 12px; background: var(--card);
+  }
+  header .navlink:hover { border-color: var(--green); }
   header .gen { margin-left: auto; font-size: 12px; color: var(--muted); }
 
   .layout { flex: 1; display: flex; min-height: 0; }
@@ -228,7 +233,7 @@ TEMPLATE = r"""<!DOCTYPE html>
 <body>
 <header>
   <div class="brand">WINDRISE<span> ·</span> 日报台</div>
-  <div class="sub">形态 / 资金潮汐 / 大宗信号 / KOL观点</div>
+  <div class="sub">形态 / 资金潮汐 / 大宗信号 / KOL观点</div>__EXTRA_NAV__
   <div class="gen">__NOTE__生成于 __GENERATED__ · 共 __NDATES__ 个交易日</div>
 </header>
 <div class="layout">
@@ -345,13 +350,14 @@ renderAll();
 """
 
 
-def render_page(dates, note=""):
+def render_page(dates, note="", extra_nav=""):
     return (
         TEMPLATE
         .replace("__DATA__", json.dumps({"dates": dates}, ensure_ascii=False))
         .replace("__GENERATED__", datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
         .replace("__NDATES__", str(len(dates)))
         .replace("__NOTE__", note)
+        .replace("__EXTRA_NAV__", extra_nav)
     )
 
 
@@ -359,7 +365,10 @@ def main():
     dates = scan()
     if not dates:
         raise SystemExit(f"在 {REPORT_DIR} 下没找到任何日期文件夹（形如 20260703）")
-    html_out = render_page(dates, note="")
+    extra_nav = ""
+    if (SITE_DIR / "kol" / "index.html").exists():
+        extra_nav = '\n  <a class="navlink" href="kol/index.html" target="_blank">KOL终端 ↗</a>'
+    html_out = render_page(dates, note="", extra_nav=extra_nav)
     OUT_FILE.write_text(html_out, encoding="utf-8")
     total = sum(len(d["types"]) for d in dates)
     print(f"完成：{len(dates)} 天、{total} 份报告 → {OUT_FILE}")
