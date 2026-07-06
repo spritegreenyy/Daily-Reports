@@ -108,7 +108,10 @@ def parse(src: Path):
     all_imgs = imgs_of(h)
     chart_imgs = imgs_of("".join(re.findall(r"<img class=\"chart\"[^>]*>", h)))
     meta_tide_img = all_imgs[0] if all_imgs else ""
-    quad_img = chart_imgs[1] if len(chart_imgs) > 1 else ""
+    # class=chart 依次为: 各类资金净流向 / 净买卖双榜 / 价格×持仓象限
+    cohort_img = chart_imgs[0] if len(chart_imgs) > 0 else ""
+    dual_img = chart_imgs[1] if len(chart_imgs) > 1 else ""
+    quad_img = chart_imgs[2] if len(chart_imgs) > 2 else (chart_imgs[-1] if chart_imgs else "")
 
     # ── 8 张表：4 动作榜 + 强度榜 + 背离×2 + 持续榜（按形状分类）──
     tables = re.findall(r"<table.*?</table>", h, re.S)
@@ -190,7 +193,7 @@ def parse(src: Path):
             r["sector"] = SECTOR_FALLBACK[r["name"]]
 
     rows = sorted(master.values(), key=lambda r: -(r.get("amt") or 0))
-    return meta, rows, sectors, meta_tide_img, quad_img
+    return meta, rows, sectors, meta_tide_img, quad_img, cohort_img, dual_img
 
 
 TEMPLATE = r"""<!doctype html>
@@ -261,6 +264,46 @@ TEMPLATE = r"""<!doctype html>
   .empty{padding:36px;text-align:center;color:var(--mut)}
   #lightbox{position:fixed;inset:0;background:rgba(20,26,23,.86);display:none;align-items:center;justify-content:center;cursor:zoom-out;z-index:50;padding:30px}
   #lightbox img{max-width:min(1100px,96vw);width:100%;background:#fff;border-radius:10px;padding:12px}
+  /* ── 富面板 ── */
+  h2.sec-h{font-family:Georgia,"Noto Serif CJK SC",serif;font-size:16px;color:var(--dark);margin:26px 0 12px;
+           display:flex;align-items:center;gap:9px}
+  h2.sec-h::before{content:"";width:7px;height:19px;background:var(--gold);border-radius:3px}
+  h2.sec-h small{font-size:11.5px;color:var(--mut);font-weight:400}
+  .pano{display:flex;flex-wrap:wrap;gap:22px;align-items:center;background:var(--panel);
+        border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .pano .legend{display:flex;flex-direction:column;gap:6px;font-size:12.5px}
+  .pano .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:middle}
+  .boards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
+  .board{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+  .board .bh{font-weight:700;font-size:13.5px;margin-bottom:8px;display:flex;justify-content:space-between}
+  .board .bh small{color:var(--mut);font-weight:400;font-size:11px}
+  .brow{display:flex;align-items:center;gap:7px;margin:6px 0;font-size:12.5px}
+  .brow .bn{width:52px;font-weight:600;flex:none}
+  .brow .bb{flex:1;height:20px;background:#efe9d8;border-radius:6px;position:relative;overflow:hidden}
+  .brow .bb i{display:block;height:100%;border-radius:6px}
+  .brow .ba{position:absolute;right:7px;top:2px;font-size:11px;font-weight:700;color:#fff;font-family:Georgia,serif;
+            text-shadow:0 1px 2px rgba(0,0,0,.3)}
+  .brow .br{width:40px;text-align:right;font-size:11px;flex:none}
+  .heat{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:9px}
+  .htile{border-radius:12px;padding:13px 12px;color:#fff;cursor:pointer;transition:transform .1s}
+  .htile:hover{transform:translateY(-2px)}
+  .htile .hn{font-size:14px;font-weight:700} .htile .hv{font-size:20px;font-family:Georgia,serif;margin-top:3px}
+  .htile .hd{font-size:10.5px;opacity:.85}
+  .cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .cardbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 15px}
+  .cardbox .ch{font-weight:700;font-size:13.5px;margin-bottom:8px}
+  .prow{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:12.5px}
+  .prow .pn{width:52px;font-weight:600;flex:none}.prow .pd{flex:1;color:var(--mut)}
+  .chip2{display:inline-block;font-size:12px;padding:4px 10px;border-radius:9px;margin:3px 5px 3px 0;font-weight:600}
+  .reson{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:9px}
+  .rcard{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--card)}
+  .rcard .rn{font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+  .rtag{color:#fff;font-size:10.5px;padding:1px 8px;border-radius:7px}
+  .rcard .rs{font-size:11px;color:var(--mut);margin-top:4px}
+  .brief{background:linear-gradient(135deg,#fffdf6,#f4eede);border:1px solid var(--line);border-radius:14px;padding:6px 22px}
+  .brief li{font-size:13.5px;line-height:1.7;margin:9px 0 9px 6px}
+  .imgrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .imgrow img{width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:zoom-in}
 </style>
 </head>
 <body>
@@ -281,8 +324,22 @@ TEMPLATE = r"""<!doctype html>
   </div>
   <img class="tidechart" id="tidechart" alt="">
 
-  <div class="secbar" id="secbar"></div>
+  <h2 class="sec-h">多空动作全景 <small>加多 / 减多 / 加空 / 减空 分布 · 情绪偏向</small></h2>
+  <div class="pano" id="pano"></div>
 
+  <h2 class="sec-h">今日速览 <small>基于当日主力席位数据自动生成</small></h2>
+  <div class="brief"><ul id="brief"></ul></div>
+
+  <h2 class="sec-h">各类资金净流向 · 净买卖双榜 <small>机构/外资/杭州/中财 + 加多加空名义 TOP</small></h2>
+  <div class="imgrow" id="flowcharts"></div>
+
+  <h2 class="sec-h">板块资金热力 <small>各板块机构名义净持仓 · 红多绿空 · 点击筛选</small></h2>
+  <div class="heat" id="secbar"></div>
+
+  <h2 class="sec-h">四类动作榜 <small>各动作按名义金额排 · 相对幅度≥50%(金色)=激进加减仓</small></h2>
+  <div class="boards" id="boards"></div>
+
+  <h2 class="sec-h">资金强度排行榜 <small>全品种可筛选/排序/点开明细</small></h2>
   <div class="controls">
     <input id="q" type="text" placeholder="搜品种，如 碳酸锂">
     <button class="pill fact" data-v="">全部动作</button>
@@ -312,7 +369,13 @@ TEMPLATE = r"""<!doctype html>
     <tbody id="tb"></tbody>
   </table>
 
-  <details class="quadbox"><summary>价格 × 持仓象限 / 资金背离雷达（原图）</summary>
+  <h2 class="sec-h">资金持续性榜 · 背离雷达 <small>连续同向天数 / 资金与价格逆向</small></h2>
+  <div class="cols2" id="persradar"></div>
+
+  <h2 class="sec-h">资金动能共振榜 · 按板块 <small>机构方向与10日趋势同向 · 可信度据样本外回测校准</small></h2>
+  <div id="reson"></div>
+
+  <details class="quadbox"><summary>价格 × 持仓象限（原图）</summary>
     <img id="quad" alt="">
   </details>
   <div class="foot" id="foot"></div>
@@ -341,16 +404,128 @@ function header() {
   $("#foot").textContent = D.meta.source;
 }
 
+const num = s => parseFloat((s ?? "0").toString().replace(/[^0-9.\-]/g, "")) || 0;
+
 function secbar() {
-  $("#secbar").innerHTML = D.sectors.map(s =>
-    `<div class="sec" data-v="${s.name}"><span class="nm">${s.name}</span>
-      <span class="v" style="color:${s.net.startsWith("-") ? "var(--short)" : "var(--long)"}">${s.net}</span>
-      <span class="d">日 ${s.day}</span></div>`).join("");
-  document.querySelectorAll(".sec").forEach(el => el.onclick = () => {
+  const vals = D.sectors.map(s => num(s.net)), mx = Math.max(1, ...vals.map(Math.abs));
+  $("#secbar").innerHTML = D.sectors.map((s, i) => {
+    const v = vals[i], a = (0.20 + 0.80 * Math.abs(v) / mx).toFixed(2);
+    const bg = v >= 0 ? `rgba(178,58,47,${a})` : `rgba(23,96,75,${a})`;
+    return `<div class="htile" data-v="${s.name}" style="background:${bg}">
+      <div class="hn">${s.name}</div><div class="hv">${s.net}</div><div class="hd">日 ${s.day}</div></div>`;
+  }).join("");
+  document.querySelectorAll(".htile").forEach(el => el.onclick = () => {
     fsec = fsec === el.dataset.v ? "" : el.dataset.v;
-    document.querySelectorAll(".sec").forEach(x => x.setAttribute("data-on", x.dataset.v === fsec ? "1" : ""));
+    document.querySelectorAll(".htile").forEach(x => x.style.outline = x.dataset.v === fsec ? "3px solid var(--gold)" : "");
     render();
   });
+}
+
+function pano() {
+  const K = D.meta.kpi, c = k => (K[k] && K[k][0]) || 0;
+  const jd = c("加多品种"), jdm = c("减多品种"), jk = c("加空品种"), jkm = c("减空品种");
+  const senti = num(K["情绪偏向"]);
+  const segs = [[jd, "#b23a2f"], [jdm, "#d98b6b"], [jkm, "#5fa97e"], [jk, "#17604b"]];
+  const tot = segs.reduce((s, x) => s + x[0], 0) || 1, C = 2 * Math.PI * 54; let off = 0;
+  const arcs = segs.map(([v, col]) => { const ln = v / tot * C;
+    const el = `<circle cx="70" cy="70" r="54" fill="none" stroke="${col}" stroke-width="20" stroke-dasharray="${ln} ${C - ln}" stroke-dashoffset="${-off}" transform="rotate(-90 70 70)"/>`;
+    off += ln; return el; }).join("");
+  const frac = Math.max(0, Math.min(1, (senti + 100) / 200)), ang = Math.PI * (1 - frac);
+  const gx = 70 + 56 * Math.cos(ang), gy = 70 - 56 * Math.sin(ang), scol = senti >= 0 ? "#b23a2f" : "#17604b";
+  const semi = Math.PI * 58;
+  $("#pano").innerHTML = `
+    <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+      <div style="position:relative;width:140px;height:140px">
+        <svg width="140" height="140" viewBox="0 0 140 140">${arcs}</svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-size:25px;font-weight:800;font-family:Georgia,serif;color:${scol}">${K["情绪偏向"] || ""}</div>
+          <div style="font-size:11px;color:var(--mut)">情绪偏向</div></div>
+      </div>
+      <svg width="150" height="92" viewBox="0 0 140 92">
+        <path d="M12 70 A58 58 0 0 1 128 70" fill="none" stroke="#17604b" stroke-width="9" stroke-dasharray="${(semi / 2).toFixed(1)} 999"/>
+        <path d="M12 70 A58 58 0 0 1 128 70" fill="none" stroke="#b23a2f" stroke-width="9" stroke-dasharray="${(semi / 2).toFixed(1)} 999" stroke-dashoffset="${(-semi / 2).toFixed(1)}"/>
+        <line x1="70" y1="70" x2="${gx.toFixed(1)}" y2="${gy.toFixed(1)}" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="70" cy="70" r="5" fill="var(--ink)"/>
+        <text x="10" y="88" font-size="9" fill="#17604b">← 极空</text><text x="96" y="88" font-size="9" fill="#b23a2f">极多 →</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <div><i style="background:#b23a2f"></i>加多 <b>${jd}</b>　<i style="background:#d98b6b;margin-left:8px"></i>减多 <b>${jdm}</b></div>
+      <div><i style="background:#17604b"></i>加空 <b>${jk}</b>　<i style="background:#5fa97e;margin-left:8px"></i>减空 <b>${jkm}</b></div>
+      <div style="margin-top:6px;color:var(--mut);font-size:12px">在场 ${K["在场品种"] || ""} 品种 · 加多总额 ${K["加多名义总额"] || "—"} · 加空总额 ${K["加空名义总额"] || "—"} · 净额 ${K["加多−加空 净额"] || "—"}</div>
+    </div>`;
+}
+
+function boards() {
+  const cfg = [["加多", "var(--long)"], ["减多", "#c9744f"], ["加空", "var(--short)"], ["减空", "#5fa97e"]];
+  $("#boards").innerHTML = cfg.map(([act, col]) => {
+    const g = D.rows.filter(r => r.act === act && r.amt != null).sort((a, b) => (b.amt || 0) - (a.amt || 0)).slice(0, 7);
+    const mx = Math.max(1, ...g.map(r => r.amt || 0)), cnt = D.rows.filter(r => r.act === act).length;
+    const rs = g.map(r => { const w = Math.max(9, (r.amt || 0) / mx * 100), hot = (r.rel ?? 0) >= 50;
+      return `<div class="brow"><span class="bn">${r.name}</span>
+        <span class="bb"><i style="width:${w}%;background:${col}"></i><span class="ba">${r.amt_txt || r.amt + "亿"}</span></span>
+        <span class="br" style="${hot ? "color:var(--gold);font-weight:700" : "color:var(--mut)"}">${r.rel == null ? "" : r.rel + "%"}</span></div>`;
+    }).join("") || '<div class="muted" style="padding:8px 2px">无</div>';
+    return `<div class="board"><div class="bh" style="color:${col}">${act}<small>${cnt}个</small></div>${rs}</div>`;
+  }).join("");
+}
+
+function persradar() {
+  const pers = D.rows.filter(r => r.streak_n).sort((a, b) => Math.abs(b.streak_n) - Math.abs(a.streak_n)).slice(0, 10);
+  const pmx = Math.max(1, ...pers.map(r => Math.abs(r.streak_n)));
+  const prows = pers.map(r => { const up = r.streak_n > 0, col = up ? "var(--long)" : "var(--short)", w = Math.max(10, Math.abs(r.streak_n) / pmx * 100);
+    return `<div class="prow"><span class="pn">${r.name}</span>
+      <span style="flex:1;height:16px;background:#efe9d8;border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:${w}%;background:${col};border-radius:5px"></i></span>
+      <span style="width:92px;text-align:right;color:${col};font-weight:600;flex:none">${r.streak || ""}</span>
+      <span class="pd" style="flex:none;width:88px;text-align:right">${r.netpos || ""}</span></div>`;
+  }).join("") || '<div class="muted">—</div>';
+  const bull = D.rows.filter(r => r.diverg && r.diverg.includes("吸筹"));
+  const bear = D.rows.filter(r => r.diverg && r.diverg.includes("沽空"));
+  const chips = (arr, col, bg) => arr.map(r => `<span class="chip2" style="color:${col};background:${bg}">${r.name} ${r.div_px || ""}</span>`).join("") || '<span class="muted">—</span>';
+  $("#persradar").innerHTML = `
+    <div class="cardbox"><div class="ch">资金持续性榜 · 机构连续同向</div>${prows}</div>
+    <div class="cardbox"><div class="ch">资金背离雷达</div>
+      <div style="font-size:12px;color:var(--long);font-weight:700;margin:6px 0 4px">逆势吸筹 · 加多而价跌</div>${chips(bull, "var(--long)", "#f7e6e1")}
+      <div style="font-size:12px;color:var(--short);font-weight:700;margin:12px 0 4px">逆势沽空 · 加空而价涨</div>${chips(bear, "var(--short)", "#e2f0e8")}
+    </div>`;
+}
+
+function reson() {
+  const BO = ["有色", "黑色", "化工", "能源", "农产品", "贵金属"], byS = {};
+  D.rows.filter(r => r.dir && r.conf != null).forEach(r => { (byS[r.sector] = byS[r.sector] || []).push(r); });
+  let html = "";
+  BO.forEach(s => { const g = (byS[s] || []).sort((a, b) => b.conf - a.conf); if (!g.length) return;
+    const cards = g.map(r => { const col = r.dir === "利多" ? "var(--long)" : "var(--short)";
+      const gold = (r.conf_label === "很高" || r.conf_label === "高");
+      return `<div class="rcard" style="border-left:5px solid ${col}"><div class="rn">${r.name}<span class="rtag" style="background:${col}">${r.dir}</span></div>
+        <div class="rs">可信度 <b style="color:${gold ? "var(--gold)" : "var(--mut)"}">${r.conf}·${r.conf_label}</b> · ${r.act || ""} 价${r.px || ""}</div></div>`;
+    }).join("");
+    html += `<div style="margin-bottom:12px"><div style="font-weight:700;color:var(--dark);border-left:5px solid var(--gold);padding-left:9px;margin:8px 0 7px">${s} <span class="muted">${g.length}</span></div><div class="reson">${cards}</div></div>`;
+  });
+  $("#reson").innerHTML = html || '<div class="muted">今日无高一致性共振品种</div>';
+}
+
+function flowcharts() {
+  const imgs = [D.cohort_img, D.dual_img].filter(Boolean), box = $("#flowcharts");
+  box.innerHTML = "";
+  imgs.forEach(s => { const im = document.createElement("img"); im.src = s; im.onclick = () => lightbox(s); box.appendChild(im); });
+  if (!imgs.length) { box.style.display = "none"; box.previousElementSibling.style.display = "none"; }
+}
+
+function brief() {
+  const m = D.meta, K = m.kpi;
+  const topA = x => D.rows.filter(r => r.act === x && r.amt != null).sort((a, b) => (b.amt || 0) - (a.amt || 0)).slice(0, 3).map(r => r.name + "(" + (r.amt_txt || r.amt + "亿") + ")");
+  const sec = D.sectors.map(s => [s.name, num(s.net)]).sort((a, b) => a[1] - b[1]);
+  const li = [];
+  li.push(`机构资金潮汐净值 <b>${m.net}亿</b>,今日变动 <b>${m.chg}</b>,情绪偏向 <b>${K["情绪偏向"] || ""}</b>(加多率−加空率)。`);
+  if (sec.length) li.push(`板块层面 <b style="color:var(--short)">${sec[0][0]}(${sec[0][1]}亿)</b> 资金最空、<b style="color:var(--long)">${sec[sec.length - 1][0]}(${sec[sec.length - 1][1]}亿)</b> 最多。`);
+  const ta = topA("加多"), ts = topA("加空");
+  if (ta.length) li.push(`加多力度居前:${ta.join("、")}。`);
+  if (ts.length) li.push(`加空力度居前:${ts.join("、")}。`);
+  const bull = D.rows.filter(r => r.diverg && r.diverg.includes("吸筹")).map(r => r.name);
+  const bear = D.rows.filter(r => r.diverg && r.diverg.includes("沽空")).map(r => r.name);
+  if (bull.length || bear.length) li.push(`背离信号:逆势吸筹 ${bull.slice(0, 3).join("、") || "无"};逆势沽空 ${bear.slice(0, 3).join("、") || "无"}。`);
+  $("#brief").innerHTML = li.map(x => `<li>${x}</li>`).join("");
 }
 
 function view() {
@@ -430,7 +605,7 @@ $("#sort").addEventListener("change", e => { sortKey = e.target.value; render();
 document.querySelector('.fact[data-v=""]').setAttribute("data-on", "1");
 document.querySelector('.fdir[data-v=""]').setAttribute("data-on", "1");
 
-header(); secbar(); render();
+header(); pano(); brief(); flowcharts(); secbar(); boards(); render(); persradar(); reson();
 </script>
 </body>
 </html>
@@ -451,9 +626,10 @@ def main():
         src = ROOT / src
     date = re.search(r"(\d{8})", src.name).group(1)
 
-    meta, rows, sectors, tide_img, quad_img = parse(src)
+    meta, rows, sectors, tide_img, quad_img, cohort_img, dual_img = parse(src)
     data = {"meta": meta, "rows": rows, "sectors": sectors,
-            "tide_img": tide_img, "quad_img": quad_img}
+            "tide_img": tide_img, "quad_img": quad_img,
+            "cohort_img": cohort_img, "dual_img": dual_img}
     html = (TEMPLATE
             .replace("__DATA__", json.dumps(data, ensure_ascii=False))
             .replace("__DATE__", meta.get("date") or f"{date[:4]}-{date[4:6]}-{date[6:]}"))
