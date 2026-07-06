@@ -21,7 +21,7 @@ REPORT_DIR = ROOT / "日报"
 OUT_FILE = SITE_DIR / "index.html"
 
 DATE_RE = re.compile(r"^\d{8}$")
-VARIANT_TOKENS = {"自包含", "长图", "副本", "最新"}
+VARIANT_TOKENS = {"自包含", "长图", "副本", "最新", "交互"}
 
 # 已知报告类型的展示顺序与短名（不在列表里的类型自动排在后面，用原名）
 KNOWN_TYPES = [
@@ -69,6 +69,8 @@ def parse_filename(fname: str):
 def file_priority(variant: str, kind: str) -> int:
     """决定同一类型下多个文件的默认展示优先级（大者优先）。"""
     if kind == "html":
+        if "交互" in variant:
+            return 110
         return 100 if "自包含" in variant else 90
     if kind == "img":
         return 80
@@ -77,7 +79,7 @@ def file_priority(variant: str, kind: str) -> int:
 
 def file_label(variant: str, kind: str) -> str:
     if kind == "html":
-        return "网页版"
+        return "交互版" if "交互" in variant else "网页版"
     if kind == "img":
         return "长图"
     return "PDF"
