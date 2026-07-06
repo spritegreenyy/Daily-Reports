@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KOL 交易主线 · 可视化终端 · 2026-07-03</title>
+<style>html,body{margin:0;background:#0e1620}</style>
+</head>
+<body>
+<div id="kolapp">
+<style>
+  #kolapp *{box-sizing:border-box}
+  #kolapp{--ink:#0e1620;--panel:#16212e;--panel2:#1b2836;--line:#26374a;--tx:#e7edf4;--mut:#8fa0b3;--mut2:#63748a;--gold:#e7b24d;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--tx);background:var(--ink);min-height:100vh;line-height:1.55;-webkit-font-smoothing:antialiased}
+  #kolapp .mono{font-family:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+  #kolapp b{color:#f4b74a;font-weight:700}
+  #kolapp mark{background:rgba(231,178,77,.26);color:#ffe4a3;border-radius:2px;padding:0 3px;font-weight:600}
+  #kolapp .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  /* masthead */
+  #kolapp .mast{background:linear-gradient(120deg,#132234,#0e1620);border-bottom:1px solid var(--line);padding:22px 0 18px}
+  #kolapp .mast h1{margin:0;font-size:22px;font-weight:800;letter-spacing:.5px}
+  #kolapp .mast h1 .g{color:var(--gold)}
+  #kolapp .mast .win{color:var(--mut);font-size:12.5px;margin-top:5px}
+  #kolapp .mast .sub{color:var(--mut2);font-size:12px;margin-top:3px}
+  #kolapp .mtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  #kolapp select.date{margin-left:auto;background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:13px;cursor:pointer}
+  /* section titles */
+  #kolapp .sect{padding:22px 0 6px}
+  #kolapp .stitle{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut);text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  #kolapp .stitle::before{content:"";width:5px;height:15px;background:var(--gold);border-radius:2px}
+  /* insights */
+  #kolapp .ins{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+  #kolapp .icard{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+  #kolapp .icard h3{margin:0 0 9px;font-size:14.5px;font-weight:700;line-height:1.4;color:#fff;text-wrap:balance;display:flex;gap:8px}
+  #kolapp .inum{flex:0 0 auto;width:20px;height:20px;border-radius:6px;background:var(--gold);color:#0e1620;font-size:12px;
+    font-weight:800;display:grid;place-items:center;margin-top:1px}
+  #kolapp .icard li{list-style:none;font-size:12.8px;color:#cdd8e6;margin:6px 0;padding-left:12px;position:relative}
+  #kolapp .icard li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--mut2)}
+  #kolapp .icard ul{margin:0;padding:0}
+  /* board sections */
+  #kolapp .bsec{margin-bottom:16px;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:var(--panel)}
+  #kolapp .bhead{padding:9px 14px;font-size:14px;font-weight:700;color:#0e1620;cursor:pointer;display:flex;align-items:center;gap:8px}
+  #kolapp .bhead .arrow{margin-left:auto;font-size:12px;opacity:.7}
+  #kolapp .bbody{padding:6px 14px 12px}
+  #kolapp .sub{margin-top:11px}
+  #kolapp .subh{font-size:11.5px;font-weight:700;letter-spacing:.5px;padding:2px 0 2px 8px;margin-bottom:5px;border-left:3px solid var(--sc)}
+  #kolapp .vp{font-size:12.8px;color:#cdd8e6;margin:5px 0;padding-left:2px}
+  #kolapp .vh{font-weight:700;color:var(--tx);cursor:pointer}
+  #kolapp .vh:hover{color:var(--gold)}
+  #kolapp .vr{color:var(--mut2);font-size:11px;margin:0 5px}
+  /* unique */
+  #kolapp .uq{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+  #kolapp .ucard{background:var(--panel);border:1px solid var(--line);border-left:3px solid #35bfad;border-radius:10px;padding:12px 14px}
+  #kolapp .ucard .uh{font-weight:700;font-size:13px;color:#35bfad;cursor:pointer}
+  #kolapp .ucard .uv{font-size:12.6px;color:#cdd8e6;margin:6px 0}
+  #kolapp .ucard .ui{font-size:11.8px;color:var(--mut);border-top:1px solid var(--line);padding-top:7px;margin-top:7px}
+  #kolapp .ucard .ui b,#kolapp .icard b{color:#f4b74a}
+  /* divider to terminal */
+  #kolapp .tdiv{margin:30px 0 0;border-top:1px dashed var(--line);padding-top:4px}
+  /* controls (sticky) */
+  #kolapp .ctrl{position:sticky;top:0;z-index:15;background:rgba(14,22,32,.94);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid var(--line)}
+  #kolapp .pills{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  #kolapp .pill{border:1px solid var(--line);background:var(--panel);color:var(--mut);border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer;transition:.14s;display:inline-flex;gap:7px;white-space:nowrap}
+  #kolapp .pill:hover{color:var(--tx);border-color:var(--mut2)}
+  #kolapp .pill .cnt{font-size:11px;color:var(--mut2)}
+  #kolapp .pill[data-on="1"]{color:#0e1620;font-weight:600}
+  #kolapp .pill[data-on="1"] .cnt{color:rgba(14,22,32,.6)}
+  #kolapp .row2{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  #kolapp .search{flex:1;min-width:190px;position:relative}
+  #kolapp .search input{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:9px 32px 9px 34px;font-size:14px;outline:none}
+  #kolapp .search input:focus{border-color:var(--gold)}
+  #kolapp .search .ic{position:absolute;left:11px;top:9px;color:var(--mut2)}
+  #kolapp .search .clr{position:absolute;right:9px;top:7px;color:var(--mut2);cursor:pointer;font-size:16px;display:none}
+  #kolapp .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  #kolapp .seg button{background:var(--panel);color:var(--mut);border:0;padding:8px 12px;font-size:12.5px;cursor:pointer}
+  #kolapp .seg button+button{border-left:1px solid var(--line)}
+  #kolapp .seg button[data-on="1"]{background:var(--panel2);color:var(--gold)}
+  #kolapp .reset{background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:8px 12px;font-size:12.5px;cursor:pointer}
+  #kolapp .reset:hover{color:var(--tx)}
+  #kolapp .tstat{font-size:12px;color:var(--mut);margin:10px 0}
+  #kolapp .tstat b{color:var(--tx)}
+  /* stream */
+  #kolapp .stream{padding:4px 0 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;align-items:start}
+  #kolapp .card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--bc,#5b8def);border-radius:10px;padding:12px 14px;cursor:pointer;transition:.14s;overflow:hidden}
+  #kolapp .card:hover{background:var(--panel2);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  #kolapp .card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  #kolapp .chead{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
+  #kolapp .hand{font-weight:700;font-size:13.5px}
+  #kolapp .hand:hover{color:var(--gold)}
+  #kolapp .bchip{font-size:10.5px;padding:1px 7px;border-radius:5px;font-weight:600;color:#0e1620}
+  #kolapp .t1{font-size:10px;color:var(--gold);border:1px solid rgba(231,178,77,.4);border-radius:4px;padding:0 4px}
+  #kolapp .lang{font-size:10px;color:var(--mut2);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+  #kolapp .time{margin-left:auto;font-size:11px;color:var(--mut2)}
+  #kolapp .cbody{font-size:13.3px;color:#d3ddeb;white-space:pre-wrap;word-break:break-word;max-height:8.6em;overflow:hidden;position:relative}
+  #kolapp .cbody.open{max-height:none}
+  #kolapp .cbody.clamp::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2.2em;background:linear-gradient(180deg,transparent,var(--panel))}
+  #kolapp .card:hover .cbody.clamp::after{background:linear-gradient(180deg,transparent,var(--panel2))}
+  #kolapp .more{font-size:11.5px;color:var(--mut2);margin-top:3px;display:inline-block;cursor:pointer}
+  #kolapp .cfoot{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line);flex-wrap:wrap}
+  #kolapp .eng{display:flex;gap:11px;font-size:11.5px;color:var(--mut)}
+  #kolapp .tags{display:flex;gap:5px;flex-wrap:wrap}
+  #kolapp .tag{font-size:10.5px;color:var(--mut);background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;cursor:pointer}
+  #kolapp .tag:hover{color:var(--tx)}
+  #kolapp .open{margin-left:auto;font-size:11.5px;color:var(--gold);white-space:nowrap}
+  #kolapp .empty{grid-column:1/-1;text-align:center;color:var(--mut2);padding:50px 20px}
+  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){#kolapp *{transition:none!important}}
+</style>
+
+<div class="mast"><div class="wrap">
+  <div class="mtop">
+    <h1>KOL 交易主线<span class="g"> · </span>可视化终端</h1>
+    <select class="date" id="dateSel"></select>
+  </div>
+  <div class="win" id="win"></div>
+  <div class="sub" id="sub"></div>
+</div></div>
+
+<div class="wrap">
+  <div class="sect"><div class="stitle">一 · 本日核心交易启示</div><div class="ins" id="insights"></div></div>
+  <div class="sect"><div class="stitle">二 · 五大板块 · 逐条观点</div><div id="sections"></div></div>
+  <div class="sect"><div class="stitle">三 · 独到 / 有启发性的观点</div><div class="uq" id="unique"></div></div>
+
+  <div class="tdiv"></div>
+  <div class="sect"><div class="stitle">四 · 全部推文 · 可检索（点击跳转原推）</div></div>
+</div>
+
+<div class="ctrl"><div class="wrap">
+  <div class="pills" id="boardPills"></div>
+  <div class="row2">
+    <div class="search"><span class="ic">🔍</span>
+      <input id="q" type="text" placeholder="搜索关键词 / @账号（按 / 聚焦，Esc 清空）" autocomplete="off">
+      <span class="clr" id="clr">×</span></div>
+    <div class="seg" id="sortSeg"><button data-v="hot" data-on="1">热度</button><button data-v="new">最新</button></div>
+    <div class="seg" id="tierSeg"><button data-v="all" data-on="1">全部</button><button data-v="1">一线</button><button data-v="2">二线</button></div>
+    <div class="seg" id="langSeg"><button data-v="all" data-on="1">中英</button><button data-v="zh">中文</button><button data-v="en">EN</button></div>
+    <button class="reset" id="reset">重置</button>
+  </div>
+</div></div>
+
+<div class="wrap"><div class="tstat" id="tstat"></div><div class="stream" id="stream"></div></div>
+
+<script type="application/json" id="payload">{"data": {"2026-07-03": {"meta": {"date": "2026-07-03", "n_tweets": 66, "n_kols": 49, "n_accounts": 271, "generated": "2026-07-03 08:29", "title": "KOL 交易主线 · 可视化分类总结", "window": "过去 24h（截至北京时间 2026-07-03 17:00）", "subtitle": "68 位 KOL / 120 条信号推文 · 已过滤新闻搬运、脏话与无关灌水 · 按板块→子领域分类 · 重点观点已高亮标注　·　英文推已译中、噪音已过滤"}, "report": {"insights": [{"title": "贵金属 · 弱非农强化 Warsh 鸽派，黄金站稳 $4,100 上方", "points": ["<b>@Ole_S_Hansen</b>：弱于预期的非农<mark>强化了 Warsh 周三的鸽派信号</mark>，黄金自 3,960 反弹后<b>正尝试站稳 4,100 上方</b>。", "<b>@LawrenceLepard</b>：全是演戏——一旦「Ted Lasso 版联储主席」赢下这场家庭大会，<mark>他就会转向鸽派、开始降息</mark>；健全货币早已嗅到，Sintra 以来金价一路向上。", "<b>@TaviCosta</b>：提醒一句——尽管金属价格回调，<b>矿商仍在产出几年前难以想象的利润率</b>，「照此行事」。"]}, {"title": "原油 · 比伊朗战争前还便宜：多空全押「中国需求」", "points": ["<b>@aeberman12</b>：即便经历约 4.3 亿桶的历史级去库，<mark>油价仍比伊朗战争前更便宜</mark>；空头逻辑几乎全押在<b>中国 490 万桶/日进口崩塌会持续</b>——若中国买盘回归而霍尔木兹受限，共识可能迅速反转。", "<b>@JavierBlas</b>：目前是拼命增产出口——<b>出口激增由井口产量上升持续支撑</b>；很快将演变为<mark>争夺市场份额的价格战</mark>。", "<b>@anasalhajji</b>：关键变量是<b>特朗普是否继续抛 SPR</b>——他此前想在大选前把 WTI 压向 50 美元，目前仍有 80 多百万桶可放。"]}, {"title": "天然气 · 结构性拐点：2030 前将超原油、成美国第一能源", "points": ["<b>@chigrl</b>：《美国靠天然气运转》——<mark>天然气有望在 2030 年前首次超过石油</mark>成为美国最大能源来源，2025 年已占一次能源约 36%。", "<b>@staunovo</b>：石油作为美国头号能源已 75 年，<b>这一地震式转变即将终结那个时代</b>。", "交易含义：天然气的结构性上位，是<b>独立于原油周期</b>的长期主线，利好气电、管道与 LNG 基础设施。"]}, {"title": "宏观 · 非农爆冷 57k：加息推迟 vs「衡量问题」", "points": ["<b>@elerianm</b>：6 月非农仅 57,000、远不及预期，<b>失业率反而降至 4.2%</b>；劳动参与率同步下滑，冷热信号交织。", "<b>@ARKInvest</b>：这份报告<b>看起来像衰退</b>（家庭就业 -50 万、非农仅为共识一半），<mark>但我们认为这是衡量问题、不是衰退信号</mark>。", "<b>@tychozzz</b>：非农爆冷，<mark>市场把加息押注推迟到年底</mark>；「每当大家想割肉清仓时，市场总会猝不及防给你惊喜」。"]}, {"title": "半导体去杠杆 · SOXX 暴跌 6%，快钱刚从黄金转来又撤", "points": ["<b>@tychozzz</b>：昨天<b>半导体板块暴跌 6%</b>、超出很多人预期，今年利润回吐一大半；<mark>SOXX 在 50/60 日 EMA（528-544）的支撑很关键</mark>。", "<b>@ChrisWeston_PS</b>：<mark>轮动是当前市场的决定性特征</mark>——半导体、存储与 AI 综合体持续被抛售，不止美股。", "<b>@TimmerFidelity</b>：快钱的路径是 <b>比特币→黄金→如今追半导体</b>；黄金的相关性表现只是暂时。"]}, {"title": "AI 算力经济学 · Meta 转「neocloud」：每 250MW 加 8% EPS", "points": ["<b>@firstadopter</b>：大摩测算 Meta——<b>每租出 250MW、按 $40/瓦、一年就为其 28 年 EPS 增加约 8%</b>；把稀缺算力变现的空间可观。", "<b>@WarrenPies</b>：随着 <b>Meta「变成 neocloud」</b>，可用算力数据将实时告诉我们<mark>市场是否进入算力供给过剩</mark>——一次很好的需求检验。", "<b>@danielnewmanUV</b>：借波动加仓 $WULF/$IREN/$CIFR（长期价差）——<b>波动就是机会</b>；另：$NVDA 用「代币换股权」当 VC，可能是巨大意外之财。"]}], "unique": [["@aeberman12", "油价比伊朗战争前还便宜——整个空头叙事几乎全押在「中国进口崩塌会持续」这一个假设上。", "把中国买盘当成油市的单一关键变量：一旦中国回归而霍尔木兹仍受限，共识会迅速反转、空头踩踏。"], ["@chigrl", "天然气将在 2030 年前首次超过石油、成为美国第一大能源——75 年的石油时代地震式转向。", "这是独立于油价周期的长期结构性主线，利好气电、管道、LNG，是大宗研究里的高置信度趋势。"], ["@ARKInvest", "非农看似衰退（家庭就业 -50 万），但更可能是「衡量问题」而非真衰退信号。", "别被单月非农吓到做空；关注家庭调查与非农背离，警惕数据噪音制造的假衰退交易。"], ["@LawrenceLepard", "Warsh 的鹰派表态全是演戏——赢下「家庭大会」后就会转鸽降息，健全货币资产早已抢跑。", "把联储口头强硬当反向指标；黄金/矿商自 Sintra 一路走强，鸽派兑现前的抢跑仍在。"], ["@chigrl", "散户对股票杠杆的需求正在飙升——银行供给 ETF 杠杆、并为对冲基金提供数万亿美元敞口。", "杠杆拥挤是脆弱性来源；在轮动加剧、半导体去杠杆时，杠杆盘的强制平仓会放大波动。"]], "sections": [["宏观经济", [["就业 · 非农", [["@elerianm", "资深宏观", "6 月非农仅 57,000、远不及预期，<b>失业率却降至 4.2%</b>，劳动参与率下滑，冷热交织。"], ["@charliebilello", "市场数据", "失业率 4.2% 为一年最低；<b>4/5 月合计下修 7.4 万</b>；工资同比 +3.5%；<mark>7 月不动、9 月加息概率 55%</mark>。"], ["@ARKInvest", "颠覆投资", "报告<b>看似衰退</b>（家庭就业 -50 万），<mark>但我们判断是衡量问题、非衰退信号</mark>。"], ["@PhyrexNI", "Phyrex", "失业率 4.2%——好处是经济仍不错，坏处是<mark>离降息又远了一步</mark>。"]]], ["美联储 · 利率", [["@LawrenceLepard", "贵金属/宏观", "Warsh 的鹰派<b>全是演戏</b>，赢下家庭大会后就会<mark>转鸽降息</mark>；健全货币自 Sintra 一路抢跑。"], ["@DariusDale42", "宏观/风险", "联储<b>现在必须用缩表来收紧</b>，才能为 Warsh 与白宫「以后大放水」腾出空间。"], ["@michaelkantro", "策略", "对市场友好的非农<b>应能平息即将加息的担忧</b>；任何压低利率的东西对股市偏多。"]]], ["汇率 · 货币", [["@TimmerFidelity", "Fidelity", "央行的鹰派也在<b>推升美元</b>——市场预期联储将回撤此前降息，<mark>美元像是从长期底部突破</mark>。"], ["@Steve_Hanke", "货币/FX", "乌干达通胀已<b>连续 37 个月低于目标</b>；并主张<b>黎巴嫩应采用美元货币局</b>以创造稳定。"]]]]], ["地缘政治", [["中东 · 伊朗 · 霍尔木兹", [["@BarakRavid", "Axios", "威特科夫/库什纳劝伊朗——<mark>收过路费会炸掉一个对伊朗更有利的大协议</mark>，美方传话「想大一点」。"], ["@HFI_Research", "能源研究", "霍尔木兹速查：ship-to-ship 走阿曼航道、<b>由美军护航</b>；非伊朗 VLCC 入境约 4 艘/日、合 800 万桶/日。"], ["@staunovo", "能源", "伊朗副议长称<b>美国应尊重伊朗对霍尔木兹的管辖权</b>。"], ["@michaeldweiss", "情报观察", "「<b>沙特越来越把美国政府视为不可靠、甚至偶尔是海湾阿拉伯国家的风险</b>」。"]]], ["大国 · 中美", [["@BonnieGlaser", "中美关系", "中美正寻求<b>回撤部分农产品关税</b>；中方称企业将按市场条件与需求采购。"], ["@RushDoshi", "战略分析", "他澄清立场未变——一贯主张<mark>「管理式竞争」</mark>，因为一向尊重北京的能力。"]]], ["防务 · 俄乌", [["@shashj", "防务政策", "£370M 或支撑 ASGARD 实战版、<b>把英军变成强大的目标锁定机器</b>；但<mark>没有弹药库存，日锁 240 个目标也白搭</mark>。"], ["@yarotrof", "俄乌战地", "俄军袭击基辅<b>已致 17 死</b>，随着救援继续挖掘或将上升。"]]]]], ["大宗商品", [["原油", [["@aeberman12", "能源地缘", "<mark>油价仍比伊朗战争前更便宜</mark>（即便约 4.3 亿桶去库）；空头几乎全押<b>中国进口崩塌会持续</b>——另有中国炼厂取消 600 万桶采购。"], ["@JavierBlas", "彭博能源", "拼命增产出口、<b>由井口产量上升支撑</b>；很快将演变为<mark>争夺份额的价格战</mark>。"], ["@anasalhajji", "能源顾问", "关键变量是<b>特朗普是否继续抛 SPR</b>（曾想把 WTI 压向 $50，仍有 80+ 百万桶）。"], ["@Rory_Johnston", "能源宏观", "非伊朗 VLCC 入境<b>强得意外</b>；加拿大西海岸管道/太平洋出海口将带来<b>真正的主权市场准入</b>。"]]], ["天然气", [["@chigrl", "能源", "<mark>天然气有望 2030 年前首超石油</mark>成美国最大能源（2025 已占约 36%）。"], ["@staunovo", "能源", "石油作头号能源已 75 年——<b>这一地震式转变即将终结那个时代</b>。"]]], ["贵金属", [["@Ole_S_Hansen", "Saxo 商品", "弱非农<b>强化 Warsh 鸽派</b>，黄金<mark>尝试站稳 4,100 上方</mark>。"], ["@TaviCosta", "Crescat", "金属回调，但<b>矿商利润率仍是几年前难以想象的水平</b>，照此行事。"], ["@TimmerFidelity", "Fidelity", "黄金相关性只是暂时——<b>快钱从比特币到黄金、如今追半导体</b>。"]]], ["农产品", [["@ScottIrwinUI", "农业", "生物燃料问题的关键<b>不在工厂、而在 RFS 下的义务方（炼厂）</b>——需靠拉高 D4 RIN 价格来满足 RVO。"], ["@cer_hedge", "谷物期货", "瘦猪：下一步看 81 还是 115？这张<b>六年楔形</b>该进每个生产者的风险手册。"], ["@commoditywx", "农业气象", "乌克兰及南俄部分地区<b>7 月或持续干燥</b>，但热浪风险有限。"]]], ["炼厂 · 产业", [["@HFI_Research", "能源研究", "引述：炼厂正处<b>史上最强的市场环境之一，但我不会买它们的股票</b>。"]]]]], ["股票", [["杠杆 · 资金", [["@chigrl", "市场结构", "<mark>散户对股票杠杆的需求正在飙升</mark>——银行供 ETF 杠杆、并为对冲基金提供数万亿敞口。"], ["@yardeni", "市场策略", "市场<b>乘着极佳的盈利动能</b>进入财报季，高预期驱动当前上涨。"]]], ["轮动 · 半导体去杠杆", [["@tychozzz", "美股/科技", "半导体<b>暴跌 6%</b>、今年利润回吐大半；<mark>SOXX 在 50/60 日 EMA（528-544）支撑关键</mark>。"], ["@ChrisWeston_PS", "市场策略", "<mark>轮动是决定性特征</mark>——半导体/存储/AI 综合体持续被抛售，不止美股。"]]], ["散户 · 心态", [["@artinmemes", "美股散户", "非农一差、<b>加息概率瞬间降低</b>，标普纳指期货报告后立即上拉。"], ["@PhyrexNI", "Phyrex", "任何数据都未必是好事——<mark>4.2% 好在经济不错，坏在离降息更远</mark>。"]]]]], ["AI半导体", [["算力经济学 · Meta neocloud", [["@firstadopter", "科技投资", "大摩：Meta <b>每租 250MW（$40/瓦、一年）为 28 年 EPS 加约 8%</b>——稀缺算力变现空间可观。"], ["@WarrenPies", "策略", "Meta「变 neocloud」后，<mark>可用算力数据将实时揭示是否供给过剩</mark>——一次很好的需求检验。"], ["@danielnewmanUV", "科技分析", "借波动<b>加仓 WULF/IREN/CIFR</b>（长期价差）；另：<b>$NVDA 用「代币换股权」当 VC</b>，或是巨大意外之财。"]]], ["IP · 前沿模型风险", [["@PatrickMoorhead", "科技分析", "前沿公司的价值主张扎实——<mark>把 IP 丢给会反过来跟你竞争的前沿模型，可能葬送一家公司</mark>。"], ["@chamath", "科技资本", "有意思的是——不少药企<b>正把收入源源送进一个它们以为是模型商、实为竞争者</b>的手里。"]]], ["边缘 · 生态", [["@cristianoamon", "高通", "<b>高通扩大与 HuggingFace 合作</b>、推动开放的开发者驱动 AI，从模型接入到边缘/数据中心的 agentic 工作流。"], ["@anshelsag", "硬件追踪", "好奇<b>亚马逊自研芯片将如何冲击其最大芯片供应商 MediaTek</b>。"]]]]]]}, "tweets": [{"h": "chamath", "tier": 1, "b": "macro", "t": "2026-07-02 12:54", "x": "8090 会逐步证明：由我们赋能的公司，其资本回报率(ROCE)超越同行——把公司的「护城河」编码进可递归自我改进的软件，而非留作个人经验。", "u": "https://x.com/chamath/status/2072665199786561713", "lk": 106, "rt": 3, "rp": 29, "eng": 138, "lang": "en", "tags": ["macro", "equities", "technology"]}, {"h": "elerianm", "tier": 1, "b": "macro", "t": "2026-07-02 13:23", "x": "美国 6 月非农新增仅 5.7 万、不及预期；失业率降至 4.2%（预期 4.3%）。结合劳动参与率下滑等数据，信号冷热交织。", "u": "https://x.com/elerianm/status/2072672436252766361", "lk": 76, "rt": 10, "rp": 13, "eng": 99, "lang": "en", "tags": ["macro", "central_banks", "teacher_required"]}, {"h": "charliebilello", "tier": 2, "b": "macro", "t": "2026-07-02 16:26", "x": "美国 6 月失业率降至 4.2%、为去年 6 月来最低、远低于 5.7% 的历史均值；新增 5.7 万 vs 预期 11.4 万；4/5 月合计下修 7.4 万；工资同比 +3.5%。7 月预计不动、9 月加息概率 55%。", "u": "https://x.com/charliebilello/status/2072718671370182698", "lk": 49, "rt": 11, "rp": 31, "eng": 91, "lang": "en", "tags": ["macro", "data", "markets"]}, {"h": "Ole_S_Hansen", "tier": 1, "b": "macro", "t": "2026-07-02 13:56", "x": "黄金在弱于预期的非农后延续涨势，强化了 Warsh 周三的鸽派信号；金价自周三盘中低点 3,960 反弹后，正尝试站稳 4,100 上方。", "u": "https://x.com/Ole_S_Hansen/status/2072680695948861901", "lk": 64, "rt": 13, "rp": 4, "eng": 81, "lang": "en", "tags": ["commodities", "cross_commodity", "sellside"]}, {"h": "TaviCosta", "tier": 1, "b": "macro", "t": "2026-07-02 22:37", "x": "再次提醒：尽管金属价格近期回调，矿商仍在产出几年前难以想象的利润率。照此行事。", "u": "https://x.com/TaviCosta/status/2072811997700477065", "lk": 59, "rt": 8, "rp": 11, "eng": 78, "lang": "en", "tags": ["macro", "commodities", "cycle"]}, {"h": "TimmerFidelity", "tier": 1, "b": "macro", "t": "2026-07-02 17:37", "x": "央行的鹰派也在推升美元——市场预期联储将不得不回撤最近几次降息。看起来像是从长期底部的明确突破。", "u": "https://x.com/TimmerFidelity/status/2072736308628541920", "lk": 59, "rt": 7, "rp": 2, "eng": 68, "lang": "en", "tags": ["macro", "equities", "cycle"]}, {"h": "tychozzz", "tier": 1, "b": "macro", "t": "2026-07-02 12:42", "x": "非农爆冷不及预期，市场押注加息推迟至年底。\n\n市场已充分消化美联储 12 月加息的预期。\n\n每当大家感觉美股要完蛋想割肉清仓的时候，市场总会猝不及防给你来个惊喜。", "u": "https://x.com/tychozzz/status/2072662290684682265", "lk": 52, "rt": 1, "rp": 12, "eng": 65, "lang": "zh", "tags": ["macro", "equities", "tech_equities"]}, {"h": "PhyrexNI", "tier": 1, "b": "macro", "t": "2026-07-02 12:34", "x": "非农公布的结果和预期的有些差距。\n\n首先是失业率，前值 4.3%，预期值是 4.3%，最终公布的是 4.2%。这个数据我之前就说了，不论是什么数据都未必是好事，现在公布的是 4.2% ，好的一方面是说美国的经济还是不错，坏的一方面就是距离降息又远了一步。", "u": "https://x.com/PhyrexNi/status/2072660251065901417", "lk": 33, "rt": 1, "rp": 29, "eng": 63, "lang": "zh", "tags": ["crypto", "bitcoin", "equities"]}, {"h": "WarrenPies", "tier": 1, "b": "macro", "t": "2026-07-02 22:28", "x": "随着 Meta「变成 neocloud」，观察算力可用性数据会很有意思。我更喜欢这种方式、而非预判市场如何消化新增供给。若市场转入供给过剩，我们会实时看到——对算力需求是一次很好的检验。", "u": "https://x.com/WarrenPies/status/2072809716581912950", "lk": 41, "rt": 5, "rp": 8, "eng": 54, "lang": "en", "tags": ["macro", "oil_energy", "cycle"]}, {"h": "LawrenceLepard", "tier": 2, "b": "macro", "t": "2026-07-02 22:39", "x": "全是演戏。一旦「Ted Lasso 版联储主席」赢下这场「家庭大会」，他就会转向鸽派、开始降息。这并不难懂，健全货币早已嗅到——自 Sintra 以来一路向上。", "u": "https://x.com/LawrenceLepard/status/2072812404635848704", "lk": 43, "rt": 4, "rp": 6, "eng": 53, "lang": "en", "tags": ["macro", "gold", "hard_assets"]}, {"h": "tychozzz", "tier": 1, "b": "macro", "t": "2026-07-03 03:10", "x": "昨天美股大盘行情比较差，尤其是半导体板块暴跌 6%，我想超出了很多人的预期。看着自己今年的利润回吐一大半，心里不难受是假的，差点没睡好觉。\n\n这波半导体去杠杆不知道还要再持续多久，从短期技术面上来看，SOXX 半导体指数在 50/60 日 EMA 均线的支撑很重要，价格位置在 528-544", "u": "https://x.com/tychozzz/status/2072880588550500717", "lk": 34, "rt": 0, "rp": 12, "eng": 46, "lang": "zh", "tags": ["macro", "equities", "tech_equities"]}, {"h": "Rory_Johnston", "tier": 1, "b": "macro", "t": "2026-07-02 23:53", "x": "阿尔伯塔省长办公室主任谈即将公布的加拿大西海岸管道/太平洋市场准入：主要目标是深水港、便于 VLCC 装载，从而为加拿大原油打开真正的主权市场准入。", "u": "https://x.com/Rory_Johnston/status/2072830988074312121", "lk": 37, "rt": 4, "rp": 3, "eng": 44, "lang": "en", "tags": ["commodities", "oil_energy", "data"]}, {"h": "Rory_Johnston", "tier": 1, "b": "macro", "t": "2026-07-02 18:33", "x": "BC 省长 Eby：本省不会上法院阻止来自阿尔伯塔的管道项目，并称管道属联邦管辖。", "u": "https://x.com/Rory_Johnston/status/2072750421160948065", "lk": 36, "rt": 1, "rp": 3, "eng": 40, "lang": "en", "tags": ["commodities", "oil_energy", "data"]}, {"h": "AndreasSteno", "tier": 1, "b": "macro", "t": "2026-07-02 16:30", "x": "对一个自己造成的问题的糟糕解法——在德国几乎不可能解雇员工；如果频繁请病假有后果，情况才会改变。", "u": "https://x.com/AndreasSteno/status/2072719520657985700", "lk": 20, "rt": 0, "rp": 10, "eng": 30, "lang": "en", "tags": ["macro", "rates_fx", "cross_asset"]}, {"h": "TimmerFidelity", "tier": 1, "b": "macro", "t": "2026-07-02 16:24", "x": "我怀疑黄金的相关性表现只是暂时的——去年垂直拉升后已失宠。快钱曾在比特币、后转向黄金、如今在追半导体。", "u": "https://x.com/TimmerFidelity/status/2072717938189033632", "lk": 20, "rt": 2, "rp": 7, "eng": 29, "lang": "en", "tags": ["macro", "equities", "cycle"]}, {"h": "chamath", "tier": 1, "b": "macro", "t": "2026-07-02 20:40", "x": "Anthropic 完全有权进入它选择的任何市场。有意思的是——不少药企通过无节制地使用 Anthropic，正把收入源源送进一个它们以为是模型商、实则是竞争者的手里。", "u": "https://x.com/chamath/status/2072782387398709573", "lk": 24, "rt": 0, "rp": 4, "eng": 28, "lang": "en", "tags": ["macro", "equities", "technology"]}, {"h": "ARKInvest", "tier": 1, "b": "macro", "t": "2026-07-02 14:00", "x": "如果跨全球运货最快的方式是穿越太空？本周节目讨论 Starfall 的轨道运输、AI 为何推高苹果涨价、以及开源权重模型是否开始在前沿 AI 上占据下风。", "u": "https://x.com/ARKInvest/status/2072681701927714902", "lk": 8, "rt": 1, "rp": 14, "eng": 23, "lang": "en", "tags": ["macro", "equities", "innovation"]}, {"h": "artinmemes", "tier": 1, "b": "macro", "t": "2026-07-02 12:40", "x": "今晚非农先传好消息，就业一差，美联储加息概率瞬间降低\n\n标普纳指期货在报告出来后立马上拉\n\n依稀记得上个月川普的抱怨，他当时坚定认为非农超预期，美国就业形势一片大好会让股票大涨", "u": "https://x.com/artinmemes/status/2072661568014463187", "lk": 13, "rt": 1, "rp": 7, "eng": 21, "lang": "zh", "tags": ["macro", "equities", "us_stocks"]}, {"h": "McClellanOsc", "tier": 2, "b": "macro", "t": "2026-07-02 20:31", "x": "全球飓风/台风活动已在升温。随着地球从汤加火山温度尖峰中降温，应预期总气旋能量增加——降温或停滞期通常更强，升温期更弱。", "u": "https://x.com/McClellanOsc/status/2072780230402720030", "lk": 12, "rt": 2, "rp": 5, "eng": 19, "lang": "en", "tags": ["macro", "technical", "cycle"]}, {"h": "michaelkantro", "tier": 2, "b": "macro", "t": "2026-07-02 13:13", "x": "一份对市场友好的就业报告，应能平息对即将加息与联储持续放鹰的担忧。任何压低利率的东西对股市偏多。", "u": "https://x.com/MichaelKantro/status/2072670111681364008", "lk": 16, "rt": 1, "rp": 2, "eng": 19, "lang": "en", "tags": ["macro", "cycle", "sellside"]}, {"h": "Steve_Hanke", "tier": 1, "b": "macro", "t": "2026-07-02 09:43", "x": "乌干达 5 月通胀 3.7%，低于其 5% 的目标——已是连续第 37 个月低于目标。", "u": "https://x.com/steve_hanke/status/2072617022567972890", "lk": 14, "rt": 2, "rp": 1, "eng": 17, "lang": "en", "tags": ["macro", "monetary", "fx"]}, {"h": "yardeni", "tier": 2, "b": "macro", "t": "2026-07-03 04:00", "x": "市场乘着极佳的盈利动能进入本财报季；Yardeni 在 CNBC 讨论驱动当前上涨的高预期。", "u": "https://x.com/yardeni/status/2072893155272233328", "lk": 9, "rt": 1, "rp": 0, "eng": 10, "lang": "en", "tags": ["macro", "equities", "sellside"]}, {"h": "ARKInvest", "tier": 1, "b": "macro", "t": "2026-07-02 22:17", "x": "今天的就业报告看似衰退：家庭就业 -50 万、非农 +5.7 万约为共识一半、劳动参与率再降。但我们不认为这是衰退信号，而是一个衡量问题。", "u": "https://x.com/ARKInvest/status/2072806783941304353", "lk": 6, "rt": 0, "rp": 2, "eng": 8, "lang": "en", "tags": ["macro", "equities", "innovation"]}, {"h": "DariusDale42", "tier": 2, "b": "macro", "t": "2026-07-02 16:10", "x": "上了 thoughtfulmoney 节目：讨论为何联储必须现在动用资产负债表收紧、才能为 Warsh 与白宫「以后大放水」腾出空间；也谈到上升的风险。", "u": "https://x.com/DariusDale42/status/2072714641340293365", "lk": 4, "rt": 0, "rp": 4, "eng": 8, "lang": "en", "tags": ["macro", "risk_regime", "quant"]}, {"h": "hausfath", "tier": 2, "b": "macro", "t": "2026-07-02 14:07", "x": "2026 年 6 月是 ERA5 数据中有记录以来第二暖的 6 月（仅次于 2024），较工业化前高 1.39°C。随着厄尔尼诺今年发力，2026 全年现有约 86% 概率成为史上第二暖年。", "u": "https://x.com/hausfath/status/2072683476336230605", "lk": 3, "rt": 3, "rp": 2, "eng": 8, "lang": "en", "tags": ["weather_climate", "climate_science", "data"]}, {"h": "leadlagreport", "tier": 2, "b": "macro", "t": "2026-07-02 13:45", "x": "60/40 不是魔法、而是一场「政体押注」。当股债不再互相分散风险，组合问题就变了。", "u": "https://x.com/leadlagreport/status/2072677953847136742", "lk": 4, "rt": 0, "rp": 4, "eng": 8, "lang": "en", "tags": ["macro", "cross_asset", "risk"]}, {"h": "MichaelAArouet", "tier": 2, "b": "macro", "t": "2026-07-02 15:55", "x": "如果印钞能解决任何问题，世界上就不会有贫困了。它对社会更广泛的负面影响很值得玩味。", "u": "https://x.com/MichaelAArouet/status/2072710697935335670", "lk": 6, "rt": 0, "rp": 0, "eng": 6, "lang": "en", "tags": ["macro", "economics", "data"]}, {"h": "Steve_Hanke", "tier": 1, "b": "macro", "t": "2026-07-02 19:11", "x": "我在黎巴嫩货币局研讨会发言：货币局创造信心冲击、削减政府赤字、通胀与利率向锚定货币看齐、GDP 加速、创造稳定。黎巴嫩应采用以美元为基础的货币局。", "u": "https://x.com/steve_hanke/status/2072759964322718012", "lk": 0, "rt": 1, "rp": 0, "eng": 1, "lang": "en", "tags": ["macro", "monetary", "fx"]}, {"h": "HenrikZeberg", "tier": 1, "b": "macro", "t": "2026-07-02 15:41", "x": "AI 会消费吗？会买房、买菜、买车吗？占 GDP 70% 的需求究竟从何而来？而 AI 是来扩张产能的……那现在被雇的人以后怎么办？企业是需要更多还是更少工人？想想吧！", "u": "https://x.com/HenrikZeberg/status/2072707358304649286", "lk": 1, "rt": 0, "rp": 0, "eng": 1, "lang": "en", "tags": ["macro", "technical", "cross_asset"]}, {"h": "chamath", "tier": 1, "b": "macro", "t": "2026-07-02 12:12", "x": "我不这么认为。除非社会框架能把责任归到一个模型上，否则责任最终总会落到某个人及其签名上。", "u": "https://x.com/chamath/status/2072654737661452352", "lk": 0, "rt": 0, "rp": 1, "eng": 1, "lang": "en", "tags": ["macro", "equities", "technology"]}, {"h": "BarakRavid", "tier": 1, "b": "geopolitics", "t": "2026-07-02 16:05", "x": "威特科夫与库什纳一直在向伊朗传达：对过路费的要求可能炸掉一个对伊朗最终更有利得多的美伊协议。「美方给伊朗的信息是——想大一点」。", "u": "https://x.com/BarakRavid/status/2072713311636873600", "lk": 234, "rt": 89, "rp": 67, "eng": 390, "lang": "en", "tags": ["geopolitics", "middle_east", "diplomacy"]}, {"h": "BenNollWeather", "tier": 1, "b": "geopolitics", "t": "2026-07-02 14:00", "x": "周五华盛顿特区将比全球 99% 的地方更热——只有撒哈拉部分地区、中东、中国戈壁及美国西南沙漠少数地点会更热。", "u": "https://x.com/BenNollWeather/status/2072681704456638543", "lk": 54, "rt": 13, "rp": 6, "eng": 73, "lang": "en", "tags": ["weather_climate", "enso", "global_weather"]}, {"h": "michaeldweiss", "tier": 2, "b": "geopolitics", "t": "2026-07-02 17:06", "x": "「沙特越来越把美国政府视为不可靠、甚至偶尔是海湾阿拉伯国家的风险。」", "u": "https://x.com/michaeldweiss/status/2072728714073317392", "lk": 50, "rt": 17, "rp": 5, "eng": 72, "lang": "en", "tags": ["geopolitics", "russia", "middle_east"]}, {"h": "HFI_Research", "tier": 1, "b": "geopolitics", "t": "2026-07-03 00:36", "x": "过去 24h 的霍尔木兹速查：任何以「prosperity」或「b」结尾的油轮，将用于经阿曼航道、在美军护航下做船对船转运。非伊朗 VLCC 入境目前约 4 艘/日、合 800 万桶/日。", "u": "https://x.com/HFI_Research/status/2072841971501273475", "lk": 62, "rt": 6, "rp": 1, "eng": 69, "lang": "en", "tags": ["commodities", "oil_energy", "nat_gas_lng"]}, {"h": "yarotrof", "tier": 2, "b": "geopolitics", "t": "2026-07-02 09:25", "x": "俄军袭击基辅的死亡人数升至 17，随着救援继续在居民高楼废墟中挖掘，或将上升。", "u": "https://x.com/yarotrof/status/2072612537363824885", "lk": 38, "rt": 20, "rp": 2, "eng": 60, "lang": "en", "tags": ["geopolitics", "war", "journalist_analysis"]}, {"h": "aeberman12", "tier": 1, "b": "geopolitics", "t": "2026-07-02 18:45", "x": "油价现在比伊朗战争前更便宜——即便经历约 4.3 亿桶的历史级去库。空头逻辑主要押在一个假设上：中国 490 万桶/日的进口崩塌会持续。若中国买盘回归而霍尔木兹仍受限，今天的共识可能迅速反转。", "u": "https://x.com/aeberman12/status/2072753590737960983", "lk": 29, "rt": 6, "rp": 6, "eng": 41, "lang": "en", "tags": ["commodities", "oil_energy", "geology"]}, {"h": "JavierBlas", "tier": 1, "b": "geopolitics", "t": "2026-07-02 14:53", "x": "目前是拼命增产出口——当然有些桶来自库存，但出口激增由井口产量上升稳步支撑。很快将演变为争夺市场份额；到那时就知道会不会变成价格战。", "u": "https://x.com/JavierBlas/status/2072695141828002044", "lk": 17, "rt": 3, "rp": 8, "eng": 28, "lang": "en", "tags": ["commodities", "oil_energy", "supply_demand"]}, {"h": "MatthewCappucci", "tier": 2, "b": "geopolitics", "t": "2026-07-02 19:48", "x": "热带风暴 Bavi 有望增强为相当于 4-5 级的台风。北马里亚纳群岛、关岛、密克罗尼西亚需严重关注；日本、台湾、菲律宾也应监测。", "u": "https://x.com/MatthewCappucci/status/2072769464437788761", "lk": 17, "rt": 1, "rp": 0, "eng": 18, "lang": "en", "tags": ["weather_climate", "extreme_weather", "journalist_analysis"]}, {"h": "anasalhajji", "tier": 1, "b": "geopolitics", "t": "2026-07-02 21:23", "x": "现在的关键问题是特朗普会否继续从战略石油储备(SPR)抽油。我们知道他曾想在大选前把 WTI 压向 50 美元。目前仍有 80 多百万桶可放，他会继续吗？", "u": "https://x.com/anasalhajji/status/2072793191888404738", "lk": 12, "rt": 1, "rp": 2, "eng": 15, "lang": "en", "tags": ["commodities", "oil_energy", "middle_east"]}, {"h": "joshua_landis", "tier": 2, "b": "geopolitics", "t": "2026-07-02 17:46", "x": "笼罩叙利亚新议会的更大问题是它将拥有什么权力——会只是一个更逊尼派版本的橡皮图章议会，还是拥有立法权？毕竟宪法赋予总统很大权力。", "u": "https://x.com/joshua_landis/status/2072738771460595785", "lk": 7, "rt": 2, "rp": 5, "eng": 14, "lang": "en", "tags": ["geopolitics", "middle_east", "syria"]}, {"h": "BonnieGlaser", "tier": 1, "b": "geopolitics", "t": "2026-07-02 15:34", "x": "中美正寻求回撤部分农产品关税；中方发言人称「企业将按市场条件与需求进行采购」。", "u": "https://x.com/BonnieGlaser/status/2072705363518894397", "lk": 3, "rt": 2, "rp": 5, "eng": 10, "lang": "en", "tags": ["geopolitics", "china", "taiwan"]}, {"h": "BenNollWeather", "tier": 1, "b": "geopolitics", "t": "2026-07-02 12:07", "x": "那些 4 月的气旋触发了破纪录的赤道西风爆发，随后的开尔文波使太平洋次表层暖水在部分区域达到创纪录水平。我认为这些气旋是最大的厄尔尼诺触发因素。", "u": "https://x.com/BenNollWeather/status/2072653277251125421", "lk": 7, "rt": 1, "rp": 1, "eng": 9, "lang": "en", "tags": ["weather_climate", "enso", "global_weather"]}, {"h": "aeberman12", "tier": 1, "b": "geopolitics", "t": "2026-07-03 02:01", "x": "据报一家中国炼厂已取消至少 600 万桶原油采购，为异常疲弱的进口再添迹象。若中国买盘回归，今天看空油市的叙事可能迅速改变。", "u": "https://x.com/aeberman12/status/2072863255261749429", "lk": 2, "rt": 1, "rp": 1, "eng": 4, "lang": "en", "tags": ["commodities", "oil_energy", "geology"]}, {"h": "shashj", "tier": 1, "b": "geopolitics", "t": "2026-07-02 11:18", "x": "£3.7 亿资金理应支撑 ASGARD 的实战版；若表现如宣称，可把英军变成强大的目标锁定机器、真正塑造北约前景。", "u": "https://x.com/shashj/status/2072640999235498389", "lk": 1, "rt": 0, "rp": 1, "eng": 2, "lang": "en", "tags": ["geopolitics", "defense", "europe"]}, {"h": "shashj", "tier": 1, "b": "geopolitics", "t": "2026-07-02 11:20", "x": "没有充足的弹药库存，Project ASGARD 与 RAPSTONE 带来的好处就无法充分实现。每天快速识别并分类 240 个目标、却没有能力摧毁它们，是没有意义的。", "u": "https://x.com/shashj/status/2072641662820475311", "lk": 1, "rt": 0, "rp": 0, "eng": 1, "lang": "en", "tags": ["geopolitics", "defense", "europe"]}, {"h": "staunovo", "tier": 1, "b": "geopolitics", "t": "2026-07-02 19:52", "x": "伊朗副议长称：美国应尊重伊朗对霍尔木兹海峡的管辖权。", "u": "https://x.com/staunovo/status/2072770448136282368", "lk": 0, "rt": 0, "rp": 0, "eng": 0, "lang": "en", "tags": ["commodities", "oil_energy", "sellside"]}, {"h": "chigrl", "tier": 1, "b": "commodities", "t": "2026-07-02 17:26", "x": "《美国靠天然气运转》：到本十年末，天然气很可能首次超过石油、成为美国最大能源来源——2025 年二者差距已几乎消失，天然气占美国一次能源约 36%。", "u": "https://x.com/chigrl/status/2072733681618481618", "lk": 38, "rt": 7, "rp": 2, "eng": 47, "lang": "en", "tags": ["commodities", "oil_energy", "metals"]}, {"h": "HFI_Research", "tier": 1, "b": "commodities", "t": "2026-07-03 03:06", "x": "（观点）投资者低估了 Espriella 对哥伦比亚能源业将有多正面。", "u": "https://x.com/HFI_Research/status/2072879607049781254", "lk": 31, "rt": 2, "rp": 0, "eng": 33, "lang": "en", "tags": ["commodities", "oil_energy", "nat_gas_lng"]}, {"h": "aeberman12", "tier": 1, "b": "commodities", "t": "2026-07-02 10:44", "x": "彭博的 McGlone 从不让人失望——现在又抛出北美 7 百万桶/日的石油「超级充裕」、说高价创造充裕。若真有接近这个量级的过剩，库存早就爆了、油价不会在当前附近。读点书吧，Mike。", "u": "https://x.com/aeberman12/status/2072632480138424473", "lk": 21, "rt": 3, "rp": 4, "eng": 28, "lang": "en", "tags": ["commodities", "oil_energy", "geology"]}, {"h": "ScottIrwinUI", "tier": 2, "b": "commodities", "t": "2026-07-02 14:24", "x": "Renshaw 的标题技术上正确，但没说到点子上：问题不在生物燃料厂，而在 RFS 下的义务方(炼厂)——只要义务方把 D4 RIN 价格抬到足够高，RVO 就能满足。", "u": "https://x.com/ScottIrwinUI/status/2072687888966238359", "lk": 6, "rt": 3, "rp": 1, "eng": 10, "lang": "en", "tags": ["commodities", "agri_softs", "academic"]}, {"h": "staunovo", "tier": 1, "b": "commodities", "t": "2026-07-02 15:42", "x": "75 年来石油一直是驱动美国最多的能源。这即将改变——到本十年末，天然气很可能首次超过石油。这一地震式转变将终结一个时代。", "u": "https://x.com/staunovo/status/2072707579709444406", "lk": 6, "rt": 2, "rp": 0, "eng": 8, "lang": "en", "tags": ["commodities", "oil_energy", "sellside"]}, {"h": "HFI_Research", "tier": 1, "b": "commodities", "t": "2026-07-02 17:42", "x": "（转）炼厂正处于其历史上最强的市场环境之一，但我不会买它们的股票。", "u": "https://x.com/HFI_Research/status/2072737593855480079", "lk": 0, "rt": 3, "rp": 0, "eng": 3, "lang": "en", "tags": ["commodities", "oil_energy", "nat_gas_lng"]}, {"h": "cer_hedge", "tier": 2, "b": "commodities", "t": "2026-07-02 18:22", "x": "瘦猪：下一步看 81 还是 115？这张长期连续图该进每个瘦猪生产者的风险手册——大格局是一个六年楔形。", "u": "https://x.com/cer_hedge/status/2072747766674055309", "lk": 2, "rt": 0, "rp": 0, "eng": 2, "lang": "en", "tags": ["commodities", "agri_softs", "trader"]}, {"h": "fchollet", "tier": 2, "b": "weather", "t": "2026-07-02 20:30", "x": "这意味着 LLM/LRM 会消失吗？完全不会。短期内它们仍是做直觉引导(代码生成)的最佳方式；长期即便在推理本身上过时，我们仍需要语言模型来与 AI 系统沟通。", "u": "https://x.com/fchollet/status/2072780025968148733", "lk": 29, "rt": 0, "rp": 1, "eng": 30, "lang": "en", "tags": ["ai_semis", "ai_research", "models"]}, {"h": "BenNollWeather", "tier": 1, "b": "weather", "t": "2026-07-02 11:30", "x": "周四清晨从纽约到华盛顿特区湿度极端，堪比迈阿密、新奥尔良和休斯顿。约 1.04 亿美国人将面对 75 度露点(极端湿度)直到周五。", "u": "https://x.com/BenNollWeather/status/2072643954638503976", "lk": 22, "rt": 6, "rp": 2, "eng": 30, "lang": "en", "tags": ["weather_climate", "enso", "global_weather"]}, {"h": "burgwx", "tier": 1, "b": "weather", "t": "2026-07-02 16:09", "x": "纽约中央公园中午 12 点已达 96°F。1950 年至今的全部数据里，中央公园在正午前达到 ≥96°F 只有另外 6 次——那 6 天下午都升到了 100°F 以上。上一次到 100°F 是 2012/7/18，近 14 年前。", "u": "https://x.com/burgwx/status/2072714292655194125", "lk": 20, "rt": 6, "rp": 0, "eng": 26, "lang": "en", "tags": ["weather_climate", "models", "tropics"]}, {"h": "MichaelEMann", "tier": 2, "b": "weather", "t": "2026-07-02 15:21", "x": "我们最近的 PNAS 文章量化了新的全球气温纪录通常如何在「以一次达到峰值的强厄尔尼诺开局的年份」被创下——因此可相当有把握地预测：2027 年将出现新的全球气温纪录。", "u": "https://x.com/MichaelEMann/status/2072702196886442230", "lk": 2, "rt": 1, "rp": 0, "eng": 3, "lang": "en", "tags": ["weather_climate", "climate_science", "policy"]}, {"h": "PaulRoundy1", "tier": 1, "b": "weather", "t": "2026-07-02 20:51", "x": "德国不该关停核电站，他们的电价被不必要地推高了。", "u": "https://x.com/PaulRoundy1/status/2072785192570306725", "lk": 1, "rt": 0, "rp": 1, "eng": 2, "lang": "en", "tags": ["weather_climate", "enso", "mjo"]}, {"h": "climateguyw", "tier": 2, "b": "weather", "t": "2026-07-02 20:29", "x": "7/2 热浪 Bluestone 逼近我定义的历史 CAT4 级，东北部部分站点接近历史纪录，系统预计 4 号前有所缓和。", "u": "https://x.com/climateguyw/status/2072779787500658957", "lk": 1, "rt": 1, "rp": 0, "eng": 2, "lang": "en", "tags": ["weather_climate", "climate_science", "communication"]}, {"h": "danielnewmanUV", "tier": 2, "b": "ai_semis", "t": "2026-07-02 19:05", "x": "通过长期价差加仓 WULF、IREN 和 CIFR。这里的波动在我看来像是机会。", "u": "https://x.com/danielnewmanUV/status/2072758474488856716", "lk": 40, "rt": 5, "rp": 19, "eng": 64, "lang": "en", "tags": ["ai_semis", "enterprise_tech", "semiconductors"]}, {"h": "danielnewmanUV", "tier": 2, "b": "ai_semis", "t": "2026-07-02 20:46", "x": "英伟达当「风投」——用代币换股权，可能是一笔巨大的意外之财。", "u": "https://x.com/danielnewmanUV/status/2072783941312868449", "lk": 26, "rt": 0, "rp": 11, "eng": 37, "lang": "en", "tags": ["ai_semis", "enterprise_tech", "semiconductors"]}, {"h": "firstadopter", "tier": 1, "b": "ai_semis", "t": "2026-07-02 12:04", "x": "大摩谈 Meta：变现这一稀缺资源带来的 EPS 上行是实质性的——每租出 250MW、一年按 $40/瓦，就为其 2028 年 EPS 增加约 3 美元(8%)。", "u": "https://x.com/firstadopter/status/2072652514420281797", "lk": 28, "rt": 2, "rp": 3, "eng": 33, "lang": "en", "tags": ["ai_semis", "semiconductors", "ai_infra"]}, {"h": "PatrickMoorhead", "tier": 1, "b": "ai_semis", "t": "2026-07-02 19:31", "x": "前沿公司的核心价值主张扎实而务实。企业 AI 很难，做错或不做可能要了你的命；把 IP 丢给一个会用你的数据与方法反过来跟你竞争的前沿模型，可能是一家公司的终点。", "u": "https://x.com/PatrickMoorhead/status/2072765134968402176", "lk": 18, "rt": 3, "rp": 0, "eng": 21, "lang": "en", "tags": ["ai_semis", "semiconductors", "enterprise_tech"]}, {"h": "danielnewmanUV", "tier": 2, "b": "ai_semis", "t": "2026-07-02 23:36", "x": "任何在应用 AI 上稍下功夫的个人或企业，都能看到它多么具变革性。回撤会有，但仍是早期。", "u": "https://x.com/danielnewmanUV/status/2072826818185343225", "lk": 13, "rt": 0, "rp": 2, "eng": 15, "lang": "en", "tags": ["ai_semis", "enterprise_tech", "semiconductors"]}, {"h": "cristianoamon", "tier": 2, "b": "ai_semis", "t": "2026-07-02 18:24", "x": "高通扩大与 HuggingFace 的合作，以扩展开放、开发者驱动的 AI——从模型接入到跨边缘与数据中心的 agentic 工作流，简化开发者构建与部署 AI 的方式。", "u": "https://x.com/cristianoamon/status/2072748263208616222", "lk": 3, "rt": 0, "rp": 0, "eng": 3, "lang": "en", "tags": ["ai_semis", "semiconductors", "edge_ai"]}, {"h": "anshelsag", "tier": 2, "b": "ai_semis", "t": "2026-07-02 15:08", "x": "我在想，亚马逊作为 MediaTek 最大客户之一，其自研芯片将如何影响 MediaTek。", "u": "https://x.com/anshelsag/status/2072698920917164253", "lk": 3, "rt": 0, "rp": 0, "eng": 3, "lang": "en", "tags": ["ai_semis", "semiconductors", "hardware"]}]}}, "boards": {"macro": {"label": "宏观经济", "color": "#5b8def", "short": "宏观"}, "geopolitics": {"label": "地缘政治", "color": "#ec6f57", "short": "地缘"}, "commodities": {"label": "大宗商品", "color": "#e0952f", "short": "大宗"}, "weather": {"label": "天气气候", "color": "#33bfad", "short": "天气"}, "ai_semis": {"label": "AI半导体", "color": "#b18ef0", "short": "AI"}}, "repColors": {"宏观经济": "#5b8def", "地缘政治": "#ec6f57", "大宗商品": "#e0952f", "股票": "#3fb36a", "AI半导体": "#b18ef0", "天气气候": "#33bfad"}, "dates": ["2026-07-03"]}</script>
+<script>
+(function(){
+  var app=document.getElementById("kolapp");
+  var P=JSON.parse(document.getElementById("payload").textContent);
+  var DATA=P.data,BOARDS=P.boards,REPC=P.repColors,DATES=P.dates;
+  var st={date:DATES[0],board:"all",tier:"all",lang:"all",sort:"hot",q:""};
+  var $=function(s){return app.querySelector(s)};
+  function esc(s){return (s||"").replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+  function hl(s,q){s=esc(s);if(!q)return s;try{var re=new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi");return s.replace(re,"<mark>$1</mark>")}catch(e){return s}}
+  function fmt(n){return n>=1000?(n/1000).toFixed(n>=10000?0:1)+"k":""+n}
+  function cur(){return DATA[st.date]}
+  function jumpHandle(h){$("#q").value="@"+h;st.q="@"+h;$("#clr").style.display="block";st.board="all";buildPills();render();
+    $("#stream").scrollIntoView({behavior:"smooth",block:"start"})}
+
+  var dsel=$("#dateSel");
+  DATES.forEach(function(d){var o=document.createElement("option");o.value=d;o.textContent=d;dsel.appendChild(o)});
+  dsel.value=st.date;
+  dsel.onchange=function(){st.date=dsel.value;st.board="all";renderAll()};
+
+  function renderReport(){
+    var r=cur().report,m=cur().meta;
+    $("#win").textContent=m.window;
+    $("#sub").textContent=m.subtitle;
+    // insights
+    var ih=$("#insights");ih.innerHTML="";
+    r.insights.forEach(function(it,i){
+      var c=document.createElement("div");c.className="icard";
+      c.innerHTML='<h3><span class="inum">'+(i+1)+'</span><span>'+esc(it.title)+'</span></h3>'+
+        '<ul>'+it.points.map(function(p){return "<li>"+p+"</li>"}).join("")+'</ul>';
+      ih.appendChild(c);
+    });
+    // sections (board -> subdomain -> viewpoints)
+    var sh=$("#sections");sh.innerHTML="";
+    r.sections.forEach(function(pair){
+      var name=pair[0],subs=pair[1],col=REPC[name]||"#5b8def";
+      var box=document.createElement("div");box.className="bsec";
+      var nvp=subs.reduce(function(a,s){return a+s[1].length},0);
+      var inner=subs.map(function(sd){
+        var subn=sd[0],rows=sd[1];
+        return '<div class="sub"><div class="subh" style="--sc:'+col+';color:'+col+'">'+esc(subn)+'</div>'+
+          rows.map(function(row){
+            return '<div class="vp"><span class="vh" data-h="'+esc(row[0].replace("@",""))+'">'+esc(row[0])+'</span>'+
+              '<span class="vr">'+esc(row[1])+'</span>'+row[2]+'</div>';
+          }).join("")+'</div>';
+      }).join("");
+      box.innerHTML='<div class="bhead" style="background:'+col+'">'+esc(name)+
+        ' <span style="font-weight:500;opacity:.75;font-size:12px">'+subs.length+' 领域 · '+nvp+' 条</span>'+
+        '<span class="arrow">▾</span></div><div class="bbody">'+inner+'</div>';
+      var bd=box.querySelector(".bbody"),hd=box.querySelector(".bhead");
+      hd.onclick=function(){bd.style.display=bd.style.display==="none"?"":"none";
+        box.querySelector(".arrow").textContent=bd.style.display==="none"?"▸":"▾"};
+      sh.appendChild(box);
+    });
+    // wire viewpoint handles
+    sh.querySelectorAll(".vh").forEach(function(v){v.onclick=function(){jumpHandle(v.dataset.h)}});
+    // unique
+    var uh=$("#unique");uh.innerHTML="";
+    r.unique.forEach(function(u){
+      var c=document.createElement("div");c.className="ucard";
+      c.innerHTML='<div class="uh" data-h="'+esc(u[0].replace("@",""))+'">'+esc(u[0])+'</div>'+
+        '<div class="uv">'+esc(u[1])+'</div><div class="ui">交易含义：'+esc(u[2])+'</div>';
+      c.querySelector(".uh").onclick=function(){jumpHandle(u[0].replace("@",""))};
+      uh.appendChild(c);
+    });
+  }
+
+  function buildPills(){
+    var tw=cur().tweets,wrap=$("#boardPills");wrap.innerHTML="";
+    var counts={all:tw.length};Object.keys(BOARDS).forEach(function(k){counts[k]=0});
+    tw.forEach(function(t){counts[t.b]=(counts[t.b]||0)+1});
+    function mk(key,label,color){var p=document.createElement("button");p.className="pill";
+      p.innerHTML=label+' <span class="cnt">'+(counts[key]||0)+'</span>';
+      if(st.board===key){p.setAttribute("data-on","1");p.style.background=color;p.style.borderColor=color}
+      p.onclick=function(){st.board=key;buildPills();render()};return p}
+    wrap.appendChild(mk("all","全部","#e7b24d"));
+    Object.keys(BOARDS).forEach(function(k){wrap.appendChild(mk(k,BOARDS[k].label,BOARDS[k].color))});
+  }
+  function pass(t){
+    if(st.board!=="all"&&t.b!==st.board)return false;
+    if(st.tier!=="all"&&(""+t.tier)!==st.tier)return false;
+    if(st.lang!=="all"&&t.lang!==st.lang)return false;
+    if(st.q){var q=st.q.toLowerCase();if((t.x+" @"+t.h).toLowerCase().indexOf(q)<0)return false}
+    return true}
+  function render(){
+    var m=cur().meta,tw=cur().tweets.filter(pass);
+    tw.sort(function(a,b){return st.sort==="hot"?b.eng-a.eng:(a.t<b.t?1:-1)});
+    var kol=new Set(tw.map(function(t){return t.h})).size;
+    $("#tstat").innerHTML='当前显示 <b>'+tw.length+'</b> / '+m.n_tweets+' 条 · <b>'+kol+'</b> 位 KOL · 监测 '+m.n_accounts+' 账号';
+    var s=$("#stream");
+    if(!tw.length){s.innerHTML='<div class="empty">没有匹配的推文 —— 换个词或点「重置」。</div>';return}
+    s.innerHTML="";
+    tw.forEach(function(t){
+      var B=BOARDS[t.b]||{short:"其他",color:"#5b8def"};
+      var c=document.createElement("div");c.className="card";c.tabIndex=0;c.style.setProperty("--bc",B.color);
+      var tags=(t.tags||[]).map(function(x){return '<span class="tag" data-tag="'+esc(x)+'">'+esc(x)+'</span>'}).join("");
+      c.innerHTML='<div class="chead"><span class="hand" data-h="'+esc(t.h)+'">@'+esc(t.h)+'</span>'+
+        '<span class="bchip" style="background:'+B.color+'">'+B.short+'</span>'+
+        (t.tier===1?'<span class="t1">一线</span>':'')+'<span class="lang">'+(t.lang==="zh"?"中":"EN")+'</span>'+
+        '<span class="time mono">'+esc(t.t)+'</span></div>'+
+        '<div class="cbody">'+hl(t.x,st.q)+'</div>'+
+        '<div class="cfoot"><span class="eng mono"><span>♥ '+fmt(t.lk)+'</span><span>⟲ '+fmt(t.rt)+'</span><span>💬 '+fmt(t.rp)+'</span></span>'+
+        '<span class="tags">'+tags+'</span><span class="open">打开 ↗</span></div>';
+      var body=c.querySelector(".cbody");
+      requestAnimationFrame(function(){if(body.scrollHeight>body.clientHeight+4){body.classList.add("clamp");
+        var mm=document.createElement("span");mm.className="more";mm.textContent="展开全文 ▾";body.after(mm);
+        mm.onclick=function(e){e.stopPropagation();body.classList.toggle("open");body.classList.toggle("clamp");
+          mm.textContent=body.classList.contains("open")?"收起 ▴":"展开全文 ▾"}}});
+      c.onclick=function(){window.open(t.u,"_blank","noopener")};
+      c.onkeydown=function(e){if(e.key==="Enter")window.open(t.u,"_blank","noopener")};
+      c.querySelector(".hand").onclick=function(e){e.stopPropagation();jumpHandle(t.h)};
+      c.querySelectorAll(".tag").forEach(function(tg){tg.onclick=function(e){e.stopPropagation();
+        $("#q").value=tg.dataset.tag;st.q=tg.dataset.tag;$("#clr").style.display="block";render()}});
+      s.appendChild(c);
+    });
+  }
+  function renderAll(){renderReport();buildPills();render()}
+
+  var qi=$("#q"),clr=$("#clr");
+  qi.oninput=function(){st.q=qi.value.trim();clr.style.display=qi.value?"block":"none";render()};
+  clr.onclick=function(){qi.value="";st.q="";clr.style.display="none";qi.focus();render()};
+  document.addEventListener("keydown",function(e){
+    if(e.key==="/"&&document.activeElement!==qi){e.preventDefault();qi.focus()}
+    if(e.key==="Escape"&&document.activeElement===qi){qi.value="";st.q="";clr.style.display="none";render()}});
+  function seg(id,key){var el=$(id);el.querySelectorAll("button").forEach(function(b){b.onclick=function(){
+    el.querySelectorAll("button").forEach(function(x){x.removeAttribute("data-on")});b.setAttribute("data-on","1");st[key]=b.dataset.v;render()}})}
+  seg("#sortSeg","sort");seg("#tierSeg","tier");seg("#langSeg","lang");
+  $("#reset").onclick=function(){st.board="all";st.tier="all";st.lang="all";st.sort="hot";st.q="";qi.value="";clr.style.display="none";
+    [["#sortSeg","hot"],["#tierSeg","all"],["#langSeg","all"]].forEach(function(p){var el=$(p[0]);
+      el.querySelectorAll("button").forEach(function(x){x.setAttribute("data-on",x.dataset.v===p[1]?"1":"")})});
+    buildPills();render()};
+  renderAll();
+})();
+</script>
+</div>
+</body>
+</html>
