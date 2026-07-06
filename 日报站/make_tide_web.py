@@ -80,7 +80,7 @@ def parse(src: Path):
     meta = {}
     m = re.search(r"(\d{4}-\d{2}-\d{2})\s*·\s*盘后", flow)
     meta["date"] = m.group(1) if m else ""
-    m = re.search(r"名义净持仓\(亿\)\|(-?[\d.]+)\|\s*亿[^|]*\|(-?[\d.]+亿)", flow)
+    m = re.search(r"名义净持仓\(亿\)\|([+-]?[\d.]+)\|\s*亿[^|]*\|([+-]?[\d.]+亿)", flow)
     if m:
         meta["net"], meta["chg"] = float(m.group(1)), m.group(2)
     m = re.search(r"40日区间\|([^|]+)", flow)
