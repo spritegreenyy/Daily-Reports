@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WINDRISE · 日报台</title>
+<style>
+  :root {
+    --bg: #f3efe4;
+    --panel: #fbf9f2;
+    --card: #ffffff;
+    --ink: #23312b;
+    --muted: #8a8676;
+    --green: #17604b;
+    --green-dark: #0f4638;
+    --red: #b23a2f;
+    --line: #e3ddc9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--ink);
+    display: flex; flex-direction: column;
+  }
+  header {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 14px 22px 12px; border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  header .brand { font-size: 18px; font-weight: 700; letter-spacing: 3px; color: var(--green-dark); }
+  header .brand span { color: var(--red); }
+  header .sub { font-size: 13px; color: var(--muted); }
+  header .navlink {
+    font-size: 13px; color: var(--green); text-decoration: none;
+    border: 1px solid var(--line); border-radius: 20px; padding: 4px 12px; background: var(--card);
+  }
+  header .navlink:hover { border-color: var(--green); }
+  header .gen { margin-left: auto; font-size: 12px; color: var(--muted); }
+
+  .layout { flex: 1; display: flex; min-height: 0; }
+
+  aside {
+    width: 215px; flex: none; border-right: 1px solid var(--line);
+    background: var(--panel); display: flex; flex-direction: column;
+  }
+  .search { padding: 12px; border-bottom: 1px solid var(--line); }
+  .search input {
+    width: 100%; padding: 8px 10px; font-size: 13px;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--card);
+    outline: none; color: var(--ink);
+  }
+  .search input:focus { border-color: var(--green); }
+  .datelist { flex: 1; overflow-y: auto; padding: 8px; }
+  .dateitem {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 12px; margin-bottom: 4px; border-radius: 8px;
+    font-size: 13.5px; cursor: pointer; border: 1px solid transparent;
+  }
+  .dateitem:hover { background: #f0ead7; }
+  .dateitem.active { background: var(--green); color: #fff; }
+  .dateitem .n {
+    font-size: 11px; color: var(--muted); background: #eee8d5;
+    border-radius: 10px; padding: 1px 8px;
+  }
+  .dateitem.active .n { background: rgba(255,255,255,.22); color: #fff; }
+
+  main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .toolbar {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    padding: 12px 18px; border-bottom: 1px solid var(--line); background: var(--panel);
+  }
+  .navbtn {
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: 8px; padding: 6px 12px; font-size: 13px; cursor: pointer;
+  }
+  .navbtn:hover { border-color: var(--green); color: var(--green); }
+  .navbtn:disabled { opacity: .35; cursor: default; }
+  .curdate { font-size: 15px; font-weight: 700; color: var(--green-dark); margin: 0 6px; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-left: 10px; }
+  .tab {
+    border: 1px solid var(--line); background: var(--card);
+    border-radius: 20px; padding: 6px 15px; font-size: 13px; cursor: pointer; color: var(--ink);
+  }
+  .tab:hover { border-color: var(--green); }
+  .tab.active { background: var(--green); border-color: var(--green); color: #fff; }
+  .filebtns { margin-left: auto; display: flex; gap: 6px; }
+  .filebtn {
+    border: 1px solid var(--line); background: var(--card);
+    border-radius: 6px; padding: 5px 11px; font-size: 12px; cursor: pointer; color: var(--muted);
+  }
+  .filebtn.active { border-color: var(--red); color: var(--red); font-weight: 600; }
+
+  .viewer { flex: 1; min-height: 0; background: #e9e4d3; position: relative; }
+  .viewer iframe { width: 100%; height: 100%; border: 0; background: #fff; }
+  .viewer .imgwrap { width: 100%; height: 100%; overflow: auto; text-align: center; padding: 14px 0; }
+  .viewer .imgwrap img { max-width: 900px; width: 100%; display: block; margin: 0 auto; }
+  .viewer .imgwrap img.page { margin-bottom: 14px; box-shadow: 0 1px 6px rgba(0,0,0,.25); background: #fff; }
+  .empty {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 14px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">WINDRISE<span> ·</span> 日报台</div>
+  <div class="sub">形态 / 资金潮汐 / 大宗信号 / KOL观点</div>
+  <a class="navlink" href="kol/index.html" target="_blank">KOL终端 ↗</a>
+  <div class="gen">生成于 2026-07-06 15:56 · 共 15 个交易日</div>
+</header>
+<div class="layout">
+  <aside>
+    <div class="search"><input id="q" type="text" placeholder="搜日期，如 0616 / 2026-06"></div>
+    <div class="datelist" id="datelist"></div>
+  </aside>
+  <main>
+    <div class="toolbar">
+      <button class="navbtn" id="prev">← 前一天</button>
+      <span class="curdate" id="curdate"></span>
+      <button class="navbtn" id="next">后一天 →</button>
+      <div class="tabs" id="tabs"></div>
+      <div class="filebtns" id="filebtns"></div>
+    </div>
+    <div class="viewer" id="viewer"><div class="empty">加载中…</div></div>
+  </main>
+</div>
+<script>
+const DATA = {"dates": [{"date": "20260703", "label": "2026-07-03 周五", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260703/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260703.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260703/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260703.pdf"}]}, {"key": "期货资金潮汐", "name": "资金潮汐", "files": [{"label": "交互版", "kind": "html", "href": "../日报/20260703/%E6%9C%9F%E8%B4%A7%E8%B5%84%E9%87%91%E6%BD%AE%E6%B1%90_20260703_%E4%BA%A4%E4%BA%92.html"}, {"label": "网页版", "kind": "html", "href": "../日报/20260703/%E6%9C%9F%E8%B4%A7%E8%B5%84%E9%87%91%E6%BD%AE%E6%B1%90_20260703.html"}, {"label": "长图", "kind": "img", "href": "../日报/20260703/%E6%9C%9F%E8%B4%A7%E8%B5%84%E9%87%91%E6%BD%AE%E6%B1%90_%E9%95%BF%E5%9B%BE_20260703.png"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260703/KOL%E8%A7%82%E7%82%B9_20260703.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260703/KOL%E8%A7%82%E7%82%B9_20260703.pdf"}]}, {"key": "KOL交互", "name": "KOL交互", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260703/KOL%E4%BA%A4%E4%BA%92_20260703.html"}]}]}, {"date": "20260702", "label": "2026-07-02 周四", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260702/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260702.pdf"}]}, {"key": "期货资金潮汐", "name": "资金潮汐", "files": [{"label": "长图", "kind": "img", "href": "../日报/20260702/%E6%9C%9F%E8%B4%A7%E8%B5%84%E9%87%91%E6%BD%AE%E6%B1%90_%E9%95%BF%E5%9B%BE_20260702.png"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260702/KOL%E8%A7%82%E7%82%B9_20260702.pdf"}]}]}, {"date": "20260701", "label": "2026-07-01 周三", "types": [{"key": "期货资金潮汐", "name": "资金潮汐", "files": [{"label": "交互版", "kind": "html", "href": "../日报/20260701/%E6%9C%9F%E8%B4%A7%E8%B5%84%E9%87%91%E6%BD%AE%E6%B1%90_20260701_%E4%BA%A4%E4%BA%92.html"}, {"label": "网页版", "kind": "html", "href": "../日报/20260701/%E6%9C%9F%E8%B4%A7%E8%B5%84%E9%87%91%E6%BD%AE%E6%B1%90_20260701.html"}, {"label": "长图", "kind": "img", "href": "../日报/20260701/%E6%9C%9F%E8%B4%A7%E8%B5%84%E9%87%91%E6%BD%AE%E6%B1%90_%E9%95%BF%E5%9B%BE_20260701.png"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260701/%E6%9C%9F%E8%B4%A7%E8%B5%84%E9%87%91%E6%BD%AE%E6%B1%90_20260701.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260701/KOL%E8%A7%82%E7%82%B9_20260701.pdf"}]}]}, {"date": "20260630", "label": "2026-06-30 周二", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260630/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260630.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260630/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260630_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260630/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260630.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260630/KOL%E8%A7%82%E7%82%B9_20260630.pdf"}]}]}, {"date": "20260629", "label": "2026-06-29 周一", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260629/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260629.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260629/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260629_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260629/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260629.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260629/KOL%E8%A7%82%E7%82%B9_20260629.pdf"}]}]}, {"date": "20260626", "label": "2026-06-26 周五", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260626/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260626.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260626/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260626_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260626/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260626.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260626/KOL%E8%A7%82%E7%82%B9_20260626.pdf"}]}]}, {"date": "20260625", "label": "2026-06-25 周四", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260625/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260625.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260625/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260625_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260625/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260625.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260625/KOL%E8%A7%82%E7%82%B9_20260625.pdf"}]}]}, {"date": "20260624", "label": "2026-06-24 周三", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260624/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260624.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260624/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260624_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260624/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260624.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260624/KOL%E8%A7%82%E7%82%B9_20260624.pdf"}]}]}, {"date": "20260623", "label": "2026-06-23 周二", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260623/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260623.pdf"}]}, {"key": "A股形态", "name": "A股形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260623/A%E8%82%A1%E5%BD%A2%E6%80%81_20260622.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260623/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260623_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260623/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260623.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260623/KOL%E8%A7%82%E7%82%B9_20260623.pdf"}]}]}, {"date": "20260622", "label": "2026-06-22 周一", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260622/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260622.pdf"}]}, {"key": "A股形态", "name": "A股形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260622/A%E8%82%A1%E5%BD%A2%E6%80%81_20260618.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260622/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260622_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260622/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260622.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260622/KOL%E8%A7%82%E7%82%B9_20260622.pdf"}]}]}, {"date": "20260621", "label": "2026-06-21 周日", "types": [{"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260621/KOL%E8%A7%82%E7%82%B9_20260621.pdf"}]}]}, {"date": "20260619", "label": "2026-06-19 周五", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260619/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260618.pdf"}]}, {"key": "A股形态", "name": "A股形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260619/A%E8%82%A1%E5%BD%A2%E6%80%81_20260618.pdf"}]}]}, {"date": "20260618", "label": "2026-06-18 周四", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260618/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260618.pdf"}]}, {"key": "A股形态", "name": "A股形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260618/A%E8%82%A1%E5%BD%A2%E6%80%81_20260617.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260618/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260618_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260618/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260618.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260618/KOL%E8%A7%82%E7%82%B9_20260618.pdf"}]}]}, {"date": "20260617", "label": "2026-06-17 周三", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260617/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260617.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260617/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260617_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260617/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260617.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260617/KOL%E8%A7%82%E7%82%B9_20260617.pdf"}]}]}, {"date": "20260616", "label": "2026-06-16 周二", "types": [{"key": "期货形态", "name": "期货形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260616/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260616.pdf"}]}, {"key": "A股形态", "name": "A股形态", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260616/A%E8%82%A1%E5%BD%A2%E6%80%81_20260616.pdf"}]}, {"key": "大宗信号_四类资金净持仓流向", "name": "大宗信号·四类资金", "files": [{"label": "网页版", "kind": "html", "href": "../日报/20260616/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260616_%E8%87%AA%E5%8C%85%E5%90%AB.html"}, {"label": "PDF", "kind": "pdf", "href": "../日报/20260616/%E5%A4%A7%E5%AE%97%E4%BF%A1%E5%8F%B7_%E5%9B%9B%E7%B1%BB%E8%B5%84%E9%87%91%E5%87%80%E6%8C%81%E4%BB%93%E6%B5%81%E5%90%91_20260616.pdf"}]}, {"key": "KOL观点", "name": "KOL观点", "files": [{"label": "PDF", "kind": "pdf", "href": "../日报/20260616/KOL%E8%A7%82%E7%82%B9_20260616.pdf"}]}]}]};
+const dates = DATA.dates;                      // 新→旧
+let di = 0, ti = 0, fi = 0, filter = "";
+
+const $ = id => document.getElementById(id);
+
+function visibleDates() {
+  if (!filter) return dates.map((d, i) => i);
+  const f = filter.replace(/[-\/\s]/g, "");
+  return dates.map((d, i) => i).filter(i => dates[i].date.includes(f));
+}
+
+function renderDateList() {
+  const idxs = visibleDates();
+  $("datelist").innerHTML = idxs.map(i => `
+    <div class="dateitem ${i === di ? "active" : ""}" onclick="pickDate(${i})">
+      <span>${dates[i].label}</span><span class="n">${dates[i].types.length}份</span>
+    </div>`).join("") || '<div style="padding:12px;color:var(--muted);font-size:13px">没有匹配的日期</div>';
+}
+
+function renderTabs() {
+  const d = dates[di];
+  $("curdate").textContent = d.label;
+  $("tabs").innerHTML = d.types.map((t, i) =>
+    `<button class="tab ${i === ti ? "active" : ""}" onclick="pickType(${i})">${t.name}</button>`).join("");
+  $("prev").disabled = di >= dates.length - 1;
+  $("next").disabled = di <= 0;
+}
+
+function renderFileBtns() {
+  const files = dates[di].types[ti].files;
+  $("filebtns").innerHTML = files.length > 1 ? files.map((f, i) =>
+    `<button class="filebtn ${i === fi ? "active" : ""}" onclick="pickFile(${i})">${f.label}</button>`).join("") : "";
+}
+
+// 普通模式下文件带 href（相对路径）；打包模式下带 b64（内嵌数据），
+// 内嵌数据首次访问时转成 blob URL 并缓存。
+function srcOf(f) {
+  if (f.href) return f.href;
+  if (!f._url) {
+    const bin = atob(f.b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    f._url = URL.createObjectURL(new Blob([bytes], { type: f.mime }));
+    f.b64 = null;
+  }
+  return f._url;
+}
+
+function renderViewer() {
+  const f = dates[di].types[ti].files[fi];
+  const v = $("viewer");
+  if (!f) { v.innerHTML = '<div class="empty">当天没有这份报告</div>'; return; }
+  if (f.kind === "pages") {
+    // 打包版里 PDF 已在生成时逐页转成图片（Chrome 不渲染内嵌数据的 PDF）
+    v.innerHTML = `<div class="imgwrap">` +
+      f.pages.map(p => `<img class="page" src="data:image/jpeg;base64,${p}" alt="">`).join("") +
+      `</div>`;
+    return;
+  }
+  const src = srcOf(f);
+  if (f.kind === "img") {
+    v.innerHTML = `<div class="imgwrap"><img src="${src}" alt=""></div>`;
+  } else {
+    v.innerHTML = `<iframe src="${src}"></iframe>`;
+  }
+}
+
+function renderAll() { renderDateList(); renderTabs(); renderFileBtns(); renderViewer(); }
+
+window.pickDate = i => {
+  const prevKey = dates[di].types[ti] && dates[di].types[ti].key;
+  di = i;
+  // 尽量停留在同类型报告上（例如一路翻看每天的资金潮汐）
+  const j = dates[di].types.findIndex(t => t.key === prevKey);
+  ti = j >= 0 ? j : 0; fi = 0;
+  renderAll();
+};
+window.pickType = i => { ti = i; fi = 0; renderAll(); };
+window.pickFile = i => { fi = i; renderFileBtns(); renderViewer(); };
+
+$("prev").onclick = () => { if (di < dates.length - 1) pickDate(di + 1); };
+$("next").onclick = () => { if (di > 0) pickDate(di - 1); };
+$("q").addEventListener("input", e => { filter = e.target.value.trim(); renderDateList(); });
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowLeft") $("prev").click();
+  if (e.key === "ArrowRight") $("next").click();
+});
+
+renderAll();
+</script>
+</body>
+</html>
