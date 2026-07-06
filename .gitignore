@@ -11,3 +11,4 @@
 日报站/index.html
 
 .DS_Store
+__pycache__/
