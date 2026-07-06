@@ -222,7 +222,7 @@ TEMPLATE = r"""<!doctype html>
   .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;text-align:center}
   .kpi b{display:block;font-size:16px;font-family:Georgia,serif}
   .kpi span{font-size:10.5px;color:var(--mut)}
-  .tidechart{width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;margin:8px 0 4px;cursor:zoom-in}
+  .tidechart{width:100%;max-width:440px;display:block;border:1px solid var(--line);border-radius:12px;background:#fff;margin:8px 0 4px;cursor:zoom-in}
   .secbar{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0}
   .sec{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);background:var(--card);
        border-radius:11px;padding:7px 13px;cursor:pointer;min-width:96px}
