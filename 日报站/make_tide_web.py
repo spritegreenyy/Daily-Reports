@@ -76,6 +76,13 @@ TEMPLATE = r"""<!doctype html>
   .cbrow .cbar{position:absolute;top:0;height:22px;border-radius:6px}
   .cbrow .cmid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--line)}
   .cbrow .cv{width:74px;text-align:right;font-family:Georgia,serif;font-weight:700;flex:none}
+  .cbrow .carrow{display:inline-block;width:14px;font-style:normal;color:var(--mut);transition:transform .15s}
+  .cbrow.chead{cursor:pointer;border-radius:8px;padding:2px 4px}
+  .cbrow.chead:hover{background:#faf6ea}
+  .cbrow.sub .cn2{width:104px;font-size:12px;font-weight:600;flex:none}
+  .cmem{display:none;border-left:2px solid var(--line);margin:0 0 10px 10px;padding-left:10px}
+  .mbtn{border:1px solid var(--line);background:var(--card);border-radius:9px;font-size:11px;padding:2px 9px;cursor:pointer;color:var(--mut);flex:none}
+  .mbtn:hover{border-color:var(--dark);color:var(--dark)}
   .heat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
   .htile{border-radius:12px;padding:13px 14px;color:#fff;cursor:zoom-in;transition:transform .1s}
   .htile:hover{transform:translateY(-2px)}
@@ -147,7 +154,7 @@ TEMPLATE = r"""<!doctype html>
   <h2 class="sec-h">今日速览 <small>基于当日主力席位数据自动生成</small></h2>
   <div class="brief"><ul id="brief"></ul></div>
 
-  <h2 class="sec-h">各类资金今日净流向 <small>机构/外资/杭州/中财 · 名义(亿) · 悬停看数</small></h2>
+  <h2 class="sec-h">各类资金今日净流向 <small>机构/外资/杭州/中财/散户 · 名义(亿) · 点行展开成员席位 · 点曲线看40日</small></h2>
   <div class="cohbars" id="cohbars"></div>
 
   <h2 class="sec-h">板块资金热力 <small>机构名义净持仓 · 红多绿空 · 点块看40日曲线 / 点击筛选</small></h2>
@@ -323,10 +330,37 @@ function brief(){
 
 function cohbars(){
   const mx=Math.max(1,...D.cohorts.map(c=>Math.abs(c.flow)));
-  $('#cohbars').innerHTML=D.cohorts.map(c=>{const v=c.flow,w=Math.abs(v)/mx*46,col=v>=0?RED:GRN;
-    return '<div class="cbrow"><span class="cn">'+c.name+'</span><div class="ctrack"><div class="cmid"></div>'+
-      '<div class="cbar" style="background:'+col+';'+(v>=0?('left:50%;width:'+w+'%'):('right:50%;width:'+w+'%'))+'"></div></div>'+
-      '<span class="cv" style="color:'+col+'">'+(v>=0?'+':'')+v.toFixed(1)+'亿</span></div>';}).join('');
+  const bar=(v,w,col)=>'<div class="ctrack"><div class="cmid"></div><div class="cbar" style="background:'+col+';'+(v>=0?('left:50%;width:'+w+'%'):('right:50%;width:'+w+'%'))+'"></div></div>';
+  $('#cohbars').innerHTML=D.cohorts.map((c,ci)=>{
+    const v=c.flow,w=Math.abs(v)/mx*46,col=v>=0?RED:GRN,mem=c.members||[];
+    let h='<div class="cbrow chead" data-ci="'+ci+'">'+
+      '<span class="cn"><i class="carrow" id="ca'+ci+'">'+(mem.length?'▸':'')+'</i>'+c.name+'</span>'+bar(v,w,col)+
+      '<span class="cv" style="color:'+col+'">'+(v>=0?'+':'')+v.toFixed(1)+'亿</span>'+
+      (c.series&&c.series.length?'<button class="mbtn" data-t="c" data-ci="'+ci+'">曲线</button>':'')+'</div>';
+    if(mem.length){
+      const mmx=Math.max(0.01,...mem.map(m=>Math.abs(m.flow)));
+      h+='<div class="cmem" id="cm'+ci+'">'+mem.map((m,mi)=>{
+        const mv=m.flow,mw=Math.abs(mv)/mmx*46,mc=mv>=0?RED:GRN;
+        return '<div class="cbrow sub"><span class="cn2">'+m.name+'</span>'+bar(mv,mw,mc)+
+          '<span class="cv" style="color:'+mc+'">'+(mv>=0?'+':'')+mv.toFixed(1)+'亿</span>'+
+          (m.series&&m.series.length?'<button class="mbtn" data-t="m" data-ci="'+ci+'" data-mi="'+mi+'">曲线</button>':'')+'</div>';
+      }).join('')+'</div>';
+    }
+    return h;
+  }).join('');
+  document.querySelectorAll('#cohbars .chead').forEach(el=>el.onclick=e=>{
+    if(e.target.classList.contains('mbtn'))return;
+    const ci=el.dataset.ci,box=document.getElementById('cm'+ci);if(!box)return;
+    const on=(box.style.display===''||box.style.display==='none');
+    box.style.display=on?'block':'none';
+    const ar=document.getElementById('ca'+ci);if(ar)ar.style.transform=on?'rotate(90deg)':'';
+  });
+  document.querySelectorAll('#cohbars .mbtn').forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    const c=D.cohorts[+b.dataset.ci], o=b.dataset.t==='c'?c:c.members[+b.dataset.mi];
+    openModal(o.name+' · 名义净持仓 40日走势(亿)');
+    lineChart($('#mbody'),o.series,D.dates40,{h:320,fmt:v=>v.toFixed(1)+' 亿'});
+  });
 }
 
 function heat(){
