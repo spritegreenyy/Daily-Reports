@@ -94,6 +94,8 @@ def scan():
         for f in sorted(d.iterdir()):
             if f.name.startswith("."):
                 continue
+            if f.name.endswith("_data.json"):  # 交互图表的中间数值文件, 不作为报告展示
+                continue
             parsed = parse_filename(f.name)
             if not parsed:
                 continue
