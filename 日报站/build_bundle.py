@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-日报台·打包版生成器（发给带教/团队用）
+日报台·打包版生成器（单文件分发用）
 
 把最近 N 个交易日的报告直接内嵌进一个 HTML 文件：
 对方拿到这一个文件，双击用浏览器打开就能看，不需要网络、不需要其他文件。
@@ -28,7 +28,7 @@ from build_site import SITE_DIR, scan, render_page
 OUT_DIR = SITE_DIR / "发送包"
 
 # 如果配置了同步目录（公司共享盘/坚果云/OneDrive 等同步文件夹），
-# 每次生成后会把 日报台_最新.html 覆盖写一份过去，带教那边打开同一个文件即是最新。
+# 每次生成后会把 日报台_最新.html 覆盖写一份过去，接收方打开同一个文件即是最新。
 # 例：SYNC_DIR = Path("/Users/yinyue/Nutstore Files/日报共享")
 SYNC_DIR = None
 
