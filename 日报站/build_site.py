@@ -365,6 +365,63 @@ def render_page(dates, note="", extra_nav=""):
     )
 
 
+# 固定入口页：形态 / 资金潮汐。像 KOL终端 一样用不变的网址直达“最新一天”。
+# 每次重建时，把这两个页面重定向到当天最新的对应报告（优先网页版/交互版，其次长图/PDF）。
+ENTRY_PAGES = [
+    ("形态", "期货形态", "期货形态"),
+    ("资金潮汐", "期货资金潮汐", "期货资金潮汐"),
+]
+
+REDIRECT_TEMPLATE = r"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__ · 最新</title>
+<meta http-equiv="refresh" content="0; url=__TARGET__">
+<link rel="canonical" href="__TARGET__">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f3efe4; color: #23312b; margin: 0; height: 100vh;
+    display: flex; align-items: center; justify-content: center; text-align: center; }
+  a { color: #17604b; }
+</style>
+</head>
+<body>
+<p>正在跳转到最新一天的__TITLE__（__DATE__）…<br>若未自动跳转，请<a href="__TARGET__">点此打开</a>。</p>
+<script>location.replace("__TARGET__");</script>
+</body>
+</html>
+"""
+
+
+def latest_type_file(dates, type_key):
+    """从新到旧找到第一天含该类型报告，返回 (date, best_file)；best_file 已按优先级排序取首个。"""
+    for d in dates:
+        for t in d["types"]:
+            if t["key"] == type_key and t["files"]:
+                return d["date"], t["files"][0]
+    return None, None
+
+
+def write_entry_pages(dates):
+    """生成 日报站/形态/index.html 与 日报站/资金潮汐/index.html 两个固定入口。"""
+    for folder, type_key, title in ENTRY_PAGES:
+        date, f = latest_type_file(dates, type_key)
+        if not f:
+            continue
+        # f["href"] 相对于 日报站/（形如 ../日报/YYYYMMDD/xxx）；入口页在 日报站/<folder>/ 下，需再上一层
+        target = "../" + f["href"]
+        out_dir = SITE_DIR / folder
+        out_dir.mkdir(exist_ok=True)
+        page = (REDIRECT_TEMPLATE
+                .replace("__TITLE__", title)
+                .replace("__DATE__", date)
+                .replace("__TARGET__", target))
+        (out_dir / "index.html").write_text(page, encoding="utf-8")
+        print(f"入口页：{folder}/ → {date} 最新（{f['label']}）")
+
+
 def main():
     dates = scan()
     if not dates:
@@ -374,6 +431,7 @@ def main():
         extra_nav = '\n  <a class="navlink" href="kol/index.html" target="_blank">KOL终端 ↗</a>'
     html_out = render_page(dates, note="", extra_nav=extra_nav)
     OUT_FILE.write_text(html_out, encoding="utf-8")
+    write_entry_pages(dates)
     total = sum(len(d["types"]) for d in dates)
     print(f"完成：{len(dates)} 天、{total} 份报告 → {OUT_FILE}")
     print(f"最新一天：{dates[0]['label']}（{'、'.join(t['name'] for t in dates[0]['types'])}）")
