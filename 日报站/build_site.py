@@ -370,6 +370,7 @@ def render_page(dates, note="", extra_nav=""):
 ENTRY_PAGES = [
     ("形态", "期货形态", "期货形态"),
     ("资金潮汐", "期货资金潮汐", "期货资金潮汐"),
+    ("kol", "KOL观点", "KOL观点"),   # 2026-07-08: 旧KOL终端停在7/3, 改为与其余入口一致的"跳最新"
 ]
 
 REDIRECT_TEMPLATE = r"""<!DOCTYPE html>
