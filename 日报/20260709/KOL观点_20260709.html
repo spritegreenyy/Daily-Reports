@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KOL 交易主线 · 可视化终端 · 2026-07-09</title>
+<style>html,body{margin:0;background:#0e1620}</style>
+</head>
+<body>
+<div id="kolapp">
+<style>
+  #kolapp *{box-sizing:border-box}
+  #kolapp{--ink:#0e1620;--panel:#16212e;--panel2:#1b2836;--line:#26374a;--tx:#e7edf4;--mut:#8fa0b3;--mut2:#63748a;--gold:#e7b24d;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--tx);background:var(--ink);min-height:100vh;line-height:1.55;-webkit-font-smoothing:antialiased}
+  #kolapp .mono{font-family:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+  #kolapp b{color:#f4b74a;font-weight:700}
+  #kolapp mark{background:rgba(231,178,77,.26);color:#ffe4a3;border-radius:2px;padding:0 3px;font-weight:600}
+  #kolapp .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  /* masthead */
+  #kolapp .mast{background:linear-gradient(120deg,#132234,#0e1620);border-bottom:1px solid var(--line);padding:22px 0 18px}
+  #kolapp .mast h1{margin:0;font-size:22px;font-weight:800;letter-spacing:.5px}
+  #kolapp .mast h1 .g{color:var(--gold)}
+  #kolapp .mast .win{color:var(--mut);font-size:12.5px;margin-top:5px}
+  #kolapp .mast .sub{color:var(--mut2);font-size:12px;margin-top:3px}
+  #kolapp .mtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  #kolapp select.date{margin-left:auto;background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:13px;cursor:pointer}
+  /* section titles */
+  #kolapp .sect{padding:22px 0 6px}
+  #kolapp .stitle{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut);text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  #kolapp .stitle::before{content:"";width:5px;height:15px;background:var(--gold);border-radius:2px}
+  /* insights */
+  #kolapp .ins{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+  #kolapp .icard{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+  #kolapp .icard h3{margin:0 0 9px;font-size:14.5px;font-weight:700;line-height:1.4;color:#fff;text-wrap:balance;display:flex;gap:8px}
+  #kolapp .inum{flex:0 0 auto;width:20px;height:20px;border-radius:6px;background:var(--gold);color:#0e1620;font-size:12px;
+    font-weight:800;display:grid;place-items:center;margin-top:1px}
+  #kolapp .icard li{list-style:none;font-size:12.8px;color:#cdd8e6;margin:6px 0;padding-left:12px;position:relative}
+  #kolapp .icard li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--mut2)}
+  #kolapp .icard ul{margin:0;padding:0}
+  /* board sections */
+  #kolapp .bsec{margin-bottom:16px;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:var(--panel)}
+  #kolapp .bhead{padding:9px 14px;font-size:14px;font-weight:700;color:#0e1620;cursor:pointer;display:flex;align-items:center;gap:8px}
+  #kolapp .bhead .arrow{margin-left:auto;font-size:12px;opacity:.7}
+  #kolapp .bbody{padding:6px 14px 12px}
+  #kolapp .sub{margin-top:11px}
+  #kolapp .subh{font-size:11.5px;font-weight:700;letter-spacing:.5px;padding:2px 0 2px 8px;margin-bottom:5px;border-left:3px solid var(--sc)}
+  #kolapp .vp{font-size:12.8px;color:#cdd8e6;margin:5px 0;padding-left:2px}
+  #kolapp .vh{font-weight:700;color:var(--tx);cursor:pointer}
+  #kolapp .vh:hover{color:var(--gold)}
+  #kolapp .vr{color:var(--mut2);font-size:11px;margin:0 5px}
+  /* unique */
+  #kolapp .uq{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+  #kolapp .ucard{background:var(--panel);border:1px solid var(--line);border-left:3px solid #35bfad;border-radius:10px;padding:12px 14px}
+  #kolapp .ucard .uh{font-weight:700;font-size:13px;color:#35bfad;cursor:pointer}
+  #kolapp .ucard .uv{font-size:12.6px;color:#cdd8e6;margin:6px 0}
+  #kolapp .ucard .ui{font-size:11.8px;color:var(--mut);border-top:1px solid var(--line);padding-top:7px;margin-top:7px}
+  #kolapp .ucard .ui b,#kolapp .icard b{color:#f4b74a}
+  /* divider to terminal */
+  #kolapp .tdiv{margin:30px 0 0;border-top:1px dashed var(--line);padding-top:4px}
+  /* controls (sticky) */
+  #kolapp .ctrl{position:sticky;top:0;z-index:15;background:rgba(14,22,32,.94);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid var(--line)}
+  #kolapp .pills{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  #kolapp .pill{border:1px solid var(--line);background:var(--panel);color:var(--mut);border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer;transition:.14s;display:inline-flex;gap:7px;white-space:nowrap}
+  #kolapp .pill:hover{color:var(--tx);border-color:var(--mut2)}
+  #kolapp .pill .cnt{font-size:11px;color:var(--mut2)}
+  #kolapp .pill[data-on="1"]{color:#0e1620;font-weight:600}
+  #kolapp .pill[data-on="1"] .cnt{color:rgba(14,22,32,.6)}
+  #kolapp .row2{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  #kolapp .search{flex:1;min-width:190px;position:relative}
+  #kolapp .search input{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:9px 32px 9px 34px;font-size:14px;outline:none}
+  #kolapp .search input:focus{border-color:var(--gold)}
+  #kolapp .search .ic{position:absolute;left:11px;top:9px;color:var(--mut2)}
+  #kolapp .search .clr{position:absolute;right:9px;top:7px;color:var(--mut2);cursor:pointer;font-size:16px;display:none}
+  #kolapp .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  #kolapp .seg button{background:var(--panel);color:var(--mut);border:0;padding:8px 12px;font-size:12.5px;cursor:pointer}
+  #kolapp .seg button+button{border-left:1px solid var(--line)}
+  #kolapp .seg button[data-on="1"]{background:var(--panel2);color:var(--gold)}
+  #kolapp .reset{background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:8px 12px;font-size:12.5px;cursor:pointer}
+  #kolapp .reset:hover{color:var(--tx)}
+  #kolapp .tstat{font-size:12px;color:var(--mut);margin:10px 0}
+  #kolapp .tstat b{color:var(--tx)}
+  /* stream */
+  #kolapp .stream{padding:4px 0 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;align-items:start}
+  #kolapp .card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--bc,#5b8def);border-radius:10px;padding:12px 14px;cursor:pointer;transition:.14s;overflow:hidden}
+  #kolapp .card:hover{background:var(--panel2);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  #kolapp .card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  #kolapp .chead{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
+  #kolapp .hand{font-weight:700;font-size:13.5px}
+  #kolapp .hand:hover{color:var(--gold)}
+  #kolapp .bchip{font-size:10.5px;padding:1px 7px;border-radius:5px;font-weight:600;color:#0e1620}
+  #kolapp .t1{font-size:10px;color:var(--gold);border:1px solid rgba(231,178,77,.4);border-radius:4px;padding:0 4px}
+  #kolapp .lang{font-size:10px;color:var(--mut2);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+  #kolapp .time{margin-left:auto;font-size:11px;color:var(--mut2)}
+  #kolapp .cbody{font-size:13.3px;color:#d3ddeb;white-space:pre-wrap;word-break:break-word;max-height:8.6em;overflow:hidden;position:relative}
+  #kolapp .cbody.open{max-height:none}
+  #kolapp .cbody.clamp::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2.2em;background:linear-gradient(180deg,transparent,var(--panel))}
+  #kolapp .card:hover .cbody.clamp::after{background:linear-gradient(180deg,transparent,var(--panel2))}
+  #kolapp .more{font-size:11.5px;color:var(--mut2);margin-top:3px;display:inline-block;cursor:pointer}
+  #kolapp .cfoot{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line);flex-wrap:wrap}
+  #kolapp .eng{display:flex;gap:11px;font-size:11.5px;color:var(--mut)}
+  #kolapp .tags{display:flex;gap:5px;flex-wrap:wrap}
+  #kolapp .tag{font-size:10.5px;color:var(--mut);background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;cursor:pointer}
+  #kolapp .tag:hover{color:var(--tx)}
+  #kolapp .open{margin-left:auto;font-size:11.5px;color:var(--gold);white-space:nowrap}
+  #kolapp .empty{grid-column:1/-1;text-align:center;color:var(--mut2);padding:50px 20px}
+  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){#kolapp *{transition:none!important}}
+</style>
+
+<div class="mast"><div class="wrap">
+  <div class="mtop">
+    <h1>KOL 交易主线<span class="g"> · </span>可视化终端</h1>
+    <select class="date" id="dateSel"></select>
+  </div>
+  <div class="win" id="win"></div>
+  <div class="sub" id="sub"></div>
+</div></div>
+
+<div class="wrap">
+  <div class="sect"><div class="stitle">一 · 本日核心交易启示</div><div class="ins" id="insights"></div></div>
+  <div class="sect"><div class="stitle">二 · 五大板块 · 逐条观点</div><div id="sections"></div></div>
+  <div class="sect"><div class="stitle">三 · 独到 / 有启发性的观点</div><div class="uq" id="unique"></div></div>
+
+  <div class="tdiv"></div>
+  <div class="sect"><div class="stitle">四 · 全部推文 · 可检索（点击跳转原推）</div></div>
+</div>
+
+<div class="ctrl"><div class="wrap">
+  <div class="pills" id="boardPills"></div>
+  <div class="row2">
+    <div class="search"><span class="ic">🔍</span>
+      <input id="q" type="text" placeholder="搜索关键词 / @账号（按 / 聚焦，Esc 清空）" autocomplete="off">
+      <span class="clr" id="clr">×</span></div>
+    <div class="seg" id="sortSeg"><button data-v="hot" data-on="1">热度</button><button data-v="new">最新</button></div>
+    <div class="seg" id="tierSeg"><button data-v="all" data-on="1">全部</button><button data-v="1">一线</button><button data-v="2">二线</button></div>
+    <div class="seg" id="langSeg"><button data-v="all" data-on="1">中英</button><button data-v="zh">中文</button><button data-v="en">EN</button></div>
+    <button class="reset" id="reset">重置</button>
+  </div>
+</div></div>
+
+<div class="wrap"><div class="tstat" id="tstat"></div><div class="stream" id="stream"></div></div>
+
+<script type="application/json" id="payload">{"data": {"2026-07-09": {"meta": {"date": "2026-07-09", "n_tweets": 22, "n_kols": 20, "n_accounts": 271, "generated": "2026-07-09 08:36", "title": "KOL 交易主线 · 可视化分类总结", "window": "过去 24h（截至北京时间 2026-07-09 16:54）", "subtitle": "约 20 位 KOL / 22 条信号推文 · 已过滤新闻搬运、纯数据搬运与无关灌水 · 按板块→子领域分类 · 重点观点已高亮标注　·　英文推优先译中，缺失时保留原文"}, "report": {"insights": [{"title": "最高热度 · 推理", "points": ["@gdb（OpenAI 总裁）：GPT-Live智能语音AI已接近自然对话体验，我们内部测试中仍感觉只触及表面；正推向ChatGPT，并计划开放API和Codex。", "交易含义：推理需求从文本转向实时语音交互，对芯片延迟和吞吐量要求更高，可能加速ASIC替代GPU", "互动 <b class=\"em\">2004</b>+ · 来自AI / 半导体板块"]}, {"title": "最大分歧 · 原油", "points": ["@PeterLBrandt：原油已成功测试下方需求，大概率已见低点；商品市场很少出现V型延伸底，但并非不可能。目前偏多而非偏空。", "交易含义：若V型底成立，空头回补可能加速；否则需等待二次确认", "互动 <b class=\"em\">457</b>+ · 来自大宗商品板块"]}, {"title": "高度警惕 · 宏观经济", "points": ["@elerianm（宏观经济学家）：今日FOMC纪要（<b class=\"em\">6</b>月<b class=\"em\">16</b><b class=\"em\">-17</b>日）将首次揭示新主席Warsh主持下的委员会讨论；新主席选择跳过点阵图，纪要可能透露分歧。", "交易含义：若纪要显示委员会对跳过点阵图存在严重分歧，将削弱市场对政策透明度的信心", "关键数据：<b class=\"em\">6</b>、<b class=\"em\">16</b>、<b class=\"em\">17</b>", "互动 <b class=\"em\">145</b>+ · 来自宏观经济板块"]}, {"title": "反向变量 · 宏观经济", "points": ["@leadlagreport：日元恐慌性空头回补将引发大规模反向套利，这是崩盘发生的路径；市场尚未理解这一机制。", "交易含义：若日元空头集中平仓，套利交易逆转可能触发跨资产连锁下跌", "互动 <b class=\"em\">982</b>+ · 来自宏观经济板块"]}, {"title": "情绪偏移 · 原油 / 馏分油", "points": ["@ChrisWeston_PS：当前市场由原油驱动，交易员缺乏方向共识；这种环境下算法通过即时解读情绪与措辞始终占据优势。", "交易含义：消息面主导时，手动交易者需警惕算法抢跑，波动率可能被放大"]}], "unique": [["@elerianm", "今日FOMC纪要（6月16-17日）将首次揭示新主席Warsh主持下的委员会讨论；新主席选择跳过点阵图，纪要可能透露分歧。", "若纪要显示委员会对跳过点阵图存在严重分歧，将削弱市场对政策透明度的信心"], ["@Stephanie_Link", "Target门店客流量明显改善，且商品质量提升至我会购买的水平；Oppenheimer分析师认同，当前15倍PE、3.5%股息率，14个买入/27个持有或卖出评级。", "基本面改善但卖方分歧大，若更多分析师上调评级，估值修复空间可观"], ["@PeterLBrandt", "原油成功测试需求支撑，低点已现概率大；商品市场极少形成V型扩展底，但当前看多倾向强于看空。", "若原油突破近期高点，V型底失败将强化多头趋势，能源股与商品货币受益"], ["@jam_croissant", "若想押注地缘风险，应等到中期选举结束后再行动；暗示选举后可能对伊朗采取军事行动。", "地缘风险时间窗口明确，原油与避险资产可能在选举后出现脉冲式波动"]], "sections": [["宏观经济", [["宏观经济", [["@jimcramer", "", "市场资金不足以支撑SK Hynix级别的合理定价交易，Rivian案例已证明资金紧张；需保持谨慎。 <span style=\"color:#8fa0b3\">交易含义：资金面约束可能压制大型科技并购与IPO估值，利空半导体与成长股</span>"], ["@elerianm", "宏观经济学家", "今日FOMC纪要（<b class=\"em\">6</b>月<b class=\"em\">16</b><b class=\"em\">-17</b>日）将首次揭示新主席Warsh主持下的委员会讨论；新主席选择跳过点阵图，纪要可能透露分歧。 <span style=\"color:#8fa0b3\">交易含义：若纪要显示委员会对跳过点阵图存在严重分歧，将削弱市场对政策透明度的信心</span>"], ["@leadlagreport", "", "日元恐慌性空头回补将引发大规模反向套利，这是崩盘发生的路径；市场尚未理解这一机制。 <span style=\"color:#8fa0b3\">交易含义：若日元空头集中平仓，套利交易逆转可能触发跨资产连锁下跌</span>"], ["@Stephanie_Link", "", "Target门店客流量明显改善，且商品质量提升至我会购买的水平；Oppenheimer分析师认同，当前<b class=\"em\">15倍</b>PE、<b class=\"em\">3.5%</b>股息率，<b class=\"em\">14</b>个买入/<b class=\"em\">27</b>个持有或卖出评级。 <span style=\"color:#8fa0b3\">交易含义：基本面改善但卖方分歧大，若更多分析师上调评级，估值修复空间可观</span>"]]], ["原油 / 馏分油", [["@PeterLBrandt", "", "原油成功测试需求支撑，低点已现概率大；商品市场极少形成V型扩展底，但当前看多倾向强于看空。 <span style=\"color:#8fa0b3\">交易含义：若原油突破近期高点，V型底失败将强化多头趋势，能源股与商品货币受益</span>"], ["@ChrisWeston_PS", "", "当前市场由原油驱动，交易员缺乏方向共识；这种环境下算法通过即时解读情绪与措辞始终占据优势。 <span style=\"color:#8fa0b3\">交易含义：消息面主导时，手动交易者需警惕算法抢跑，波动率可能被放大</span>"]]], ["中东 / 伊朗", [["@jam_croissant", "", "若想押注地缘风险，应等到中期选举结束后再行动；暗示选举后可能对伊朗采取军事行动。 <span style=\"color:#8fa0b3\">交易含义：地缘风险时间窗口明确，原油与避险资产可能在选举后出现脉冲式波动</span>"]]], ["美股 / 资金流", [["@McClellanOsc", "技术分析", "纳斯达克<b class=\"em\">100</b>指数新增SpaceX后成分股达<b class=\"em\">103</b>只（<b class=\"em\">101</b>家公司），因Alphabet和Honeywell有双股类；指数构成已偏离传统<b class=\"em\">100</b>只定义。 <span style=\"color:#8fa0b3\">交易含义：指数构成变化可能影响跟踪基金权重计算与再平衡，增加科技板块被动资金流入</span>"]]], ["工业金属", [["@pboockvar", "", "国防部开始购买锂用于战略储备，这是我预期中的商品囤货逻辑之一；多头案例正在兑现。 <span style=\"color:#8fa0b3\">交易含义：政府战略采购为锂价提供额外需求支撑，但需关注采购规模与节奏是否超预期</span>"]]]]], ["地缘政治", [["中东", [["@tparsi", "伊朗问题专家", "美伊MOU虽被特朗普和IRGC宣称结束，但实际尚未完全破裂，仍存在挽救路径；关键在于双方是否愿意在斯特雷特问题上做出让步。 <span style=\"color:#8fa0b3\">交易含义：若协议最终破裂，中东风险溢价将快速上升，原油和避险资产可能短期冲高</span>"], ["@Charles_Lister", "", "叙利亚总统沙拉和外交部长展示特朗普信件，暗示美国公司即将在叙利亚投资，SST即将撤离，叙利亚重建窗口打开。 <span style=\"color:#8fa0b3\">交易含义：叙利亚重建预期可能推动中东基建和能源相关资产，但需关注美国政策持续性</span>"], ["@jam_croissant", "", "若想押注美伊冲突升级，最佳时机是中期选举结束后立即行动，暗示政治周期对军事决策有显著影响。 <span style=\"color:#8fa0b3\">交易含义：中期选举后地缘风险可能集中释放，期权交易者可提前布局波动率策略</span>"]]], ["中美", [["@DerekJGrossman", "", "中国警告美伊恢复敌对行动将损害各方利益，表明北京对中东稳定有明确立场，可能通过外交或经济手段介入。 <span style=\"color:#8fa0b3\">交易含义：中国介入可能为中东局势提供缓冲，但若冲突升级，中国立场将影响油价和人民币资产</span>"]]], ["其他地缘", [["@ELuttwak", "", "埃尔多安声称土耳其历史无种族灭绝和压迫，但这一谎言过于明显，可能削弱其国际信誉；同时伊朗革命卫队呼吁在安卡拉刺杀特朗普和埃尔多安，显示极端派系已失去耐心。 <span style=\"color:#8fa0b3\">交易含义：领导人安全风险上升，若刺杀事件发生，将引发市场剧烈波动，尤其是土耳其资产和油价</span>"], ["@PeterZeihan", "", "美伊技术谈判虽占据头条，但真正关键的谈判可能发生在伊朗内部各方之间，外部协议能否落地取决于伊朗内部权力平衡。 <span style=\"color:#8fa0b3\">交易含义：伊朗内部博弈结果将决定协议走向，交易员需关注伊朗国内政治信号而非仅看美方表态</span>"]]]]], ["大宗商品", [["原油", [["@PeterLBrandt", "", "原油已成功测试下方需求，大概率已见低点；商品市场很少出现V型延伸底，但并非不可能。目前偏多而非偏空。 <span style=\"color:#8fa0b3\">交易含义：若V型底成立，空头回补可能加速；否则需等待二次确认</span>"]]], ["其他大宗", [["@JavierBlas", "能源记者 (BBG)", "南亚季风已完全覆盖印度，但比正常晚<b class=\"em\">3</b><b class=\"em\">-4</b>天；降水缺口从<b class=\"em\">-35%</b>收窄至<b class=\"em\">-15%</b>，未来几周对作物和能源需求是关键窗口。 <span style=\"color:#8fa0b3\">交易含义：季风恢复速度决定印度能源需求节奏，若再延迟将推高柴油和LNG进口</span>"]]]]], ["天气气候", []], ["AI半导体", [["推理", [["@gdb", "OpenAI 总裁", "GPT-Live智能语音AI已接近自然对话体验，我们内部测试中仍感觉只触及表面；正推向ChatGPT，并计划开放API和Codex。 <span style=\"color:#8fa0b3\">交易含义：推理需求从文本转向实时语音交互，对芯片延迟和吞吐量要求更高，可能加速ASIC替代GPU</span>"]]]]]]}, "tweets": [{"h": "leadlagreport", "tier": 2, "b": "macro", "t": "2026-07-09 02:49", "x": "你现在明白了吗？\n他们即将引发的恐慌会导致日元大规模空头挤压。\n这就是反向套利交易发生的方式。\n这就是崩盘发生的方式。", "u": "https://x.com/leadlagreport/status/2075049624591642768", "lk": 820, "rt": 118, "rp": 44, "eng": 982, "lang": "en", "tags": ["macro", "cross_asset", "risk"]}, {"h": "jimcramer", "tier": 1, "b": "macro", "t": "2026-07-08 13:14", "x": "这个市场有足够的资金以合理价格进行SK海力士的交易吗？我们甚至无法在Rivian股价仅差几个点的时候完成交易……我们必须谨慎。", "u": "https://x.com/jimcramer/status/2074844506436800719", "lk": 627, "rt": 82, "rp": 142, "eng": 851, "lang": "en", "tags": ["macro", "equities", "teacher_required"]}, {"h": "PeterLBrandt", "tier": 1, "b": "macro", "t": "2026-07-08 16:33", "x": "原油价格已经回落并成功测试了潜在需求。很可能已经见到了低点。大宗商品市场形成“V”形延伸底部的情况很少见，尽管这总是可能的。从这里开始，我比看空更看多$CL_F。", "u": "https://x.com/PeterLBrandt/status/2074894645033828830", "lk": 410, "rt": 38, "rp": 9, "eng": 457, "lang": "en", "tags": ["commodities", "technical", "trader"]}, {"h": "McClellanOsc", "tier": 2, "b": "macro", "t": "2026-07-08 20:43", "x": "纳斯达克100指数最近加入了SpaceX，并且没有删除任何现有成分股。它长期以来拥有超过100只“股票”，因为它们包含了Alphabet和Honeywell的两个股票类别。但现在它们有103只股票，对应101家公司。所以我将这样称呼它。", "u": "https://x.com/McClellanOsc/status/2074957609866780816", "lk": 264, "rt": 15, "rp": 20, "eng": 299, "lang": "en", "tags": ["macro", "technical", "cycle"]}, {"h": "biancoresearch", "tier": 1, "b": "macro", "t": "2026-07-08 12:05", "x": "哇！经济学家又做到了吗？！\n嘿@donnelly_brent，我们是否可能看到他们创造新的世界纪录？", "u": "https://x.com/biancoresearch/status/2074827094434132255", "lk": 196, "rt": 15, "rp": 28, "eng": 239, "lang": "en", "tags": ["macro", "rates_fx", "bonds"]}, {"h": "elerianm", "tier": 1, "b": "macro", "t": "2026-07-08 12:58", "x": "今天我们将获得美联储6月16-17日FOMC会议的会议纪要。虽然不可避免地片面且范围有限，但它们将首次揭示委员会在主席Kevin Warsh领导下的审议情况。回想一下，新主席选择不参与6月的“点阵图”，这与", "u": "https://x.com/elerianm/status/2074840473844253069", "lk": 113, "rt": 13, "rp": 19, "eng": 145, "lang": "en", "tags": ["macro", "central_banks", "teacher_required"]}, {"h": "PeterLBrandt", "tier": 1, "b": "macro", "t": "2026-07-08 16:49", "x": "绅士们不交易燕麦$ZO_F。\n回到CBOT交易所时代，独立场内交易员有一个等级顺序。\n等级顺序的顶端是大豆。豆粕和豆油有专家，所以无法应对大豆波动的交易员最终会进入玉米。每当我们看到一个新手", "u": "https://x.com/PeterLBrandt/status/2074898655690330595", "lk": 71, "rt": 3, "rp": 27, "eng": 101, "lang": "en", "tags": ["commodities", "technical", "trader"]}, {"h": "Stephanie_Link", "tier": 2, "b": "macro", "t": "2026-07-08 18:26", "x": "$TGT：上周做了一些渠道检查，客流量明显好转，但产品是我真正会买的。FTLT。Oppenheimer分析师显然同意。\n15倍市盈率，3.5%收益率，14个卖方买入评级和27个持有/卖出评级。", "u": "https://x.com/Stephanie_Link/status/2074922976709898302", "lk": 54, "rt": 6, "rp": 0, "eng": 60, "lang": "en", "tags": ["macro", "equities", "fund_manager"]}, {"h": "pboockvar", "tier": 2, "b": "macro", "t": "2026-07-08 16:01", "x": "我对大宗商品看多的理由之一是我预期会看到各种东西的囤积。今早我在彭博上读到一篇报道：“美国国防部正在为其战略储备购买锂，因为国家加大力度减少供应。”", "u": "https://x.com/pboockvar/status/2074886707086782571", "lk": 34, "rt": 8, "rp": 5, "eng": 47, "lang": "en", "tags": ["macro", "rates_fx", "economics"]}, {"h": "jam_croissant", "tier": 1, "b": "macro", "t": "2026-07-09 05:14", "x": "“所以如果你想玩那个游戏，那你会等到中期选举结束，然后在接下来的一个小时内攻击伊朗。”", "u": "https://x.com/jam_croissant/status/2075086264160686265", "lk": 19, "rt": 1, "rp": 1, "eng": 21, "lang": "en", "tags": ["macro", "volatility", "options"]}, {"h": "ChrisWeston_PS", "tier": 2, "b": "macro", "t": "2026-07-08 21:26", "x": "每日解盘：石油主导行情，市场寻找方向\n\n我们再次回到交易头条新闻的模式，在这种市场中，算法总能通过其即时解读情绪、措辞和细微差别的能力占据优势。", "u": "https://x.com/ChrisWeston_PS/status/2074968324480643321", "lk": 14, "rt": 0, "rp": 1, "eng": 15, "lang": "en", "tags": ["macro", "rates_fx", "trader"]}, {"h": "tparsi", "tier": 2, "b": "geopolitics", "t": "2026-07-08 16:19", "x": "特朗普说：“我认为它结束了”[谅解备忘录]。\n\n伊朗革命卫队通过塔斯尼姆通讯社表示谅解备忘录结束了。\n\n但事实并非如此。至少现在还没有。\n\n还有办法挽救它。我在此阐述：\n\nhttps://tritaparsi.substack.com/p/how-the-us-iran-fight-in-the-strait…", "u": "https://x.com/tparsi/status/2074891128952803334", "lk": 560, "rt": 119, "rp": 160, "eng": 839, "lang": "en", "tags": ["geopolitics", "middle_east", "diplomacy"]}, {"h": "ELuttwak", "tier": 2, "b": "geopolitics", "t": "2026-07-08 18:29", "x": "据报道，埃尔多安说：“土耳其的历史没有种族灭绝、大屠杀、压迫和殖民主义……在我们数千年的辉煌历史中，只有正义和同情。”这不可能是欺骗的企图，谎言太明显了。", "u": "https://x.com/ELuttwak/status/2074923830917636522", "lk": 299, "rt": 46, "rp": 19, "eng": 364, "lang": "en", "tags": ["geopolitics", "strategy", "history"]}, {"h": "michaeldweiss", "tier": 2, "b": "geopolitics", "t": "2026-07-09 02:44", "x": "我认为这真的把整个房间联系起来了。", "u": "https://x.com/michaeldweiss/status/2075048432318779792", "lk": 185, "rt": 42, "rp": 5, "eng": 232, "lang": "en", "tags": ["geopolitics", "russia", "middle_east"]}, {"h": "Charles_Lister", "tier": 2, "b": "geopolitics", "t": "2026-07-08 21:08", "x": "#叙利亚总统沙拉（@AH_AlSharaa）和外交部长沙伊巴尼（@AsaadHShaibani）手持#特朗普总统今天早些时候分享的一封信。\n\nSST很快将消失，用#特朗普的话说，美国公司正等着投资。", "u": "https://x.com/Charles_Lister/status/2074963978636120469", "lk": 168, "rt": 28, "rp": 2, "eng": 198, "lang": "en", "tags": ["geopolitics", "middle_east", "syria"]}, {"h": "ELuttwak", "tier": 2, "b": "geopolitics", "t": "2026-07-08 16:04", "x": "在德黑兰，革命卫队只需服从一个人，即最高领袖，自从他的父亲被炸弹炸死后，没人见过或听过他的消息。他们明智地表示，特朗普应该尽快被杀死，趁他还在安卡拉，和逊尼派老板埃尔多安在一起。", "u": "https://x.com/ELuttwak/status/2074887380117397912", "lk": 97, "rt": 15, "rp": 3, "eng": 115, "lang": "en", "tags": ["geopolitics", "strategy", "history"]}, {"h": "PeterZeihan", "tier": 1, "b": "geopolitics", "t": "2026-07-08 11:00", "x": "今天，我把话筒交给我的分析总监 Michael N.，讨论美国与伊朗技术性会谈的现状。虽然这些对话占据了头条，但最重要的谈判可能发生在伊朗人内部。#地缘政治", "u": "https://x.com/PeterZeihan/status/2074810743170474128", "lk": 37, "rt": 4, "rp": 3, "eng": 44, "lang": "en", "tags": ["geopolitics", "demographics", "supply_chain"]}, {"h": "DerekJGrossman", "tier": 1, "b": "geopolitics", "t": "2026-07-08 15:44", "x": "中国周三警告称，美国与伊朗之间重新爆发的敌对行动对任何一方都没有好处，此前几小时两国互相发动了打击，威胁到脆弱的和平框架。", "u": "https://x.com/DerekJGrossman/status/2074882255303127248", "lk": 11, "rt": 2, "rp": 2, "eng": 15, "lang": "en", "tags": ["geopolitics", "indo_pacific", "security"]}, {"h": "MassDara", "tier": 1, "b": "geopolitics", "t": "2026-07-08 18:51", "x": "1-6：后苏联时期的自由落体及其对当今高级军官的影响\n6-15：第一和第二次车臣战争及其对当今俄罗斯军事行为的影响，普京的军事力量思维如何形成\n16-22:00 2000-2008：重建与改革尝试\n第二部分如下", "u": "https://x.com/MassDara/status/2074929271756161155", "lk": 13, "rt": 0, "rp": 1, "eng": 14, "lang": "en", "tags": ["geopolitics", "defense", "military"]}, {"h": "chigrl", "tier": 1, "b": "commodities", "t": "2026-07-08 22:25", "x": "我是说，谁能猜到呢", "u": "https://x.com/chigrl/status/2074983301383676359", "lk": 102, "rt": 3, "rp": 3, "eng": 108, "lang": "en", "tags": ["commodities", "oil_energy", "metals"]}, {"h": "JavierBlas", "tier": 1, "b": "commodities", "t": "2026-07-09 07:53", "x": "今日地图：南亚季风现已完全覆盖印度（比正常情况晚约3-4天）。季节性降雨仍低于平均水平，但差距已从几周前的-35%缩小至-15%。未来几周对农作物和能源需求至关重要。", "u": "https://x.com/JavierBlas/status/2075126287232905569", "lk": 44, "rt": 9, "rp": 2, "eng": 55, "lang": "en", "tags": ["commodities", "oil_energy", "supply_demand"]}, {"h": "gdb", "tier": 2, "b": "ai_semis", "t": "2026-07-08 17:35", "x": "GPT-Live——智能语音AI，感觉就像自然对话。觉得我们在自己的测试中仍只是触及了如何使用它的表面。现在正在整合到ChatGPT中，并致力于将其引入API和Codex。", "u": "https://x.com/gdb/status/2074910365377568948", "lk": 1779, "rt": 115, "rp": 110, "eng": 2004, "lang": "en", "tags": ["ai_semis", "ai", "executive"]}]}}, "boards": {"macro": {"label": "宏观经济", "color": "#5b8def", "short": "宏观"}, "geopolitics": {"label": "地缘政治", "color": "#ec6f57", "short": "地缘"}, "commodities": {"label": "大宗商品", "color": "#e0952f", "short": "大宗"}, "weather": {"label": "天气气候", "color": "#33bfad", "short": "天气"}, "ai_semis": {"label": "AI半导体", "color": "#b18ef0", "short": "AI"}}, "repColors": {"宏观经济": "#5b8def", "地缘政治": "#ec6f57", "大宗商品": "#e0952f", "股票": "#3fb36a", "AI半导体": "#b18ef0", "AI半导体科技": "#b18ef0", "AI / 半导体": "#b18ef0", "天气气候": "#33bfad"}, "dates": ["2026-07-09"]}</script>
+<script>
+(function(){
+  var app=document.getElementById("kolapp");
+  var P=JSON.parse(document.getElementById("payload").textContent);
+  var DATA=P.data,BOARDS=P.boards,REPC=P.repColors,DATES=P.dates;
+  var st={date:DATES[0],board:"all",tier:"all",lang:"all",sort:"hot",q:""};
+  var $=function(s){return app.querySelector(s)};
+  function esc(s){return (s||"").replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+  function hl(s,q){s=esc(s);if(!q)return s;try{var re=new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi");return s.replace(re,"<mark>$1</mark>")}catch(e){return s}}
+  function fmt(n){return n>=1000?(n/1000).toFixed(n>=10000?0:1)+"k":""+n}
+  function cur(){return DATA[st.date]}
+  function jumpHandle(h){$("#q").value="@"+h;st.q="@"+h;$("#clr").style.display="block";st.board="all";buildPills();render();
+    $("#stream").scrollIntoView({behavior:"smooth",block:"start"})}
+
+  var dsel=$("#dateSel");
+  DATES.forEach(function(d){var o=document.createElement("option");o.value=d;o.textContent=d;dsel.appendChild(o)});
+  dsel.value=st.date;
+  dsel.onchange=function(){st.date=dsel.value;st.board="all";renderAll()};
+
+  function renderReport(){
+    var r=cur().report,m=cur().meta;
+    $("#win").textContent=m.window;
+    $("#sub").textContent=m.subtitle;
+    // insights
+    var ih=$("#insights");ih.innerHTML="";
+    r.insights.forEach(function(it,i){
+      var c=document.createElement("div");c.className="icard";
+      c.innerHTML='<h3><span class="inum">'+(i+1)+'</span><span>'+esc(it.title)+'</span></h3>'+
+        '<ul>'+it.points.map(function(p){return "<li>"+p+"</li>"}).join("")+'</ul>';
+      ih.appendChild(c);
+    });
+    // sections (board -> subdomain -> viewpoints)
+    var sh=$("#sections");sh.innerHTML="";
+    r.sections.forEach(function(pair){
+      var name=pair[0],subs=pair[1],col=REPC[name]||"#5b8def";
+      var box=document.createElement("div");box.className="bsec";
+      var nvp=subs.reduce(function(a,s){return a+s[1].length},0);
+      var inner=subs.map(function(sd){
+        var subn=sd[0],rows=sd[1];
+        return '<div class="sub"><div class="subh" style="--sc:'+col+';color:'+col+'">'+esc(subn)+'</div>'+
+          rows.map(function(row){
+            return '<div class="vp"><span class="vh" data-h="'+esc(row[0].replace("@",""))+'">'+esc(row[0])+'</span>'+
+              '<span class="vr">'+esc(row[1])+'</span>'+row[2]+'</div>';
+          }).join("")+'</div>';
+      }).join("");
+      box.innerHTML='<div class="bhead" style="background:'+col+'">'+esc(name)+
+        ' <span style="font-weight:500;opacity:.75;font-size:12px">'+subs.length+' 领域 · '+nvp+' 条</span>'+
+        '<span class="arrow">▾</span></div><div class="bbody">'+inner+'</div>';
+      var bd=box.querySelector(".bbody"),hd=box.querySelector(".bhead");
+      hd.onclick=function(){bd.style.display=bd.style.display==="none"?"":"none";
+        box.querySelector(".arrow").textContent=bd.style.display==="none"?"▸":"▾"};
+      sh.appendChild(box);
+    });
+    // wire viewpoint handles
+    sh.querySelectorAll(".vh").forEach(function(v){v.onclick=function(){jumpHandle(v.dataset.h)}});
+    // unique
+    var uh=$("#unique");uh.innerHTML="";
+    r.unique.forEach(function(u){
+      var c=document.createElement("div");c.className="ucard";
+      c.innerHTML='<div class="uh" data-h="'+esc(u[0].replace("@",""))+'">'+esc(u[0])+'</div>'+
+        '<div class="uv">'+esc(u[1])+'</div><div class="ui">交易含义：'+esc(u[2])+'</div>';
+      c.querySelector(".uh").onclick=function(){jumpHandle(u[0].replace("@",""))};
+      uh.appendChild(c);
+    });
+  }
+
+  function buildPills(){
+    var tw=cur().tweets,wrap=$("#boardPills");wrap.innerHTML="";
+    var counts={all:tw.length};Object.keys(BOARDS).forEach(function(k){counts[k]=0});
+    tw.forEach(function(t){counts[t.b]=(counts[t.b]||0)+1});
+    function mk(key,label,color){var p=document.createElement("button");p.className="pill";
+      p.innerHTML=label+' <span class="cnt">'+(counts[key]||0)+'</span>';
+      if(st.board===key){p.setAttribute("data-on","1");p.style.background=color;p.style.borderColor=color}
+      p.onclick=function(){st.board=key;buildPills();render()};return p}
+    wrap.appendChild(mk("all","全部","#e7b24d"));
+    Object.keys(BOARDS).forEach(function(k){wrap.appendChild(mk(k,BOARDS[k].label,BOARDS[k].color))});
+  }
+  function pass(t){
+    if(st.board!=="all"&&t.b!==st.board)return false;
+    if(st.tier!=="all"&&(""+t.tier)!==st.tier)return false;
+    if(st.lang!=="all"&&t.lang!==st.lang)return false;
+    if(st.q){var q=st.q.toLowerCase();if((t.x+" @"+t.h).toLowerCase().indexOf(q)<0)return false}
+    return true}
+  function render(){
+    var m=cur().meta,tw=cur().tweets.filter(pass);
+    tw.sort(function(a,b){return st.sort==="hot"?b.eng-a.eng:(a.t<b.t?1:-1)});
+    var kol=new Set(tw.map(function(t){return t.h})).size;
+    $("#tstat").innerHTML='当前显示 <b>'+tw.length+'</b> / '+m.n_tweets+' 条 · <b>'+kol+'</b> 位 KOL · 监测 '+m.n_accounts+' 账号';
+    var s=$("#stream");
+    if(!tw.length){s.innerHTML='<div class="empty">没有匹配的推文 —— 换个词或点「重置」。</div>';return}
+    s.innerHTML="";
+    tw.forEach(function(t){
+      var B=BOARDS[t.b]||{short:"其他",color:"#5b8def"};
+      var c=document.createElement("div");c.className="card";c.tabIndex=0;c.style.setProperty("--bc",B.color);
+      var tags=(t.tags||[]).map(function(x){return '<span class="tag" data-tag="'+esc(x)+'">'+esc(x)+'</span>'}).join("");
+      c.innerHTML='<div class="chead"><span class="hand" data-h="'+esc(t.h)+'">@'+esc(t.h)+'</span>'+
+        '<span class="bchip" style="background:'+B.color+'">'+B.short+'</span>'+
+        (t.tier===1?'<span class="t1">一线</span>':'')+'<span class="lang">'+(t.lang==="zh"?"中":"EN")+'</span>'+
+        '<span class="time mono">'+esc(t.t)+'</span></div>'+
+        '<div class="cbody">'+hl(t.x,st.q)+'</div>'+
+        '<div class="cfoot"><span class="eng mono"><span>♥ '+fmt(t.lk)+'</span><span>⟲ '+fmt(t.rt)+'</span><span>💬 '+fmt(t.rp)+'</span></span>'+
+        '<span class="tags">'+tags+'</span><span class="open">打开 ↗</span></div>';
+      var body=c.querySelector(".cbody");
+      requestAnimationFrame(function(){if(body.scrollHeight>body.clientHeight+4){body.classList.add("clamp");
+        var mm=document.createElement("span");mm.className="more";mm.textContent="展开全文 ▾";body.after(mm);
+        mm.onclick=function(e){e.stopPropagation();body.classList.toggle("open");body.classList.toggle("clamp");
+          mm.textContent=body.classList.contains("open")?"收起 ▴":"展开全文 ▾"}}});
+      c.onclick=function(){window.open(t.u,"_blank","noopener")};
+      c.onkeydown=function(e){if(e.key==="Enter")window.open(t.u,"_blank","noopener")};
+      c.querySelector(".hand").onclick=function(e){e.stopPropagation();jumpHandle(t.h)};
+      c.querySelectorAll(".tag").forEach(function(tg){tg.onclick=function(e){e.stopPropagation();
+        $("#q").value=tg.dataset.tag;st.q=tg.dataset.tag;$("#clr").style.display="block";render()}});
+      s.appendChild(c);
+    });
+  }
+  function renderAll(){renderReport();buildPills();render()}
+
+  var qi=$("#q"),clr=$("#clr");
+  qi.oninput=function(){st.q=qi.value.trim();clr.style.display=qi.value?"block":"none";render()};
+  clr.onclick=function(){qi.value="";st.q="";clr.style.display="none";qi.focus();render()};
+  document.addEventListener("keydown",function(e){
+    if(e.key==="/"&&document.activeElement!==qi){e.preventDefault();qi.focus()}
+    if(e.key==="Escape"&&document.activeElement===qi){qi.value="";st.q="";clr.style.display="none";render()}});
+  function seg(id,key){var el=$(id);el.querySelectorAll("button").forEach(function(b){b.onclick=function(){
+    el.querySelectorAll("button").forEach(function(x){x.removeAttribute("data-on")});b.setAttribute("data-on","1");st[key]=b.dataset.v;render()}})}
+  seg("#sortSeg","sort");seg("#tierSeg","tier");seg("#langSeg","lang");
+  $("#reset").onclick=function(){st.board="all";st.tier="all";st.lang="all";st.sort="hot";st.q="";qi.value="";clr.style.display="none";
+    [["#sortSeg","hot"],["#tierSeg","all"],["#langSeg","all"]].forEach(function(p){var el=$(p[0]);
+      el.querySelectorAll("button").forEach(function(x){x.setAttribute("data-on",x.dataset.v===p[1]?"1":"")})});
+    buildPills();render()};
+  renderAll();
+})();
+</script>
+</div>
+</body>
+</html>
