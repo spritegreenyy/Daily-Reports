@@ -44,6 +44,9 @@ TEMPLATE = r"""<!doctype html>
   .brand{font-family:Georgia,serif;letter-spacing:3px;font-size:13px;color:var(--mut)}
   h1{font-family:Georgia,"Noto Serif CJK SC",serif;font-size:26px;color:var(--dark)}
   .asof{margin-left:auto;font-size:12px;color:var(--mut)}
+  .langsw{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;background:var(--card);padding:3px;margin-left:10px}
+  .langsw button{border:0;background:transparent;color:var(--mut);font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;cursor:pointer}
+  .langsw button[data-on="1"]{background:var(--dark);color:#fff}
   h2.sec-h{font-family:Georgia,"Noto Serif CJK SC",serif;font-size:16px;color:var(--dark);margin:26px 0 12px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
   h2.sec-h::before{content:"";width:7px;height:19px;background:var(--gold);border-radius:3px}
   h2.sec-h small{font-size:11.5px;color:var(--mut);font-weight:400}
@@ -138,55 +141,55 @@ TEMPLATE = r"""<!doctype html>
   #modal .mx{cursor:pointer;color:var(--mut);font-size:20px}
 </style></head><body>
 <div class="wrap">
-  <div class="mast"><div class="brand">WINDRISE</div><h1>期货资金潮汐 · 交互终端</h1><div class="asof">__DATE__ · 盘后主力席位资金视图</div></div>
+  <div class="mast"><div class="brand">WINDRISE</div><h1 id="title"></h1><div class="asof" id="asof"></div><div class="langsw"><button type="button" data-lang="zh">中</button><button type="button" data-lang="en">EN</button></div></div>
 
   <div class="hero">
-    <div class="netcard"><div class="lb">机构资金潮汐净值 · 名义净持仓(亿)</div><b id="netv"></b><div class="sub" id="netsub"></div></div>
+    <div class="netcard"><div class="lb" id="netlb"></div><b id="netv"></b><div class="sub" id="netsub"></div></div>
     <div class="kpis" id="kpis"></div>
   </div>
 
-  <h2 class="sec-h">机构资金潮汐净值 · 40日走势 <small>鼠标移到线上看每日数值 · 点图放大</small></h2>
+  <h2 class="sec-h" id="sec-tide"></h2>
   <div class="chartbox zoom" id="tidebox" onclick="enlarge('tide')"><div id="tidechart"></div></div>
 
-  <h2 class="sec-h">多空动作全景 <small>加多/减多/加空/减空分布 · 情绪偏向</small></h2>
+  <h2 class="sec-h" id="sec-pano"></h2>
   <div class="pano" id="pano"></div>
 
-  <h2 class="sec-h">今日速览 <small>基于当日主力席位数据自动生成</small></h2>
+  <h2 class="sec-h" id="sec-brief"></h2>
   <div class="brief"><ul id="brief"></ul></div>
 
-  <h2 class="sec-h">各类资金今日净流向 <small>机构/外资/杭州/中财/散户 · 名义(亿) · 点行展开成员席位 · 点曲线看40日</small></h2>
+  <h2 class="sec-h" id="sec-cohorts"></h2>
   <div class="cohbars" id="cohbars"></div>
 
-  <h2 class="sec-h">板块资金热力 <small>机构名义净持仓 · 红多绿空 · 点块看40日曲线 / 点击筛选</small></h2>
+  <h2 class="sec-h" id="sec-heat"></h2>
   <div class="heat" id="heat"></div>
 
-  <h2 class="sec-h">四类动作榜 <small>各动作按名义金额排 · 相对幅度≥50%(金色)=激进</small></h2>
+  <h2 class="sec-h" id="sec-boards"></h2>
   <div class="boards" id="boards"></div>
 
-  <h2 class="sec-h">资金强度排行榜 <small>可筛选/排序/点行看该品种60日机构净持仓曲线</small></h2>
+  <h2 class="sec-h" id="sec-table"></h2>
   <div class="controls">
-    <input id="q" type="text" placeholder="搜品种，如 碳酸锂">
-    <button class="pill fact" data-v="">全部</button><button class="pill fact" data-v="加多">加多</button>
-    <button class="pill fact" data-v="减多">减多</button><button class="pill fact" data-v="加空">加空</button>
-    <button class="pill fact" data-v="减空">减空</button>
-    <span class="lab">共振</span><button class="pill fdir" data-v="">全部</button>
-    <button class="pill fdir" data-v="利多">利多</button><button class="pill fdir" data-v="利空">利空</button>
-    <span class="lab">排序</span><select id="sort">
-      <option value="amt">名义金额</option><option value="conf">共振可信度</option>
-      <option value="ratio">相对幅度</option><option value="streak">持续天数</option></select>
+    <input id="q" type="text">
+    <button class="pill fact" data-v=""></button><button class="pill fact" data-v="加多"></button>
+    <button class="pill fact" data-v="减多"></button><button class="pill fact" data-v="加空"></button>
+    <button class="pill fact" data-v="减空"></button>
+    <span class="lab" id="lab-dir"></span><button class="pill fdir" data-v=""></button>
+    <button class="pill fdir" data-v="利多"></button><button class="pill fdir" data-v="利空"></button>
+    <span class="lab" id="lab-sort"></span><select id="sort">
+      <option value="amt"></option><option value="conf"></option>
+      <option value="ratio"></option><option value="streak"></option></select>
   </div>
   <table><thead><tr><th data-k="name">品种</th><th data-k="sector">板块</th><th data-k="act">动作</th>
     <th data-k="amt">名义金额</th><th data-k="ratio">相对</th><th data-k="hb">环比</th>
     <th data-k="conf">共振</th><th data-k="streak">持续</th><th>近60日</th></tr></thead>
     <tbody id="tb"></tbody></table>
 
-  <h2 class="sec-h">资金持续性榜 · 背离雷达 <small>连续同向天数 / 资金与价格逆向</small></h2>
+  <h2 class="sec-h" id="sec-persist"></h2>
   <div class="cols2" id="persradar"></div>
 
-  <h2 class="sec-h">价格 × 持仓象限 <small>横=当日价格% 纵=机构资金流向强度 · 悬停看品种</small></h2>
+  <h2 class="sec-h" id="sec-quad"></h2>
   <div class="chartbox" id="quadbox" style="cursor:default"></div>
 
-  <h2 class="sec-h">资金动能共振榜 · 按板块 <small>机构方向与10日趋势同向 · 可信度据样本外回测校准</small></h2>
+  <h2 class="sec-h" id="sec-reson"></h2>
   <div id="reson"></div>
 
   <div class="foot" id="foot"></div>
@@ -197,11 +200,91 @@ const D = __DATA__;
 const $ = s => document.querySelector(s);
 const RED="#b23a2f",GRN="#17604b",GOLD="#b98b2f",DARK="#0f4638";
 let fact="",fdir="",q="",sortKey="amt",opened=null;
+let lang=(new URLSearchParams(location.search).get('lang')||localStorage.getItem('windrise_lang')||'zh');
+const UI={
+  zh:{
+    title:'期货资金潮汐 · 交互终端',asof:'__DATE__ · 盘后主力席位资金视图',netlb:'机构资金潮汐净值 · 名义净持仓(亿)',
+    tide:'机构资金潮汐净值 · 40日走势',tideSub:'鼠标移到线上看每日数值 · 点图放大',
+    pano:'多空动作全景',panoSub:'加多/减多/加空/减空分布 · 情绪偏向',
+    brief:'今日速览',briefSub:'基于当日主力席位数据自动生成',
+    cohorts:'各类资金今日净流向',cohortsSub:'机构/外资/杭州/中财/散户 · 名义(亿) · 点行展开成员席位 · 点曲线看40日',
+    heat:'板块资金热力',heatSub:'机构名义净持仓 · 红多绿空 · 点块看40日曲线 / 点击筛选',
+    boards:'四类动作榜',boardsSub:'各动作按名义金额排 · 相对幅度≥50%(金色)=激进',
+    table:'资金强度排行榜',tableSub:'可筛选/排序/点行看该品种60日机构净持仓曲线',
+    persist:'资金持续性榜 · 背离雷达',persistSub:'连续同向天数 / 资金与价格逆向',
+    quad:'价格 × 持仓象限',quadSub:'横=当日价格% 纵=机构资金流向强度 · 悬停看品种',
+    reson:'资金动能共振榜 · 按板块',resonSub:'机构方向与10日趋势同向 · 可信度据样本外回测校准',
+    search:'搜品种，如 碳酸锂',all:'全部',dir:'共振',sort:'排序',amt:'名义金额',conf:'共振可信度',ratio:'相对幅度',streak:'持续天数',
+    name:'品种',sector:'板块',act:'动作',mom:'环比',last60:'近60日',hoverDaily:'悬停看每日',clickCurve:'点看曲线',curve:'曲线',
+    noData:'无数据',none:'无',noMatch:'没有匹配的品种',emptyReson:'今日无高一致性共振品种',
+    netMove:'今日变动',range40:'40日区间',longCnt:'加多品种',trimLongCnt:'减多品种',shortCnt:'加空品种',trimShortCnt:'减空品种',
+    senti:'情绪偏向',inPlay:'在场品种',amtLong:'加多总额',amtShort:'加空总额',
+    extremeShort:'← 极空',extremeLong:'极多 →',netLong:'净多',netShort:'净空',todayAction:'今日动作',todayPx:'当日价格',todayChg:'当日涨跌',
+    resonance:'共振',instLong:'逆势吸筹 · 加多而价跌',instShort:'逆势沽空 · 加空而价涨',persistRank:'资金持续性榜 · 机构连续同向',divRadar:'资金背离雷达',
+    currentNet:'当前净持仓',priceFlowUp:'量价齐升·强多',priceDownAcc:'逆势吸筹',distribute:'冲高派发',exit:'杀跌离场',priceAxis:'价格涨跌 % →',
+    price:'价',strength:'资金强度',openMembers:'点行展开成员席位',members:'成员席位',dataSource:'数据源',nominal:'名义=持仓×合约乘数×收盘价',desc:'描述性研究,不构成投资建议',
+    todayFlowIn:'净流入',todayFlowOut:'净流出',sectorLayer:'板块层面',mostShort:'资金最空',mostLong:'最多',topLong:'加多力度居前',topShort:'加空力度居前',
+    divSignal:'背离信号',bullList:'逆势吸筹',bearList:'逆势沽空',tierDot:'可信度',currentShow:'当前显示',monitoring:'监测',accounts:'账号',
+    aggressive:'激进',items:'个',days:'日'
+  },
+  en:{
+    title:'Futures Tide of Funds · Interactive Terminal',asof:'__DATE__ · Post-close view of major seat positioning',netlb:'Institutional Tide NAV · Nominal Net Position (CNY 100m)',
+    tide:'Institutional Tide NAV · 40-Day Trend',tideSub:'Hover for daily values · Click to enlarge',
+    pano:'Long/Short Action Panorama',panoSub:'Add Long / Trim Long / Add Short / Trim Short · Sentiment bias',
+    brief:'Today at a Glance',briefSub:'Auto-generated from today’s major-seat data',
+    cohorts:'Net Flow by Participant Type Today',cohortsSub:'Institutions / Foreign / Hangzhou / Zhongcai / Retail · Nominal (CNY 100m) · Expand member seats · Open 40-day curve',
+    heat:'Sector Heatmap of Funds',heatSub:'Institutional nominal net positions · Red=long Green=short · Click tiles for 40-day curves',
+    boards:'Four Action Leaderboards',boardsSub:'Ranked by nominal size · Relative move ≥ 50% (gold) = aggressive',
+    table:'Fund Strength Ranking',tableSub:'Filter / sort / click a row for the 60-day institutional position curve',
+    persist:'Persistence Ranking · Divergence Radar',persistSub:'Consecutive same-direction days / fund-price divergence',
+    quad:'Price × Positioning Quadrants',quadSub:'X = daily price % · Y = institutional flow strength · Hover for contract',
+    reson:'Momentum Resonance by Sector',resonSub:'Institutional direction aligned with 10-day trend · confidence calibrated on out-of-sample tests',
+    search:'Search contract, e.g. Lithium Carbonate',all:'All',dir:'Resonance',sort:'Sort',amt:'Nominal Size',conf:'Resonance Confidence',ratio:'Relative Move',streak:'Streak Days',
+    name:'Contract',sector:'Sector',act:'Action',mom:'DoD',last60:'Last 60D',hoverDaily:'Hover for daily values',clickCurve:'Open curve',curve:'Curve',
+    noData:'No data',none:'None',noMatch:'No matching contracts',emptyReson:'No high-consensus resonance contract today',
+    netMove:'Today change',range40:'40-day range',longCnt:'Added-long contracts',trimLongCnt:'Trimmed-long contracts',shortCnt:'Added-short contracts',trimShortCnt:'Trimmed-short contracts',
+    senti:'Sentiment bias',inPlay:'Contracts in play',amtLong:'Total add-long',amtShort:'Total add-short',
+    extremeShort:'← Extreme short',extremeLong:'Extreme long →',netLong:'Net long',netShort:'Net short',todayAction:'Today change',todayPx:'Close',todayChg:'Daily change',
+    resonance:'Resonance',instLong:'Counter-trend accumulation · add long while price falls',instShort:'Counter-trend shorting · add short while price rises',persistRank:'Persistence Ranking · institutions in one direction',divRadar:'Fund Divergence Radar',
+    currentNet:'Current net position',priceFlowUp:'Price and flow rising together',priceDownAcc:'Counter-trend accumulation',distribute:'Strength into distribution',exit:'Panic exit',priceAxis:'Price change % →',
+    price:'Price',strength:'Flow strength',openMembers:'Expand member seats',members:'Member seats',dataSource:'Source',nominal:'Nominal = position × contract multiplier × close',desc:'Descriptive research only, not investment advice',
+    todayFlowIn:'net inflow',todayFlowOut:'net outflow',sectorLayer:'By sector',mostShort:'most net-short',mostLong:'most net-long',topLong:'Top add-long strength',topShort:'Top add-short strength',
+    divSignal:'Divergence signal',bullList:'Counter-trend accumulation',bearList:'Counter-trend shorting',tierDot:'Confidence',currentShow:'Showing',monitoring:'monitoring',accounts:'accounts',
+    aggressive:'Aggressive',items:'items',days:'days'
+  }
+};
+const TERM_EN={"铜":"Copper","铝":"Aluminum","锌":"Zinc","铅":"Lead","镍":"Nickel","锡":"Tin","黄金":"Gold","白银":"Silver","氧化铝":"Alumina","热卷":"Hot-Rolled Coil","焦煤":"Coking Coal","燃油":"Fuel Oil","苯乙烯":"Styrene","PVC":"PVC","尿素":"Urea","豆二":"Soybean No.2","棕榈油":"Palm Oil","棉花":"Cotton","鸡蛋":"Eggs","红枣":"Red Dates","不锈钢":"Stainless Steel","工业硅":"Industrial Silicon","碳酸锂":"Lithium Carbonate","螺纹钢":"Rebar","铁矿石":"Iron Ore","焦炭":"Coke","硅铁":"Ferrosilicon","锰硅":"Silicomanganese","原油":"Crude Oil","沥青":"Bitumen","液化气":"LPG","PTA":"PTA","甲醇":"Methanol","乙二醇":"MEG","LLDPE":"LLDPE","PP":"Polypropylene","纯碱":"Soda Ash","玻璃":"Glass","短纤":"Polyester Staple Fiber","20号胶":"TSR 20","橡胶":"Rubber","纸浆":"Pulp","豆一":"Soybean No.1","豆粕":"Soybean Meal","豆油":"Soybean Oil","菜粕":"Rapeseed Meal","菜油":"Rapeseed Oil","白糖":"Sugar","玉米":"Corn","淀粉":"Corn Starch","生猪":"Live Hogs","苹果":"Apples","花生":"Peanuts","有色":"Non-Ferrous","黑色":"Ferrous","化工":"Chemicals","能源":"Energy","农产品":"Agri","贵金属":"Precious Metals","机构":"Institutions","外资":"Foreign","杭州":"Hangzhou","中财":"Zhongcai","散户":"Retail","中信期货":"CITIC Futures","国泰君安":"Guotai Junan","东证期货":"Orient Futures","中财期货":"Zhongcai Futures","永安期货":"Yongan Futures","浙商期货":"Zheshang Futures","南华期货":"Nanhua Futures","徽商期货":"Huaan Futures","平安期货":"Ping An Futures","宝城期货":"Baocheng Futures","大地期货":"Dadi Futures","乾坤期货":"Qiankun Futures","物产中大":"Wuchan Zhongda","东方财富期货":"Eastmoney Futures","摩根大通":"J.P. Morgan"};
+const ACT_EN={"加多":"Add Long","减多":"Trim Long","加空":"Add Short","减空":"Trim Short","利多":"Bullish","利空":"Bearish","连加":"Added","连减":"Reduced","很高":"Very High","高":"High","中":"Medium","低":"Low"};
+const SRC_EN={"奇货可查龙虎榜逐日主力席位净持仓":"QHQC daily major-seat net positioning","akshare 主力合约价格":"AkShare front-contract prices","机构=中信+国君+东证":"Institutions = CITIC + Guotai Junan + Orient"};
+const t=k=>(UI[lang]&&UI[lang][k])||UI.zh[k]||k;
+const term=v=>lang==='en'?(TERM_EN[v]||v):v;
+const actText=v=>lang==='en'?(ACT_EN[v]||v):v;
+const tierText=v=>lang==='en'?(ACT_EN[v]||v):v;
+function secHtml(a,b){return a+' <small>'+b+'</small>'}
+function sourceText(v){if(lang!=='en')return v;let s=v||'';Object.keys(SRC_EN).forEach(k=>{s=s.replaceAll(k,SRC_EN[k])});return s}
+function syncUi(){
+  localStorage.setItem('windrise_lang',lang);
+  document.documentElement.lang=lang==='en'?'en':'zh-CN';
+  document.title=t('title')+' __DATE__';
+  $('#title').textContent=t('title'); $('#asof').textContent=t('asof'); $('#netlb').textContent=t('netlb');
+  $('#sec-tide').innerHTML=secHtml(t('tide'),t('tideSub')); $('#sec-pano').innerHTML=secHtml(t('pano'),t('panoSub'));
+  $('#sec-brief').innerHTML=secHtml(t('brief'),t('briefSub')); $('#sec-cohorts').innerHTML=secHtml(t('cohorts'),t('cohortsSub'));
+  $('#sec-heat').innerHTML=secHtml(t('heat'),t('heatSub')); $('#sec-boards').innerHTML=secHtml(t('boards'),t('boardsSub'));
+  $('#sec-table').innerHTML=secHtml(t('table'),t('tableSub')); $('#sec-persist').innerHTML=secHtml(t('persist'),t('persistSub'));
+  $('#sec-quad').innerHTML=secHtml(t('quad'),t('quadSub')); $('#sec-reson').innerHTML=secHtml(t('reson'),t('resonSub'));
+  $('#q').placeholder=t('search'); $('#lab-dir').textContent=t('dir'); $('#lab-sort').textContent=t('sort');
+  document.querySelectorAll('.fact').forEach(b=>b.textContent=b.dataset.v?actText(b.dataset.v):t('all'));
+  document.querySelectorAll('.fdir').forEach(b=>b.textContent=b.dataset.v?actText(b.dataset.v):t('all'));
+  [['amt','amt'],['conf','conf'],['ratio','ratio'],['streak','streak']].forEach((x,i)=>$('#sort').options[i].textContent=t(x[1]));
+  const heads=document.querySelectorAll('thead th');
+  [t('name'),t('sector'),t('act'),t('amt'),t('ratio'),t('mom'),t('resonance'),t('streak'),t('last60')].forEach((x,i)=>heads[i].textContent=x);
+  document.querySelectorAll('.langsw button').forEach(b=>b.setAttribute('data-on',b.dataset.lang===lang?'1':''));
+}
 
 /* ── 通用可交互折线图(悬停十字线+数值气泡, 零轴双色渐变面积) ── */
 function lineChart(host, y, dates, opt){
   opt=opt||{}; const H=opt.h||130, W=1000, n=y.length;
-  if(!n){host.innerHTML='<div class="muted" style="padding:20px">无数据</div>';return;}
+  if(!n){host.innerHTML='<div class="muted" style="padding:20px">'+t('noData')+'</div>';return;}
   const ymin=Math.min(0,...y), ymax=Math.max(0,...y), pad=((ymax-ymin)||1)*0.14, lo=ymin-pad, hi=ymax+pad;
   const X=i=> n<2?W/2:(i/(n-1))*W, Y=v=> H-(v-lo)/(hi-lo)*H, zY=Y(0);
   const line=y.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ');
@@ -249,17 +332,17 @@ function scatter(host){
   let s='<svg class="lc" viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto">'+
     '<line x1="'+X(0)+'" y1="0" x2="'+X(0)+'" y2="'+H+'" stroke="'+'#e5dfcb'+'" stroke-width="1"/>'+
     '<line x1="0" y1="'+Y(0)+'" x2="'+W+'" y2="'+Y(0)+'" stroke="#e5dfcb" stroke-width="1"/>'+
-    lab(W*0.8,20,'量价齐升·强多',RED)+lab(W*0.16,20,'逆势吸筹','#2d5f8a')+
-    lab(W*0.8,H-8,'冲高派发',GOLD)+lab(W*0.16,H-8,'杀跌离场',GRN);
+    lab(W*0.8,20,t('priceFlowUp'),RED)+lab(W*0.16,20,t('priceDownAcc'),'#2d5f8a')+
+    lab(W*0.8,H-8,t('distribute'),GOLD)+lab(W*0.16,H-8,t('exit'),GRN);
   pts.forEach((p,i)=>{const c=(p.z||0)>=0?RED:GRN;
     s+='<circle class="dot" data-i="'+i+'" cx="'+X(p.pc).toFixed(1)+'" cy="'+Y(p.z||0).toFixed(1)+'" r="6" fill="'+c+'" fill-opacity=".7" stroke="#fff" stroke-width="1"/>';});
-  s+='<text x="'+ (W-6) +'" y="'+(Y(0)-6)+'" text-anchor="end" font-size="11" fill="#8a8676">价格涨跌 % →</text></svg><div class="tip" style="display:none"></div>';
+  s+='<text x="'+ (W-6) +'" y="'+(Y(0)-6)+'" text-anchor="end" font-size="11" fill="#8a8676">'+t('priceAxis')+'</text></svg><div class="tip" style="display:none"></div>';
   host.innerHTML=s;
   const tip=host.querySelector('.tip');
   host.querySelectorAll('.dot').forEach(d=>{
     d.addEventListener('mouseenter',()=>{const p=pts[+d.dataset.i]; d.setAttribute('r',9);
       tip.style.display='block';
-      tip.innerHTML='<b>'+p.name+'</b>　'+(p.act||'')+'<br>价 '+(p.pc>=0?'+':'')+p.pc+'% · 资金强度 '+(p.z>=0?'+':'')+p.z;
+      tip.innerHTML='<b>'+term(p.name)+'</b>　'+actText(p.act||'')+'<br>'+t('price')+' '+(p.pc>=0?'+':'')+p.pc+'% · '+t('strength')+' '+(p.z>=0?'+':'')+p.z;
       const r=host.getBoundingClientRect(),dr=d.getBoundingClientRect();
       tip.style.left=Math.min(r.width-140,(dr.left-r.left)+8)+'px'; tip.style.top=((dr.top-r.top)-40)+'px';});
     d.addEventListener('mouseleave',()=>{d.setAttribute('r',6);tip.style.display='none';});
@@ -268,12 +351,12 @@ function scatter(host){
 
 /* ── 图表放大弹窗 ── */
 function enlarge(which){
-  if(which==='tide'){ openModal('机构资金潮汐净值 · 40日走势',''); lineChart($('#mbody'),D.tide,D.dates40,{h:340,fmt:v=>v.toFixed(1)+' 亿'}); }
+  if(which==='tide'){ openModal(t('tide'),''); lineChart($('#mbody'),D.tide,D.dates40,{h:340,fmt:v=>v.toFixed(1)+' '+(lang==='en'?'CNY 100m':'亿')}); }
 }
 function sectorModal(name){
   const s=D.sectors.find(x=>x.name===name); if(!s)return;
-  openModal(name+' · 机构名义净持仓 40日走势','');
-  lineChart($('#mbody'),s.series,D.dates40,{h:320,fmt:v=>v.toFixed(1)+' 亿'});
+  openModal(term(name)+' · '+t('tide'),'');
+  lineChart($('#mbody'),s.series,D.dates40,{h:320,fmt:v=>v.toFixed(1)+' '+(lang==='en'?'CNY 100m':'亿')});
 }
 function openModal(t){ $('#mtitle').textContent=t; $('#modal').style.display='flex'; }
 function closeModal(){ $('#modal').style.display='none'; }
@@ -281,16 +364,17 @@ $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();}
 
 /* ── 头部 / KPI ── */
 function header(){
+  syncUi();
   $('#netv').textContent=(D.net>0?'+':'')+D.net;
   $('#netv').style.color=D.net>=0?'#f0a89c':'#9fd8b4';
-  $('#netsub').innerHTML='今日变动 <b>'+(D.chg>0?'+':'')+D.chg+'亿</b> · 40日区间 '+D.range40[0]+' ~ '+D.range40[1]+' 亿';
+  $('#netsub').innerHTML=t('netMove')+' <b>'+(D.chg>0?'+':'')+D.chg+(lang==='en'?' CNY 100m':'亿')+'</b> · '+t('range40')+' '+D.range40[0]+' ~ '+D.range40[1]+' '+(lang==='en'?'CNY 100m':'亿');
   const K=D.kpi, tile=(v,l)=>'<div class="kpi"><b>'+v+'</b><span>'+l+'</span></div>';
   $('#kpis').innerHTML=
-    tile('<span style="color:'+RED+'">'+K['加多']+'</span>','加多品种')+tile(K['减多'],'减多品种')+
-    tile('<span style="color:'+GRN+'">'+K['加空']+'</span>','加空品种')+tile(K['减空'],'减空品种')+
-    tile('<span style="color:'+(D.senti>=0?RED:GRN)+'">'+(D.senti>0?'+':'')+D.senti+'%</span>','情绪偏向')+
-    tile(D.in_play,'在场品种')+tile(D.amt_add_long+'亿','加多总额')+tile(D.amt_add_short+'亿','加空总额');
-  $('#foot').textContent='数据源: '+D.source+' · 名义=持仓×合约乘数×收盘价 · 描述性研究,不构成投资建议 · WINDRISE';
+    tile('<span style="color:'+RED+'">'+K['加多']+'</span>',t('longCnt'))+tile(K['减多'],t('trimLongCnt'))+
+    tile('<span style="color:'+GRN+'">'+K['加空']+'</span>',t('shortCnt'))+tile(K['减空'],t('trimShortCnt'))+
+    tile('<span style="color:'+(D.senti>=0?RED:GRN)+'">'+(D.senti>0?'+':'')+D.senti+'%</span>',t('senti'))+
+    tile(D.in_play,t('inPlay'))+tile(D.amt_add_long+(lang==='en'?' CNY 100m':'亿'),t('amtLong'))+tile(D.amt_add_short+(lang==='en'?' CNY 100m':'亿'),t('amtShort'));
+  $('#foot').textContent=t('dataSource')+': '+sourceText(D.source)+' · '+t('nominal')+' · '+t('desc')+' · WINDRISE';
 }
 
 /* ── 多空全景 环形+仪表 ── */
@@ -302,29 +386,34 @@ function pano(){
   $('#pano').innerHTML=
     '<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">'+
     '<div style="position:relative;width:140px;height:140px"><svg width="140" height="140" viewBox="0 0 140 140">'+arcs+'</svg>'+
-    '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:25px;font-weight:800;font-family:Georgia,serif;color:'+scol+'">'+(senti>0?'+':'')+senti+'%</div><div style="font-size:11px;color:var(--mut)">情绪偏向</div></div></div>'+
+    '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:25px;font-weight:800;font-family:Georgia,serif;color:'+scol+'">'+(senti>0?'+':'')+senti+'%</div><div style="font-size:11px;color:var(--mut)">'+t('senti')+'</div></div></div>'+
     '<svg width="150" height="92" viewBox="0 0 140 92">'+
       '<path d="M12 70 A58 58 0 0 1 128 70" fill="none" stroke="'+GRN+'" stroke-width="9" stroke-dasharray="'+(semi/2).toFixed(1)+' 999"/>'+
       '<path d="M12 70 A58 58 0 0 1 128 70" fill="none" stroke="'+RED+'" stroke-width="9" stroke-dasharray="'+(semi/2).toFixed(1)+' 999" stroke-dashoffset="'+(-semi/2).toFixed(1)+'"/>'+
       '<line x1="70" y1="70" x2="'+gx.toFixed(1)+'" y2="'+gy.toFixed(1)+'" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"/><circle cx="70" cy="70" r="5" fill="var(--ink)"/>'+
-      '<text x="10" y="88" font-size="9" fill="'+GRN+'">← 极空</text><text x="96" y="88" font-size="9" fill="'+RED+'">极多 →</text></svg>'+
-    '<div class="legend"><div><i style="background:'+RED+'"></i>加多 <b>'+jd+'</b>　<i style="background:#d98b6b;margin-left:8px"></i>减多 <b>'+jdm+'</b></div>'+
-    '<div><i style="background:'+GRN+'"></i>加空 <b>'+jk+'</b>　<i style="background:#5fa97e;margin-left:8px"></i>减空 <b>'+jkm+'</b></div>'+
-    '<div style="margin-top:6px;color:var(--mut);font-size:12px">在场 '+D.in_play+' 品种 · 加多总额 '+D.amt_add_long+'亿 · 加空总额 '+D.amt_add_short+'亿</div></div></div>';
+      '<text x="10" y="88" font-size="9" fill="'+GRN+'">'+t('extremeShort')+'</text><text x="96" y="88" font-size="9" fill="'+RED+'">'+t('extremeLong')+'</text></svg>'+
+    '<div class="legend"><div><i style="background:'+RED+'"></i>'+actText('加多')+' <b>'+jd+'</b>　<i style="background:#d98b6b;margin-left:8px"></i>'+actText('减多')+' <b>'+jdm+'</b></div>'+
+    '<div><i style="background:'+GRN+'"></i>'+actText('加空')+' <b>'+jk+'</b>　<i style="background:#5fa97e;margin-left:8px"></i>'+actText('减空')+' <b>'+jkm+'</b></div>'+
+    '<div style="margin-top:6px;color:var(--mut);font-size:12px">'+t('inPlay')+' '+D.in_play+' · '+t('amtLong')+' '+D.amt_add_long+(lang==='en'?' CNY 100m':'亿')+' · '+t('amtShort')+' '+D.amt_add_short+(lang==='en'?' CNY 100m':'亿')+'</div></div></div>';
 }
 
 function brief(){
   const sec=D.sectors.map(s=>[s.name,s.series[s.series.length-1]]).sort((a,b)=>a[1]-b[1]);
-  const topA=x=>D.rows.filter(r=>r.act===x).sort((a,b)=>b.amt-a.amt).slice(0,3).map(r=>r.name+'('+r.amt_txt+')');
+  const topA=x=>D.rows.filter(r=>r.act===x).sort((a,b)=>b.amt-a.amt).slice(0,3).map(r=>term(r.name)+'('+r.amt_txt+(lang==='en'?' CNY 100m':'')+')');
   const li=[];
-  li.push('机构资金潮汐净值 <b>'+D.net+'亿</b>,今日'+(D.chg<0?'净流出':'净流入')+' <b>'+Math.abs(D.chg)+'亿</b>,情绪偏向 <b style="color:'+(D.senti>=0?RED:GRN)+'">'+(D.senti>0?'+':'')+D.senti+'%</b>。');
-  if(sec.length)li.push('板块层面 <b style="color:'+GRN+'">'+sec[0][0]+'('+sec[0][1]+'亿)</b> 资金最空、<b style="color:'+RED+'">'+sec[sec.length-1][0]+'('+sec[sec.length-1][1]+'亿)</b> 最多。');
+  if(lang==='en'){
+    li.push('Institutional tide NAV is <b>'+D.net+' CNY 100m</b>, with a '+(D.chg<0?t('todayFlowOut'):t('todayFlowIn'))+' of <b>'+Math.abs(D.chg)+' CNY 100m</b> today and '+t('senti')+' at <b style="color:'+(D.senti>=0?RED:GRN)+'">'+(D.senti>0?'+':'')+D.senti+'%</b>.');
+    if(sec.length)li.push(t('sectorLayer')+': <b style="color:'+GRN+'">'+term(sec[0][0])+'('+sec[0][1]+' CNY 100m)</b> is '+t('mostShort')+', while <b style="color:'+RED+'">'+term(sec[sec.length-1][0])+'('+sec[sec.length-1][1]+' CNY 100m)</b> is '+t('mostLong')+'.');
+  }else{
+    li.push('机构资金潮汐净值 <b>'+D.net+'亿</b>,今日'+(D.chg<0?t('todayFlowOut'):t('todayFlowIn'))+' <b>'+Math.abs(D.chg)+'亿</b>,情绪偏向 <b style="color:'+(D.senti>=0?RED:GRN)+'">'+(D.senti>0?'+':'')+D.senti+'%</b>。');
+    if(sec.length)li.push('板块层面 <b style="color:'+GRN+'">'+term(sec[0][0])+'('+sec[0][1]+'亿)</b> '+t('mostShort')+'、<b style="color:'+RED+'">'+term(sec[sec.length-1][0])+'('+sec[sec.length-1][1]+'亿)</b> '+t('mostLong')+'。');
+  }
   const ta=topA('加多'),ts=topA('加空');
-  if(ta.length)li.push('加多力度居前:'+ta.join('、')+'。');
-  if(ts.length)li.push('加空力度居前:'+ts.join('、')+'。');
+  if(ta.length)li.push(t('topLong')+': '+ta.join(lang==='en'?', ':'、')+(lang==='en'?'.':'。'));
+  if(ts.length)li.push(t('topShort')+': '+ts.join(lang==='en'?', ':'、')+(lang==='en'?'.':'。'));
   const bull=D.rows.filter(r=>r.act==='加多'&&r.pc!=null&&r.pc<-0.2).map(r=>r.name);
   const bear=D.rows.filter(r=>r.act==='加空'&&r.pc!=null&&r.pc>0.2).map(r=>r.name);
-  if(bull.length||bear.length)li.push('背离信号:逆势吸筹 '+(bull.slice(0,3).join('、')||'无')+';逆势沽空 '+(bear.slice(0,3).join('、')||'无')+'。');
+  if(bull.length||bear.length)li.push(t('divSignal')+': '+t('bullList')+' '+((bull.slice(0,3).map(term).join(lang==='en'?', ':'、'))||t('none'))+'; '+t('bearList')+' '+((bear.slice(0,3).map(term).join(lang==='en'?', ':'、'))||t('none'))+(lang==='en'?'.':'。'));
   $('#brief').innerHTML=li.map(x=>'<li>'+x+'</li>').join('');
 }
 
@@ -334,16 +423,16 @@ function cohbars(){
   $('#cohbars').innerHTML=D.cohorts.map((c,ci)=>{
     const v=c.flow,w=Math.abs(v)/mx*46,col=v>=0?RED:GRN,mem=c.members||[];
     let h='<div class="cbrow chead" data-ci="'+ci+'">'+
-      '<span class="cn"><i class="carrow" id="ca'+ci+'">'+(mem.length?'▸':'')+'</i>'+c.name+'</span>'+bar(v,w,col)+
-      '<span class="cv" style="color:'+col+'">'+(v>=0?'+':'')+v.toFixed(1)+'亿</span>'+
-      (c.series&&c.series.length?'<button class="mbtn" data-t="c" data-ci="'+ci+'">曲线</button>':'')+'</div>';
+      '<span class="cn"><i class="carrow" id="ca'+ci+'">'+(mem.length?'▸':'')+'</i>'+term(c.name)+'</span>'+bar(v,w,col)+
+      '<span class="cv" style="color:'+col+'">'+(v>=0?'+':'')+v.toFixed(1)+(lang==='en'?' CNY 100m':'亿')+'</span>'+
+      (c.series&&c.series.length?'<button class="mbtn" data-t="c" data-ci="'+ci+'">'+t('curve')+'</button>':'')+'</div>';
     if(mem.length){
       const mmx=Math.max(0.01,...mem.map(m=>Math.abs(m.flow)));
       h+='<div class="cmem" id="cm'+ci+'">'+mem.map((m,mi)=>{
         const mv=m.flow,mw=Math.abs(mv)/mmx*46,mc=mv>=0?RED:GRN;
-        return '<div class="cbrow sub"><span class="cn2">'+m.name+'</span>'+bar(mv,mw,mc)+
-          '<span class="cv" style="color:'+mc+'">'+(mv>=0?'+':'')+mv.toFixed(1)+'亿</span>'+
-          (m.series&&m.series.length?'<button class="mbtn" data-t="m" data-ci="'+ci+'" data-mi="'+mi+'">曲线</button>':'')+'</div>';
+        return '<div class="cbrow sub"><span class="cn2">'+term(m.name)+'</span>'+bar(mv,mw,mc)+
+          '<span class="cv" style="color:'+mc+'">'+(mv>=0?'+':'')+mv.toFixed(1)+(lang==='en'?' CNY 100m':'亿')+'</span>'+
+          (m.series&&m.series.length?'<button class="mbtn" data-t="m" data-ci="'+ci+'" data-mi="'+mi+'">'+t('curve')+'</button>':'')+'</div>';
       }).join('')+'</div>';
     }
     return h;
@@ -358,8 +447,8 @@ function cohbars(){
   document.querySelectorAll('#cohbars .mbtn').forEach(b=>b.onclick=e=>{
     e.stopPropagation();
     const c=D.cohorts[+b.dataset.ci], o=b.dataset.t==='c'?c:c.members[+b.dataset.mi];
-    openModal(o.name+' · 名义净持仓 40日走势(亿)');
-    lineChart($('#mbody'),o.series,D.dates40,{h:320,fmt:v=>v.toFixed(1)+' 亿'});
+    openModal(term(o.name)+' · '+t('tide'));
+    lineChart($('#mbody'),o.series,D.dates40,{h:320,fmt:v=>v.toFixed(1)+' '+(lang==='en'?'CNY 100m':'亿')});
   });
 }
 
@@ -368,7 +457,7 @@ function heat(){
   $('#heat').innerHTML=D.sectors.map((s,i)=>{const v=vals[i],day=s.series.length>1?v-s.series[s.series.length-2]:0;
     const a=(0.20+0.80*Math.abs(v)/mx).toFixed(2), bg=v>=0?'rgba(178,58,47,'+a+')':'rgba(23,96,75,'+a+')';
     return '<div class="htile" data-v="'+s.name+'" style="background:'+bg+'" onclick="sectorModal(\''+s.name+'\')">'+
-      '<div class="hn">'+s.name+'</div><div class="hv">'+(v>=0?'+':'')+v.toFixed(0)+'亿</div><div class="hd">日 '+(day>=0?'+':'')+day.toFixed(1)+' · 点看曲线</div></div>';}).join('');
+      '<div class="hn">'+term(s.name)+'</div><div class="hv">'+(v>=0?'+':'')+v.toFixed(0)+(lang==='en'?' CNY 100m':'亿')+'</div><div class="hd">'+(lang==='en'?'Day ':'日 ')+(day>=0?'+':'')+day.toFixed(1)+' · '+t('clickCurve')+'</div></div>';}).join('');
 }
 
 function boards(){
@@ -376,16 +465,16 @@ function boards(){
   $('#boards').innerHTML=cfg.map(([act,col])=>{
     const g=D.rows.filter(r=>r.act===act).sort((a,b)=>b.amt-a.amt).slice(0,7), mx=Math.max(0.001,...g.map(r=>r.amt)),cnt=D.rows.filter(r=>r.act===act).length;
     const rs=g.map(r=>{const w=Math.max(9,r.amt/mx*100),hot=r.ratio>=50;
-      return '<div class="brow"><span class="bn">'+r.name+'</span><span class="bb"><i style="width:'+w+'%;background:'+col+'"></i><span class="ba">'+r.amt_txt+'</span></span><span class="br" style="'+(hot?'color:'+GOLD+';font-weight:700':'color:var(--mut)')+'">'+r.ratio+'%</span></div>';
-    }).join('')||'<div class="muted" style="padding:8px 2px">无</div>';
-    return '<div class="board"><div class="bh" style="color:'+col+'">'+act+'<small>'+cnt+'个</small></div>'+rs+'</div>';
+      return '<div class="brow"><span class="bn">'+term(r.name)+'</span><span class="bb"><i style="width:'+w+'%;background:'+col+'"></i><span class="ba">'+r.amt_txt+'</span></span><span class="br" style="'+(hot?'color:'+GOLD+';font-weight:700':'color:var(--mut)')+'">'+r.ratio+'%</span></div>';
+    }).join('')||'<div class="muted" style="padding:8px 2px">'+t('none')+'</div>';
+    return '<div class="board"><div class="bh" style="color:'+col+'">'+actText(act)+'<small>'+cnt+' '+t('items')+'</small></div>'+rs+'</div>';
   }).join('');
 }
 
 /* ── 强度表 ── */
-const actTag=a=>!a?'':'<span class="tag '+(a.indexOf('多')>=0?'jd':'jk')+(a[0]==='减'?' less':'')+'">'+a+'</span>';
+const actTag=(raw,label)=>!raw?'':'<span class="tag '+(raw.indexOf('多')>=0?'jd':'jk')+(raw[0]==='减'?' less':'')+'">'+(label||raw)+'</span>';
 function view(){
-  let arr=D.rows.filter(r=>(!fact||r.act===fact)&&(!fdir||r.dir===fdir)&&(!q||r.name.indexOf(q)>=0));
+  let arr=D.rows.filter(r=>(!fact||r.act===fact)&&(!fdir||r.dir===fdir)&&(!q||r.name.indexOf(q)>=0||term(r.name).toLowerCase().indexOf(q.toLowerCase())>=0||term(r.sector||'').toLowerCase().indexOf(q.toLowerCase())>=0));
   const kf={amt:r=>-r.amt,conf:r=>-(r.conf==null?-1:r.conf),ratio:r=>-r.ratio,streak:r=>-Math.abs(r.streak||0)}[sortKey];
   return arr.sort((a,b)=>kf(a)-kf(b));
 }
@@ -399,39 +488,39 @@ function render(){
   const arr=view();
   $('#tb').innerHTML=arr.length?arr.map(r=>{
     const hot=r.ratio>=50, conf=r.conf==null?'<span class="muted">—</span>':
-      '<div class="confcell"><span style="color:'+(r.dir==='利多'?GRN:RED)+';font-weight:700;font-size:12px">'+r.dir+' '+r.conf+'</span><div class="confbar"><i style="width:'+r.conf+'%;background:'+(r.dir==='利多'?GRN:RED)+'"></i></div></div>';
+      '<div class="confcell"><span style="color:'+(r.dir==='利多'?GRN:RED)+';font-weight:700;font-size:12px">'+actText(r.dir)+' '+r.conf+'</span><div class="confbar"><i style="width:'+r.conf+'%;background:'+(r.dir==='利多'?GRN:RED)+'"></i></div></div>';
     const hb=r.hb==null?'—':((r.hb>=0?'+':'')+r.hb+'%'), hbc=r.hb==null?'var(--mut)':(r.hb>=0?RED:GRN);
-    const strk=r.streak?((r.streak>0?'连加':'连减')+Math.abs(r.streak)+'日'):'—';
-    return '<tr class="main" data-n="'+r.name+'"><td class="nm2">'+r.name+'</td><td class="muted">'+(r.sector||'—')+'</td>'+
-      '<td>'+actTag(r.act)+'</td><td class="amt">'+r.amt_txt+'</td><td class="'+(hot?'rel-hot':'muted')+'">'+r.ratio+'%</td>'+
+    const strk=r.streak?(lang==='en'?((r.streak>0?'Added ':'Reduced ')+Math.abs(r.streak)+'d'):((r.streak>0?'连加':'连减')+Math.abs(r.streak)+'日')):'—';
+    return '<tr class="main" data-n="'+r.name+'"><td class="nm2">'+term(r.name)+'</td><td class="muted">'+(r.sector?term(r.sector):'—')+'</td>'+
+      '<td>'+actTag(r.act,actText(r.act))+'</td><td class="amt">'+r.amt_txt+'</td><td class="'+(hot?'rel-hot':'muted')+'">'+r.ratio+'%</td>'+
       '<td style="color:'+hbc+';font-size:12px">'+hb+'</td><td>'+conf+'</td><td class="muted" style="font-size:12px">'+strk+'</td>'+
       '<td>'+sparkMini(r.series)+'</td></tr>'+(opened===r.name?detail(r):'');
-  }).join(''):'<tr><td colspan="9" class="empty">没有匹配的品种</td></tr>';
+  }).join(''):'<tr><td colspan="9" class="empty">'+t('noMatch')+'</td></tr>';
   document.querySelectorAll('#tb tr.main').forEach(tr=>tr.onclick=()=>{opened=opened===tr.dataset.n?null:tr.dataset.n;render();
-    if(opened===tr.dataset.n){const r=D.rows.find(x=>x.name===opened);const host=document.getElementById('dch_'+cssid(opened));if(host)lineChart(host,r.series,D.dates60.slice(D.dates60.length-r.series.length),{h:150,fmt:v=>Math.round(v).toLocaleString()+' 手'});}});
+    if(opened===tr.dataset.n){const r=D.rows.find(x=>x.name===opened);const host=document.getElementById('dch_'+cssid(opened));if(host)lineChart(host,r.series,D.dates60.slice(D.dates60.length-r.series.length),{h:150,fmt:v=>Math.round(v).toLocaleString()+' '+(lang==='en'?'lots':'手')});}});
 }
 function cssid(s){return s.replace(/[^a-zA-Z0-9]/g,c=>c.charCodeAt(0));}
 function detail(r){
-  const items=[['当前净持仓',(r.net>=0?'净多 ':'净空 ')+Math.abs(r.net).toLocaleString()+' 手'],['今日动作',(r.dnet>=0?'+':'')+r.dnet.toLocaleString()+' 手'],
-    ['当日价格',r.px!=null?r.px:'—'],['当日涨跌',r.pc!=null?((r.pc>=0?'+':'')+r.pc+'%'):'—'],
-    ['共振',r.conf!=null?(r.dir+' '+r.conf+'·'+r.tier):'—']];
+  const items=[[t('currentNet'),(r.net>=0?t('netLong')+' ':t('netShort')+' ')+Math.abs(r.net).toLocaleString()+' '+(lang==='en'?'lots':'手')],[t('todayAction'),(r.dnet>=0?'+':'')+r.dnet.toLocaleString()+' '+(lang==='en'?'lots':'手')],
+    [t('todayPx'),r.px!=null?r.px:'—'],[t('todayChg'),r.pc!=null?((r.pc>=0?'+':'')+r.pc+'%'):'—'],
+    [t('resonance'),r.conf!=null?(actText(r.dir)+' '+r.conf+' · '+tierText(r.tier)):'—']];
   return '<tr class="detail"><td colspan="9"><div class="dgrid">'+items.map(x=>'<span class="di"><span>'+x[0]+'</span>　<b>'+x[1]+'</b></span>').join('')+'</div>'+
-    '<div class="chartbox" style="cursor:crosshair" id="dch_'+cssid(r.name)+'"></div><div class="chartcap"><span>'+r.name+' · 近60日机构名义净持仓(手)</span><span>悬停看每日</span></div></td></tr>';
+    '<div class="chartbox" style="cursor:crosshair" id="dch_'+cssid(r.name)+'"></div><div class="chartcap"><span>'+term(r.name)+' · '+(lang==='en'?'Institutional nominal net position over last 60 days (lots)':'近60日机构名义净持仓(手)')+'</span><span>'+t('hoverDaily')+'</span></div></td></tr>';
 }
 
 function persradar(){
   const pers=D.rows.filter(r=>r.streak).sort((a,b)=>Math.abs(b.streak)-Math.abs(a.streak)).slice(0,10), pmx=Math.max(1,...pers.map(r=>Math.abs(r.streak)));
   const prows=pers.map(r=>{const up=r.streak>0,col=up?RED:GRN,w=Math.max(10,Math.abs(r.streak)/pmx*100);
-    return '<div class="prow"><span class="pn">'+r.name+'</span><span style="flex:1;height:16px;background:var(--soft);border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:'+w+'%;background:'+col+';border-radius:5px"></i></span>'+
-      '<span style="width:86px;text-align:right;color:'+col+';font-weight:600;flex:none">'+(up?'连加':'连减')+Math.abs(r.streak)+'日</span><span class="muted" style="width:96px;text-align:right;flex:none;font-size:12px">'+(r.net>=0?'净多':'净空')+' '+Math.abs(r.net).toLocaleString()+'</span></div>';
+    return '<div class="prow"><span class="pn">'+term(r.name)+'</span><span style="flex:1;height:16px;background:var(--soft);border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:'+w+'%;background:'+col+';border-radius:5px"></i></span>'+
+      '<span style="width:86px;text-align:right;color:'+col+';font-weight:600;flex:none">'+(lang==='en'?((up?'Added ':'Reduced ')+Math.abs(r.streak)+'d'):((up?'连加':'连减')+Math.abs(r.streak)+'日'))+'</span><span class="muted" style="width:96px;text-align:right;flex:none;font-size:12px">'+(r.net>=0?t('netLong'):t('netShort'))+' '+Math.abs(r.net).toLocaleString()+'</span></div>';
   }).join('')||'<div class="muted">—</div>';
   const bull=D.rows.filter(r=>r.act==='加多'&&r.pc!=null&&r.pc<-0.2).sort((a,b)=>a.pc-b.pc);
   const bear=D.rows.filter(r=>r.act==='加空'&&r.pc!=null&&r.pc>0.2).sort((a,b)=>b.pc-a.pc);
-  const chips=(arr,col,bg)=>arr.slice(0,6).map(r=>'<span class="chip2" style="color:'+col+';background:'+bg+'">'+r.name+' '+(r.pc>=0?'+':'')+r.pc+'%</span>').join('')||'<span class="muted">—</span>';
+  const chips=(arr,col,bg)=>arr.slice(0,6).map(r=>'<span class="chip2" style="color:'+col+';background:'+bg+'">'+term(r.name)+' '+(r.pc>=0?'+':'')+r.pc+'%</span>').join('')||'<span class="muted">—</span>';
   $('#persradar').innerHTML=
-    '<div class="cardbox"><div class="ch">资金持续性榜 · 机构连续同向</div>'+prows+'</div>'+
-    '<div class="cardbox"><div class="ch">资金背离雷达</div><div style="font-size:12px;color:'+RED+';font-weight:700;margin:6px 0 4px">逆势吸筹 · 加多而价跌</div>'+chips(bull,RED,'#f7e6e1')+
-    '<div style="font-size:12px;color:'+GRN+';font-weight:700;margin:12px 0 4px">逆势沽空 · 加空而价涨</div>'+chips(bear,GRN,'#e2f0e8')+'</div>';
+    '<div class="cardbox"><div class="ch">'+t('persistRank')+'</div>'+prows+'</div>'+
+    '<div class="cardbox"><div class="ch">'+t('divRadar')+'</div><div style="font-size:12px;color:'+RED+';font-weight:700;margin:6px 0 4px">'+t('instLong')+'</div>'+chips(bull,RED,'#f7e6e1')+
+    '<div style="font-size:12px;color:'+GRN+';font-weight:700;margin:12px 0 4px">'+t('instShort')+'</div>'+chips(bear,GRN,'#e2f0e8')+'</div>';
 }
 
 function reson(){
@@ -440,9 +529,9 @@ function reson(){
   let html='';
   BO.forEach(s=>{const g=(byS[s]||[]).sort((a,b)=>b.conf-a.conf);if(!g.length)return;
     const cards=g.map(r=>{const col=r.dir==='利多'?GRN:RED, gold=(r.tier==='很高'||r.tier==='高');
-      return '<div class="rcard" style="border-left:5px solid '+col+'"><div class="rn">'+r.name+'<span class="rtag" style="background:'+col+'">'+r.dir+'</span></div><div class="rs">可信度 <b style="color:'+(gold?GOLD:'var(--mut)')+'">'+r.conf+'·'+r.tier+'</b> · '+r.act+' 价'+(r.pc!=null?((r.pc>=0?'+':'')+r.pc+'%'):'')+'</div></div>';}).join('');
-    html+='<div style="margin-bottom:12px"><div style="font-weight:700;color:var(--dark);border-left:5px solid var(--gold);padding-left:9px;margin:8px 0 7px">'+s+' <span class="muted">'+g.length+'</span></div><div class="reson">'+cards+'</div></div>';});
-  $('#reson').innerHTML=html||'<div class="muted">今日无高一致性共振品种</div>';
+      return '<div class="rcard" style="border-left:5px solid '+col+'"><div class="rn">'+term(r.name)+'<span class="rtag" style="background:'+col+'">'+actText(r.dir)+'</span></div><div class="rs">'+t('tierDot')+' <b style="color:'+(gold?GOLD:'var(--mut)')+'">'+r.conf+' · '+tierText(r.tier)+'</b> · '+actText(r.act)+' '+t('price')+(r.pc!=null?((r.pc>=0?'+':'')+r.pc+'%'):'')+'</div></div>';}).join('');
+    html+='<div style="margin-bottom:12px"><div style="font-weight:700;color:var(--dark);border-left:5px solid var(--gold);padding-left:9px;margin:8px 0 7px">'+term(s)+' <span class="muted">'+g.length+'</span></div><div class="reson">'+cards+'</div></div>';});
+  $('#reson').innerHTML=html||'<div class="muted">'+t('emptyReson')+'</div>';
 }
 
 /* filters */
@@ -453,10 +542,14 @@ $('#sort').addEventListener('change',e=>{sortKey=e.target.value;render();});
 document.querySelectorAll('thead th[data-k]').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(['amt','conf','ratio','streak'].includes(k)){sortKey=k;$('#sort').value=k;render();}});
 document.querySelector('.fact[data-v=""]').setAttribute('data-on','1');
 document.querySelector('.fdir[data-v=""]').setAttribute('data-on','1');
+document.querySelectorAll('.langsw button').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;renderAll();});
 
-header();
-lineChart($('#tidechart'),D.tide,D.dates40,{h:150,fmt:v=>v.toFixed(1)+' 亿'});
-pano();brief();cohbars();heat();boards();render();persradar();scatter($('#quadbox'));reson();
+function renderAll(){
+  header();
+  lineChart($('#tidechart'),D.tide,D.dates40,{h:150,fmt:v=>v.toFixed(1)+' '+(lang==='en'?'CNY 100m':'亿')});
+  pano();brief();cohbars();heat();boards();render();persradar();scatter($('#quadbox'));reson();
+}
+renderAll();
 </script></body></html>
 """
 

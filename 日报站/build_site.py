@@ -379,7 +379,6 @@ REDIRECT_TEMPLATE = r"""<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>__TITLE__ · 最新</title>
-<meta http-equiv="refresh" content="0; url=__TARGET__">
 <link rel="canonical" href="__TARGET__">
 <style>
   body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -389,8 +388,19 @@ REDIRECT_TEMPLATE = r"""<!DOCTYPE html>
 </style>
 </head>
 <body>
-<p>正在跳转到最新一天的__TITLE__（__DATE__）…<br>若未自动跳转，请<a href="__TARGET__">点此打开</a>。</p>
-<script>location.replace("__TARGET__");</script>
+<p id="msg">正在跳转到最新一天的__TITLE__（__DATE__）…<br>若未自动跳转，请<a id="jump" href="__TARGET__">点此打开</a>。</p>
+<script>
+  (function () {
+    var target = "__TARGET__";
+    var params = new URLSearchParams(location.search);
+    var lang = params.get("lang") || localStorage.getItem("windrise_lang");
+    if (lang === "zh" || lang === "en") {
+      target += (target.indexOf("?") >= 0 ? "&" : "?") + "lang=" + lang;
+    }
+    document.getElementById("jump").href = target;
+    location.replace(target);
+  })();
+</script>
 </body>
 </html>
 """

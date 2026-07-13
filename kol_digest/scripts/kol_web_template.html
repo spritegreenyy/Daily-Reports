@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KOL 交易主线 · 可视化终端 · 2026-07-12</title>
+<title>KOL 交易主线 · 可视化终端 · __DATE__</title>
 <style>html,body{margin:0;background:#0e1620}</style>
 </head>
 <body>
@@ -104,7 +104,7 @@
 
 <div class="wrap"><div class="tstat" id="tstat"></div><div class="stream" id="stream"></div></div>
 
-<script type="application/json" id="payload">{"data": {"2026-07-12": {"meta": {"date": "2026-07-12", "n_tweets": 0, "n_kols": 0, "n_accounts": 271, "generated": "2026-07-12 08:07", "title_zh": "KOL 交易主线 · 可视化分类总结", "title_en": "KOL Trading Themes · Visual Summary", "window_zh": "过去 24h（截至北京时间 2026-07-12 16:07）", "window_en": "Past 24h (as of Beijing time 2026-07-12 16:07)", "subtitle_zh": "约 0 位 KOL / 0 条信号推文 · 已过滤新闻搬运、纯数据搬运与无关灌水 · 按板块→子领域分类 · 重点观点已高亮标注　·　英文推优先译中，缺失时保留原文", "subtitle_en": "About 0 KOLs / 0 signal tweets · reposted news, raw data forwarding, and irrelevant chatter filtered out · grouped by sector -> sub-theme · key views highlighted · English tweets are translated into Chinese first; if unavailable, original text is kept"}, "report_zh": {"insights": [], "unique": [], "sections": [["宏观经济", []], ["地缘政治", []], ["大宗商品", []], ["天气气候", []], ["AI半导体", []]]}, "report_en": {"insights": [], "unique": [], "sections": [["Macro", []], ["Geopolitics", []], ["Commodities", []], ["Weather", []], ["AI & Semis", []]]}, "tweets": []}}, "boards": {"macro": {"label_zh": "宏观经济", "label_en": "Macro", "color": "#5b8def", "short_zh": "宏观", "short_en": "Macro"}, "geopolitics": {"label_zh": "地缘政治", "label_en": "Geopolitics", "color": "#ec6f57", "short_zh": "地缘", "short_en": "Geo"}, "commodities": {"label_zh": "大宗商品", "label_en": "Commodities", "color": "#e0952f", "short_zh": "大宗", "short_en": "Cmdty"}, "weather": {"label_zh": "天气气候", "label_en": "Weather", "color": "#33bfad", "short_zh": "天气", "short_en": "Weather"}, "ai_semis": {"label_zh": "AI半导体", "label_en": "AI & Semis", "color": "#b18ef0", "short_zh": "AI", "short_en": "AI"}}, "repColors": {"宏观经济": "#5b8def", "地缘政治": "#ec6f57", "大宗商品": "#e0952f", "股票": "#3fb36a", "AI半导体": "#b18ef0", "AI半导体科技": "#b18ef0", "AI / 半导体": "#b18ef0", "天气气候": "#33bfad"}, "dates": ["2026-07-12"]}</script>
+<script type="application/json" id="payload">__PAYLOAD__</script>
 <script>
 (function(){
   var app=document.getElementById("kolapp"),P=JSON.parse(document.getElementById("payload").textContent),DATA=P.data,BOARDS=P.boards,REPC=P.repColors,DATES=P.dates;
@@ -124,7 +124,7 @@
   function jumpHandle(h){$("#q").value="@"+h;st.q="@"+h;$("#clr").style.display="block";st.board="all";buildPills();render();$("#stream").scrollIntoView({behavior:"smooth",block:"start"})}
   function syncUi(){
     localStorage.setItem("windrise_lang",uiLang); document.documentElement.lang=uiLang==="en"?"en":"zh-CN";
-    document.title=(uiLang==="en"?"KOL Trading Themes · Visual Terminal":"KOL 交易主线 · 可视化终端")+" · 2026-07-12";
+    document.title=(uiLang==="en"?"KOL Trading Themes · Visual Terminal":"KOL 交易主线 · 可视化终端")+" · __DATE__";
     $("#title").innerHTML=tx("title"); $("#st1").textContent=tx("s1"); $("#st2").textContent=tx("s2"); $("#st3").textContent=tx("s3"); $("#st4").textContent=tx("s4");
     $("#q").placeholder=tx("search"); $("#reset").textContent=tx("reset");
     [["#sortSeg",["hot","latest"]],["#tierSeg",["all","tier1","tier2"]],["#langSeg",["bi","zhOnly","enOnly"]]].forEach(function(pair){

@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>期货形态 · 最新</title>
-<meta http-equiv="refresh" content="0; url=../../日报/20260710/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260710.html">
 <link rel="canonical" href="../../日报/20260710/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260710.html">
 <style>
   body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -14,7 +13,18 @@
 </style>
 </head>
 <body>
-<p>正在跳转到最新一天的期货形态（20260710）…<br>若未自动跳转，请<a href="../../日报/20260710/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260710.html">点此打开</a>。</p>
-<script>location.replace("../../日报/20260710/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260710.html");</script>
+<p id="msg">正在跳转到最新一天的期货形态（20260710）…<br>若未自动跳转，请<a id="jump" href="../../日报/20260710/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260710.html">点此打开</a>。</p>
+<script>
+  (function () {
+    var target = "../../日报/20260710/%E6%9C%9F%E8%B4%A7%E5%BD%A2%E6%80%81_20260710.html";
+    var params = new URLSearchParams(location.search);
+    var lang = params.get("lang") || localStorage.getItem("windrise_lang");
+    if (lang === "zh" || lang === "en") {
+      target += (target.indexOf("?") >= 0 ? "&" : "?") + "lang=" + lang;
+    }
+    document.getElementById("jump").href = target;
+    location.replace(target);
+  })();
+</script>
 </body>
 </html>
