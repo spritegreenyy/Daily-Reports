@@ -223,7 +223,7 @@ const UI={
   }
 };
 const TERM_EN={"铜":"Copper","铝":"Aluminum","锌":"Zinc","铅":"Lead","镍":"Nickel","锡":"Tin","黄金":"Gold","白银":"Silver","氧化铝":"Alumina","热卷":"Hot-Rolled Coil","焦煤":"Coking Coal","燃油":"Fuel Oil","苯乙烯":"Styrene","PVC":"PVC","尿素":"Urea","豆二":"Soybean No.2","棕榈油":"Palm Oil","棉花":"Cotton","鸡蛋":"Eggs","红枣":"Red Dates","不锈钢":"Stainless Steel","工业硅":"Industrial Silicon","碳酸锂":"Lithium Carbonate","螺纹钢":"Rebar","铁矿石":"Iron Ore","焦炭":"Coke","硅铁":"Ferrosilicon","锰硅":"Silicomanganese","原油":"Crude Oil","沥青":"Bitumen","液化气":"LPG","PTA":"PTA","甲醇":"Methanol","乙二醇":"MEG","LLDPE":"LLDPE","PP":"Polypropylene","纯碱":"Soda Ash","玻璃":"Glass","短纤":"Polyester Staple Fiber","20号胶":"TSR 20","橡胶":"Rubber","纸浆":"Pulp","豆一":"Soybean No.1","豆粕":"Soybean Meal","豆油":"Soybean Oil","菜粕":"Rapeseed Meal","菜油":"Rapeseed Oil","白糖":"Sugar","玉米":"Corn","淀粉":"Corn Starch","生猪":"Live Hogs","苹果":"Apples","花生":"Peanuts","有色":"Non-Ferrous","黑色":"Ferrous","化工":"Chemicals","能源":"Energy","农产品":"Agri","贵金属":"Precious Metals","机构":"Institutions","外资":"Foreign","杭州":"Hangzhou","中财":"Zhongcai","散户":"Retail","中信期货":"CITIC Futures","国泰君安":"Guotai Junan","东证期货":"Orient Futures","中财期货":"Zhongcai Futures","永安期货":"Yongan Futures","浙商期货":"Zheshang Futures","南华期货":"Nanhua Futures","徽商期货":"Huaan Futures","平安期货":"Ping An Futures","宝城期货":"Baocheng Futures","大地期货":"Dadi Futures","乾坤期货":"Qiankun Futures","物产中大":"Wuchan Zhongda","东方财富期货":"Eastmoney Futures","摩根大通":"J.P. Morgan"};
-const ACT_EN={"加多":"Add Long","减多":"Trim Long","加空":"Add Short","减空":"Trim Short","利多":"Bullish","利空":"Bearish","连加":"Added","连减":"Reduced","很高":"Very High","高":"High","中":"Medium","低":"Low"};
+const ACT_EN={"加多":"Add Long","减多":"Trim Long","加空":"Add Short","减空":"Trim Short","利多":"Bullish","利空":"Bearish","连加":"Added","连减":"Reduced","很高":"Very High","高":"High","中":"Medium","低":"Low","很低":"Very Low"};
 const SRC_EN={"奇货可查龙虎榜逐日主力席位净持仓":"QHQC daily major-seat net positioning","akshare 主力合约价格":"AkShare front-contract prices","机构=中信+国君+东证":"Institutions = CITIC + Guotai Junan + Orient"};
 const t=k=>(UI[lang]&&UI[lang][k])||UI.zh[k]||k;
 const term=v=>lang==='en'?(TERM_EN[v]||v):v;
@@ -231,6 +231,13 @@ const actText=v=>lang==='en'?(ACT_EN[v]||v):v;
 const tierText=v=>lang==='en'?(ACT_EN[v]||v):v;
 function secHtml(a,b){return a+' <small>'+b+'</small>'}
 function sourceText(v){if(lang!=='en')return v;let s=v||'';Object.keys(SRC_EN).forEach(k=>{s=s.replaceAll(k,SRC_EN[k])});return s}
+function amtLabel(r){
+  if(lang!=='en') return r.amt_txt;
+  const a=Math.abs(r.amt||0);
+  if(a>=1e8) return (a/1e8).toFixed(2)+' CNY 100m';
+  if(a>=1e4) return Math.round(a/1e4).toLocaleString()+' CNY 10k';
+  return Math.round(a).toLocaleString()+' CNY';
+}
 function syncUi(){
   localStorage.setItem('windrise_lang',lang);
   document.documentElement.lang=lang==='en'?'en':'zh-CN';
@@ -368,7 +375,7 @@ function pano(){
 
 function brief(){
   const sec=D.sectors.map(s=>[s.name,s.series[s.series.length-1]]).sort((a,b)=>a[1]-b[1]);
-  const topA=x=>D.rows.filter(r=>r.act===x).sort((a,b)=>b.amt-a.amt).slice(0,3).map(r=>term(r.name)+'('+r.amt_txt+(lang==='en'?' CNY 100m':'')+')');
+  const topA=x=>D.rows.filter(r=>r.act===x).sort((a,b)=>b.amt-a.amt).slice(0,3).map(r=>term(r.name)+'('+amtLabel(r)+')');
   const li=[];
   if(lang==='en'){
     li.push('Institutional tide NAV is <b>'+D.net+' CNY 100m</b>, with a '+(D.chg<0?t('todayFlowOut'):t('todayFlowIn'))+' of <b>'+Math.abs(D.chg)+' CNY 100m</b> today and '+t('senti')+' at <b style="color:'+(D.senti>=0?RED:GRN)+'">'+(D.senti>0?'+':'')+D.senti+'%</b>.');
@@ -434,7 +441,7 @@ function boards(){
   $('#boards').innerHTML=cfg.map(([act,col])=>{
     const g=D.rows.filter(r=>r.act===act).sort((a,b)=>b.amt-a.amt).slice(0,7), mx=Math.max(0.001,...g.map(r=>r.amt)),cnt=D.rows.filter(r=>r.act===act).length;
     const rs=g.map(r=>{const w=Math.max(9,r.amt/mx*100),hot=r.ratio>=50;
-      return '<div class="brow"><span class="bn">'+term(r.name)+'</span><span class="bb"><i style="width:'+w+'%;background:'+col+'"></i><span class="ba">'+r.amt_txt+'</span></span><span class="br" style="'+(hot?'color:'+GOLD+';font-weight:700':'color:var(--mut)')+'">'+r.ratio+'%</span></div>';
+      return '<div class="brow"><span class="bn">'+term(r.name)+'</span><span class="bb"><i style="width:'+w+'%;background:'+col+'"></i><span class="ba">'+amtLabel(r)+'</span></span><span class="br" style="'+(hot?'color:'+GOLD+';font-weight:700':'color:var(--mut)')+'">'+r.ratio+'%</span></div>';
     }).join('')||'<div class="muted" style="padding:8px 2px">'+t('none')+'</div>';
     return '<div class="board"><div class="bh" style="color:'+col+'">'+actText(act)+'<small>'+cnt+' '+t('items')+'</small></div>'+rs+'</div>';
   }).join('');
@@ -461,7 +468,7 @@ function render(){
     const hb=r.hb==null?'—':((r.hb>=0?'+':'')+r.hb+'%'), hbc=r.hb==null?'var(--mut)':(r.hb>=0?RED:GRN);
     const strk=r.streak?(lang==='en'?((r.streak>0?'Added ':'Reduced ')+Math.abs(r.streak)+'d'):((r.streak>0?'连加':'连减')+Math.abs(r.streak)+'日')):'—';
     return '<tr class="main" data-n="'+r.name+'"><td class="nm2">'+term(r.name)+'</td><td class="muted">'+(r.sector?term(r.sector):'—')+'</td>'+
-      '<td>'+actTag(r.act,actText(r.act))+'</td><td class="amt">'+r.amt_txt+'</td><td class="'+(hot?'rel-hot':'muted')+'">'+r.ratio+'%</td>'+
+      '<td>'+actTag(r.act,actText(r.act))+'</td><td class="amt">'+amtLabel(r)+'</td><td class="'+(hot?'rel-hot':'muted')+'">'+r.ratio+'%</td>'+
       '<td style="color:'+hbc+';font-size:12px">'+hb+'</td><td>'+conf+'</td><td class="muted" style="font-size:12px">'+strk+'</td>'+
       '<td>'+sparkMini(r.series)+'</td></tr>'+(opened===r.name?detail(r):'');
   }).join(''):'<tr><td colspan="9" class="empty">'+t('noMatch')+'</td></tr>';

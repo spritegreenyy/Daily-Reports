@@ -5,6 +5,7 @@ import json
 import os
 import re
 import sys
+import urllib.request
 
 ROOT = "/Users/yinyue/Downloads/JYWC海拓"
 KD = ROOT + "/kol_digest"
@@ -35,16 +36,6 @@ EN_MAP = [
     ("宏观经济", "Macro"), ("地缘政治", "Geopolitics"), ("大宗商品", "Commodities"),
     ("天气气候", "Weather"), ("AI半导体科技", "AI & Semis"), ("AI半导体", "AI & Semis"),
     ("AI / 半导体", "AI / Semis"), ("厄尔尼诺现状", "El Nino status"),
-    ("微软", "Microsoft"), ("英伟达", "Nvidia"), ("特朗普", "Trump"), ("伊朗", "Iran"),
-    ("股价", "share price"), ("估值", "valuation"), ("并购", "M&A"), ("预期", "expectations"),
-    ("回调", "pullback"), ("融资", "financing"), ("合并", "merge"), ("关系紧张", "relationship is strained"),
-    ("大规模股债融资", "large equity-and-debt financing"), ("真实估值", "fair value"),
-    ("可能", "may"), ("强化", "reinforces"), ("长期需求叙事", "long-term demand narrative"),
-    ("短期", "short term"), ("透支预期", "fully priced in"), ("需警惕", "watch for"), ("获利回吐", "profit taking"),
-    ("市场", "market"), ("资本流动", "capital flows"), ("周期性", "cyclical"), ("领导地位轮换", "leadership rotates"),
-    ("价差", "valuation gap"), ("最终会收窄", "eventually narrows"),
-    ("在我看来", "in my view"), ("积累区域", "accumulation zone"), ("接近", "approaching"),
-    ("支撑线", "support line"), ("如果", "if"), ("将", "will"), ("真是遗憾", "is a shame"),
 ]
 
 
@@ -61,7 +52,87 @@ def translate_text_en(text: str) -> str:
     return out
 
 
-def translate_report_en(rep: dict) -> dict:
+def openai_cfg():
+    base_url = os.environ.get("KOL_DIGEST_BASE_URL", "").strip()
+    api_key = os.environ.get("KOL_DIGEST_API_KEY", "").strip()
+    model = os.environ.get("KOL_DIGEST_MODEL", "").strip()
+    return base_url, api_key, model
+
+
+def extract_json(text: str):
+    text = (text or "").strip()
+    if not text:
+        raise ValueError("empty response")
+    if text.startswith("```"):
+        text = re.sub(r"^```(?:json)?\s*", "", text)
+        text = re.sub(r"\s*```$", "", text)
+    try:
+        return json.loads(text)
+    except Exception:
+        m = re.search(r"(\{.*\})", text, re.S)
+        if not m:
+            raise
+        return json.loads(m.group(1))
+
+
+def call_openai_compatible(*, prompt: str, system_prompt: str, base_url: str, api_key: str, model: str):
+    url = base_url.rstrip("/") + "/chat/completions"
+    payload = {
+        "model": model,
+        "temperature": 0.2,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt},
+        ],
+    }
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+        },
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=120) as resp:
+        raw = resp.read().decode("utf-8")
+    data = json.loads(raw)
+    content = data["choices"][0]["message"]["content"]
+    return extract_json(content)
+
+
+def batched(items, size):
+    return [items[i:i + size] for i in range(0, len(items), size)]
+
+
+def translate_batch_to_en(batch, *, base_url: str, api_key: str, model: str):
+    prompt_rows = [f"[{item['ref']}]\n{item['text']}" for item in batch]
+    prompt = (
+        "You are translating trader-daily content from Chinese into natural professional English.\n"
+        "Requirements:\n"
+        "1. Preserve numbers, tickers, @handles, percentages, prices, and directional meaning.\n"
+        "2. Keep any HTML tags and attributes unchanged.\n"
+        "3. Translate the full text faithfully; do not summarize.\n"
+        "4. Output strict JSON only: {\"items\":[{\"ref\":\"id\",\"en\":\"...\"}]}\n\n"
+        "Texts:\n" + "\n\n".join(prompt_rows)
+    )
+    result = call_openai_compatible(
+        prompt=prompt,
+        system_prompt="You are a bilingual markets editor. Output strict JSON only.",
+        base_url=base_url,
+        api_key=api_key,
+        model=model,
+    )
+    out = {}
+    for item in result.get("items", []):
+        ref = str(item.get("ref") or "").strip()
+        en = str(item.get("en") or "").strip()
+        if ref:
+            out[ref] = en
+    return out
+
+
+def translate_report_en_fallback(rep: dict) -> dict:
     return {
         "insights": [
             {"title": translate_text_en(item.get("title", "")),
@@ -85,6 +156,34 @@ def translate_report_en(rep: dict) -> dict:
     }
 
 
+def translate_report_en_ai(rep: dict, *, base_url: str, api_key: str, model: str) -> dict:
+    prompt = (
+        "Translate the following Chinese trading-report JSON into natural English.\n"
+        "Requirements:\n"
+        "1. Keep the same JSON schema and array structure.\n"
+        "2. Preserve @handles, numbers, percentages, prices, tickers, and HTML tags exactly.\n"
+        "3. Translate all user-facing Chinese, including section titles, subsection titles, and viewpoint body text.\n"
+        "4. Output strict JSON only.\n\n"
+        + json.dumps(rep, ensure_ascii=False)
+    )
+    return call_openai_compatible(
+        prompt=prompt,
+        system_prompt="You are a bilingual sell-side editor. Output strict JSON only.",
+        base_url=base_url,
+        api_key=api_key,
+        model=model,
+    )
+
+
+def load_json_if_exists(path):
+    return json.load(open(path, encoding="utf-8")) if os.path.exists(path) else None
+
+
+def save_json(path, data):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+
 def main():
     date = sys.argv[1] if len(sys.argv) > 1 else None
     if not date:
@@ -95,35 +194,61 @@ def main():
     tw = json.load(open(f"{OUT}/kol_tweets_{ymd}.json", encoding="utf-8"))
     rep_raw = json.load(open(f"{OUT}/content_{ymd}.json", encoding="utf-8"))
     zhp = f"{OUT}/kol_zh_{ymd}.json"
-    zh = json.load(open(zhp, encoding="utf-8")) if os.path.exists(zhp) else {}
+    zh = load_json_if_exists(zhp) or {}
+    enp = f"{OUT}/kol_en_{ymd}.json"
+    en_cache = load_json_if_exists(enp) or {}
+    content_en_path = f"{OUT}/content_en_{ymd}.json"
 
+    base_url, api_key, model = openai_cfg()
+
+    pending_en = []
     tweets, kols, dropped = [], set(), 0
     for sec in tw["sections"]:
         bk = sec["key"] if sec["key"] in TW_BOARD else "macro"
         for item in sec["tweets"]:
             sid = item["source_id"].replace("tw_", "")[-6:]
             src_lang = item.get("language", "en")
-            body_en = (item.get("body") or "").strip()
+            body_src = (item.get("body") or "").strip()
             if src_lang == "zh":
-                body_zh = body_en
+                body_zh = body_src
             elif sid in zh and zh[sid].strip():
                 body_zh = zh[sid].strip()
             else:
-                body_zh = body_en
+                body_zh = body_src
                 if not body_zh:
                     dropped += 1
                     continue
-            if not body_en:
+
+            body_en = body_src if src_lang != "zh" else en_cache.get(sid, "").strip()
+            if src_lang == "zh" and not body_en:
+                pending_en.append({"ref": sid, "text": body_zh})
+            elif not body_en:
                 body_en = translate_text_en(body_zh)
+
             kols.add(item["handle"])
             tags = [x for x in item.get("tags", []) if x != "viewpoint"][:3]
             tweets.append({
+                "sid": sid,
                 "h": item["handle"], "tier": item.get("tier", 2), "b": bk,
                 "t": item.get("published_at", "")[:16].replace("T", " "),
                 "x_zh": body_zh, "x_en": body_en, "u": item.get("url", ""),
                 "lk": item.get("likes", 0), "rt": item.get("retweets", 0), "rp": item.get("replies", 0),
                 "eng": item.get("engagement", 0), "lang": src_lang, "tags": tags
             })
+
+    if pending_en and base_url and api_key and model:
+        for batch in batched(pending_en, 8):
+            try:
+                en_map = translate_batch_to_en(batch, base_url=base_url, api_key=api_key, model=model)
+                en_cache.update(en_map)
+            except Exception as exc:
+                print(f"translate zh->en batch failed: {exc}")
+    if pending_en:
+        save_json(enp, en_cache)
+    for t in tweets:
+        if not t["x_en"]:
+            t["x_en"] = en_cache.get(t["sid"], "").strip() or translate_text_en(t["x_zh"])
+        t.pop("sid", None)
 
     meta = {
         "date": date, "n_tweets": len(tweets), "n_kols": len(kols), "n_accounts": tw.get("active_accounts_count", 0),
@@ -134,7 +259,16 @@ def main():
         "subtitle_en": translate_text_en(rep_raw.get("subtitle_stat", "") + "　·　英文推优先译中，缺失时保留原文"),
     }
     report_zh = {"insights": rep_raw.get("insights", []), "unique": rep_raw.get("unique", []), "sections": rep_raw.get("sections", [])}
-    report_en = translate_report_en(report_zh)
+    report_en = load_json_if_exists(content_en_path)
+    if not report_en and base_url and api_key and model:
+        try:
+            report_en = translate_report_en_ai(report_zh, base_url=base_url, api_key=api_key, model=model)
+            save_json(content_en_path, report_en)
+        except Exception as exc:
+            print(f"translate report zh->en failed: {exc}")
+    if not report_en:
+        report_en = translate_report_en_fallback(report_zh)
+
     data = {date: {"meta": meta, "report_zh": report_zh, "report_en": report_en, "tweets": tweets}}
     boards = {
         k: {"label_zh": v[0], "label_en": v[1], "color": v[2], "short_zh": v[3], "short_en": v[4]}
