@@ -169,6 +169,16 @@ TEMPLATE = r"""<!DOCTYPE html>
   }
   header .navlink:hover { border-color: var(--green); }
   header .gen { margin-left: auto; font-size: 12px; color: var(--muted); }
+  .langsw {
+    display: inline-flex; align-items: center; gap: 4px;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--card);
+    padding: 3px; margin-left: 6px;
+  }
+  .langsw button {
+    border: 0; background: transparent; color: var(--muted);
+    font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; cursor: pointer;
+  }
+  .langsw button[data-on="1"] { background: var(--green-dark); color: #fff; }
 
   .layout { flex: 1; display: flex; min-height: 0; }
 
@@ -236,32 +246,95 @@ TEMPLATE = r"""<!DOCTYPE html>
 </head>
 <body>
 <header>
-  <div class="brand">WINDRISE<span> ·</span> 日报台</div>
-  <div class="sub">形态 / 资金潮汐 / 大宗信号 / KOL观点</div>__EXTRA_NAV__
-  <div class="gen">__NOTE__生成于 __GENERATED__ · 共 __NDATES__ 个交易日</div>
+  <div class="brand" id="brand"></div>
+  <div class="sub" id="sub"></div>__EXTRA_NAV__
+  <div class="langsw"><button type="button" data-lang="zh">中</button><button type="button" data-lang="en">EN</button></div>
+  <div class="gen" id="gen"></div>
 </header>
 <div class="layout">
   <aside>
-    <div class="search"><input id="q" type="text" placeholder="搜日期，如 0616 / 2026-06"></div>
+    <div class="search"><input id="q" type="text"></div>
     <div class="datelist" id="datelist"></div>
   </aside>
   <main>
     <div class="toolbar">
-      <button class="navbtn" id="prev">← 前一天</button>
+      <button class="navbtn" id="prev"></button>
       <span class="curdate" id="curdate"></span>
-      <button class="navbtn" id="next">后一天 →</button>
+      <button class="navbtn" id="next"></button>
       <div class="tabs" id="tabs"></div>
       <div class="filebtns" id="filebtns"></div>
     </div>
-    <div class="viewer" id="viewer"><div class="empty">加载中…</div></div>
+    <div class="viewer" id="viewer"><div class="empty" id="bootempty"></div></div>
   </main>
 </div>
 <script>
 const DATA = __DATA__;
 const dates = DATA.dates;                      // 新→旧
 let di = 0, ti = 0, fi = 0, filter = "";
+let lang = (new URLSearchParams(location.search).get("lang") || localStorage.getItem("windrise_lang") || "zh");
 
 const $ = id => document.getElementById(id);
+const UI = {
+  zh: {
+    brand: 'WINDRISE<span> ·</span> 日报台',
+    sub: '形态 / 资金潮汐 / 大宗信号 / KOL观点',
+    gen: '__NOTE__生成于 __GENERATED__ · 共 __NDATES__ 个交易日',
+    search: '搜日期，如 0616 / 2026-06',
+    prev: '← 前一天',
+    next: '后一天 →',
+    loading: '加载中…',
+    noMatch: '没有匹配的日期',
+    noReport: '当天没有这份报告',
+    days: '份',
+    kolLink: 'KOL终端 ↗',
+    generated: '生成于',
+    totalDays: '个交易日'
+  },
+  en: {
+    brand: 'WINDRISE<span> ·</span> Report Desk',
+    sub: 'Patterns / Tide of Funds / Commodity Signals / KOL Views',
+    gen: '__NOTE__Generated at __GENERATED__ · __NDATES__ trading days',
+    search: 'Search dates, e.g. 0616 / 2026-06',
+    prev: '← Previous',
+    next: 'Next →',
+    loading: 'Loading…',
+    noMatch: 'No matching dates',
+    noReport: 'No report for this day',
+    days: 'files',
+    kolLink: 'KOL Terminal ↗',
+    generated: 'Generated at',
+    totalDays: 'trading days'
+  }
+};
+const TYPE_EN = {"期货形态":"Patterns","A股形态":"A-Share Patterns","资金潮汐":"Tide of Funds","期货资金潮汐":"Tide of Funds","大宗信号·四类资金":"Commodity Signals","KOL观点":"KOL Views"};
+const FILE_EN = {"网页版":"Web","交互版":"Interactive","长图":"Long Image","PDF":"PDF"};
+const WEEKDAY_EN = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+function t(k){ return (UI[lang] && UI[lang][k]) || UI.zh[k] || k; }
+function typeText(v){ return lang === "en" ? (TYPE_EN[v] || v) : v; }
+function fileText(v){ return lang === "en" ? (FILE_EN[v] || v) : v; }
+function fmtDateLabel(item){
+  if (lang !== "en") return item.label;
+  const y = item.date.slice(0,4), m = item.date.slice(4,6), d = item.date.slice(6,8);
+  const dt = new Date(`${y}-${m}-${d}T00:00:00`);
+  const wd = WEEKDAY_EN[(dt.getDay() + 6) % 7] || "";
+  return `${y}-${m}-${d} ${wd}`;
+}
+function syncUi(){
+  localStorage.setItem("windrise_lang", lang);
+  document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
+  document.title = lang === "en" ? "WINDRISE · Report Desk" : "WINDRISE · 日报台";
+  $("brand").innerHTML = t("brand");
+  $("sub").textContent = t("sub");
+  $("gen").textContent = t("gen");
+  $("q").placeholder = t("search");
+  $("prev").textContent = t("prev");
+  $("next").textContent = t("next");
+  if ($("bootempty")) $("bootempty").textContent = t("loading");
+  const nav = document.querySelector("header .navlink");
+  if (nav) nav.textContent = t("kolLink");
+  document.querySelectorAll(".langsw button").forEach(b => b.setAttribute("data-on", b.dataset.lang === lang ? "1" : ""));
+}
 
 function visibleDates() {
   if (!filter) return dates.map((d, i) => i);
@@ -273,15 +346,15 @@ function renderDateList() {
   const idxs = visibleDates();
   $("datelist").innerHTML = idxs.map(i => `
     <div class="dateitem ${i === di ? "active" : ""}" onclick="pickDate(${i})">
-      <span>${dates[i].label}</span><span class="n">${dates[i].types.length}份</span>
-    </div>`).join("") || '<div style="padding:12px;color:var(--muted);font-size:13px">没有匹配的日期</div>';
+      <span>${fmtDateLabel(dates[i])}</span><span class="n">${dates[i].types.length}${t("days")}</span>
+    </div>`).join("") || '<div style="padding:12px;color:var(--muted);font-size:13px">'+t("noMatch")+'</div>';
 }
 
 function renderTabs() {
   const d = dates[di];
-  $("curdate").textContent = d.label;
+  $("curdate").textContent = fmtDateLabel(d);
   $("tabs").innerHTML = d.types.map((t, i) =>
-    `<button class="tab ${i === ti ? "active" : ""}" onclick="pickType(${i})">${t.name}</button>`).join("");
+    `<button class="tab ${i === ti ? "active" : ""}" onclick="pickType(${i})">${typeText(t.name)}</button>`).join("");
   $("prev").disabled = di >= dates.length - 1;
   $("next").disabled = di <= 0;
 }
@@ -289,7 +362,7 @@ function renderTabs() {
 function renderFileBtns() {
   const files = dates[di].types[ti].files;
   $("filebtns").innerHTML = files.length > 1 ? files.map((f, i) =>
-    `<button class="filebtn ${i === fi ? "active" : ""}" onclick="pickFile(${i})">${f.label}</button>`).join("") : "";
+    `<button class="filebtn ${i === fi ? "active" : ""}" onclick="pickFile(${i})">${fileText(f.label)}</button>`).join("") : "";
 }
 
 // 普通模式下文件带 href（相对路径）；打包模式下带 b64（内嵌数据），
@@ -309,7 +382,7 @@ function srcOf(f) {
 function renderViewer() {
   const f = dates[di].types[ti].files[fi];
   const v = $("viewer");
-  if (!f) { v.innerHTML = '<div class="empty">当天没有这份报告</div>'; return; }
+  if (!f) { v.innerHTML = '<div class="empty">'+t("noReport")+'</div>'; return; }
   if (f.kind === "pages") {
     // 打包版里 PDF 已在生成时逐页转成图片（Chrome 不渲染内嵌数据的 PDF）
     v.innerHTML = `<div class="imgwrap">` +
@@ -325,7 +398,7 @@ function renderViewer() {
   }
 }
 
-function renderAll() { renderDateList(); renderTabs(); renderFileBtns(); renderViewer(); }
+function renderAll() { syncUi(); renderDateList(); renderTabs(); renderFileBtns(); renderViewer(); }
 
 window.pickDate = i => {
   const prevKey = dates[di].types[ti] && dates[di].types[ti].key;
@@ -346,6 +419,7 @@ document.addEventListener("keydown", e => {
   if (e.key === "ArrowLeft") $("prev").click();
   if (e.key === "ArrowRight") $("next").click();
 });
+document.querySelectorAll(".langsw button").forEach(b => b.onclick = () => { lang = b.dataset.lang; renderAll(); });
 
 renderAll();
 </script>
