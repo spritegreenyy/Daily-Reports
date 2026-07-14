@@ -85,6 +85,14 @@ def file_label(variant: str, kind: str) -> str:
     return "PDF"
 
 
+def versioned_href(file_path: Path, href: str, kind: str) -> str:
+    if kind != "html":
+        return href
+    ver = int(file_path.stat().st_mtime)
+    joiner = "&" if "?" in href else "?"
+    return f"{href}{joiner}v={ver}"
+
+
 def scan():
     dates = []
     for d in sorted(REPORT_DIR.iterdir(), reverse=True):
@@ -101,6 +109,7 @@ def scan():
                 continue
             type_key, variant, kind = parsed
             href = "../日报/" + quote(d.name) + "/" + quote(f.name)
+            href = versioned_href(f, href, kind)
             groups.setdefault(type_key, []).append({
                 "label": file_label(variant, kind),
                 "kind": kind,
