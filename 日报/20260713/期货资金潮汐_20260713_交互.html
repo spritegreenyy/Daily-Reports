@@ -104,6 +104,13 @@
   .rcard .rs{font-size:11px;color:var(--mut);margin-top:4px}
   .foot{margin-top:24px;border-top:1px solid var(--line);padding-top:10px;font-size:11.5px;color:var(--mut)}
   .empty{padding:30px;text-align:center;color:var(--mut)}
+  html[lang="en"] .brow .bn{width:108px;font-size:11px;line-height:1.15}
+  html[lang="en"] .brow .ba{right:6px;top:3px;font-size:10px}
+  html[lang="en"] .brow .br{width:54px;font-size:10.5px}
+  html[lang="en"] .board .bh{font-size:12px}
+  html[lang="en"] thead th{font-size:10px}
+  html[lang="en"] tbody td{font-size:12.5px}
+  html[lang="en"] .amt{font-size:12.5px}
   #modal{position:fixed;inset:0;background:rgba(20,26,23,.78);display:none;align-items:center;justify-content:center;z-index:50;padding:24px}
   #modal .mbox{background:#fff;border-radius:14px;padding:18px 20px;max-width:900px;width:100%}
   #modal .mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -203,12 +210,12 @@ const UI={
     brief:'Today at a Glance',briefSub:'Auto-generated from today’s major-seat data',
     cohorts:'Net Flow by Participant Type Today',cohortsSub:'Institutions / Foreign / Hangzhou / Zhongcai / Retail · Nominal (CNY 100m) · Expand member seats · Open 40-day curve',
     heat:'Sector Heatmap of Funds',heatSub:'Institutional nominal net positions · Red=long Green=short · Click tiles for 40-day curves',
-    boards:'Four Action Leaderboards',boardsSub:'Ranked by nominal size · Relative move ≥ 50% (gold) = aggressive',
+    boards:'Four Action Leaderboards',boardsSub:'Ranked by nominal size (CNY 100m) · Relative move ≥ 50% (gold) = aggressive',
     table:'Fund Strength Ranking',tableSub:'Filter / sort / click a row for the 60-day institutional position curve',
     persist:'Persistence Ranking · Divergence Radar',persistSub:'Consecutive same-direction days / fund-price divergence',
     quad:'Price × Positioning Quadrants',quadSub:'X = daily price % · Y = institutional flow strength · Hover for contract',
     reson:'Momentum Resonance by Sector',resonSub:'Institutional direction aligned with 10-day trend · confidence calibrated on out-of-sample tests',
-    search:'Search contract, e.g. Lithium Carbonate',all:'All',dir:'Resonance',sort:'Sort',amt:'Nominal Size',conf:'Resonance Confidence',ratio:'Relative Move',streak:'Streak Days',
+    search:'Search contract, e.g. Lithium Carbonate',all:'All',dir:'Resonance',sort:'Sort',amt:'Nominal Size (CNY 100m)',conf:'Resonance Confidence',ratio:'Relative Move',streak:'Streak Days',
     name:'Contract',sector:'Sector',act:'Action',mom:'DoD',last60:'Last 60D',hoverDaily:'Hover for daily values',clickCurve:'Open curve',curve:'Curve',
     noData:'No data',none:'None',noMatch:'No matching contracts',emptyReson:'No high-consensus resonance contract today',
     netMove:'Today change',range40:'40-day range',longCnt:'Added-long contracts',trimLongCnt:'Trimmed-long contracts',shortCnt:'Added-short contracts',trimShortCnt:'Trimmed-short contracts',
@@ -234,8 +241,8 @@ function sourceText(v){if(lang!=='en')return v;let s=v||'';Object.keys(SRC_EN).f
 function amtLabel(r){
   if(lang!=='en') return r.amt_txt;
   const a=Math.abs(r.amt||0);
-  if(a>=1e8) return (a/1e8).toFixed(2)+' CNY 100m';
-  if(a>=1e4) return Math.round(a/1e4).toLocaleString()+' CNY 10k';
+  if(a>=1e8) return (a/1e8).toFixed(a>=1e9?0:1)+' 100m';
+  if(a>=1e4) return Math.round(a/1e4).toLocaleString()+' 10k';
   return Math.round(a).toLocaleString()+' CNY';
 }
 function syncUi(){
