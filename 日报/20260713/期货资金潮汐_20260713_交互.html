@@ -239,7 +239,7 @@ const tierText=v=>lang==='en'?(ACT_EN[v]||v):v;
 function secHtml(a,b){return a+' <small>'+b+'</small>'}
 function sourceText(v){if(lang!=='en')return v;let s=v||'';Object.keys(SRC_EN).forEach(k=>{s=s.replaceAll(k,SRC_EN[k])});return s}
 function fmt100m(a){
-  return (Math.abs(a||0)/1e8).toFixed(2).replace(/\.?0+$/,'');
+  return Math.abs(a||0).toFixed(2).replace(/\.?0+$/,'');
 }
 function amtLabel(r){
   return fmt100m(r.amt||0);
