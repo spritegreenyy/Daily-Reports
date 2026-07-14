@@ -216,12 +216,12 @@ const UI={
     brief:'今日速览',briefSub:'基于当日主力席位数据自动生成',
     cohorts:'各类资金今日净流向',cohortsSub:'机构/外资/杭州/中财/散户 · 名义(亿) · 点行展开成员席位 · 点曲线看40日',
     heat:'板块资金热力',heatSub:'机构名义净持仓 · 红多绿空 · 点块看40日曲线 / 点击筛选',
-    boards:'四类动作榜',boardsSub:'各动作按名义金额排 · 相对幅度≥50%(金色)=激进',
+    boards:'四类动作榜',boardsSub:'各动作按名义金额(CNY 100m)排序 · 相对幅度≥50%(金色)=激进',
     table:'资金强度排行榜',tableSub:'可筛选/排序/点行看该品种60日机构净持仓曲线',
     persist:'资金持续性榜 · 背离雷达',persistSub:'连续同向天数 / 资金与价格逆向',
     quad:'价格 × 持仓象限',quadSub:'横=当日价格% 纵=机构资金流向强度 · 悬停看品种',
     reson:'资金动能共振榜 · 按板块',resonSub:'机构方向与10日趋势同向 · 可信度据样本外回测校准',
-    search:'搜品种，如 碳酸锂',all:'全部',dir:'共振',sort:'排序',amt:'名义金额',conf:'共振可信度',ratio:'相对幅度',streak:'持续天数',
+    search:'搜品种，如 碳酸锂',all:'全部',dir:'共振',sort:'排序',amt:'名义金额 (CNY 100m)',conf:'共振可信度',ratio:'相对幅度',streak:'持续天数',
     name:'品种',sector:'板块',act:'动作',mom:'环比',last60:'近60日',hoverDaily:'悬停看每日',clickCurve:'点看曲线',curve:'曲线',
     noData:'无数据',none:'无',noMatch:'没有匹配的品种',emptyReson:'今日无高一致性共振品种',
     netMove:'今日变动',range40:'40日区间',longCnt:'加多品种',trimLongCnt:'减多品种',shortCnt:'加空品种',trimShortCnt:'减空品种',
@@ -269,12 +269,11 @@ const actText=v=>lang==='en'?(ACT_EN[v]||v):v;
 const tierText=v=>lang==='en'?(ACT_EN[v]||v):v;
 function secHtml(a,b){return a+' <small>'+b+'</small>'}
 function sourceText(v){if(lang!=='en')return v;let s=v||'';Object.keys(SRC_EN).forEach(k=>{s=s.replaceAll(k,SRC_EN[k])});return s}
+function fmt100m(a){
+  return (Math.abs(a||0)/1e8).toFixed(2).replace(/\.?0+$/,'');
+}
 function amtLabel(r){
-  if(lang!=='en') return r.amt_txt;
-  const a=Math.abs(r.amt||0);
-  if(a>=1e8) return (a/1e8).toFixed(a>=1e9?0:1)+' 100m';
-  if(a>=1e4) return Math.round(a/1e4).toLocaleString()+' 10k';
-  return Math.round(a).toLocaleString()+' CNY';
+  return fmt100m(r.amt||0);
 }
 function syncUi(){
   localStorage.setItem('windrise_lang',lang);
