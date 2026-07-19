@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KOL 交易主线 · 可视化终端 · 2026-07-19</title>
+<style>html,body{margin:0;background:#0e1620}</style>
+</head>
+<body>
+<div id="kolapp">
+<style>
+  #kolapp *{box-sizing:border-box}
+  #kolapp{--ink:#0e1620;--panel:#16212e;--panel2:#1b2836;--line:#26374a;--tx:#e7edf4;--mut:#8fa0b3;--mut2:#63748a;--gold:#e7b24d;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--tx);background:var(--ink);min-height:100vh;line-height:1.55;-webkit-font-smoothing:antialiased}
+  #kolapp .mono{font-family:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+  #kolapp b{color:#f4b74a;font-weight:700} #kolapp mark{background:rgba(231,178,77,.26);color:#ffe4a3;border-radius:2px;padding:0 3px;font-weight:600}
+  #kolapp .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  #kolapp .mast{background:linear-gradient(120deg,#132234,#0e1620);border-bottom:1px solid var(--line);padding:22px 0 18px}
+  #kolapp .mast h1{margin:0;font-size:22px;font-weight:800;letter-spacing:.5px}
+  #kolapp .mast h1 .g{color:var(--gold)} #kolapp .mast .win{color:var(--mut);font-size:12.5px;margin-top:5px}
+  #kolapp .mast .sub{color:var(--mut2);font-size:12px;margin-top:3px}
+  #kolapp .mtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  #kolapp .langsw{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;background:var(--panel2);padding:3px}
+  #kolapp .langsw button{border:0;background:transparent;color:var(--mut);font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;cursor:pointer}
+  #kolapp .langsw button[data-on="1"]{background:var(--gold);color:#0e1620}
+  #kolapp select.date{margin-left:auto;background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:13px;cursor:pointer}
+  #kolapp .sect{padding:22px 0 6px} #kolapp .stitle{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut);text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  #kolapp .stitle::before{content:"";width:5px;height:15px;background:var(--gold);border-radius:2px}
+  #kolapp .ins,#kolapp .uq,#kolapp .stream{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+  #kolapp .icard,#kolapp .ucard,#kolapp .card,#kolapp .bsec{background:var(--panel);border:1px solid var(--line);border-radius:11px}
+  #kolapp .icard{padding:14px 16px} #kolapp .icard h3{margin:0 0 9px;font-size:14.5px;font-weight:700;line-height:1.4;color:#fff;display:flex;gap:8px}
+  #kolapp .inum{flex:0 0 auto;width:20px;height:20px;border-radius:6px;background:var(--gold);color:#0e1620;font-size:12px;font-weight:800;display:grid;place-items:center;margin-top:1px}
+  #kolapp .icard li{list-style:none;font-size:12.8px;color:#cdd8e6;margin:6px 0;padding-left:12px;position:relative}
+  #kolapp .icard li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--mut2)}
+  #kolapp .icard ul{margin:0;padding:0}
+  #kolapp .bhead{padding:9px 14px;font-size:14px;font-weight:700;color:#0e1620;cursor:pointer;display:flex;align-items:center;gap:8px}
+  #kolapp .bhead .arrow{margin-left:auto;font-size:12px;opacity:.7} #kolapp .bbody{padding:6px 14px 12px}
+  #kolapp .subg{margin-top:11px} #kolapp .subh{font-size:11.5px;font-weight:700;letter-spacing:.5px;padding:2px 0 2px 8px;margin-bottom:5px;border-left:3px solid var(--sc)}
+  #kolapp .vp{font-size:12.8px;color:#cdd8e6;margin:5px 0;padding-left:2px} #kolapp .vh{font-weight:700;color:var(--tx);cursor:pointer} #kolapp .vh:hover,#kolapp .ucard .uh:hover{color:var(--gold)}
+  #kolapp .vr{color:var(--mut2);font-size:11px;margin:0 5px}
+  #kolapp .ucard{border-left:3px solid #35bfad;padding:12px 14px} #kolapp .ucard .uh{font-weight:700;font-size:13px;color:#35bfad;cursor:pointer}
+  #kolapp .ucard .uv{font-size:12.6px;color:#cdd8e6;margin:6px 0} #kolapp .ucard .ui{font-size:11.8px;color:var(--mut);border-top:1px solid var(--line);padding-top:7px;margin-top:7px}
+  #kolapp .tdiv{margin:30px 0 0;border-top:1px dashed var(--line);padding-top:4px}
+  #kolapp .ctrl{position:sticky;top:0;z-index:15;background:rgba(14,22,32,.94);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid var(--line)}
+  #kolapp .pills{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  #kolapp .pill{border:1px solid var(--line);background:var(--panel);color:var(--mut);border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer;display:inline-flex;gap:7px;white-space:nowrap}
+  #kolapp .pill[data-on="1"]{color:#0e1620;font-weight:600}
+  #kolapp .pill .cnt{font-size:11px;color:var(--mut2)} #kolapp .pill[data-on="1"] .cnt{color:rgba(14,22,32,.6)}
+  #kolapp .row2{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  #kolapp .search{flex:1;min-width:190px;position:relative}
+  #kolapp .search input{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:9px 32px 9px 34px;font-size:14px;outline:none}
+  #kolapp .search .ic{position:absolute;left:11px;top:9px;color:var(--mut2)} #kolapp .search .clr{position:absolute;right:9px;top:7px;color:var(--mut2);cursor:pointer;font-size:16px;display:none}
+  #kolapp .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden} #kolapp .seg button{background:var(--panel);color:var(--mut);border:0;padding:8px 12px;font-size:12.5px;cursor:pointer}
+  #kolapp .seg button+button{border-left:1px solid var(--line)} #kolapp .seg button[data-on="1"]{background:var(--panel2);color:var(--gold)}
+  #kolapp .reset{background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:8px 12px;font-size:12.5px;cursor:pointer}
+  #kolapp .tstat{font-size:12px;color:var(--mut);margin:10px 0} #kolapp .tstat b{color:var(--tx)}
+  #kolapp .stream{padding:4px 0 60px;align-items:start}
+  #kolapp .card{border-left:3px solid var(--bc,#5b8def);padding:12px 14px;cursor:pointer;overflow:hidden}
+  #kolapp .chead{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
+  #kolapp .hand{font-weight:700;font-size:13.5px} #kolapp .hand:hover{color:var(--gold)}
+  #kolapp .bchip{font-size:10.5px;padding:1px 7px;border-radius:5px;font-weight:600;color:#0e1620}
+  #kolapp .t1{font-size:10px;color:var(--gold);border:1px solid rgba(231,178,77,.4);border-radius:4px;padding:0 4px}
+  #kolapp .lang{font-size:10px;color:var(--mut2);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+  #kolapp .time{margin-left:auto;font-size:11px;color:var(--mut2)}
+  #kolapp .cbody{font-size:13.3px;color:#d3ddeb;white-space:pre-wrap;word-break:break-word;max-height:8.6em;overflow:hidden;position:relative}
+  #kolapp .cbody.open{max-height:none} #kolapp .cbody.clamp::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2.2em;background:linear-gradient(180deg,transparent,var(--panel))}
+  #kolapp .more{font-size:11.5px;color:var(--mut2);margin-top:3px;display:inline-block;cursor:pointer}
+  #kolapp .cfoot{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line);flex-wrap:wrap}
+  #kolapp .eng{display:flex;gap:11px;font-size:11.5px;color:var(--mut)} #kolapp .tags{display:flex;gap:5px;flex-wrap:wrap}
+  #kolapp .tag{font-size:10.5px;color:var(--mut);background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;cursor:pointer}
+  #kolapp .open{margin-left:auto;font-size:11.5px;color:var(--gold);white-space:nowrap}
+  #kolapp .empty{grid-column:1/-1;text-align:center;color:var(--mut2);padding:50px 20px}
+  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream{grid-template-columns:1fr}}
+</style>
+
+<div class="mast"><div class="wrap">
+  <div class="mtop">
+    <h1 id="title"></h1>
+    <div class="langsw"><button type="button" data-lang="zh">中</button><button type="button" data-lang="en">EN</button></div>
+    <select class="date" id="dateSel"></select>
+  </div>
+  <div class="win" id="win"></div>
+  <div class="sub" id="sub"></div>
+</div></div>
+
+<div class="wrap">
+  <div class="sect"><div class="stitle" id="st1"></div><div class="ins" id="insights"></div></div>
+  <div class="sect"><div class="stitle" id="st2"></div><div id="sections"></div></div>
+  <div class="sect"><div class="stitle" id="st3"></div><div class="uq" id="unique"></div></div>
+  <div class="tdiv"></div>
+  <div class="sect"><div class="stitle" id="st4"></div></div>
+</div>
+
+<div class="ctrl"><div class="wrap">
+  <div class="pills" id="boardPills"></div>
+  <div class="row2">
+    <div class="search"><span class="ic">🔍</span><input id="q" type="text" autocomplete="off"><span class="clr" id="clr">×</span></div>
+    <div class="seg" id="sortSeg"><button data-v="hot" data-on="1"></button><button data-v="new"></button></div>
+    <div class="seg" id="tierSeg"><button data-v="all" data-on="1"></button><button data-v="1"></button><button data-v="2"></button></div>
+    <div class="seg" id="langSeg"><button data-v="all" data-on="1"></button><button data-v="zh"></button><button data-v="en"></button></div>
+    <button class="reset" id="reset"></button>
+  </div>
+</div></div>
+
+<div class="wrap"><div class="tstat" id="tstat"></div><div class="stream" id="stream"></div></div>
+
+<script type="application/json" id="payload">{"data": {"2026-07-19": {"meta": {"date": "2026-07-19", "n_tweets": 0, "n_kols": 0, "n_accounts": 271, "generated": "2026-07-19 08:09", "title_zh": "KOL 交易主线 · 可视化分类总结", "title_en": "KOL Trading Themes · Visual Summary", "window_zh": "过去 24h（截至北京时间 2026-07-19 16:09）", "window_en": "Past 24h (as of Beijing time 2026-07-19 16:09)", "subtitle_zh": "约 0 位 KOL / 0 条信号推文 · 已过滤新闻搬运、纯数据搬运与无关灌水 · 按板块→子领域分类 · 重点观点已高亮标注　·　英文推优先译中，缺失时保留原文", "subtitle_en": "About 0 KOLs / 0 signal tweets · reposted news, raw data forwarding, and irrelevant chatter filtered out · grouped by sector -> sub-theme · key views highlighted · English tweets are translated into Chinese first; if unavailable, original text is kept"}, "report_zh": {"insights": [], "unique": [], "sections": [["宏观经济", []], ["地缘政治", []], ["大宗商品", []], ["天气气候", []], ["AI半导体", []]]}, "report_en": {"insights": [], "unique": [], "sections": [["Macro", []], ["Geopolitics", []], ["Commodities", []], ["Weather", []], ["AI & Semis", []]]}, "tweets": []}}, "boards": {"macro": {"label_zh": "宏观经济", "label_en": "Macro", "color": "#5b8def", "short_zh": "宏观", "short_en": "Macro"}, "geopolitics": {"label_zh": "地缘政治", "label_en": "Geopolitics", "color": "#ec6f57", "short_zh": "地缘", "short_en": "Geo"}, "commodities": {"label_zh": "大宗商品", "label_en": "Commodities", "color": "#e0952f", "short_zh": "大宗", "short_en": "Cmdty"}, "weather": {"label_zh": "天气气候", "label_en": "Weather", "color": "#33bfad", "short_zh": "天气", "short_en": "Weather"}, "ai_semis": {"label_zh": "AI半导体", "label_en": "AI & Semis", "color": "#b18ef0", "short_zh": "AI", "short_en": "AI"}}, "repColors": {"宏观经济": "#5b8def", "地缘政治": "#ec6f57", "大宗商品": "#e0952f", "股票": "#3fb36a", "AI半导体": "#b18ef0", "AI半导体科技": "#b18ef0", "AI / 半导体": "#b18ef0", "天气气候": "#33bfad"}, "dates": ["2026-07-19"]}</script>
+<script>
+(function(){
+  var app=document.getElementById("kolapp"),P=JSON.parse(document.getElementById("payload").textContent),DATA=P.data,BOARDS=P.boards,REPC=P.repColors,DATES=P.dates;
+  var uiLang=(new URLSearchParams(location.search).get("lang")||localStorage.getItem("windrise_lang")||"zh");
+  var st={date:DATES[0],board:"all",tier:"all",lang:"all",sort:"hot",q:""};
+  var UI={zh:{title:'KOL 交易主线<span class="g"> · </span>可视化终端',s1:'一 · 本日核心交易启示',s2:'二 · 五大板块 · 逐条观点',s3:'三 · 独到 / 有启发性的观点',s4:'四 · 全部推文 · 可检索（点击跳转原推）',search:'搜索关键词 / @账号（按 / 聚焦，Esc 清空）',hot:'热度',latest:'最新',all:'全部',tier1:'一线',tier2:'二线',zhOnly:'中文',enOnly:'EN',bi:'中英',reset:'重置',open:'打开 ↗',more:'展开全文 ▾',less:'收起 ▴',empty:'没有匹配的推文 —— 换个词或点「重置」。',show:'当前显示',kols:'位 KOL',monitor:'监测',accounts:'账号',domains:'领域',items:'条',meaning:'交易含义：',langZh:'中',langEn:'EN'},en:{title:'KOL Trading Themes<span class="g"> · </span>Visual Terminal',s1:'I · Core Trading Takeaways',s2:'II · Five Sectors · View by View',s3:'III · Distinctive / Insightful Views',s4:'IV · All Tweets · Searchable (click to open source)',search:'Search keyword / @handle (press / to focus, Esc to clear)',hot:'Hot',latest:'Latest',all:'All',tier1:'Tier 1',tier2:'Tier 2',zhOnly:'Chinese',enOnly:'English',bi:'Both',reset:'Reset',open:'Open ↗',more:'Expand ▾',less:'Collapse ▴',empty:'No matching tweets. Try another keyword or reset.',show:'Showing',kols:'KOLs',monitor:'monitoring',accounts:'accounts',domains:'domains',items:'items',meaning:'Trading implication: ',langZh:'ZH',langEn:'EN'}};
+  var $=function(s){return app.querySelector(s)};
+  function esc(s){return (s||"").replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+  function tx(k){return UI[uiLang][k]||UI.zh[k]||k}
+  function boardLabel(k){var b=BOARDS[k]||{};return uiLang==="en"?(b.label_en||b.label_zh||k):(b.label_zh||k)}
+  function boardShort(k){var b=BOARDS[k]||{};return uiLang==="en"?(b.short_en||b.short_zh||k):(b.short_zh||k)}
+  function report(){var c=DATA[st.date];return uiLang==="en"?c.report_en:c.report_zh}
+  function bodyOf(t){return uiLang==="en"?(t.x_en||t.x_zh||""):(t.x_zh||t.x_en||"")}
+  function fmt(n){return n>=1000?(n/1000).toFixed(n>=10000?0:1)+"k":""+n}
+  function hl(s,q){s=s||"";if(!q)return s;try{var re=new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi");return s.replace(re,"<mark>$1</mark>")}catch(e){return s}}
+  function cur(){return DATA[st.date]}
+  function jumpHandle(h){$("#q").value="@"+h;st.q="@"+h;$("#clr").style.display="block";st.board="all";buildPills();render();$("#stream").scrollIntoView({behavior:"smooth",block:"start"})}
+  function syncUi(){
+    localStorage.setItem("windrise_lang",uiLang); document.documentElement.lang=uiLang==="en"?"en":"zh-CN";
+    document.title=(uiLang==="en"?"KOL Trading Themes · Visual Terminal":"KOL 交易主线 · 可视化终端")+" · 2026-07-19";
+    $("#title").innerHTML=tx("title"); $("#st1").textContent=tx("s1"); $("#st2").textContent=tx("s2"); $("#st3").textContent=tx("s3"); $("#st4").textContent=tx("s4");
+    $("#q").placeholder=tx("search"); $("#reset").textContent=tx("reset");
+    [["#sortSeg",["hot","latest"]],["#tierSeg",["all","tier1","tier2"]],["#langSeg",["bi","zhOnly","enOnly"]]].forEach(function(pair){
+      var btns=$(pair[0]).querySelectorAll("button"); pair[1].forEach(function(k,i){btns[i].textContent=tx(k)})});
+    app.querySelectorAll(".langsw button").forEach(function(b){b.setAttribute("data-on",b.dataset.lang===uiLang?"1":"")});
+  }
+  var dsel=$("#dateSel"); DATES.forEach(function(d){var o=document.createElement("option");o.value=d;o.textContent=d;dsel.appendChild(o)}); dsel.value=st.date;
+  dsel.onchange=function(){st.date=dsel.value;st.board="all";renderAll()};
+
+  function renderReport(){
+    var r=report(),m=cur().meta;
+    $("#win").textContent=uiLang==="en"?m.window_en:m.window_zh; $("#sub").textContent=uiLang==="en"?m.subtitle_en:m.subtitle_zh;
+    var ih=$("#insights");ih.innerHTML=""; r.insights.forEach(function(it,i){var c=document.createElement("div");c.className="icard";c.innerHTML='<h3><span class="inum">'+(i+1)+'</span><span>'+it.title+'</span></h3><ul>'+it.points.map(function(p){return "<li>"+p+"</li>"}).join("")+'</ul>';ih.appendChild(c)});
+    var sh=$("#sections");sh.innerHTML="";
+    r.sections.forEach(function(pair){
+      var name=pair[0],subs=pair[1],col=REPC[name]||"#5b8def",nvp=subs.reduce(function(a,s){return a+s[1].length},0);
+      var inner=subs.map(function(sd){return '<div class="subg"><div class="subh" style="--sc:'+col+';color:'+col+'">'+sd[0]+'</div>'+sd[1].map(function(row){return '<div class="vp"><span class="vh" data-h="'+esc(row[0].replace("@",""))+'">'+row[0]+'</span>'+(row[1]?'<span class="vr">'+row[1]+'</span>':'')+row[2]+'</div>'}).join("")+'</div>'}).join("");
+      var box=document.createElement("div");box.className="bsec";box.innerHTML='<div class="bhead" style="background:'+col+'">'+name+' <span style="font-weight:500;opacity:.75;font-size:12px">'+subs.length+' '+tx("domains")+' · '+nvp+' '+tx("items")+'</span><span class="arrow">▾</span></div><div class="bbody">'+inner+'</div>';
+      var bd=box.querySelector(".bbody"),hd=box.querySelector(".bhead"); hd.onclick=function(){bd.style.display=bd.style.display==="none"?"":"none";box.querySelector(".arrow").textContent=bd.style.display==="none"?"▸":"▾"}; sh.appendChild(box);
+    });
+    sh.querySelectorAll(".vh").forEach(function(v){v.onclick=function(){jumpHandle(v.dataset.h)}});
+    var uh=$("#unique");uh.innerHTML=""; r.unique.forEach(function(u){var c=document.createElement("div");c.className="ucard";c.innerHTML='<div class="uh" data-h="'+esc(u[0].replace("@",""))+'">'+u[0]+'</div><div class="uv">'+u[1]+'</div><div class="ui">'+tx("meaning")+u[2]+'</div>';c.querySelector(".uh").onclick=function(){jumpHandle(u[0].replace("@",""))};uh.appendChild(c)});
+  }
+  function buildPills(){
+    var tw=cur().tweets,wrap=$("#boardPills");wrap.innerHTML=""; var counts={all:tw.length};Object.keys(BOARDS).forEach(function(k){counts[k]=0}); tw.forEach(function(t){counts[t.b]=(counts[t.b]||0)+1});
+    function mk(key,label,color){var p=document.createElement("button");p.className="pill";p.innerHTML=label+' <span class="cnt">'+(counts[key]||0)+'</span>';if(st.board===key){p.setAttribute("data-on","1");p.style.background=color;p.style.borderColor=color} p.onclick=function(){st.board=key;buildPills();render()};return p}
+    wrap.appendChild(mk("all",tx("all"),"#e7b24d")); Object.keys(BOARDS).forEach(function(k){wrap.appendChild(mk(k,boardLabel(k),BOARDS[k].color))});
+  }
+  function pass(t){
+    if(st.board!=="all"&&t.b!==st.board)return false;
+    if(st.tier!=="all"&&(""+t.tier)!==st.tier)return false;
+    if(st.lang!=="all"&&t.lang!==st.lang)return false;
+    if(st.q){var q=st.q.toLowerCase(); var hay=(bodyOf(t)+" "+(t.x_zh||"")+" "+(t.x_en||"")+" @"+t.h+" "+(t.tags||[]).join(" ")).toLowerCase(); if(hay.indexOf(q)<0)return false}
+    return true
+  }
+  function render(){
+    var m=cur().meta,tw=cur().tweets.filter(pass); tw.sort(function(a,b){return st.sort==="hot"?b.eng-a.eng:(a.t<b.t?1:-1)});
+    var kol=new Set(tw.map(function(t){return t.h})).size; $("#tstat").innerHTML=tx("show")+' <b>'+tw.length+'</b> / '+m.n_tweets+' · <b>'+kol+'</b> '+tx("kols")+' · '+tx("monitor")+' '+m.n_accounts+' '+tx("accounts");
+    var s=$("#stream"); if(!tw.length){s.innerHTML='<div class="empty">'+tx("empty")+'</div>';return} s.innerHTML="";
+    tw.forEach(function(t){
+      var B=BOARDS[t.b]||{color:"#5b8def"}, body=bodyOf(t), tags=(t.tags||[]).map(function(x){return '<span class="tag" data-tag="'+esc(x)+'">'+esc(x)+'</span>'}).join("");
+      var c=document.createElement("div"); c.className="card"; c.tabIndex=0; c.style.setProperty("--bc",B.color);
+      c.innerHTML='<div class="chead"><span class="hand" data-h="'+esc(t.h)+'">@'+esc(t.h)+'</span><span class="bchip" style="background:'+B.color+'">'+boardShort(t.b)+'</span>'+(t.tier===1?'<span class="t1">'+tx("tier1")+'</span>':'')+'<span class="lang">'+(t.lang==="zh"?tx("langZh"):tx("langEn"))+'</span><span class="time mono">'+esc(t.t)+'</span></div><div class="cbody">'+hl(body,st.q)+'</div><div class="cfoot"><span class="eng mono"><span>♥ '+fmt(t.lk)+'</span><span>⟲ '+fmt(t.rt)+'</span><span>💬 '+fmt(t.rp)+'</span></span><span class="tags">'+tags+'</span><span class="open">'+tx("open")+'</span></div>';
+      var bodyEl=c.querySelector(".cbody"); requestAnimationFrame(function(){if(bodyEl.scrollHeight>bodyEl.clientHeight+4){bodyEl.classList.add("clamp"); var mm=document.createElement("span"); mm.className="more"; mm.textContent=tx("more"); bodyEl.after(mm); mm.onclick=function(e){e.stopPropagation();bodyEl.classList.toggle("open");bodyEl.classList.toggle("clamp");mm.textContent=bodyEl.classList.contains("open")?tx("less"):tx("more")}}});
+      c.onclick=function(){window.open(t.u,"_blank","noopener")}; c.onkeydown=function(e){if(e.key==="Enter")window.open(t.u,"_blank","noopener")};
+      c.querySelector(".hand").onclick=function(e){e.stopPropagation();jumpHandle(t.h)}; c.querySelectorAll(".tag").forEach(function(tg){tg.onclick=function(e){e.stopPropagation();$("#q").value=tg.dataset.tag;st.q=tg.dataset.tag;$("#clr").style.display="block";render()}});
+      s.appendChild(c);
+    })
+  }
+  function renderAll(){syncUi();renderReport();buildPills();render()}
+  var qi=$("#q"),clr=$("#clr"); qi.oninput=function(){st.q=qi.value.trim();clr.style.display=qi.value?"block":"none";render()}; clr.onclick=function(){qi.value="";st.q="";clr.style.display="none";qi.focus();render()};
+  document.addEventListener("keydown",function(e){if(e.key==="/"&&document.activeElement!==qi){e.preventDefault();qi.focus()} if(e.key==="Escape"&&document.activeElement===qi){qi.value="";st.q="";clr.style.display="none";render()}});
+  function seg(id,key){var el=$(id);el.querySelectorAll("button").forEach(function(b){b.onclick=function(){el.querySelectorAll("button").forEach(function(x){x.removeAttribute("data-on")});b.setAttribute("data-on","1");st[key]=b.dataset.v;render()}})}
+  seg("#sortSeg","sort"); seg("#tierSeg","tier"); seg("#langSeg","lang");
+  $("#reset").onclick=function(){st.board="all";st.tier="all";st.lang="all";st.sort="hot";st.q="";qi.value="";clr.style.display="none";[["#sortSeg","hot"],["#tierSeg","all"],["#langSeg","all"]].forEach(function(p){var el=$(p[0]);el.querySelectorAll("button").forEach(function(x){x.setAttribute("data-on",x.dataset.v===p[1]?"1":"")})});buildPills();render()};
+  app.querySelectorAll(".langsw button").forEach(function(b){b.onclick=function(){uiLang=b.dataset.lang;renderAll()}});
+  renderAll();
+})();
+</script>
+</div>
+</body>
+</html>
