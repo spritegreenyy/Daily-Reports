@@ -444,7 +444,7 @@ def build():
         "cohorts": [_cohort_json(c) for c in COHORTS if cohort_flow(c) is not None],
         "sectors": [{"name": sec, "series": [round(float(x), 1) for x in _secser[sec]]} for sec in SEC_ORDER if _secser[sec] is not None],
         "rows": [_row_json(m) for m in ROWS],
-        "backtests": build_cohort_backtests(DATA, DISP, SECTOR, MULT, SEC_ORDER),
+        "backtests": build_cohort_backtests(DATA, DISP, SECTOR, MULT, SEC_ORDER, BDATA, COHORT_MEMBERS),
         "source": "奇货可查龙虎榜逐日主力席位净持仓 + akshare 主力合约价格 · 机构=中信+国君+东证",
     }
     (OUT / f"期货资金潮汐_{TARGET.replace('-','')}_data.json").write_text(json.dumps(web_data, ensure_ascii=False), encoding="utf-8")
