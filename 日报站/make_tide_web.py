@@ -133,6 +133,21 @@ TEMPLATE = r"""<!doctype html>
   .rcard .rn{font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center}
   .rtag{color:#fff;font-size:10.5px;padding:1px 8px;border-radius:7px}
   .rcard .rs{font-size:11px;color:var(--mut);margin-top:4px}
+  .btgroups{display:flex;flex-direction:column;gap:14px}
+  .btgroup{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .bthead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:10px}
+  .btname{font-family:Georgia,"Noto Serif CJK SC",serif;font-size:18px;font-weight:700;color:var(--dark)}
+  .btbadge{font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;background:var(--soft);color:var(--dark)}
+  .btbadge.rev{background:#f5dfd9;color:var(--long)}
+  .btmetrics{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}
+  .btmetric{font-size:11px;color:var(--mut);text-align:right}.btmetric b{display:block;font:700 17px Georgia,serif;color:var(--ink)}
+  .btread{font-size:12.5px;line-height:1.65;color:var(--ink);margin:2px 0 11px;padding:8px 11px;background:#fff;border-left:4px solid var(--gold);border-radius:7px}
+  .btcharts{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:10px}
+  .btchart{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+  .btcname{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;margin-bottom:5px}
+  .btcname small{font-weight:400;color:var(--mut)}
+  .btlegend{display:flex;gap:13px;color:var(--mut);font-size:10.5px;margin-top:4px}.btlegend i{display:inline-block;width:13px;height:2px;vertical-align:middle;margin-right:4px}
+  .btnote{font-size:10.5px;color:var(--mut);margin-top:10px;line-height:1.55}
   .foot{margin-top:24px;border-top:1px solid var(--line);padding-top:10px;font-size:11.5px;color:var(--mut)}
   .empty{padding:30px;text-align:center;color:var(--mut)}
   html[lang="en"] .brow .bn{width:108px;font-size:11px;line-height:1.15}
@@ -166,6 +181,9 @@ TEMPLATE = r"""<!doctype html>
 
   <h2 class="sec-h" id="sec-cohorts"></h2>
   <div class="cohbars" id="cohbars"></div>
+
+  <h2 class="sec-h" id="sec-backtest"></h2>
+  <div class="btgroups" id="backtests"></div>
 
   <h2 class="sec-h" id="sec-heat"></h2>
   <div class="heat" id="heat"></div>
@@ -232,6 +250,10 @@ const UI={
     price:'价',strength:'资金强度',openMembers:'点行展开成员席位',members:'成员席位',dataSource:'数据源',nominal:'名义=持仓×合约乘数×收盘价',desc:'描述性研究,不构成投资建议',
     todayFlowIn:'净流入',todayFlowOut:'净流出',sectorLayer:'板块层面',mostShort:'资金最空',mostLong:'最多',topLong:'加多力度居前',topShort:'加空力度居前',
     divSignal:'背离信号',bullList:'逆势吸筹',bearList:'逆势沽空',tierDot:'可信度',currentShow:'当前显示',monitoring:'监测',accounts:'账号',
+    backtest:'三类席位板块回测',backtestSub:'机构 / 杭州 / 外资 · 信号与未来价格相关度及胜率 · 仅展示各组最佳板块',
+    bestSector:'最佳板块',forward:'顺向',reverse:'反向',corr:'相关度',winRate:'胜率',horizon:'观察周期',samples:'样本',tradingDays:'个交易日',
+    seatNet:'席位净持仓',priceTrend:'价格',latestSignal:'最新信号',currentBias:'当前解读',noActiveSignal:'未达触发阈值',bullishWatch:'偏多观察',bearishWatch:'偏空观察',evidenceWeak:'弱',evidenceMedium:'中等',evidenceStrong:'较强',evidence:'证据强度',
+    backtestNote:'口径：板块席位名义净流向经过去60日标准化，与未来1/3/5日板块等权收益比较；|z|≥0.5才计入胜率。结果未计交易成本，重叠周期可能放大统计显著性。',
     aggressive:'激进',items:'个',days:'日'
   },
   en:{
@@ -257,6 +279,10 @@ const UI={
     price:'Price',strength:'Flow strength',openMembers:'Expand member seats',members:'Member seats',dataSource:'Source',nominal:'Nominal = position × contract multiplier × close',desc:'Descriptive research only, not investment advice',
     todayFlowIn:'net inflow',todayFlowOut:'net outflow',sectorLayer:'By sector',mostShort:'most net-short',mostLong:'most net-long',topLong:'Top add-long strength',topShort:'Top add-short strength',
     divSignal:'Divergence signal',bullList:'Counter-trend accumulation',bearList:'Counter-trend shorting',tierDot:'Confidence',currentShow:'Showing',monitoring:'monitoring',accounts:'accounts',
+    backtest:'Seat Signals by Sector · Backtest',backtestSub:'Institutions / Hangzhou / Foreign · correlation and hit rate versus subsequent returns · best sector only',
+    bestSector:'Best sector',forward:'Directional',reverse:'Contrarian',corr:'Correlation',winRate:'Hit rate',horizon:'Horizon',samples:'Samples',tradingDays:'trading days',
+    seatNet:'Seat net position',priceTrend:'Price',latestSignal:'Latest signal',currentBias:'Current read',noActiveSignal:'Below trigger threshold',bullishWatch:'Bullish watch',bearishWatch:'Bearish watch',evidenceWeak:'Weak',evidenceMedium:'Moderate',evidenceStrong:'Stronger',evidence:'Evidence',
+    backtestNote:'Method: sector nominal seat flow is standardized on the prior 60 days and compared with equal-weight sector returns over the next 1/3/5 days; hit rate includes |z| ≥ 0.5 signals only. Trading costs are excluded and overlapping horizons may overstate significance.',
     aggressive:'Aggressive',items:'items',days:'days'
   }
 };
@@ -282,6 +308,7 @@ function syncUi(){
   $('#title').textContent=t('title'); $('#asof').textContent=t('asof'); $('#netlb').textContent=t('netlb');
   $('#sec-tide').innerHTML=secHtml(t('tide'),t('tideSub')); $('#sec-pano').innerHTML=secHtml(t('pano'),t('panoSub'));
   $('#sec-brief').innerHTML=secHtml(t('brief'),t('briefSub')); $('#sec-cohorts').innerHTML=secHtml(t('cohorts'),t('cohortsSub'));
+  $('#sec-backtest').innerHTML=secHtml(t('backtest'),t('backtestSub'));
   $('#sec-heat').innerHTML=secHtml(t('heat'),t('heatSub')); $('#sec-boards').innerHTML=secHtml(t('boards'),t('boardsSub'));
   $('#sec-table').innerHTML=secHtml(t('table'),t('tableSub')); $('#sec-persist').innerHTML=secHtml(t('persist'),t('persistSub'));
   $('#sec-quad').innerHTML=secHtml(t('quad'),t('quadSub')); $('#sec-reson').innerHTML=secHtml(t('reson'),t('resonSub'));
@@ -333,6 +360,23 @@ function lineChart(host, y, dates, opt){
   svg.addEventListener('mousemove',move); svg.addEventListener('touchmove',move,{passive:true});
   const hide=()=>{cross.style.display='none';tip.style.display='none';};
   svg.addEventListener('mouseleave',hide);
+}
+
+function seatPriceChart(host,item){
+  const net=item.net||[], rawclose=item.close||[], dates=item.dates||[];let carry=rawclose.find(v=>v!=null)||0;
+  const close=rawclose.map(v=>{if(v!=null)carry=v;return carry;}),n=Math.min(net.length,close.length);
+  if(!n){host.innerHTML='<div class="muted">'+t('noData')+'</div>';return;}
+  const W=520,H=108,pad=5;
+  const scale=a=>{const ok=a.filter(v=>v!=null&&Number.isFinite(+v)),lo=Math.min(...ok),hi=Math.max(...ok),span=(hi-lo)||1;return v=>H-pad-(v-lo)/span*(H-pad*2)};
+  const yn=scale(net),yp=scale(close),X=i=>n<2?W/2:i/(n-1)*W;
+  const path=(a,Y)=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ');
+  host.innerHTML='<div style="position:relative"><svg class="lc" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" style="width:100%;height:'+H+'px">'+
+    '<path d="'+path(close,yp)+'" fill="none" stroke="'+GOLD+'" stroke-width="1.7" opacity=".85" vector-effect="non-scaling-stroke"/>'+
+    '<path d="'+path(net,yn)+'" fill="none" stroke="'+DARK+'" stroke-width="2.2" vector-effect="non-scaling-stroke"/>'+
+    '<g class="cross" style="display:none"><line class="cx" y1="0" y2="'+H+'" stroke="#8a8676" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/></g><rect class="ov" width="'+W+'" height="'+H+'" fill="transparent"/></svg><div class="tip" style="display:none"></div></div>';
+  const svg=host.querySelector('svg'),cross=host.querySelector('.cross'),cx=host.querySelector('.cx'),tip=host.querySelector('.tip');
+  svg.addEventListener('mousemove',e=>{const r=svg.getBoundingClientRect(),i=Math.max(0,Math.min(n-1,Math.round((e.clientX-r.left)/r.width*(n-1)))),x=X(i);cross.style.display='';cx.setAttribute('x1',x);cx.setAttribute('x2',x);tip.style.display='block';tip.innerHTML='<b>'+dates[i]+'</b><br>'+t('seatNet')+' '+Number(net[i]).toLocaleString()+' · '+t('priceTrend')+' '+Number(close[i]).toLocaleString();tip.style.left=Math.min(r.width-(tip.offsetWidth||150),Math.max(0,x/W*r.width-60))+'px';tip.style.top='8px';});
+  svg.addEventListener('mouseleave',()=>{cross.style.display='none';tip.style.display='none';});
 }
 
 /* ── 象限散点(悬停看品种) ── */
@@ -465,6 +509,24 @@ function cohbars(){
   });
 }
 
+function backtests(){
+  const root=$('#backtests'), groups=(D.backtests&&D.backtests.groups)||[];
+  if(!groups.length){root.innerHTML='<div class="muted">'+t('noData')+'</div>';return;}
+  const pct=v=>(v*100).toFixed(1)+'%', signed=v=>(v>=0?'+':'')+(v*100).toFixed(1)+'%';
+  root.innerHTML=groups.map((g,gi)=>{const b=g.best,rev=b.mode==='反向',mode=rev?t('reverse'):t('forward');
+    const strength=(Math.abs(b.ic)>=.15&&b.win_rate>=.58)?t('evidenceStrong'):(Math.abs(b.ic)>=.08||b.win_rate>=.55)?t('evidenceMedium'):t('evidenceWeak');
+    const active=Math.abs(b.latest_z||0)>=((D.backtests.method&&D.backtests.method.signal_threshold)||.5),bull=active&&((b.latest_z>0)!==rev),bias=!active?t('noActiveSignal'):(bull?t('bullishWatch'):t('bearishWatch'));
+    let reading=lang==='en'
+      ? term(g.cohort)+' performs best in '+term(b.sector)+' on a '+b.horizon+'-day '+mode.toLowerCase()+' reading. Historical hit rate is <b>'+pct(b.win_rate)+'</b> with correlation <b>'+signed(b.ic)+'</b>; evidence is <b>'+strength.toLowerCase()+'</b>.'
+      : term(g.cohort)+'在'+term(b.sector)+'板块的'+b.horizon+'日'+mode+'解读相对最好，历史胜率 <b>'+pct(b.win_rate)+'</b>、相关度 <b>'+signed(b.ic)+'</b>；当前证据强度为<b>'+strength+'</b>。';
+    reading+=' '+t('currentBias')+': <b style="color:'+(active?(bull?RED:GRN):'var(--mut)')+'">'+bias+'</b> (z '+(b.latest_z>=0?'+':'')+b.latest_z+').';
+    const charts=(b.contracts||[]).map((c,ci)=>'<div class="btchart"><div class="btcname"><span>'+term(c.name)+'</span><small>'+t('latestSignal')+' z '+(c.latest_z==null?'—':((c.latest_z>=0?'+':'')+c.latest_z))+'</small></div><div id="bt_'+gi+'_'+ci+'"></div><div class="btlegend"><span><i style="background:'+DARK+'"></i>'+t('seatNet')+'</span><span><i style="background:'+GOLD+'"></i>'+t('priceTrend')+'</span></div></div>').join('');
+    return '<section class="btgroup"><div class="bthead"><span class="btname">'+term(g.cohort)+'</span><span class="btbadge">'+t('bestSector')+' · '+term(b.sector)+'</span><span class="btbadge '+(rev?'rev':'')+'">'+mode+'</span><span class="btbadge">'+t('evidence')+' · '+strength+'</span><div class="btmetrics">'+
+      '<span class="btmetric">'+t('corr')+'<b>'+signed(b.ic)+'</b></span><span class="btmetric">'+t('winRate')+'<b>'+pct(b.win_rate)+'</b></span><span class="btmetric">'+t('horizon')+'<b>'+b.horizon+'D</b></span><span class="btmetric">'+t('samples')+'<b>'+b.samples+'</b></span></div></div><div class="btread">'+reading+'</div><div class="btcharts">'+charts+'</div></section>';
+  }).join('')+'<div class="btnote">'+t('backtestNote')+'</div>';
+  groups.forEach((g,gi)=>(g.best.contracts||[]).forEach((c,ci)=>seatPriceChart(document.getElementById('bt_'+gi+'_'+ci),c)));
+}
+
 function heat(){
   const vals=D.sectors.map(s=>s.series[s.series.length-1]), mx=Math.max(1,...vals.map(Math.abs));
   $('#heat').innerHTML=D.sectors.map((s,i)=>{const v=vals[i],day=s.series.length>1?v-s.series[s.series.length-2]:0;
@@ -560,7 +622,7 @@ document.querySelectorAll('.langsw button').forEach(b=>b.onclick=()=>{lang=b.dat
 function renderAll(){
   header();
   lineChart($('#tidechart'),D.tide,D.dates40,{h:150,fmt:v=>v.toFixed(1)+' '+(lang==='en'?'CNY 100m':'亿')});
-  pano();brief();cohbars();heat();boards();render();persradar();scatter($('#quadbox'));reson();
+  pano();brief();cohbars();backtests();heat();boards();render();persradar();scatter($('#quadbox'));reson();
 }
 renderAll();
 </script></body></html>

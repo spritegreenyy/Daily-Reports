@@ -7,11 +7,13 @@
 !/日报站/
 !/automation/
 /automation/**
+!/automation/tide_backtest.py
 !/automation/local/
 /automation/local/**
 !/automation/local/kol_build.py
 !/automation/local/kol_pull.py
 !/automation/local/run_daily.sh
+!/automation/local/tide_report.py
 !/kol_digest/
 /kol_digest/**
 !/kol_digest/scripts/
