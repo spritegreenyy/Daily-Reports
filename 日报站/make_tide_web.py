@@ -149,6 +149,10 @@ TEMPLATE = r"""<!doctype html>
   .btlegend{display:flex;gap:13px;color:var(--mut);font-size:10.5px;margin-top:4px}.btlegend i{display:inline-block;width:13px;height:2px;vertical-align:middle;margin-right:4px}
   .btnote{font-size:10.5px;color:var(--mut);margin-top:10px;line-height:1.55}
   .btguide{font-size:12px;line-height:1.65;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:12px}
+  .icpanel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+  .icrow{display:grid;grid-template-columns:minmax(115px,1.1fr) minmax(180px,2fr) 58px 76px;gap:9px;align-items:center;font-size:11.5px;margin:9px 0}
+  .ictrack{height:15px;background:var(--soft);border-radius:6px;overflow:hidden}.ictrack i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--gold),var(--dark))}
+  .icval{font:700 14px Georgia,serif;color:var(--dark);text-align:right}.icmeta{font-size:10.5px;color:var(--mut);text-align:right}
   .btsubhead{font-family:Georgia,"Noto Serif CJK SC",serif;font-size:15px;font-weight:700;color:var(--dark);margin:4px 0 9px;border-left:5px solid var(--gold);padding-left:9px}
   .btperiod{font-size:10.5px;color:var(--mut);margin:-5px 0 10px}
   .btstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:7px;margin:9px 0}
@@ -265,11 +269,11 @@ const UI={
     price:'价',strength:'资金强度',openMembers:'点行展开成员席位',members:'成员席位',dataSource:'数据源',nominal:'名义=持仓×合约乘数×收盘价',desc:'描述性研究,不构成投资建议',
     todayFlowIn:'净流入',todayFlowOut:'净流出',sectorLayer:'板块层面',mostShort:'资金最空',mostLong:'最多',topLong:'加多力度居前',topShort:'加空力度居前',
     divSignal:'背离信号',bullList:'逆势吸筹',bearList:'逆势沽空',tierDot:'可信度',currentShow:'当前显示',monitoring:'监测',accounts:'账号',
-    backtest:'席位信号有效性检验',backtestSub:'前70%选择参数 · 后30%样本外验证 · 重点品种席位跟踪',
+    backtest:'因子对未来收益的预测能力',backtestSub:'方向调整后样本外 IC · 仅展示正相关较强的因子',
     bestSector:'最佳板块',forward:'顺向',reverse:'反向',corr:'相关度',winRate:'胜率',horizon:'观察周期',samples:'样本',tradingDays:'个交易日',
     seatNet:'席位净持仓',priceTrend:'价格',latestSignal:'最新信号',currentBias:'当前解读',noActiveSignal:'未达触发阈值',bullishWatch:'偏多观察',bearishWatch:'偏空观察',evidenceWeak:'弱',evidenceMedium:'中等',evidenceStrong:'较强',evidence:'证据强度',
-    oosBest:'训练期入选板块 · 样本外验证',focusTests:'重点板块与品种检验',comboTest:'杭州与外资组合检验',readGuide:'阅读顺序：先看样本外相关度和胜率判断信号是否有效；再看年化收益和最大回撤判断是否可交易；最后看重点品种与成员席位定位信号来源。',trainSelect:'训练期筛选',presetTest:'固定假设检验',validation:'样本外验证期',annualized:'策略年化',maxDrawdown:'最大回撤',payoff:'盈亏比',trades:'交易次数',equity:'验证期策略净值',strengthLayers:'信号强度分层',memberSplit:'成员席位拆分',netLots:'净持仓',dayChange:'当日变化',insufficient:'样本不足',comboWin:'是否优于单类席位',yes:'是',no:'否',
-    backtestNote:'口径：前70%历史只用于选择板块/1、3、5日周期/顺反方向，后30%验证期不再调参；|z|≥0.5计入。策略曲线按信号后延迟1日、非重叠持有，未计手续费与滑点。外资有色因训练样本稀疏，事前固定为5日反向假设检验。',
+    oosBest:'样本外 IC 排名',focusTests:'通过筛选的因子',comboTest:'组合因子',readGuide:'IC 衡量席位因子与未来收益的相关性。反向因子统一翻转方向，因此有效预测均显示为正 IC；仅展示样本外 IC≥8%且样本数≥30的因子。',adjIC:'方向调整后 IC',icThreshold:'筛选门槛：样本外 IC ≥ 8% · 样本数 ≥ 30',noQualified:'当前无因子达到展示门槛',trainSelect:'训练期筛选',presetTest:'固定假设检验',validation:'样本外验证期',annualized:'策略年化',maxDrawdown:'最大回撤',payoff:'盈亏比',trades:'交易次数',equity:'验证期策略净值',strengthLayers:'信号强度分层',memberSplit:'成员席位拆分',netLots:'净持仓',dayChange:'当日变化',insufficient:'样本不足',comboWin:'是否优于单类席位',yes:'是',no:'否',
+    backtestNote:'口径：前70%历史只用于选择板块/1、3、5日周期/顺反方向，后30%验证期不再调参；|z|≥0.5计入。IC≥8%为研究展示门槛，不等同于统计显著。策略曲线延迟1日、非重叠持有，未计手续费与滑点。外资有色事前固定为5日反向假设检验。',
     aggressive:'激进',items:'个',days:'日'
   },
   en:{
@@ -295,11 +299,11 @@ const UI={
     price:'Price',strength:'Flow strength',openMembers:'Expand member seats',members:'Member seats',dataSource:'Source',nominal:'Nominal = position × contract multiplier × close',desc:'Descriptive research only, not investment advice',
     todayFlowIn:'net inflow',todayFlowOut:'net outflow',sectorLayer:'By sector',mostShort:'most net-short',mostLong:'most net-long',topLong:'Top add-long strength',topShort:'Top add-short strength',
     divSignal:'Divergence signal',bullList:'Counter-trend accumulation',bearList:'Counter-trend shorting',tierDot:'Confidence',currentShow:'Showing',monitoring:'monitoring',accounts:'accounts',
-    backtest:'Seat Signals by Sector · Backtest',backtestSub:'First 70% selects parameters · final 30% is untouched validation · focus and composite tests',
+    backtest:'Factor Predictive Power for Forward Returns',backtestSub:'Direction-adjusted out-of-sample IC · only stronger positive relationships shown',
     bestSector:'Best sector',forward:'Directional',reverse:'Contrarian',corr:'Correlation',winRate:'Hit rate',horizon:'Horizon',samples:'Samples',tradingDays:'trading days',
     seatNet:'Seat net position',priceTrend:'Price',latestSignal:'Latest signal',currentBias:'Current read',noActiveSignal:'Below trigger threshold',bullishWatch:'Bullish watch',bearishWatch:'Bearish watch',evidenceWeak:'Weak',evidenceMedium:'Moderate',evidenceStrong:'Stronger',evidence:'Evidence',
-    oosBest:'Training-Selected Sectors · Out-of-Sample Validation',focusTests:'Priority Sector and Contract Tests',comboTest:'Hangzhou and Foreign Composite Test',readGuide:'Reading order: first use out-of-sample correlation and hit rate to assess signal validity; then use annualized return and max drawdown to assess tradability; finally inspect priority contracts and member seats to locate the signal source.',trainSelect:'Training-screened',presetTest:'Fixed-hypothesis test',validation:'Out-of-sample validation',annualized:'Strategy annualized',maxDrawdown:'Max drawdown',payoff:'Payoff ratio',trades:'Trades',equity:'Validation strategy equity',strengthLayers:'Signal strength tiers',memberSplit:'Member-seat breakdown',netLots:'Net position',dayChange:'Daily change',insufficient:'Insufficient sample',comboWin:'Beats best single cohort',yes:'Yes',no:'No',
-    backtestNote:'Method: the first 70% of history selects sector, 1/3/5-day horizon and directional/contrarian interpretation; the final 30% is untouched validation. |z| ≥ 0.5 signals count. Strategy equity uses a one-day delay and non-overlapping holds, excluding fees and slippage. Sparse foreign non-ferrous history is tested as a pre-specified 5-day contrarian hypothesis.',
+    oosBest:'Out-of-Sample IC Ranking',focusTests:'Factors Passing the Screen',comboTest:'Composite Factor',readGuide:'IC measures the relationship between a seat factor and forward returns. Contrarian factors are direction-flipped so valid forecasts always appear as positive IC. Only factors with out-of-sample IC ≥ 8% and at least 30 observations are shown.',adjIC:'Direction-Adjusted IC',icThreshold:'Screen: out-of-sample IC ≥ 8% · observations ≥ 30',noQualified:'No factor currently meets the display threshold',trainSelect:'Training-screened',presetTest:'Fixed-hypothesis test',validation:'Out-of-sample validation',annualized:'Strategy annualized',maxDrawdown:'Max drawdown',payoff:'Payoff ratio',trades:'Trades',equity:'Validation strategy equity',strengthLayers:'Signal strength tiers',memberSplit:'Member-seat breakdown',netLots:'Net position',dayChange:'Daily change',insufficient:'Insufficient sample',comboWin:'Beats best single cohort',yes:'Yes',no:'No',
+    backtestNote:'Method: the first 70% of history selects sector, 1/3/5-day horizon and directional/contrarian interpretation; the final 30% is untouched validation. |z| ≥ 0.5 signals count. IC ≥ 8% is a research display threshold, not statistical significance. Strategy equity uses a one-day delay and non-overlapping holds, excluding fees and slippage. Foreign non-ferrous is a pre-specified 5-day contrarian test.',
     aggressive:'Aggressive',items:'items',days:'days'
   }
 };
@@ -536,10 +540,11 @@ function backtests(){
   if(!groups.length){root.innerHTML='<div class="muted">'+t('noData')+'</div>';return;}
   const charts=[], pct=v=>v==null?'—':(v*100).toFixed(1)+'%', signed=v=>v==null?'—':(v>=0?'+':'')+(v*100).toFixed(1)+'%';
   const num=v=>v==null?'—':Number(v).toLocaleString(), mode=b=>b.mode==='反向'?t('reverse'):t('forward');
-  const strength=b=>(Math.abs(b.oos.ic)>=.15&&b.oos.win_rate>=.58)?t('evidenceStrong'):(Math.abs(b.oos.ic)>=.08||b.oos.win_rate>=.55)?t('evidenceMedium'):t('evidenceWeak');
+  const adjusted=(b,part)=>(b.mode==='反向'?-1:1)*b[part||'oos'].ic;
+  const strength=b=>(adjusted(b)>=.15&&b.oos.win_rate>=.58)?t('evidenceStrong'):(adjusted(b)>=.08||b.oos.win_rate>=.55)?t('evidenceMedium'):t('evidenceWeak');
   function stats(b){
     const s=b.oos.strategy||{};
-    return '<div class="btstats"><div class="btstat">'+t('corr')+'<b>'+signed(b.oos.ic)+'</b></div><div class="btstat">'+t('winRate')+'<b>'+pct(b.oos.win_rate)+'</b></div><div class="btstat">'+t('annualized')+'<b>'+pct(s.annualized)+'</b></div><div class="btstat">'+t('maxDrawdown')+'<b>'+pct(s.max_drawdown)+'</b></div><div class="btstat">'+t('payoff')+'<b>'+(s.payoff==null?'—':s.payoff.toFixed(2))+'</b></div><div class="btstat">'+t('trades')+'<b>'+num(s.trades)+'</b></div></div>';
+    return '<div class="btstats"><div class="btstat">'+t('adjIC')+'<b>'+signed(adjusted(b))+'</b></div><div class="btstat">'+t('winRate')+'<b>'+pct(b.oos.win_rate)+'</b></div><div class="btstat">'+t('annualized')+'<b>'+pct(s.annualized)+'</b></div><div class="btstat">'+t('maxDrawdown')+'<b>'+pct(s.max_drawdown)+'</b></div><div class="btstat">'+t('payoff')+'<b>'+(s.payoff==null?'—':s.payoff.toFixed(2))+'</b></div><div class="btstat">'+t('trades')+'<b>'+num(s.trades)+'</b></div></div>';
   }
   function research(b,id){
     const s=b.oos.strategy||{}, buckets=b.oos.buckets||[]; charts.push(['eq_'+id,'equity',s]);
@@ -554,18 +559,19 @@ function backtests(){
     const rev=b.mode==='反向', active=Math.abs(b.latest_z||0)>=(pack.method&&pack.method.signal_threshold||.5), bull=active&&((b.latest_z>0)!==rev), bias=!active?t('noActiveSignal'):(bull?t('bullishWatch'):t('bearishWatch'));
     const selection=b.selection==='预设检验'?t('presetTest'):t('trainSelect');
     const reading=lang==='en'
-      ? selection+': '+b.horizon+'-day '+mode(b).toLowerCase()+'. Training IC '+signed(b.train.ic)+' / hit rate '+pct(b.train.win_rate)+'; untouched validation IC <b>'+signed(b.oos.ic)+'</b> / hit rate <b>'+pct(b.oos.win_rate)+'</b>.'
-      : selection+'：'+b.horizon+'日'+mode(b)+'。训练期相关度 '+signed(b.train.ic)+' / 胜率 '+pct(b.train.win_rate)+'；未参与调参的验证期相关度 <b>'+signed(b.oos.ic)+'</b> / 胜率 <b>'+pct(b.oos.win_rate)+'</b>。';
+      ? selection+': '+b.horizon+'-day '+mode(b).toLowerCase()+'. Training adjusted IC '+signed(adjusted(b,'train'))+' / hit rate '+pct(b.train.win_rate)+'; untouched validation adjusted IC <b>'+signed(adjusted(b))+'</b> / hit rate <b>'+pct(b.oos.win_rate)+'</b>.'
+      : selection+'：'+b.horizon+'日'+mode(b)+'。训练期方向调整后IC '+signed(adjusted(b,'train'))+' / 胜率 '+pct(b.train.win_rate)+'；未参与调参的验证期IC <b>'+signed(adjusted(b))+'</b> / 胜率 <b>'+pct(b.oos.win_rate)+'</b>。';
     return '<section class="btgroup"><div class="bthead"><span class="btname">'+title+'</span><span class="btbadge">'+selection+'</span><span class="btbadge '+(rev?'rev':'')+'">'+mode(b)+'</span><span class="btbadge">'+t('evidence')+' · '+strength(b)+'</span></div><div class="btperiod">'+t('validation')+' '+b.oos_start+' → '+b.latest_date+' · '+t('horizon')+' '+b.horizon+'D · '+t('samples')+' '+b.oos.samples+'</div><div class="btread">'+reading+' '+t('currentBias')+': <b style="color:'+(active?(bull?RED:GRN):'var(--mut)')+'">'+bias+'</b> (z '+(b.latest_z==null?'—':((b.latest_z>=0?'+':'')+b.latest_z))+').</div>'+stats(b)+research(b,id)+(showContracts?contracts(b,id):'')+'</section>';
   }
-  let html='<div class="btguide">'+t('readGuide')+'</div><div class="btsubhead">'+t('oosBest')+'</div>';
-  html+=groups.map((g,i)=>study(term(g.cohort)+' · '+term(g.best.sector),g.best,'g'+i,true)).join('');
-  if(focuses.length){html+='<div class="btsubhead" style="margin-top:18px">'+t('focusTests')+'</div><div class="focusgrid">'+focuses.map((b,i)=>study(term(b.cohort)+' · '+term(b.target),b,'f'+i,true)).join('')+'</div>';}
-  if(combo){
-    const base=Math.max(...groups.map(g=>(g.best.oos.strategy||{}).annualized==null?-Infinity:g.best.oos.strategy.annualized));
-    const best=(combo.oos.strategy||{}).annualized, beats=Number.isFinite(base)&&best!=null&&best>base;
-    html+='<div class="btsubhead" style="margin-top:18px">'+t('comboTest')+'</div>'+study((lang==='en'?'Follow Hangzhou · Fade Foreign':'跟杭州 · 反外资')+' · '+term(combo.sector),combo,'combo',false)+'<div class="btread">'+t('comboWin')+': <b style="color:'+(beats?RED:GRN)+'">'+(beats?t('yes'):t('no'))+'</b> ('+pct(best)+' vs '+pct(base)+')</div>';
-  }
+  const candidates=[];
+  groups.forEach((g,i)=>candidates.push({title:term(g.cohort)+' · '+term(g.best.sector),b:g.best,id:'g'+i}));
+  focuses.forEach((b,i)=>candidates.push({title:term(b.cohort)+' · '+term(b.target),b,id:'f'+i}));
+  if(combo)candidates.push({title:(lang==='en'?'Follow Hangzhou · Fade Foreign':'跟杭州 · 反外资')+' · '+term(combo.sector),b:combo,id:'combo'});
+  const seen=new Set(), qualified=candidates.filter(x=>{const key=x.title+'|'+x.b.horizon+'|'+x.b.mode;if(seen.has(key))return false;seen.add(key);return adjusted(x.b)>=.08&&x.b.oos.samples>=30;}).sort((a,b)=>adjusted(b.b)-adjusted(a.b));
+  const mx=Math.max(.08,...qualified.map(x=>adjusted(x.b)));
+  const icrows=qualified.map(x=>'<div class="icrow"><b>'+x.title+'</b><span class="ictrack"><i style="width:'+Math.max(4,adjusted(x.b)/mx*100)+'%"></i></span><span class="icval">'+signed(adjusted(x.b))+'</span><span class="icmeta">'+x.b.horizon+'D · n='+x.b.oos.samples+'</span></div>').join('');
+  let html='<div class="btguide">'+t('readGuide')+'</div><div class="btsubhead">'+t('oosBest')+'</div><div class="icpanel">'+(icrows||'<div class="muted">'+t('noQualified')+'</div>')+'<div class="btnote">'+t('icThreshold')+'</div></div>';
+  if(qualified.length)html+='<div class="btsubhead">'+t('focusTests')+'</div><div class="focusgrid">'+qualified.map(x=>study(x.title,x.b,x.id,true)).join('')+'</div>';
   root.innerHTML=html+'<div class="btnote">'+t('backtestNote')+'</div>';
   charts.forEach(x=>{const host=document.getElementById(x[0]);if(host)(x[1]==='equity'?equityChart:seatPriceChart)(host,x[2]);});
 }
