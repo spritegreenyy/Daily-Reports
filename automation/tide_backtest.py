@@ -165,7 +165,7 @@ def _strength_buckets(x, y, mode):
     return result
 
 
-def _analyze(dates, flows, returns, preset=None):
+def _analyze(dates, flows, returns, preset=None, fixed_mode=None):
     if len(dates) <= LOOKBACK + max(HORIZONS) + 20:
         return None
     signals = _signals(flows)
@@ -183,13 +183,13 @@ def _analyze(dates, flows, returns, preset=None):
             x, y = _observations(signals, returns, horizon, LOOKBACK, split)
             if len(x) < MIN_TRAIN_SAMPLES:
                 continue
-            metrics = _metrics(x, y)
+            metrics = _metrics(x, y, fixed_mode)
             if metrics:
                 candidates.append((metrics["score"], horizon, metrics))
         if not candidates:
             return None
         _, horizon, train = max(candidates, key=lambda row: row[0])
-        selection = "训练期选择"
+        selection = "固定反向筛选" if fixed_mode == "反向" else "训练期选择"
     x, y = _observations(signals, returns, horizon, split, len(dates))
     if len(x) < MIN_OOS_SAMPLES:
         return None
@@ -302,6 +302,18 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
         best["contracts"] = _key_contracts(data, cohort, "sector", sector, best, display, sectors, broker_data, cohort_members)
         groups.append({"cohort": cohort, "best": best})
 
+    retail_candidates = []
+    for sector in sector_order:
+        dates, flows, returns = _daily_series(data, "散户", "sector", sector, display, sectors, multipliers)
+        result = _analyze(dates, flows, returns, fixed_mode="反向")
+        if result:
+            retail_candidates.append((result["train"]["score"], sector, result))
+    if retail_candidates:
+        _, sector, best = max(retail_candidates, key=lambda row: row[0])
+        best["sector"] = sector
+        best["contracts"] = _key_contracts(data, "散户", "sector", sector, best, display, sectors, broker_data, cohort_members)
+        groups.append({"cohort": "散户", "best": best})
+
     focuses = []
     for label, cohort, kind, target, preset in FOCUS_TESTS:
         dates, flows, returns = _daily_series(data, cohort, kind, target, display, sectors, multipliers)
@@ -330,6 +342,7 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
             "signal_threshold": SIGNAL_THRESHOLD,
             "train_ratio": TRAIN_RATIO,
             "execution_delay": 1,
+            "retail_mode": "反向",
             "price": "板块等权收益",
         },
         "groups": groups,
