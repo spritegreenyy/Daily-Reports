@@ -117,6 +117,7 @@
   .btcname small{font-weight:400;color:var(--mut)}
   .btlegend{display:flex;gap:13px;color:var(--mut);font-size:10.5px;margin-top:4px}.btlegend i{display:inline-block;width:13px;height:2px;vertical-align:middle;margin-right:4px}
   .btnote{font-size:10.5px;color:var(--mut);margin-top:10px;line-height:1.55}
+  .btguide{font-size:12px;line-height:1.65;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:12px}
   .btsubhead{font-family:Georgia,"Noto Serif CJK SC",serif;font-size:15px;font-weight:700;color:var(--dark);margin:4px 0 9px;border-left:5px solid var(--gold);padding-left:9px}
   .btperiod{font-size:10.5px;color:var(--mut);margin:-5px 0 10px}
   .btstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:7px;margin:9px 0}
@@ -233,11 +234,11 @@ const UI={
     price:'价',strength:'资金强度',openMembers:'点行展开成员席位',members:'成员席位',dataSource:'数据源',nominal:'名义=持仓×合约乘数×收盘价',desc:'描述性研究,不构成投资建议',
     todayFlowIn:'净流入',todayFlowOut:'净流出',sectorLayer:'板块层面',mostShort:'资金最空',mostLong:'最多',topLong:'加多力度居前',topShort:'加空力度居前',
     divSignal:'背离信号',bullList:'逆势吸筹',bearList:'逆势沽空',tierDot:'可信度',currentShow:'当前显示',monitoring:'监测',accounts:'账号',
-    backtest:'三类席位板块回测',backtestSub:'前70%训练期选择参数 · 后30%验证期只验不调 · 专项与组合信号',
+    backtest:'席位信号有效性检验',backtestSub:'前70%选择参数 · 后30%样本外验证 · 重点品种席位跟踪',
     bestSector:'最佳板块',forward:'顺向',reverse:'反向',corr:'相关度',winRate:'胜率',horizon:'观察周期',samples:'样本',tradingDays:'个交易日',
     seatNet:'席位净持仓',priceTrend:'价格',latestSignal:'最新信号',currentBias:'当前解读',noActiveSignal:'未达触发阈值',bullishWatch:'偏多观察',bearishWatch:'偏空观察',evidenceWeak:'弱',evidenceMedium:'中等',evidenceStrong:'较强',evidence:'证据强度',
-    oosBest:'样本外最佳板块',focusTests:'带教指定专项',comboTest:'组合信号检验',trainSelect:'训练期选择',presetTest:'事前预设',validation:'验证期',annualized:'策略年化',maxDrawdown:'最大回撤',payoff:'盈亏比',trades:'交易次数',equity:'验证期策略净值',strengthLayers:'信号强度分层',memberSplit:'成员席位拆分',netLots:'净持仓',dayChange:'当日变化',insufficient:'样本不足',comboWin:'是否优于单席位',yes:'是',no:'否',
-    backtestNote:'口径：前70%历史只用于选择板块/1、3、5日周期/顺反方向，后30%验证期不再调参；|z|≥0.5计入。策略曲线按信号后延迟1日、非重叠持有，未计手续费与滑点。外资有色因训练样本稀疏，按带教假设事前固定为5日反向检验。',
+    oosBest:'训练期入选板块 · 样本外验证',focusTests:'重点板块与品种检验',comboTest:'杭州与外资组合检验',readGuide:'阅读顺序：先看样本外相关度和胜率判断信号是否有效；再看年化收益和最大回撤判断是否可交易；最后看重点品种与成员席位定位信号来源。',trainSelect:'训练期筛选',presetTest:'固定假设检验',validation:'样本外验证期',annualized:'策略年化',maxDrawdown:'最大回撤',payoff:'盈亏比',trades:'交易次数',equity:'验证期策略净值',strengthLayers:'信号强度分层',memberSplit:'成员席位拆分',netLots:'净持仓',dayChange:'当日变化',insufficient:'样本不足',comboWin:'是否优于单类席位',yes:'是',no:'否',
+    backtestNote:'口径：前70%历史只用于选择板块/1、3、5日周期/顺反方向，后30%验证期不再调参；|z|≥0.5计入。策略曲线按信号后延迟1日、非重叠持有，未计手续费与滑点。外资有色因训练样本稀疏，事前固定为5日反向假设检验。',
     aggressive:'激进',items:'个',days:'日'
   },
   en:{
@@ -266,7 +267,7 @@ const UI={
     backtest:'Seat Signals by Sector · Backtest',backtestSub:'First 70% selects parameters · final 30% is untouched validation · focus and composite tests',
     bestSector:'Best sector',forward:'Directional',reverse:'Contrarian',corr:'Correlation',winRate:'Hit rate',horizon:'Horizon',samples:'Samples',tradingDays:'trading days',
     seatNet:'Seat net position',priceTrend:'Price',latestSignal:'Latest signal',currentBias:'Current read',noActiveSignal:'Below trigger threshold',bullishWatch:'Bullish watch',bearishWatch:'Bearish watch',evidenceWeak:'Weak',evidenceMedium:'Moderate',evidenceStrong:'Stronger',evidence:'Evidence',
-    oosBest:'Out-of-Sample Best Sectors',focusTests:'Mentor-Specified Focus Tests',comboTest:'Composite Signal Test',trainSelect:'Training-selected',presetTest:'Pre-specified',validation:'Validation',annualized:'Strategy annualized',maxDrawdown:'Max drawdown',payoff:'Payoff ratio',trades:'Trades',equity:'Validation strategy equity',strengthLayers:'Signal strength tiers',memberSplit:'Member-seat breakdown',netLots:'Net position',dayChange:'Daily change',insufficient:'Insufficient sample',comboWin:'Beats single seat',yes:'Yes',no:'No',
+    oosBest:'Training-Selected Sectors · Out-of-Sample Validation',focusTests:'Priority Sector and Contract Tests',comboTest:'Hangzhou and Foreign Composite Test',readGuide:'Reading order: first use out-of-sample correlation and hit rate to assess signal validity; then use annualized return and max drawdown to assess tradability; finally inspect priority contracts and member seats to locate the signal source.',trainSelect:'Training-screened',presetTest:'Fixed-hypothesis test',validation:'Out-of-sample validation',annualized:'Strategy annualized',maxDrawdown:'Max drawdown',payoff:'Payoff ratio',trades:'Trades',equity:'Validation strategy equity',strengthLayers:'Signal strength tiers',memberSplit:'Member-seat breakdown',netLots:'Net position',dayChange:'Daily change',insufficient:'Insufficient sample',comboWin:'Beats best single cohort',yes:'Yes',no:'No',
     backtestNote:'Method: the first 70% of history selects sector, 1/3/5-day horizon and directional/contrarian interpretation; the final 30% is untouched validation. |z| ≥ 0.5 signals count. Strategy equity uses a one-day delay and non-overlapping holds, excluding fees and slippage. Sparse foreign non-ferrous history is tested as a pre-specified 5-day contrarian hypothesis.',
     aggressive:'Aggressive',items:'items',days:'days'
   }
@@ -526,7 +527,7 @@ function backtests(){
       : selection+'：'+b.horizon+'日'+mode(b)+'。训练期相关度 '+signed(b.train.ic)+' / 胜率 '+pct(b.train.win_rate)+'；未参与调参的验证期相关度 <b>'+signed(b.oos.ic)+'</b> / 胜率 <b>'+pct(b.oos.win_rate)+'</b>。';
     return '<section class="btgroup"><div class="bthead"><span class="btname">'+title+'</span><span class="btbadge">'+selection+'</span><span class="btbadge '+(rev?'rev':'')+'">'+mode(b)+'</span><span class="btbadge">'+t('evidence')+' · '+strength(b)+'</span></div><div class="btperiod">'+t('validation')+' '+b.oos_start+' → '+b.latest_date+' · '+t('horizon')+' '+b.horizon+'D · '+t('samples')+' '+b.oos.samples+'</div><div class="btread">'+reading+' '+t('currentBias')+': <b style="color:'+(active?(bull?RED:GRN):'var(--mut)')+'">'+bias+'</b> (z '+(b.latest_z==null?'—':((b.latest_z>=0?'+':'')+b.latest_z))+').</div>'+stats(b)+research(b,id)+(showContracts?contracts(b,id):'')+'</section>';
   }
-  let html='<div class="btsubhead">'+t('oosBest')+'</div>';
+  let html='<div class="btguide">'+t('readGuide')+'</div><div class="btsubhead">'+t('oosBest')+'</div>';
   html+=groups.map((g,i)=>study(term(g.cohort)+' · '+term(g.best.sector),g.best,'g'+i,true)).join('');
   if(focuses.length){html+='<div class="btsubhead" style="margin-top:18px">'+t('focusTests')+'</div><div class="focusgrid">'+focuses.map((b,i)=>study(term(b.cohort)+' · '+term(b.target),b,'f'+i,true)).join('')+'</div>';}
   if(combo){
