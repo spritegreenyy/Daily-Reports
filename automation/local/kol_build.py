@@ -43,6 +43,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--date", default=datetime.now().strftime("%Y-%m-%d"))
     parser.add_argument("--hours", type=int, default=24)
+    parser.add_argument("--as-of", default="", help="历史补报的统计窗口截止时间 ISO-8601")
     args = parser.parse_args()
 
     load_dotenv(KD / ".env")
@@ -51,7 +52,8 @@ def main() -> int:
     if not DB.exists():
         raise SystemExit(f"缺少本地 KOL sqlite: {DB}")
 
-    run_digest(args.date, args.hours)
+    run_dump(args.date, args.hours, args.as_of)
+    run_digest(args.date, args.hours, args.as_of)
     ymd = args.date.replace("-", "")
 
     digest_payload = read_json(OUT / f"kol_{ymd}.json")
@@ -85,7 +87,7 @@ def main() -> int:
     return 0
 
 
-def run_digest(report_date: str, hours: int) -> None:
+def digest_command(report_date: str, hours: int, as_of: str) -> tuple[list[str], dict[str, str]]:
     env = os.environ.copy()
     env["PYTHONPATH"] = f"{KD / 'src'}:{ROOT}{':' + env['PYTHONPATH'] if env.get('PYTHONPATH') else ''}"
     cmd = [
@@ -104,6 +106,19 @@ def run_digest(report_date: str, hours: int) -> None:
         str(OUT),
         "--no-pdf",
     ]
+    if as_of:
+        cmd.extend(["--end", as_of])
+    return cmd, env
+
+
+def run_dump(report_date: str, hours: int, as_of: str) -> None:
+    cmd, env = digest_command(report_date, hours, as_of)
+    cmd.append("--dump-only")
+    subprocess.run(cmd, cwd=str(KD), env=env, check=True)
+
+
+def run_digest(report_date: str, hours: int, as_of: str) -> None:
+    cmd, env = digest_command(report_date, hours, as_of)
     subprocess.run(cmd, cwd=str(KD), env=env, check=True)
 
 

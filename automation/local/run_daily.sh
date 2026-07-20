@@ -21,26 +21,53 @@ notify() { /usr/bin/osascript -e "display notification \"$2\" with title \"$1\""
 push() {  # push <msg>
   cd "$ROOT"
   git add 日报 日报站 README.md .gitignore 2>/dev/null
-  if git commit -m "$1" --quiet 2>/dev/null; then
-    git pull --rebase --quiet 2>/dev/null; git push origin main --quiet && echo "pushed: $1"
-  fi
+  git diff --cached --quiet || git commit -m "$1" --quiet 2>/dev/null
+  for a in 1 2 3; do
+    if git pull --rebase --quiet 2>/dev/null && git push origin main --quiet 2>/dev/null; then
+      echo "pushed: $1"
+      cd "$LOCAL"
+      return 0
+    fi
+    echo "push retry $a/3"
+    [ "$a" -lt 3 ] && sleep 30
+  done
   cd "$LOCAL"
+  return 1
+}
+
+pull_kol() {
+  for a in 1 2 3; do
+    "$PY" "$LOCAL/kol_pull.py" && return 0
+    echo "KOL pull retry $a/3"; sleep 180
+  done
+  return 1
+}
+
+publish_kol() {
+  if "$PY" "$LOCAL/kol_build.py" --date "$TODAY"; then
+    "$PY" "$ROOT/日报站/build_site.py"
+    if push "日报 $YMD: KOL观点交互版(自动)"; then
+      notify "✅ KOL 已上线" "日报站与 GitHub 已自动更新"
+      return 0
+    fi
+    notify "⚠️ KOL 推送失败" "日报已在本地生成，GitHub 将在下次任务重试"
+    return 1
+  fi
+  echo "KOL build failed, skip empty report"
+  notify "⚠️ KOL 生成失败" "已保留上一期，稍后会自动重试"
+  return 1
 }
 
 if [ "$DOW" -ge 6 ]; then
   echo "weekend: 只做 KOL"
-  "$PY" "$LOCAL/kol_pull.py"
-  "$PY" "$LOCAL/kol_build.py" --date "$TODAY"
-  "$PY" "$ROOT/日报站/build_site.py"
-  push "日报 $YMD: KOL观点交互版(自动)"
-  notify "✅ KOL 已上线(周末)" "日报站与 GitHub 已自动更新"
+  if pull_kol; then publish_kol; fi
   exit 0
 fi
 
 DEST="$ROOT/日报/$YMD"; mkdir -p "$DEST"
 
 # ── 0) KOL 推文抓取扔后台(约30min, 与一切并行) ──
-"$PY" "$LOCAL/kol_pull.py" > "$LOCAL/logs/kolpull_$YMD.log" 2>&1 &
+pull_kol > "$LOCAL/logs/kolpull_$YMD.log" 2>&1 &
 KOLPID=$!
 
 # ── 1) 形态: 不依赖席位, 最先出先推 (~16:20 上线) ──
@@ -72,17 +99,14 @@ cp "$LOCAL/output/期货资金潮汐_长图_${YMD}.png" "$DEST/" 2>/dev/null
 push "日报 $YMD: 资金潮汐(自动)"
 notify "✅ 潮汐+形态已上线" "成员明细与KOL稍后自动补"
 
-# ── 4) 逐席位(已提速~20min) → 潮汐 v2 带成员下拉, 静默更新 ──
+# ── 4) KOL 一抓完就发布，不再等待耗时的席位成员明细 ──
+if wait $KOLPID 2>/dev/null; then publish_kol; fi
+
+# ── 5) 逐席位(已提速~20min) → 潮汐 v2 带成员下拉, 静默更新 ──
 "$PY" "$LOCAL/pull_brokers.py"
 "$PY" "$LOCAL/tide_report.py"
 cp "$LOCAL/output/期货资金潮汐_${YMD}_data.json" "$DEST/" 2>/dev/null
 "$PY" "$ROOT/日报站/make_tide_web.py" "$DEST/期货资金潮汐_${YMD}_data.json"
 push "日报 $YMD: 潮汐补席位成员明细(自动)"
 
-# ── 5) 等 KOL 抓取收尾 → 自动生成KOL交互页并上线 ──
-wait $KOLPID 2>/dev/null
-"$PY" "$LOCAL/kol_build.py" --date "$TODAY"
-"$PY" "$ROOT/日报站/build_site.py"
-push "日报 $YMD: KOL观点交互版(自动)"
-notify "✅ KOL 已上线" "日报站与 GitHub 已自动更新"
 echo "==== $(date '+%F %T') run_daily v2 done ===="

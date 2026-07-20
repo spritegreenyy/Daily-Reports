@@ -44,6 +44,10 @@ def main():
         print(f"tier{tier}: {len(r.items)} 条")
         all_items += r.items
 
+    if not all_items:
+        print("KOL 抓取结果为 0，保留上次数据库并停止发布", file=sys.stderr)
+        return 2
+
     con = sqlite3.connect(DB)
     con.executescript(DDL)
     con.execute("DELETE FROM news_items")
@@ -66,7 +70,8 @@ def main():
                          "--dump-only", "--output", str(KD / "output")],
                         env=env).returncode
     print("kol_digest dump rc=", rc)
+    return rc
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
