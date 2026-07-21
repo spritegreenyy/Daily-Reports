@@ -221,6 +221,15 @@ def _member_stats(broker_data, variety, member_names, latest_date):
         item = broker_data.get(variety, {}).get(name)
         if (not item or len(item.get("net", [])) < 2
                 or not item.get("dates") or item["dates"][-1] != latest_date):
+            members.append({
+                "name": name,
+                "net": None,
+                "change": None,
+                "long_change": None,
+                "short_change": None,
+                "visible": False,
+                "has_data": False,
+            })
             continue
         net = item["net"]
         previous, current = float(net[-2]), float(net[-1])
@@ -231,8 +240,13 @@ def _member_stats(broker_data, variety, member_names, latest_date):
             "long_change": round(max(current, 0) - max(previous, 0)),
             "short_change": round(max(-current, 0) - max(-previous, 0)),
             "visible": bool(current or previous),
+            "has_data": True,
         })
-    return sorted(members, key=lambda x: abs(x["change"]), reverse=True)
+    return sorted(
+        members,
+        key=lambda x: (x["visible"], abs(x["change"] or 0)),
+        reverse=True,
+    )
 
 
 def _contract_item(data, display, cohort, target):
@@ -242,20 +256,14 @@ def _contract_item(data, display, cohort, target):
     return None, None
 
 
-def _position_snapshot(item, members):
+def _position_snapshot(item):
     net = item.get("net", [])
     if len(net) < 2:
         return None
     previous, current = float(net[-2]), float(net[-1])
-    if members:
-        current = sum(row["net"] for row in members)
-        net_change = sum(row["change"] for row in members)
-        long_change = sum(row["long_change"] for row in members)
-        short_change = sum(row["short_change"] for row in members)
-    else:
-        net_change = current - previous
-        long_change = max(current, 0) - max(previous, 0)
-        short_change = max(-current, 0) - max(-previous, 0)
+    net_change = current - previous
+    long_change = max(current, 0) - max(previous, 0)
+    short_change = max(-current, 0) - max(-previous, 0)
     return {
         "net": round(current),
         "net_change": round(net_change),
@@ -264,19 +272,9 @@ def _position_snapshot(item, members):
     }
 
 
-def _member_net_series(broker_data, variety, members, fallback_dates, fallback_net):
-    if not members:
-        n = min(len(fallback_dates), len(fallback_net), 90)
-        return fallback_dates[-n:], [round(float(value)) for value in fallback_net[-n:]]
-    series = []
-    for member in members:
-        item = broker_data.get(variety, {}).get(member["name"], {})
-        series.append(dict(zip(item.get("dates", []), item.get("net", []))))
-    common_dates = sorted(set.intersection(*(set(item) for item in series))) if series else []
-    common_dates = common_dates[-90:]
-    return common_dates, [
-        round(sum(float(item[date]) for item in series)) for date in common_dates
-    ]
+def _cohort_net_series(dates, net):
+    n = min(len(dates), len(net), 90)
+    return dates[-n:], [round(float(value)) for value in net[-n:]]
 
 
 def _contract_stats(item, horizon, mode, split_ratio=TRAIN_RATIO):
@@ -379,11 +377,11 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
             members = _member_stats(
                 broker_data, variety, cohort_members.get(cohort, []), result["latest_date"]
             )
-            snapshot = _position_snapshot(item, members)
+            snapshot = _position_snapshot(item)
             if not snapshot:
                 continue
-            item_dates, net_series = _member_net_series(
-                broker_data, variety, members, item.get("dates", []), item.get("net", [])
+            item_dates, net_series = _cohort_net_series(
+                item.get("dates", []), item.get("net", [])
             )
             qualified.append({
                 "name": canonical_name,
