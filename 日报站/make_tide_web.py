@@ -182,8 +182,17 @@ TEMPLATE = r"""<!doctype html>
   .seattable th,.seattable td{padding:6px 7px;font-size:10.5px;text-align:right;white-space:nowrap}
   .seattable th:first-child,.seattable td:first-child{text-align:left}
   .seattable tr.total td{font-weight:700;background:var(--panel)}
+  .icdash{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .iccol{background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 11px;min-width:0}
+  .iccolhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;color:var(--dark)}
+  .iccolhead b{font:700 16px Georgia,"Noto Serif CJK SC",serif}.iccolhead span{font-size:10px;color:var(--mut)}
+  .iclist{max-height:430px;overflow-y:auto;padding-right:3px}
+  .icrankrow{display:grid;grid-template-columns:minmax(68px,.9fr) minmax(58px,1fr) 45px 72px;gap:5px;align-items:center;padding:5px 0;border-bottom:1px solid #f0ebdb;font-size:10.5px}
+  .icrankrow .iname{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .icrankrow .ibar{height:8px;background:var(--soft);border-radius:4px;overflow:hidden}.icrankrow .ibar i{display:block;height:100%;border-radius:4px}
+  .icrankrow .ival{font:700 11px Georgia,serif;text-align:right}.icrankrow .imeta{color:var(--mut);font-size:9px;text-align:right;line-height:1.2}
   @media(max-width:650px){.btresearch{grid-template-columns:1fr}.focusgrid{grid-template-columns:1fr}.btmetrics{margin-left:0;width:100%;justify-content:space-between}.btmetric{text-align:left}}
-  @media(max-width:650px){.mast{align-items:center;flex-wrap:wrap}.mast .asof{order:4;width:100%;margin-left:0}.scancards{grid-template-columns:1fr}.scanmeta{width:100%;margin-left:0}.scancorr{margin-left:0}#sec-table+.controls+table{display:block;overflow-x:auto}}
+  @media(max-width:650px){.mast{align-items:center;flex-wrap:wrap}.mast .asof{order:4;width:100%;margin-left:0}.icdash{grid-template-columns:1fr}.iclist{max-height:320px}.scancards{grid-template-columns:1fr}.scanmeta{width:100%;margin-left:0}.scancorr{margin-left:0}#sec-table+.controls+table{display:block;overflow-x:auto}}
   .foot{margin-top:24px;border-top:1px solid var(--line);padding-top:10px;font-size:11.5px;color:var(--mut)}
   .empty{padding:30px;text-align:center;color:var(--mut)}
   html[lang="en"] .brow .bn{width:108px;font-size:11px;line-height:1.15}
@@ -286,12 +295,12 @@ const UI={
     price:'价',strength:'资金强度',openMembers:'点行展开成员席位',members:'成员席位',dataSource:'数据源',nominal:'名义=持仓×合约乘数×收盘价',desc:'描述性研究,不构成投资建议',
     todayFlowIn:'净流入',todayFlowOut:'净流出',sectorLayer:'板块层面',mostShort:'资金最空',mostLong:'最多',topLong:'加多力度居前',topShort:'加空力度居前',
     divSignal:'背离信号',bullList:'逆势吸筹',bearList:'逆势沽空',tierDot:'可信度',currentShow:'当前显示',monitoring:'监测',accounts:'账号',
-    backtest:'重点品种席位相关性扫描',backtestSub:'机构 / 外资 / 杭州 × 18个指定品种 · 仅列高相关结果',
+    backtest:'全品种席位 IC 扫描',backtestSub:'机构 / 外资 / 杭州 · 全品种逐一扫描 · IC从高到低',
     bestSector:'最佳板块',forward:'顺向',reverse:'反向',corr:'相关度',winRate:'胜率',horizon:'观察周期',samples:'样本',tradingDays:'个交易日',
     seatNet:'席位净持仓',priceTrend:'价格',latestSignal:'最新信号',currentBias:'当前解读',noActiveSignal:'未达触发阈值',bullishWatch:'偏多观察',bearishWatch:'偏空观察',evidenceWeak:'弱',evidenceMedium:'中等',evidenceStrong:'较强',evidence:'证据强度',
     oosBest:'样本外 IC 排名',focusTests:'重点因子详细验证',comboTest:'组合因子',readGuide:'普通因子仅展示 IC≥8%且样本数≥30的结果；散户反向为固定检验项，无论是否达标都保留并如实标注。',icFormulaTitle:'IC 怎么算',icFormula:'IC = corr(方向调整后席位因子, 未来1/3/5日板块等权收益)',icSignalTitle:'因子是什么',icSignal:'将每日净持仓变化换算为名义金额，再用过去60日标准化为z-score；仅统计 |z|≥0.5 的信号。',icMeaningTitle:'IC 代表什么',icMeaning:'IC越大，因子对未来方向的线性预测力越强；接近0表示相关性弱。反向因子先翻转方向，有效反指也显示为正IC。',adjIC:'方向调整后 IC',icThreshold:'筛选门槛：样本外 IC ≥ 8% · 样本数 ≥ 30',belowThreshold:'未通过门槛',noQualified:'当前无因子达到展示门槛',trainSelect:'训练期筛选',presetTest:'固定假设检验',retailTest:'散户固定反向 · 训练期筛选',validation:'样本外验证期',annualized:'策略年化',maxDrawdown:'最大回撤',payoff:'盈亏比',trades:'交易次数',equity:'验证期策略净值',strengthLayers:'信号强度分层',memberSplit:'成员席位拆分',netLots:'净持仓',dayChange:'当日变化',insufficient:'样本不足',comboWin:'是否优于单类席位',yes:'是',no:'否',
     backtestNote:'口径：前70%历史只用于选择板块/1、3、5日周期/顺反方向，后30%验证期不再调参；散户因子事前固定为反向，只用训练期选板块和周期。|z|≥0.5计入。IC≥8%为研究展示门槛，不等同于统计显著。策略曲线延迟1日、非重叠持有，未计手续费与滑点。外资有色事前固定为5日反向假设检验。',
-    scanGuide:'逐一检验席位净持仓变化与该品种未来1/3/5日收益的样本外相关性；仅展示方向调整后相关性≥8%、样本≥30的结果。',scanFormula:'口径：前70%历史选择周期和顺/反方向，后30%独立验证。净多头/净空头变化按成员席位的净方向暴露拆分，正数为增加、负数为减少，不代表交易所公布的多空总持仓。',scanned:'已扫描',testable:'可检验',highCorr:'高相关',futureCorr:'未来收益相关性',seat:'席位',total:'组合合计',netPosition:'净持仓',netPositionChange:'净持仓变化',netLongChange:'净多头变化',netShortChange:'净空头变化',lotsUnit:'单位：手',noHighCorr:'暂无结果达到展示门槛',
+    scanGuide:'机构、外资、杭州对数据源内全部品种逐一扫描。前置仪表盘列出所有可计算的方向调整后样本外 IC；下方仅展开 IC≥8%、样本≥30的高相关席位明细。',scanFormula:'口径：前70%历史选择周期和顺/反方向，后30%独立验证。无足够有效信号的品种不计算IC，不用0代替。净多头/净空头变化按成员席位的净方向暴露拆分，正数为增加、负数为减少，不代表交易所公布的多空总持仓。',scanned:'已扫描',testable:'可计算IC',highCorr:'高相关',futureCorr:'未来收益相关性',seat:'席位',total:'组合合计',netPosition:'净持仓',netPositionChange:'净持仓变化',netLongChange:'净多头变化',netShortChange:'净空头变化',lotsUnit:'单位：手',noHighCorr:'暂无结果达到展示门槛',icDashboard:'全品种 IC 排名',adjustedIc:'调整后IC',
     aggressive:'激进',items:'个',days:'日'
   },
   en:{
@@ -317,12 +326,12 @@ const UI={
     price:'Price',strength:'Flow strength',openMembers:'Expand member seats',members:'Member seats',dataSource:'Source',nominal:'Nominal = position × contract multiplier × close',desc:'Descriptive research only, not investment advice',
     todayFlowIn:'net inflow',todayFlowOut:'net outflow',sectorLayer:'By sector',mostShort:'most net-short',mostLong:'most net-long',topLong:'Top add-long strength',topShort:'Top add-short strength',
     divSignal:'Divergence signal',bullList:'Counter-trend accumulation',bearList:'Counter-trend shorting',tierDot:'Confidence',currentShow:'Showing',monitoring:'monitoring',accounts:'accounts',
-    backtest:'Priority Contract Seat-Correlation Scan',backtestSub:'Institutions / Foreign / Hangzhou × 18 specified contracts · only stronger relationships shown',
+    backtest:'All-Contract Seat IC Scan',backtestSub:'Institutions / Foreign / Hangzhou · every contract scanned · IC ranked high to low',
     bestSector:'Best sector',forward:'Directional',reverse:'Contrarian',corr:'Correlation',winRate:'Hit rate',horizon:'Horizon',samples:'Samples',tradingDays:'trading days',
     seatNet:'Seat net position',priceTrend:'Price',latestSignal:'Latest signal',currentBias:'Current read',noActiveSignal:'Below trigger threshold',bullishWatch:'Bullish watch',bearishWatch:'Bearish watch',evidenceWeak:'Weak',evidenceMedium:'Moderate',evidenceStrong:'Stronger',evidence:'Evidence',
     oosBest:'Out-of-Sample IC Ranking',focusTests:'Detailed Validation of Priority Factors',comboTest:'Composite Factor',readGuide:'Standard factors are shown only when IC ≥ 8% with at least 30 observations. The retail contrarian factor is a required fixed test and remains visible with an explicit pass/fail label.',icFormulaTitle:'How IC is calculated',icFormula:'IC = corr(direction-adjusted seat factor, equal-weight sector return over the next 1/3/5 days)',icSignalTitle:'Factor definition',icSignal:'Daily net-position changes are converted to nominal value and standardized against the prior 60 days as a z-score; only |z| ≥ 0.5 signals count.',icMeaningTitle:'What IC means',icMeaning:'A larger IC indicates stronger linear predictive power for forward direction; values near zero indicate weak association. Contrarian factors are direction-flipped, so an effective fade also appears as positive IC.',adjIC:'Direction-Adjusted IC',icThreshold:'Screen: out-of-sample IC ≥ 8% · observations ≥ 30',belowThreshold:'Below threshold',noQualified:'No factor currently meets the display threshold',trainSelect:'Training-screened',presetTest:'Fixed-hypothesis test',retailTest:'Retail fixed contrarian · training-screened',validation:'Out-of-sample validation',annualized:'Strategy annualized',maxDrawdown:'Max drawdown',payoff:'Payoff ratio',trades:'Trades',equity:'Validation strategy equity',strengthLayers:'Signal strength tiers',memberSplit:'Member-seat breakdown',netLots:'Net position',dayChange:'Daily change',insufficient:'Insufficient sample',comboWin:'Beats best single cohort',yes:'Yes',no:'No',
     backtestNote:'Method: the first 70% of history selects sector, 1/3/5-day horizon and directional/contrarian interpretation; the final 30% is untouched validation. Retail is pre-specified as contrarian, with sector and horizon selected only in training. |z| ≥ 0.5 signals count. IC ≥ 8% is a research display threshold, not statistical significance. Strategy equity uses a one-day delay and non-overlapping holds, excluding fees and slippage. Foreign non-ferrous is a pre-specified 5-day contrarian test.',
-    scanGuide:'Each seat net-position change is tested against its contract return over the next 1/3/5 days. Only out-of-sample relationships with direction-adjusted correlation ≥ 8% and at least 30 observations are shown.',scanFormula:'Method: the first 70% selects horizon and directional/contrarian interpretation; the final 30% is untouched validation. Net-long/net-short changes decompose each member seat’s net exposure: positive means an increase and negative a decrease. They are not exchange-reported gross long/short positions.',scanned:'Scanned',testable:'Testable',highCorr:'Stronger',futureCorr:'Forward-return correlation',seat:'Seat',total:'Cohort total',netPosition:'Net position',netPositionChange:'Net-position change',netLongChange:'Net-long change',netShortChange:'Net-short change',lotsUnit:'Unit: lots',noHighCorr:'No result currently meets the display threshold',
+    scanGuide:'Institutions, Foreign and Hangzhou are scanned across every contract in the source. The dashboard lists every calculable direction-adjusted out-of-sample IC; only stronger results with IC ≥ 8% and at least 30 observations are expanded below.',scanFormula:'Method: the first 70% selects horizon and directional/contrarian interpretation; the final 30% is untouched validation. Contracts without enough active signals have no IC rather than an artificial zero. Net-long/net-short changes decompose each member seat’s net exposure and are not exchange-reported gross positions.',scanned:'Scanned',testable:'IC available',highCorr:'Stronger',futureCorr:'Forward-return correlation',seat:'Seat',total:'Cohort total',netPosition:'Net position',netPositionChange:'Net-position change',netLongChange:'Net-long change',netShortChange:'Net-short change',lotsUnit:'Unit: lots',noHighCorr:'No result currently meets the display threshold',icDashboard:'All-Contract IC Ranking',adjustedIc:'Adjusted IC',
     aggressive:'Aggressive',items:'items',days:'days'
   }
 };
@@ -562,6 +571,12 @@ function backtests(){
   const signedPct=v=>v==null?'—':(v>0?'+':'')+(v*100).toFixed(1)+'%';
   const mode=v=>v==='反向'?t('reverse'):t('forward');
   const cell=(v,col)=>'<td style="color:'+(v===0?'var(--mut)':col)+'">'+signedNum(v)+'</td>';
+  const rankColumn=scan=>{
+    const ranking=scan.rankings||[],mx=Math.max(.01,...ranking.map(r=>Math.abs(r.effective_correlation||0)));
+    const rows=ranking.map(r=>{const ic=r.effective_correlation||0,col=ic>=0?DARK:RED,w=Math.max(2,Math.abs(ic)/mx*100);
+      return '<div class="icrankrow" title="'+term(r.name)+' · '+t('adjustedIc')+' '+signedPct(ic)+'"><span class="iname">'+term(r.name)+'</span><span class="ibar"><i style="width:'+w+'%;background:'+col+'"></i></span><span class="ival" style="color:'+col+'">'+signedPct(ic)+'</span><span class="imeta">'+mode(r.mode)+' · '+r.horizon+'D<br>n='+r.samples+'</span></div>';}).join('');
+    return '<section class="iccol"><div class="iccolhead"><b>'+term(scan.cohort)+'</b><span>'+t('scanned')+' '+scan.requested+' · '+t('testable')+' '+scan.analyzed+'</span></div><div class="iclist">'+(rows||'<div class="muted">'+t('noData')+'</div>')+'</div></section>';
+  };
   const rows=r=>{
     const total='<tr class="total"><td>'+t('total')+'</td><td>'+num(r.net)+'</td>'+cell(r.net_change,r.net_change>=0?RED:GRN)+cell(r.long_change,r.long_change>=0?RED:GRN)+cell(r.short_change,r.short_change>=0?GRN:RED)+'</tr>';
     const members=(r.members||[]).map(m=>'<tr><td>'+term(m.name)+'</td><td>'+num(m.net)+'</td>'+cell(m.change,m.change>=0?RED:GRN)+cell(m.long_change,m.long_change>=0?RED:GRN)+cell(m.short_change,m.short_change>=0?GRN:RED)+'</tr>').join('');
@@ -578,7 +593,8 @@ function backtests(){
     return '<section class="btgroup"><div class="bthead"><span class="btname">'+term(scan.cohort)+'</span><span class="scanmeta">'+t('scanned')+' '+scan.requested+' · '+t('testable')+' '+scan.analyzed+' · '+t('highCorr')+' '+results.length+'</span></div>'+
       (results.length?'<div class="scancards">'+results.map((r,ri)=>card(r,si,ri)).join('')+'</div>':'<div class="muted">'+t('noHighCorr')+'</div>')+'</section>';
   }).join('');
-  root.innerHTML='<div class="btguide">'+t('scanGuide')+'</div>'+groups+'<div class="btnote">'+t('scanFormula')+'</div>';
+  const dashboard='<div class="btsubhead">'+t('icDashboard')+'</div><div class="icdash">'+scans.map(rankColumn).join('')+'</div>';
+  root.innerHTML='<div class="btguide">'+t('scanGuide')+'</div>'+dashboard+groups+'<div class="btnote">'+t('scanFormula')+'</div>';
   charts.forEach(([id,r])=>{const host=document.getElementById(id);if(host)lineChart(host,r.net_series,r.dates,{h:88,fmt:v=>num(v)+' '+(lang==='en'?'lots':'手')});});
 }
 

@@ -9,15 +9,8 @@ import math
 import numpy as np
 
 
-COHORTS = ("机构", "杭州", "外资")
-SCAN_CONTRACTS = (
-    ("铜", "铜"), ("铝", "铝"), ("锌", "锌"), ("锡", "锡"),
-    ("碳酸锂", "碳酸锂"), ("焦煤", "焦煤"), ("铁矿", "铁矿石"),
-    ("热卷", "热卷"), ("PTA", "PTA"), ("沥青", "沥青"),
-    ("甲醇", "甲醇"), ("PP", "PP"), ("苯乙烯", "苯乙烯"),
-    ("燃料油", "燃油"), ("棕榈油", "棕榈油"), ("豆粕", "豆粕"),
-    ("豆油", "豆油"), ("天然橡胶", "橡胶"),
-)
+COHORTS = ("机构", "外资", "杭州")
+DISPLAY_ALIASES = {"铁矿石": "铁矿", "燃油": "燃料油", "橡胶": "天然橡胶"}
 HORIZONS = (1, 3, 5)
 LOOKBACK = 60
 TRAIN_RATIO = 0.70
@@ -346,14 +339,20 @@ def _combo_series(data, sector, display, sectors, multipliers):
 
 
 def build_cohort_backtests(data, display, sectors, multipliers, sector_order, broker_data=None, cohort_members=None):
-    """Scan the requested contracts and retain only strong out-of-sample relationships."""
+    """Scan every available contract and retain details for strong relationships."""
     broker_data = broker_data or {}
     cohort_members = cohort_members or {}
+    contracts = sorted(
+        ((DISPLAY_ALIASES.get(display.get(variety, variety), display.get(variety, variety)),
+          display.get(variety, variety), variety) for variety in data),
+        key=lambda row: row[0],
+    )
     scans = []
     for cohort in COHORTS:
         qualified = []
+        rankings = []
         analyzed = 0
-        for canonical_name, source_name in SCAN_CONTRACTS:
+        for canonical_name, source_name, variety in contracts:
             dates, flows, returns = _daily_series(
                 data, cohort, "contract", source_name, display, sectors, multipliers
             )
@@ -363,9 +362,17 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
             analyzed += 1
             direction = 1 if result["mode"] == "顺向" else -1
             effective_correlation = result["oos"]["ic"] * direction
+            rankings.append({
+                "name": canonical_name,
+                "mode": result["mode"],
+                "horizon": result["horizon"],
+                "correlation": result["oos"]["ic"],
+                "effective_correlation": round(effective_correlation, 4),
+                "samples": result["oos"]["samples"],
+            })
             if effective_correlation < DISPLAY_MIN_CORRELATION or result["oos"]["samples"] < DISPLAY_MIN_SAMPLES:
                 continue
-            variety, item = _contract_item(data, display, cohort, source_name)
+            item = data.get(variety, {}).get(cohort)
             if not item:
                 continue
             members = _member_stats(
@@ -393,10 +400,12 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
                 "net_series": net_series,
             })
         qualified.sort(key=lambda row: row["effective_correlation"], reverse=True)
+        rankings.sort(key=lambda row: row["effective_correlation"], reverse=True)
         scans.append({
             "cohort": cohort,
-            "requested": len(SCAN_CONTRACTS),
+            "requested": len(contracts),
             "analyzed": analyzed,
+            "rankings": rankings,
             "results": qualified,
         })
 
@@ -408,7 +417,7 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
             "train_ratio": TRAIN_RATIO,
             "min_samples": DISPLAY_MIN_SAMPLES,
             "min_correlation": DISPLAY_MIN_CORRELATION,
-            "contracts": [name for name, _ in SCAN_CONTRACTS],
+            "contracts": [name for name, _, _ in contracts],
             "price": "品种未来收益",
         },
         "scans": scans,
