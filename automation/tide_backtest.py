@@ -230,6 +230,7 @@ def _member_stats(broker_data, variety, member_names, latest_date):
             "change": round(current - previous),
             "long_change": round(max(current, 0) - max(previous, 0)),
             "short_change": round(max(-current, 0) - max(-previous, 0)),
+            "visible": bool(current or previous),
         })
     return sorted(members, key=lambda x: abs(x["change"]), reverse=True)
 
