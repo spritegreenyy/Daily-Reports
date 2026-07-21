@@ -28,6 +28,14 @@
   #kolapp .stitle::before{content:"";width:5px;height:15px;background:var(--gold);border-radius:2px}
   #kolapp .ins,#kolapp .uq,#kolapp .stream{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
   #kolapp .icard,#kolapp .ucard,#kolapp .card,#kolapp .bsec{background:var(--panel);border:1px solid var(--line);border-radius:11px}
+  #kolapp .idxgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  #kolapp .idxcard{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 13px;min-width:0}
+  #kolapp .idxhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.idxhead b{font-size:13px!important;color:var(--tx)!important}
+  #kolapp .idxscore{font:800 22px "SF Mono",ui-monospace,monospace}.idxscore.pos{color:#55c9a5}.idxscore.neg{color:#ef7f73}.idxscore.none{color:var(--mut2)}
+  #kolapp .idxstate{font-size:10.5px;color:var(--mut);margin:2px 0 7px}.idxunder{font-size:9.5px;color:var(--mut2);min-height:30px;line-height:1.35}
+  #kolapp .idxaxis{height:8px;background:var(--panel2);border-radius:5px;position:relative;margin:8px 0}.idxaxis::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--mut2)}
+  #kolapp .idxfill{position:absolute;height:100%;border-radius:5px}.idxmeta{font-size:10px;color:var(--mut);display:flex;justify-content:space-between;gap:5px}
+  #kolapp .idxspark{height:32px;margin-top:7px}.idxspark svg{width:100%;height:32px;display:block}.idxnote{font-size:10.5px;color:var(--mut2);margin-top:9px}
   #kolapp .icard{padding:14px 16px} #kolapp .icard h3{margin:0 0 9px;font-size:14.5px;font-weight:700;line-height:1.4;color:#fff;display:flex;gap:8px}
   #kolapp .inum{flex:0 0 auto;width:20px;height:20px;border-radius:6px;background:var(--gold);color:#0e1620;font-size:12px;font-weight:800;display:grid;place-items:center;margin-top:1px}
   #kolapp .icard li{list-style:none;font-size:12.8px;color:#cdd8e6;margin:6px 0;padding-left:12px;position:relative}
@@ -70,7 +78,8 @@
   #kolapp .tag{font-size:10.5px;color:var(--mut);background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;cursor:pointer}
   #kolapp .open{margin-left:auto;font-size:11.5px;color:var(--gold);white-space:nowrap}
   #kolapp .empty{grid-column:1/-1;text-align:center;color:var(--mut2);padding:50px 20px}
-  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream{grid-template-columns:1fr}}
+  @media (max-width:820px){#kolapp .idxgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream,#kolapp .idxgrid{grid-template-columns:1fr}}
 </style>
 
 <div class="mast"><div class="wrap">
@@ -85,6 +94,7 @@
 
 <div class="wrap">
   <div class="sect"><div class="stitle" id="st1"></div><div class="ins" id="insights"></div></div>
+  <div class="sect"><div class="stitle" id="stidx"></div><div class="idxgrid" id="indices"></div><div class="idxnote" id="idxnote"></div></div>
   <div class="sect"><div class="stitle" id="st2"></div><div id="sections"></div></div>
   <div class="sect"><div class="stitle" id="st3"></div><div class="uq" id="unique"></div></div>
   <div class="tdiv"></div>
@@ -110,7 +120,7 @@
   var app=document.getElementById("kolapp"),P=JSON.parse(document.getElementById("payload").textContent),DATA=P.data,BOARDS=P.boards,REPC=P.repColors,DATES=P.dates;
   var uiLang=(new URLSearchParams(location.search).get("lang")||localStorage.getItem("windrise_lang")||"zh");
   var st={date:DATES[0],board:"all",tier:"all",lang:"all",sort:"hot",q:""};
-  var UI={zh:{title:'KOL 交易主线<span class="g"> · </span>可视化终端',s1:'一 · 本日核心交易启示',s2:'二 · 五大板块 · 逐条观点',s3:'三 · 独到 / 有启发性的观点',s4:'四 · 全部推文 · 可检索（点击跳转原推）',search:'搜索关键词 / @账号（按 / 聚焦，Esc 清空）',hot:'热度',latest:'最新',all:'全部',tier1:'一线',tier2:'二线',zhOnly:'中文',enOnly:'EN',bi:'中英',reset:'重置',open:'打开 ↗',more:'展开全文 ▾',less:'收起 ▴',empty:'没有匹配的推文 —— 换个词或点「重置」。',show:'当前显示',kols:'位 KOL',monitor:'监测',accounts:'账号',domains:'领域',items:'条',meaning:'交易含义：',langZh:'中',langEn:'EN'},en:{title:'KOL Trading Themes<span class="g"> · </span>Visual Terminal',s1:'I · Core Trading Takeaways',s2:'II · Five Sectors · View by View',s3:'III · Distinctive / Insightful Views',s4:'IV · All Tweets · Searchable (click to open source)',search:'Search keyword / @handle (press / to focus, Esc to clear)',hot:'Hot',latest:'Latest',all:'All',tier1:'Tier 1',tier2:'Tier 2',zhOnly:'Chinese',enOnly:'English',bi:'Both',reset:'Reset',open:'Open ↗',more:'Expand ▾',less:'Collapse ▴',empty:'No matching tweets. Try another keyword or reset.',show:'Showing',kols:'KOLs',monitor:'monitoring',accounts:'accounts',domains:'domains',items:'items',meaning:'Trading implication: ',langZh:'ZH',langEn:'EN'}};
+  var UI={zh:{title:'KOL 交易主线<span class="g"> · </span>可视化终端',s1:'一 · 本日核心交易启示',sidx:'二 · 可回测 KOL 方向指数',s2:'三 · 主题板块 · 逐条观点',s3:'四 · 独到 / 有启发性的观点',s4:'五 · 全部推文 · 可检索（点击跳转原推）',search:'搜索关键词 / @账号（按 / 聚焦，Esc 清空）',hot:'热度',latest:'最新',all:'全部',tier1:'一线',tier2:'二线',zhOnly:'中文',enOnly:'EN',bi:'中英',reset:'重置',open:'打开 ↗',more:'展开全文 ▾',less:'收起 ▴',empty:'没有匹配的推文 —— 换个词或点「重置」。',show:'当前显示',kols:'位 KOL',monitor:'监测',accounts:'账号',domains:'领域',items:'条',meaning:'交易含义：',langZh:'中',langEn:'EN',bull:'偏多',bear:'偏空',balanced:'中性',noSignal:'无方向信号',mentions:'提及',signals:'有效',indexNote:'指数范围 -100～+100；只使用原始推文和固定词典，按KOL层级及互动度加权。中性观点不进入方向分母；用于后续价格回测，不代表投资建议。'},en:{title:'KOL Trading Themes<span class="g"> · </span>Visual Terminal',s1:'I · Core Trading Takeaways',sidx:'II · Backtest-Ready KOL Direction Indices',s2:'III · Thematic Sectors · View by View',s3:'IV · Distinctive / Insightful Views',s4:'V · All Tweets · Searchable (click to open source)',search:'Search keyword / @handle (press / to focus, Esc to clear)',hot:'Hot',latest:'Latest',all:'All',tier1:'Tier 1',tier2:'Tier 2',zhOnly:'Chinese',enOnly:'English',bi:'Both',reset:'Reset',open:'Open ↗',more:'Expand ▾',less:'Collapse ▴',empty:'No matching tweets. Try another keyword or reset.',show:'Showing',kols:'KOLs',monitor:'monitoring',accounts:'accounts',domains:'domains',items:'items',meaning:'Trading implication: ',langZh:'ZH',langEn:'EN',bull:'Bullish',bear:'Bearish',balanced:'Neutral',noSignal:'No directional signal',mentions:'mentions',signals:'signals',indexNote:'Range: -100 to +100. Built only from raw tweets and a fixed lexicon, weighted by KOL tier and engagement. Neutral views are excluded from the direction denominator. Designed for price backtests, not investment advice.'}};
   var $=function(s){return app.querySelector(s)};
   function esc(s){return (s||"").replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
   function tx(k){return UI[uiLang][k]||UI.zh[k]||k}
@@ -125,7 +135,7 @@
   function syncUi(){
     localStorage.setItem("windrise_lang",uiLang); document.documentElement.lang=uiLang==="en"?"en":"zh-CN";
     document.title=(uiLang==="en"?"KOL Trading Themes · Visual Terminal":"KOL 交易主线 · 可视化终端")+" · __DATE__";
-    $("#title").innerHTML=tx("title"); $("#st1").textContent=tx("s1"); $("#st2").textContent=tx("s2"); $("#st3").textContent=tx("s3"); $("#st4").textContent=tx("s4");
+    $("#title").innerHTML=tx("title"); $("#st1").textContent=tx("s1"); $("#stidx").textContent=tx("sidx"); $("#st2").textContent=tx("s2"); $("#st3").textContent=tx("s3"); $("#st4").textContent=tx("s4");
     $("#q").placeholder=tx("search"); $("#reset").textContent=tx("reset");
     [["#sortSeg",["hot","latest"]],["#tierSeg",["all","tier1","tier2"]],["#langSeg",["bi","zhOnly","enOnly"]]].forEach(function(pair){
       var btns=$(pair[0]).querySelectorAll("button"); pair[1].forEach(function(k,i){btns[i].textContent=tx(k)})});
@@ -133,6 +143,10 @@
   }
   var dsel=$("#dateSel"); DATES.forEach(function(d){var o=document.createElement("option");o.value=d;o.textContent=d;dsel.appendChild(o)}); dsel.value=st.date;
   dsel.onchange=function(){st.date=dsel.value;st.board="all";renderAll()};
+
+  var IDXUNDER={zh:{energy:'原油 · 成品油 · 天然气 · LNG',metals:'黄金 · 白银 · 铜 · 铝 · 锌 · 镍 · 锂',grains:'玉米 · 小麦 · 大豆 · 豆粕 · 豆油',softs:'白糖 · 咖啡 · 可可 · 棉花 · 橙汁 · 天然橡胶'},en:{energy:'Crude · Products · Natural Gas · LNG',metals:'Gold · Silver · Copper · Aluminum · Zinc · Nickel · Lithium',grains:'Corn · Wheat · Soybeans · Meal · Soy Oil',softs:'Sugar · Coffee · Cocoa · Cotton · Orange Juice · Natural Rubber'}};
+  function idxSpark(rows,color){var vals=(rows||[]).filter(function(r){return r.score!==null&&r.score!==undefined});if(vals.length<2)return '';var w=180,h=30,pts=vals.map(function(r,i){var x=i/(vals.length-1)*w,y=(1-(r.score+100)/200)*h;return x.toFixed(1)+','+y.toFixed(1)}).join(' ');return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="15" x2="180" y2="15" stroke="#394a5e" stroke-width="1"/><polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="2"/></svg>'}
+  function renderIndices(){var c=cur(),wrap=$("#indices"),keys=['energy','metals','grains','softs'];wrap.innerHTML='';keys.forEach(function(key){var x=(c.indices||{})[key]||{},score=x.score,col=x.color||'#8fa0b3',has=score!==null&&score!==undefined,state=!has?tx('noSignal'):(score>10?tx('bull'):(score<-10?tx('bear'):tx('balanced'))),left=has&&score<0?50-Math.abs(score)/2:50,width=has?Math.abs(score)/2:0,label=uiLang==='en'?(x.label_en||key):(x.label_zh||key),card=document.createElement('div');card.className='idxcard';card.innerHTML='<div class="idxhead"><b>'+esc(label)+'</b><span class="idxscore '+(!has?'none':score>=0?'pos':'neg')+'">'+(has?(score>0?'+':'')+score.toFixed(1):'—')+'</span></div><div class="idxstate">'+state+'</div><div class="idxunder">'+IDXUNDER[uiLang][key]+'</div><div class="idxaxis"><i class="idxfill" style="left:'+left+'%;width:'+width+'%;background:'+col+'"></i></div><div class="idxmeta"><span>'+tx('mentions')+' '+(x.mentions||0)+' · '+tx('signals')+' '+(x.signal_tweets||0)+'</span><span>↑'+(x.bullish||0)+' / ↓'+(x.bearish||0)+' · KOL '+(x.kols||0)+'</span></div><div class="idxspark">'+idxSpark((c.index_history||{})[key],col)+'</div>';wrap.appendChild(card)});$("#idxnote").textContent=tx('indexNote')}
 
   function renderReport(){
     var r=report(),m=cur().meta;
@@ -174,7 +188,7 @@
       s.appendChild(c);
     })
   }
-  function renderAll(){syncUi();renderReport();buildPills();render()}
+  function renderAll(){syncUi();renderReport();renderIndices();buildPills();render()}
   var qi=$("#q"),clr=$("#clr"); qi.oninput=function(){st.q=qi.value.trim();clr.style.display=qi.value?"block":"none";render()}; clr.onclick=function(){qi.value="";st.q="";clr.style.display="none";qi.focus();render()};
   document.addEventListener("keydown",function(e){if(e.key==="/"&&document.activeElement!==qi){e.preventDefault();qi.focus()} if(e.key==="Escape"&&document.activeElement===qi){qi.value="";st.q="";clr.style.display="none";render()}});
   function seg(id,key){var el=$(id);el.querySelectorAll("button").forEach(function(b){b.onclick=function(){el.querySelectorAll("button").forEach(function(x){x.removeAttribute("data-on")});b.setAttribute("data-on","1");st[key]=b.dataset.v;render()}})}

@@ -12,6 +12,10 @@
 /automation/local/**
 !/automation/local/kol_build.py
 !/automation/local/kol_pull.py
+!/automation/local/kol_indices.py
+!/automation/local/kol_accounts_merge.py
+!/automation/local/kol_soft_accounts.yaml
+!/automation/local/test_kol_indices.py
 !/automation/local/run_daily.sh
 !/automation/local/tide_report.py
 !/kol_digest/

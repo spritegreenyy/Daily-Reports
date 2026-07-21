@@ -1,0 +1,4 @@
+accounts:
+  - handle: mkt_intl
+    tier: 2
+    tags: [commodities, agri_softs, soft_commodities, research, viewpoint]

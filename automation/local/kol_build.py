@@ -29,12 +29,19 @@ ROOT = HERE.parent.parent
 KD = ROOT / "kol_digest"
 OUT = KD / "output"
 DB = HERE / "kol_24h.sqlite"
-ACCOUNTS = ROOT / "datamux" / "kol_accounts_viewpoint_250.yaml"
+from kol_accounts_merge import merged_accounts_file
+
+ACCOUNTS = merged_accounts_file(
+    ROOT / "datamux" / "kol_accounts_viewpoint_250.yaml",
+    HERE / "kol_soft_accounts.yaml",
+    HERE / "kol_accounts_runtime.yaml",
+)
 
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(KD / "src"))
 
 from kol_digest.digest import EnsoStatus, KolBlock, SectionDigest, TopicGroup, Viewpoint
+from kol_indices import build_index_history, match_asset_keys
 from kol_digest.loader import Tweet
 from kol_digest import report as kd_report
 
@@ -58,6 +65,7 @@ def main() -> int:
 
     digest_payload = read_json(OUT / f"kol_{ymd}.json")
     dump_payload = read_json(OUT / f"kol_tweets_{ymd}.json")
+    build_index_history(OUT)
 
     sections = [section_from_dict(item) for item in digest_payload.get("sections", [])]
     tweets_by_section = tweets_by_section_from_dump(dump_payload)
@@ -276,7 +284,18 @@ def render_section_for_web(section: SectionDigest) -> list[Any]:
 
     if section.topic_groups:
         for group in section.topic_groups:
-            rows = [render_row(view) for view in group.views if kd_report._is_real_view(view)]
+            views = [view for view in group.views if kd_report._is_real_view(view)]
+            if section.key == "commodities" and group.label == "农产品":
+                soft_rows, grain_rows = [], []
+                for view in views:
+                    text = f"{view.view} {view.insight}"
+                    (soft_rows if "softs" in match_asset_keys(text) else grain_rows).append(render_row(view))
+                if soft_rows:
+                    groups.append(["软商品", soft_rows])
+                if grain_rows:
+                    groups.append(["谷物油籽", grain_rows])
+                continue
+            rows = [render_row(view) for view in views]
             if rows:
                 groups.append([group.label, rows])
     else:

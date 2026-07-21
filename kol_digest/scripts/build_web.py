@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """构建 KOL 交易观点交互网页(独立可打开 HTML)。"""
+import csv
 import json
 import os
 import re
 import sys
 import urllib.request
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "automation", "local"))
+
+from kol_indices import build_index_history, match_asset_keys
 
 ROOT = "/Users/yinyue/Downloads/JYWC海拓"
 KD = ROOT + "/kol_digest"
@@ -16,12 +21,13 @@ TW_BOARD = {
     "macro": ("宏观经济", "Macro", "#5b8def", "宏观", "Macro"),
     "geopolitics": ("地缘政治", "Geopolitics", "#ec6f57", "地缘", "Geo"),
     "commodities": ("大宗商品", "Commodities", "#e0952f", "大宗", "Cmdty"),
+    "softs": ("软商品", "Soft Commodities", "#df6f91", "软商品", "Softs"),
     "weather": ("天气气候", "Weather", "#33bfad", "天气", "Weather"),
     "ai_semis": ("AI半导体", "AI & Semis", "#b18ef0", "AI", "AI"),
 }
 REP_BOARD = {
     "宏观经济": "#5b8def", "地缘政治": "#ec6f57", "大宗商品": "#e0952f", "股票": "#3fb36a",
-    "AI半导体": "#b18ef0", "AI半导体科技": "#b18ef0", "AI / 半导体": "#b18ef0", "天气气候": "#33bfad"
+    "AI半导体": "#b18ef0", "AI半导体科技": "#b18ef0", "AI / 半导体": "#b18ef0", "天气气候": "#33bfad", "软商品": "#df6f91"
 }
 
 EN_MAP = [
@@ -34,6 +40,7 @@ EN_MAP = [
     ("最高热度", "Top engagement"), ("交易含义", "Trading implication"), ("关键数据", "Key data"),
     ("互动", "Engagement"), ("来自", "from"), ("板块", "sector"),
     ("宏观经济", "Macro"), ("地缘政治", "Geopolitics"), ("大宗商品", "Commodities"),
+    ("软商品", "Soft Commodities"), ("谷物油籽", "Grains & Oilseeds"),
     ("天气气候", "Weather"), ("AI半导体科技", "AI & Semis"), ("AI半导体", "AI & Semis"),
     ("AI / 半导体", "AI / Semis"), ("厄尔尼诺现状", "El Nino status"),
 ]
@@ -184,6 +191,25 @@ def save_json(path, data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
+def export_indices(report_date, ymd, index_history):
+    daily = [row for row in index_history.get("daily", []) if row.get("date", "") <= report_date]
+    report_dir = os.path.join(ROOT, "日报", ymd)
+    os.makedirs(report_dir, exist_ok=True)
+    export = {"as_of": report_date, "method": index_history.get("method", {}), "daily": daily}
+    save_json(os.path.join(report_dir, f"KOL结构化指数_{ymd}.json"), export)
+    csv_path = os.path.join(report_dir, f"KOL结构化指数_{ymd}.csv")
+    with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=[
+            "date", "asset", "score", "mentions", "signal_tweets", "kols", "bullish", "bearish"
+        ], lineterminator="\n")
+        writer.writeheader()
+        for row in daily:
+            for asset, values in row.get("assets", {}).items():
+                writer.writerow({"date": row["date"], "asset": asset, **{
+                    key: values.get(key) for key in writer.fieldnames if key not in {"date", "asset"}
+                }})
+
+
 def main():
     date = sys.argv[1] if len(sys.argv) > 1 else None
     if not date:
@@ -200,6 +226,9 @@ def main():
     content_en_path = f"{OUT}/content_en_{ymd}.json"
 
     base_url, api_key, model = openai_cfg()
+    index_history = build_index_history(OUT)
+    index_by_date = {row["date"]: row for row in index_history.get("daily", [])}
+    export_indices(date, ymd, index_history)
 
     pending_en = []
     tweets, kols, dropped = [], set(), 0
@@ -225,6 +254,11 @@ def main():
             elif not body_en:
                 body_en = translate_text_en(body_zh)
 
+            asset_keys = match_asset_keys(body_src)
+            if "softs" in asset_keys:
+                bk = "softs"
+            else:
+                bk = sec["key"] if sec["key"] in TW_BOARD else "macro"
             kols.add(item["handle"])
             tags = [x for x in item.get("tags", []) if x != "viewpoint"][:3]
             tweets.append({
@@ -269,7 +303,19 @@ def main():
     if not report_en:
         report_en = translate_report_en_fallback(report_zh)
 
-    data = {date: {"meta": meta, "report_zh": report_zh, "report_en": report_en, "tweets": tweets}}
+    history_series = {
+        key: [
+            {"date": row["date"], **row["assets"][key]}
+            for row in index_history.get("daily", [])[-30:]
+        ]
+        for key in ("energy", "metals", "grains", "softs")
+    }
+    current_indices = index_by_date.get(date, {"date": date, "assets": {}})
+    data = {date: {
+        "meta": meta, "report_zh": report_zh, "report_en": report_en, "tweets": tweets,
+        "indices": current_indices.get("assets", {}), "index_history": history_series,
+        "index_method": index_history.get("method", {}),
+    }}
     boards = {
         k: {"label_zh": v[0], "label_en": v[1], "color": v[2], "short_zh": v[3], "short_en": v[4]}
         for k, v in TW_BOARD.items()

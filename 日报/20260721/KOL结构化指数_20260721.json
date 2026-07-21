@@ -1,0 +1,1386 @@
+{
+  "as_of": "2026-07-21",
+  "method": {
+    "range": [
+      -100,
+      100
+    ],
+    "formula": "100 * sum(direction * weight) / sum(weight), directional tweets only",
+    "weight": "tier weight (1.5/1.2/1.0) * capped log engagement weight (1.0-2.0)",
+    "neutral": "mentions without deterministic direction are excluded from the score denominator"
+  },
+  "daily": [
+    {
+      "date": "2026-06-08",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -32.3,
+          "mentions": 9,
+          "signal_tweets": 6,
+          "kols": 6,
+          "bullish": 2,
+          "bearish": 4
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-09",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -100.0,
+          "mentions": 6,
+          "signal_tweets": 2,
+          "kols": 4,
+          "bullish": 0,
+          "bearish": 2
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": -100.0,
+          "mentions": 1,
+          "signal_tweets": 1,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 1
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": -14.4,
+          "mentions": 2,
+          "signal_tweets": 2,
+          "kols": 2,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-10",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -33.4,
+          "mentions": 13,
+          "signal_tweets": 4,
+          "kols": 8,
+          "bullish": 1,
+          "bearish": 3
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": 100.0,
+          "mentions": 5,
+          "signal_tweets": 1,
+          "kols": 5,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-11",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -36.0,
+          "mentions": 9,
+          "signal_tweets": 6,
+          "kols": 8,
+          "bullish": 2,
+          "bearish": 4
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": -100.0,
+          "mentions": 3,
+          "signal_tweets": 2,
+          "kols": 3,
+          "bullish": 0,
+          "bearish": 2
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-12",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -23.5,
+          "mentions": 12,
+          "signal_tweets": 2,
+          "kols": 7,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": 100.0,
+          "mentions": 6,
+          "signal_tweets": 3,
+          "kols": 2,
+          "bullish": 3,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-15",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -4.5,
+          "mentions": 4,
+          "signal_tweets": 2,
+          "kols": 3,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-16",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -21.9,
+          "mentions": 11,
+          "signal_tweets": 5,
+          "kols": 7,
+          "bullish": 2,
+          "bearish": 3
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": -100.0,
+          "mentions": 3,
+          "signal_tweets": 1,
+          "kols": 2,
+          "bullish": 0,
+          "bearish": 1
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": -20.4,
+          "mentions": 2,
+          "signal_tweets": 2,
+          "kols": 2,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-24",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -100.0,
+          "mentions": 14,
+          "signal_tweets": 3,
+          "kols": 9,
+          "bullish": 0,
+          "bearish": 3
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": -32.0,
+          "mentions": 4,
+          "signal_tweets": 3,
+          "kols": 4,
+          "bullish": 1,
+          "bearish": 2
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-06-30",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -37.0,
+          "mentions": 12,
+          "signal_tweets": 9,
+          "kols": 7,
+          "bullish": 3,
+          "bearish": 6
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": 2.0,
+          "mentions": 3,
+          "signal_tweets": 2,
+          "kols": 3,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-01",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -100.0,
+          "mentions": 8,
+          "signal_tweets": 3,
+          "kols": 7,
+          "bullish": 0,
+          "bearish": 3
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": -15.4,
+          "mentions": 2,
+          "signal_tweets": 2,
+          "kols": 2,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": 100.0,
+          "mentions": 5,
+          "signal_tweets": 1,
+          "kols": 2,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-02",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -35.7,
+          "mentions": 9,
+          "signal_tweets": 4,
+          "kols": 7,
+          "bullish": 1,
+          "bearish": 3
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": 100.0,
+          "mentions": 6,
+          "signal_tweets": 2,
+          "kols": 5,
+          "bullish": 2,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-03",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -63.9,
+          "mentions": 8,
+          "signal_tweets": 6,
+          "kols": 5,
+          "bullish": 1,
+          "bearish": 5
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": 4.6,
+          "mentions": 3,
+          "signal_tweets": 2,
+          "kols": 3,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-06",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": 6.4,
+          "mentions": 9,
+          "signal_tweets": 2,
+          "kols": 6,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-07",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-08",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -43.5,
+          "mentions": 5,
+          "signal_tweets": 3,
+          "kols": 5,
+          "bullish": 1,
+          "bearish": 2
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-09",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": null,
+          "mentions": 3,
+          "signal_tweets": 0,
+          "kols": 2,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": 100.0,
+          "mentions": 1,
+          "signal_tweets": 1,
+          "kols": 1,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-10",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": null,
+          "mentions": 3,
+          "signal_tweets": 0,
+          "kols": 3,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-11",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": -100.0,
+          "mentions": 2,
+          "signal_tweets": 2,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 2
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-12",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-13",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": 3.7,
+          "mentions": 4,
+          "signal_tweets": 2,
+          "kols": 4,
+          "bullish": 1,
+          "bearish": 1
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": 100.0,
+          "mentions": 1,
+          "signal_tweets": 1,
+          "kols": 1,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-14",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": 100.0,
+          "mentions": 2,
+          "signal_tweets": 1,
+          "kols": 2,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": 100.0,
+          "mentions": 2,
+          "signal_tweets": 1,
+          "kols": 2,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-15",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -100.0,
+          "mentions": 1,
+          "signal_tweets": 1,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 1
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": 100.0,
+          "mentions": 2,
+          "signal_tweets": 1,
+          "kols": 2,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-16",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": -100.0,
+          "mentions": 1,
+          "signal_tweets": 1,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 1
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-17",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": 100.0,
+          "mentions": 3,
+          "signal_tweets": 1,
+          "kols": 3,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-18",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": null,
+          "mentions": 2,
+          "signal_tweets": 0,
+          "kols": 2,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 1,
+          "signal_tweets": 0,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-19",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": 100.0,
+          "mentions": 2,
+          "signal_tweets": 2,
+          "kols": 2,
+          "bullish": 2,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": 100.0,
+          "mentions": 1,
+          "signal_tweets": 1,
+          "kols": 1,
+          "bullish": 1,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-20",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": 100.0,
+          "mentions": 3,
+          "signal_tweets": 2,
+          "kols": 3,
+          "bullish": 2,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    },
+    {
+      "date": "2026-07-21",
+      "assets": {
+        "energy": {
+          "label_zh": "能源",
+          "label_en": "Energy",
+          "color": "#ef8f4c",
+          "score": 100.0,
+          "mentions": 4,
+          "signal_tweets": 2,
+          "kols": 4,
+          "bullish": 2,
+          "bearish": 0
+        },
+        "metals": {
+          "label_zh": "金属",
+          "label_en": "Metals",
+          "color": "#d8ad55",
+          "score": -100.0,
+          "mentions": 1,
+          "signal_tweets": 1,
+          "kols": 1,
+          "bullish": 0,
+          "bearish": 1
+        },
+        "grains": {
+          "label_zh": "谷物油籽",
+          "label_en": "Grains & Oilseeds",
+          "color": "#76b77b",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        },
+        "softs": {
+          "label_zh": "软商品",
+          "label_en": "Soft Commodities",
+          "color": "#df6f91",
+          "score": null,
+          "mentions": 0,
+          "signal_tweets": 0,
+          "kols": 0,
+          "bullish": 0,
+          "bearish": 0
+        }
+      }
+    }
+  ]
+}

@@ -14,7 +14,13 @@ from pathlib import Path
 HERE = Path(__file__).parent
 ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT))                    # import datamux.*
-ACCOUNTS = str(ROOT / "datamux/kol_accounts_viewpoint_250.yaml")
+from kol_accounts_merge import merged_accounts_file
+
+ACCOUNTS = str(merged_accounts_file(
+    ROOT / "datamux/kol_accounts_viewpoint_250.yaml",
+    HERE / "kol_soft_accounts.yaml",
+    HERE / "kol_accounts_runtime.yaml",
+))
 COOKIES = str(Path.home() / ".x_cookies.json")
 DB = HERE / "kol_24h.sqlite"
 KD = ROOT / "kol_digest"
