@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Walk-forward sector and contract backtests for futures seat signals."""
+"""Walk-forward contract scans for futures seat-position signals."""
 
 from __future__ import annotations
 
@@ -10,12 +10,22 @@ import numpy as np
 
 
 COHORTS = ("机构", "杭州", "外资")
+SCAN_CONTRACTS = (
+    ("铜", "铜"), ("铝", "铝"), ("锌", "锌"), ("锡", "锡"),
+    ("碳酸锂", "碳酸锂"), ("焦煤", "焦煤"), ("铁矿", "铁矿石"),
+    ("热卷", "热卷"), ("PTA", "PTA"), ("沥青", "沥青"),
+    ("甲醇", "甲醇"), ("PP", "PP"), ("苯乙烯", "苯乙烯"),
+    ("燃料油", "燃油"), ("棕榈油", "棕榈油"), ("豆粕", "豆粕"),
+    ("豆油", "豆油"), ("天然橡胶", "橡胶"),
+)
 HORIZONS = (1, 3, 5)
 LOOKBACK = 60
 TRAIN_RATIO = 0.70
 SIGNAL_THRESHOLD = 0.5
 MIN_TRAIN_SAMPLES = 30
 MIN_OOS_SAMPLES = 10
+DISPLAY_MIN_SAMPLES = 30
+DISPLAY_MIN_CORRELATION = 0.08
 
 FOCUS_TESTS = (
     ("杭州·化工", "杭州", "sector", "化工", None),
@@ -212,15 +222,67 @@ def _analyze(dates, flows, returns, preset=None, fixed_mode=None):
     }
 
 
-def _member_stats(broker_data, variety, member_names):
+def _member_stats(broker_data, variety, member_names, latest_date):
     members = []
     for name in member_names:
         item = broker_data.get(variety, {}).get(name)
-        if not item or len(item.get("net", [])) < 2:
+        if (not item or len(item.get("net", [])) < 2
+                or not item.get("dates") or item["dates"][-1] != latest_date):
             continue
         net = item["net"]
-        members.append({"name": name, "net": round(float(net[-1])), "change": round(float(net[-1] - net[-2]))})
+        previous, current = float(net[-2]), float(net[-1])
+        members.append({
+            "name": name,
+            "net": round(current),
+            "change": round(current - previous),
+            "long_change": round(max(current, 0) - max(previous, 0)),
+            "short_change": round(max(-current, 0) - max(-previous, 0)),
+        })
     return sorted(members, key=lambda x: abs(x["change"]), reverse=True)
+
+
+def _contract_item(data, display, cohort, target):
+    for variety, cohorts in data.items():
+        if display.get(variety, variety) == target and cohort in cohorts:
+            return variety, cohorts[cohort]
+    return None, None
+
+
+def _position_snapshot(item, members):
+    net = item.get("net", [])
+    if len(net) < 2:
+        return None
+    previous, current = float(net[-2]), float(net[-1])
+    if members:
+        current = sum(row["net"] for row in members)
+        net_change = sum(row["change"] for row in members)
+        long_change = sum(row["long_change"] for row in members)
+        short_change = sum(row["short_change"] for row in members)
+    else:
+        net_change = current - previous
+        long_change = max(current, 0) - max(previous, 0)
+        short_change = max(-current, 0) - max(-previous, 0)
+    return {
+        "net": round(current),
+        "net_change": round(net_change),
+        "long_change": round(long_change),
+        "short_change": round(short_change),
+    }
+
+
+def _member_net_series(broker_data, variety, members, fallback_dates, fallback_net):
+    if not members:
+        n = min(len(fallback_dates), len(fallback_net), 90)
+        return fallback_dates[-n:], [round(float(value)) for value in fallback_net[-n:]]
+    series = []
+    for member in members:
+        item = broker_data.get(variety, {}).get(member["name"], {})
+        series.append(dict(zip(item.get("dates", []), item.get("net", []))))
+    common_dates = sorted(set.intersection(*(set(item) for item in series))) if series else []
+    common_dates = common_dates[-90:]
+    return common_dates, [
+        round(sum(float(item[date]) for item in series)) for date in common_dates
+    ]
 
 
 def _contract_stats(item, horizon, mode, split_ratio=TRAIN_RATIO):
@@ -284,56 +346,59 @@ def _combo_series(data, sector, display, sectors, multipliers):
 
 
 def build_cohort_backtests(data, display, sectors, multipliers, sector_order, broker_data=None, cohort_members=None):
-    """Build strict train/validation studies, focus tests and the Hangzhou-minus-foreign factor."""
+    """Scan the requested contracts and retain only strong out-of-sample relationships."""
     broker_data = broker_data or {}
     cohort_members = cohort_members or {}
-    groups = []
+    scans = []
     for cohort in COHORTS:
-        candidates = []
-        for sector in sector_order:
-            dates, flows, returns = _daily_series(data, cohort, "sector", sector, display, sectors, multipliers)
+        qualified = []
+        analyzed = 0
+        for canonical_name, source_name in SCAN_CONTRACTS:
+            dates, flows, returns = _daily_series(
+                data, cohort, "contract", source_name, display, sectors, multipliers
+            )
             result = _analyze(dates, flows, returns)
-            if result:
-                candidates.append((result["train"]["score"], sector, result))
-        if not candidates:
-            continue
-        _, sector, best = max(candidates, key=lambda row: row[0])
-        best["sector"] = sector
-        best["contracts"] = _key_contracts(data, cohort, "sector", sector, best, display, sectors, broker_data, cohort_members)
-        groups.append({"cohort": cohort, "best": best})
-
-    retail_candidates = []
-    for sector in sector_order:
-        dates, flows, returns = _daily_series(data, "散户", "sector", sector, display, sectors, multipliers)
-        result = _analyze(dates, flows, returns, fixed_mode="反向")
-        if result:
-            retail_candidates.append((result["train"]["score"], sector, result))
-    if retail_candidates:
-        _, sector, best = max(retail_candidates, key=lambda row: row[0])
-        best["sector"] = sector
-        best["contracts"] = _key_contracts(data, "散户", "sector", sector, best, display, sectors, broker_data, cohort_members)
-        groups.append({"cohort": "散户", "best": best})
-
-    focuses = []
-    for label, cohort, kind, target, preset in FOCUS_TESTS:
-        dates, flows, returns = _daily_series(data, cohort, kind, target, display, sectors, multipliers)
-        result = _analyze(dates, flows, returns, preset=preset)
-        if not result:
-            continue
-        result.update({"label": label, "cohort": cohort, "target": target, "kind": kind})
-        result["contracts"] = _key_contracts(data, cohort, kind, target, result, display, sectors, broker_data, cohort_members, limit=2)
-        focuses.append(result)
-
-    combo_candidates = []
-    for sector in sector_order:
-        dates, flows, returns = _combo_series(data, sector, display, sectors, multipliers)
-        result = _analyze(dates, flows, returns)
-        if result:
-            combo_candidates.append((result["train"]["score"], sector, result))
-    combo = None
-    if combo_candidates:
-        _, sector, combo = max(combo_candidates, key=lambda row: row[0])
-        combo.update({"name": "跟杭州·反外资", "sector": sector})
+            if not result:
+                continue
+            analyzed += 1
+            direction = 1 if result["mode"] == "顺向" else -1
+            effective_correlation = result["oos"]["ic"] * direction
+            if effective_correlation < DISPLAY_MIN_CORRELATION or result["oos"]["samples"] < DISPLAY_MIN_SAMPLES:
+                continue
+            variety, item = _contract_item(data, display, cohort, source_name)
+            if not item:
+                continue
+            members = _member_stats(
+                broker_data, variety, cohort_members.get(cohort, []), result["latest_date"]
+            )
+            snapshot = _position_snapshot(item, members)
+            if not snapshot:
+                continue
+            item_dates, net_series = _member_net_series(
+                broker_data, variety, members, item.get("dates", []), item.get("net", [])
+            )
+            qualified.append({
+                "name": canonical_name,
+                "source_name": source_name,
+                "mode": result["mode"],
+                "horizon": result["horizon"],
+                "correlation": result["oos"]["ic"],
+                "effective_correlation": round(effective_correlation, 4),
+                "samples": result["oos"]["samples"],
+                "oos_start": result["oos_start"],
+                "latest_date": result["latest_date"],
+                **snapshot,
+                "members": members,
+                "dates": item_dates,
+                "net_series": net_series,
+            })
+        qualified.sort(key=lambda row: row["effective_correlation"], reverse=True)
+        scans.append({
+            "cohort": cohort,
+            "requested": len(SCAN_CONTRACTS),
+            "analyzed": analyzed,
+            "results": qualified,
+        })
 
     return {
         "method": {
@@ -341,11 +406,10 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
             "horizons": list(HORIZONS),
             "signal_threshold": SIGNAL_THRESHOLD,
             "train_ratio": TRAIN_RATIO,
-            "execution_delay": 1,
-            "retail_mode": "反向",
-            "price": "板块等权收益",
+            "min_samples": DISPLAY_MIN_SAMPLES,
+            "min_correlation": DISPLAY_MIN_CORRELATION,
+            "contracts": [name for name, _ in SCAN_CONTRACTS],
+            "price": "品种未来收益",
         },
-        "groups": groups,
-        "focuses": focuses,
-        "combo": combo,
+        "scans": scans,
     }
