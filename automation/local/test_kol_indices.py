@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from kol_indices import build_daily_index, direction, match_asset_keys
+from kol_indices import build_daily_index, build_daily_index_from_digest, direction, match_asset_keys
 
 
 def _payload(*tweets):
@@ -37,8 +37,30 @@ def test_daily_index_is_null_without_direction_and_weighted_with_signal():
     assert result["signal_tweets"] == 2
     assert result["bullish"] == 1 and result["bearish"] == 1
     assert result["score"] > 0
+    assert result["score"] < result["raw_score"]
+    assert result["confidence"] == 0.4
 
     neutral = build_daily_index(
         _payload(_tweet("A", "Cotton may trade in a range")), "2026-07-20"
     )["assets"]["softs"]
     assert neutral["score"] is None
+
+
+def test_structured_view_uses_trading_implication_and_shrinks_small_samples():
+    payload = {"sections": [{"kol_blocks": [{
+        "handle": "EnergyA", "tier": 1, "top_engagement": 100,
+        "views": [{
+            "view": "美国石油钻机数量上升。",
+            "insight": "若产量上升兑现，油价上行空间将受限。",
+        }],
+    }, {
+        "handle": "GoldA", "tier": 1, "top_engagement": 100,
+        "views": [{
+            "view": "美元可能大幅贬值，黄金将受益。",
+            "insight": "黄金长期重估。",
+        }],
+    }]}]}
+    result = build_daily_index_from_digest(payload, "2026-07-21")
+    assert result["source"] == "structured_views"
+    assert result["assets"]["energy"]["score"] == -25.0
+    assert result["assets"]["metals"]["score"] == 25.0

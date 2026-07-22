@@ -201,13 +201,14 @@ def export_indices(report_date, ymd, index_history):
     csv_path = os.path.join(report_dir, f"KOL结构化指数_{ymd}.csv")
     with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=[
-            "date", "asset", "score", "mentions", "signal_tweets", "kols", "bullish", "bearish"
+            "date", "asset", "score", "raw_score", "confidence", "status", "source",
+            "mentions", "signal_tweets", "kols", "bullish", "bearish"
         ], lineterminator="\n")
         writer.writeheader()
         for row in daily:
             for asset, values in row.get("assets", {}).items():
-                writer.writerow({"date": row["date"], "asset": asset, **{
-                    key: values.get(key) for key in writer.fieldnames if key not in {"date", "asset"}
+                writer.writerow({"date": row["date"], "asset": asset, "source": row.get("source", ""), **{
+                    key: values.get(key) for key in writer.fieldnames if key not in {"date", "asset", "source"}
                 }})
 
 

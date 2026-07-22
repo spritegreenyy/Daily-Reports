@@ -58,7 +58,7 @@ BULLISH = (
     r"\bdeficit\b", r"\bstrong demand\b", r"\bsupported\b", r"\btailwind\b",
     r"\brising\b", r"\brise[sd]?\b", r"\bclimb(?:s|ed|ing)?\b", r"\bgain(?:s|ed|ing)?\b",
     r"\babove\b", r"\bup \d", r"\bimprov(?:e|es|ed|ing|ement)\b",
-    "看多", "偏多", "上涨", "反弹", "突破", "做多", "买入", "逼空", "供应紧张", "短缺", "需求强劲",
+    "看多", "偏多", "上涨", "反弹", "突破", "做多", "买入", "逼空", "供应紧张", "短缺", "需求强劲", "受益", "利好",
 )
 BEARISH = (
     r"\bbearish\b", r"\bbear market\b", r"\bdownside\b", r"\bsell[ -]?off\b",
@@ -68,7 +68,7 @@ BEARISH = (
     r"\bheadwind\b", r"\blower prices?\b", r"\bdemand destruction\b",
     r"\bfall(?:s|ing)?\b", r"\bfell\b", r"\bdrop(?:s|ped|ping)?\b", r"\bdeclin(?:e|es|ed|ing)\b",
     r"\bbelow\b", r"\bdown \d",
-    "看空", "偏空", "下跌", "回落", "破位", "做空", "卖出", "减仓", "供应过剩", "需求疲弱",
+    "看空", "偏空", "下跌", "回落", "破位", "做空", "卖出", "减仓", "供应过剩", "需求疲弱", "利空", "承压",
 )
 NEGATED_BULL = (r"\bnot bullish\b", r"\bno upside\b", r"\bfailed breakout\b")
 NEGATED_BEAR = (r"\bnot bearish\b", r"\bno downside\b", r"\bfailed breakdown\b")
@@ -77,12 +77,15 @@ COMPOUND_BULL = (
     r"\bestablish(?:ed|ing)? new bullish long\b", r"\bshort positioning (?:is )?(?:starting to )?fall\b",
     r"\breduc(?:e|es|ed|ing) (?:global )?(?:oil )?supply\b", r"\bsupply disruption\b",
     r"\bdisrupt(?:s|ed|ing)? supply\b",
+    r"上行风险.{0,8}(?:放大|上升|增加)",
 )
 COMPOUND_BEAR = (
     r"\blong liquidation\b", r"\bincreas(?:e|es|ed|ing) (?:global )?(?:oil )?supply\b",
     r"\bproduction growth\b", r"\bdemand destruction\b",
+    r"上行空间.{0,8}(?:受限|有限|压制)",
 )
 TIER_WEIGHT = {1: 1.5, 2: 1.2, 3: 1.0}
+PRIOR_SIGNALS = 3
 
 
 def match_asset_keys(text: str) -> list[str]:
@@ -105,41 +108,74 @@ def direction(text: str) -> int:
 
 
 def build_daily_index(payload: dict[str, Any], date: str) -> dict[str, Any]:
-    buckets = {key: [] for key in ASSETS}
+    rows = []
     for section in payload.get("sections", []):
         for tweet in section.get("tweets", []):
             body = str(tweet.get("body") or tweet.get("title") or "")
-            keys = match_asset_keys(body)
-            if not keys:
-                continue
-            item = {
+            rows.append({
                 "handle": str(tweet.get("handle") or "").lstrip("@"),
+                "text": body,
+                "signal_text": body,
                 "direction": direction(body),
                 "weight": _weight(tweet),
-            }
-            for key in keys:
-                buckets[key].append(item)
+            })
+    return _summarize_rows(rows, date, source="raw_tweets")
+
+
+def build_daily_index_from_digest(payload: dict[str, Any], date: str) -> dict[str, Any]:
+    rows = []
+    for section in payload.get("sections", []):
+        for block in section.get("kol_blocks", []):
+            for view in block.get("views", []):
+                view_text = str(view.get("view") or "")
+                insight = str(view.get("insight") or "")
+                signal_text = insight if direction(insight) else view_text
+                rows.append({
+                    "handle": str(view.get("handle") or block.get("handle") or "").lstrip("@"),
+                    "text": f"{view_text} {insight}",
+                    "signal_text": signal_text,
+                    "direction": direction(signal_text),
+                    "weight": _weight({
+                        "tier": block.get("tier"),
+                        "engagement": view.get("engagement") or block.get("top_engagement"),
+                    }),
+                })
+    return _summarize_rows(rows, date, source="structured_views")
+
+
+def _summarize_rows(rows: list[dict[str, Any]], date: str, *, source: str) -> dict[str, Any]:
+    buckets = {key: [] for key in ASSETS}
+    for row in rows:
+        for key in match_asset_keys(row["text"]):
+            buckets[key].append(row)
 
     assets = {}
     for key, spec in ASSETS.items():
         rows = buckets[key]
         signals = [row for row in rows if row["direction"]]
         denominator = sum(row["weight"] for row in signals)
+        raw_score = None
+        confidence = 0.0
         score = None
         if denominator:
-            score = round(100 * sum(row["direction"] * row["weight"] for row in signals) / denominator, 1)
+            raw_score = 100 * sum(row["direction"] * row["weight"] for row in signals) / denominator
+            confidence = len(signals) / (len(signals) + PRIOR_SIGNALS)
+            score = round(raw_score * confidence, 1)
         assets[key] = {
             "label_zh": spec["label_zh"],
             "label_en": spec["label_en"],
             "color": spec["color"],
             "score": score,
+            "raw_score": round(raw_score, 1) if raw_score is not None else None,
+            "confidence": round(confidence, 3),
+            "status": "no_data" if not rows else ("no_direction" if not signals else "signal"),
             "mentions": len(rows),
             "signal_tweets": len(signals),
             "kols": len({row["handle"].lower() for row in rows if row["handle"]}),
             "bullish": sum(row["direction"] > 0 for row in signals),
             "bearish": sum(row["direction"] < 0 for row in signals),
         }
-    return {"date": date, "assets": assets}
+    return {"date": date, "source": source, "assets": assets}
 
 
 def build_index_history(output_dir: str | Path) -> dict[str, Any]:
@@ -151,7 +187,15 @@ def build_index_history(output_dir: str | Path) -> dict[str, Any]:
         except (OSError, json.JSONDecodeError):
             continue
         date = f"{path.stem[-8:-4]}-{path.stem[-4:-2]}-{path.stem[-2:]}"
-        row = build_daily_index(payload, date)
+        digest_path = output / f"kol_{path.stem[-8:]}.json"
+        if digest_path.exists():
+            try:
+                digest_payload = json.loads(digest_path.read_text(encoding="utf-8"))
+                row = build_daily_index_from_digest(digest_payload, date)
+            except (OSError, json.JSONDecodeError):
+                row = build_daily_index(payload, date)
+        else:
+            row = build_daily_index(payload, date)
         daily.append(row)
         (output / f"kol_indices_{path.stem[-8:]}.json").write_text(
             json.dumps(row, ensure_ascii=False, indent=2), encoding="utf-8"
@@ -159,9 +203,11 @@ def build_index_history(output_dir: str | Path) -> dict[str, Any]:
     history = {
         "method": {
             "range": [-100, 100],
-            "formula": "100 * sum(direction * weight) / sum(weight), directional tweets only",
+            "formula": "raw direction score * n/(n+3), where n is the directional viewpoint count",
+            "raw_formula": "100 * sum(direction * weight) / sum(weight), directional viewpoints only",
             "weight": "tier weight (1.5/1.2/1.0) * capped log engagement weight (1.0-2.0)",
-            "neutral": "mentions without deterministic direction are excluded from the score denominator",
+            "shrinkage": "three neutral pseudo-signals reduce small-sample extremes",
+            "neutral": "views without deterministic direction are excluded from the score denominator",
         },
         "dates": [row["date"] for row in daily],
         "daily": daily,
@@ -181,7 +227,7 @@ def _count(text: str, terms: Iterable[str]) -> int:
 
 
 def _is_regex(term: str) -> bool:
-    return term.startswith(r"\b") or term.startswith("#")
+    return term.startswith(r"\b") or term.startswith("#") or bool(re.search(r"[\\.^$*+?{}\[\]|()]", term))
 
 
 def _weight(tweet: dict[str, Any]) -> float:
