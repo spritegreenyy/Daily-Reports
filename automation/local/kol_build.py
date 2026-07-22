@@ -41,9 +41,13 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(KD / "src"))
 
 from kol_digest.digest import EnsoStatus, KolBlock, SectionDigest, TopicGroup, Viewpoint
+from kol_emphasis import emphasize_opinion
 from kol_indices import build_index_history, match_asset_keys
 from kol_digest.loader import Tweet
 from kol_digest import report as kd_report
+
+# The legacy renderer emphasizes every number. Reports should emphasize conclusions instead.
+kd_report._emph = emphasize_opinion
 
 
 def main() -> int:

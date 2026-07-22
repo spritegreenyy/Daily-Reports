@@ -10,6 +10,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "automation", "local"))
 
+from kol_emphasis import strip_numeric_emphasis
 from kol_indices import build_index_history, match_asset_keys
 
 ROOT = "/Users/yinyue/Downloads/JYWC海拓"
@@ -292,8 +293,8 @@ def main():
         "subtitle_zh": rep_raw.get("subtitle_stat", "") + "　·　英文推优先译中，缺失时保留原文",
         "subtitle_en": translate_text_en(rep_raw.get("subtitle_stat", "") + "　·　英文推优先译中，缺失时保留原文"),
     }
-    report_zh = {"insights": rep_raw.get("insights", []), "unique": rep_raw.get("unique", []), "sections": rep_raw.get("sections", [])}
-    report_en = load_json_if_exists(content_en_path)
+    report_zh = strip_numeric_emphasis({"insights": rep_raw.get("insights", []), "unique": rep_raw.get("unique", []), "sections": rep_raw.get("sections", [])})
+    report_en = strip_numeric_emphasis(load_json_if_exists(content_en_path))
     if not report_en and base_url and api_key and model:
         try:
             report_en = translate_report_en_ai(report_zh, base_url=base_url, api_key=api_key, model=model)
