@@ -1,6 +1,7 @@
 import pandas as pd
 
 from pattern_research import enrich_pattern, market_context, walk_forward_backtest
+from hourly_pattern_report import morphology_breadth
 
 
 def frame(n=320):
@@ -65,3 +66,19 @@ def test_walk_forward_uses_future_crossing_and_directional_return():
     assert result["samples"] == 1
     assert result["horizons"]["8"]["win_rate"] == 1.0
     assert result["horizons"]["24"]["avg_return"] > 0
+
+
+def test_morphology_breadth_has_a_fixed_transparent_denominator(monkeypatch):
+    calls = iter([
+        {"bias": "bullish", "bars_since": 2, "exhausted": False, "pattern": "Bull Flag", "pattern_cn": "多头旗形", "confidence": 0.8},
+        {"bias": "bullish", "bars_since": 3, "exhausted": False, "pattern": "Rectangle", "pattern_cn": "矩形", "confidence": 0.78},
+        {"bias": "bearish", "bars_since": 80, "exhausted": False, "pattern": "Bear Flag", "pattern_cn": "空头旗形", "confidence": 0.8},
+        None,
+    ])
+    monkeypatch.setattr("hourly_pattern_report.analyze", lambda _: next(calls))
+    result = morphology_breadth(frame(), windows=(100, 120, 140, 160))
+    assert result["positive"] == 2
+    assert result["negative"] == 0
+    assert result["neutral"] == 2
+    assert result["breadth"] == 0.5
+    assert result["label"] == "偏多共振"

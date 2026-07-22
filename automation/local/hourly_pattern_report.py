@@ -68,6 +68,7 @@ TQ_SYM = {
 TQ_CONF = str(Path.home() / ".tqsdk_auth.json")  # {"user":..,"pass":..}; 也可用环境变量 TQSDK_USER/TQSDK_PASS
 
 WIN = 250          # 分析窗口(小时K根数)
+MORPH_WINDOWS = (120, 160, 200, 250)  # 华创式截面聚合: 每个观察窗口独立投一票
 RECENT_BARS = 45   # 形态右端在最近这么多根内 = 近端/可操作
 CONF_MIN = 0.74    # 门槛(抵消"每品种取最优窗口"的选择偏差, 对齐原版6-8个的选择性); 老师要求只留高置信度
 # 只保留 三角/矩形/楔形/旗形 (老师2026-06-24要求)
@@ -226,6 +227,66 @@ def analyze(win):
     return pick(actionable) or pick(recent) or pick(cand)
 
 
+def morphology_breadth(df, windows=MORPH_WINDOWS):
+    """Aggregate transparent bullish/bearish morphology votes across time windows.
+
+    This borrows the ETF API's positive-minus-negative breadth idea, but does not
+    reproduce its undisclosed proprietary score. Every configured window is one
+    observable vote; missing/stale/played-out geometry is neutral.
+    """
+    votes = []
+    for size in windows:
+        if len(df) < size:
+            votes.append({"window": size, "vote": "neutral", "pattern": None})
+            continue
+        hit = analyze(df.tail(size))
+        invalidated = bool(hit and (
+            (hit.get("bias") == "bullish" and hit.get("stop") is not None
+             and hit.get("last_close") <= hit.get("stop"))
+            or (hit.get("bias") == "bearish" and hit.get("stop") is not None
+                and hit.get("last_close") >= hit.get("stop"))
+        ))
+        valid = bool(
+            hit and hit.get("bias") in {"bullish", "bearish"}
+            and hit.get("bars_since", RECENT_BARS + 1) <= RECENT_BARS
+            and not hit.get("exhausted", False)
+            and not invalidated
+        )
+        votes.append({
+            "window": size,
+            "vote": hit["bias"] if valid else "neutral",
+            "pattern": hit.get("pattern") if valid else None,
+            "pattern_cn": hit.get("pattern_cn") if valid else None,
+            "confidence": hit.get("confidence") if valid else None,
+        })
+    positive = sum(v["vote"] == "bullish" for v in votes)
+    negative = sum(v["vote"] == "bearish" for v in votes)
+    breadth = (positive - negative) / len(votes) if votes else 0.0
+    patterns = {}
+    for vote in votes:
+        if vote.get("pattern"):
+            patterns[vote["pattern"]] = patterns.get(vote["pattern"], 0) + 1
+    dominant = max(patterns, key=patterns.get) if patterns else None
+    if breadth >= 0.5:
+        label = "偏多共振"
+    elif breadth <= -0.5:
+        label = "偏空共振"
+    elif breadth > 0:
+        label = "弱偏多"
+    elif breadth < 0:
+        label = "弱偏空"
+    elif positive or negative:
+        label = "多空分歧"
+    else:
+        label = "无有效形态"
+    return {
+        "windows": list(windows), "positive": positive, "negative": negative,
+        "neutral": len(votes) - positive - negative, "net": positive - negative,
+        "breadth": round(breadth, 4), "label": label,
+        "dominant_pattern": dominant, "votes": votes,
+    }
+
+
 def eligible_hits(win):
     """Pattern detector used by the walk-forward audit, with the live-report universe."""
     return [
@@ -250,6 +311,23 @@ def sector_breadth(universe):
             "neutral_trends": max(0, len(group) - bull - bear),
             "actionable": actionable,
             "bias": "bullish" if bull > bear else "bearish" if bear > bull else "neutral",
+        })
+    return output
+
+
+def morphology_sector_breadth(universe):
+    rows = {row["name"]: row for row in universe}
+    output = []
+    for sector, names in SECTORS.items():
+        group = [rows[name].get("morphology", {}) for name in names if name in rows]
+        positive = sum(row.get("positive", 0) for row in group)
+        negative = sum(row.get("negative", 0) for row in group)
+        total = sum(len(row.get("windows", [])) for row in group)
+        breadth = (positive - negative) / total if total else 0.0
+        output.append({
+            "sector": sector, "positive": positive, "negative": negative,
+            "neutral": max(0, total - positive - negative), "windows": total,
+            "breadth": round(breadth, 4),
         })
     return output
 
@@ -362,10 +440,12 @@ def main():
                 errs.append((name, "数据不足")); continue
             asof_bars.append(str(df.index[-1]))
             context = market_context(df)
+            morphology = morphology_breadth(df)
             win = df.tail(WIN)
             a = analyze(win)
             if not a:
                 universe.append({"name": name, "code": code, "context": context,
+                                 "morphology": morphology,
                                  "trade_state": "none", "decision_eligible": False})
                 results.append({"name": name, "code": code, "none": True}); continue
             a = enrich_pattern(a, context, RECENT_BARS)
@@ -375,6 +455,7 @@ def main():
             )
             a["img"] = plot_kline(win, a)
             a["name"] = name; a["code"] = code
+            a["morphology"] = morphology
             results.append(a)
             universe.append({k: v for k, v in a.items() if k not in {"img", "key_points"}})
         except Exception as e:
@@ -415,6 +496,7 @@ def main():
         "results": have,
         "universe": universe,
         "sectors": sector_breadth(universe),
+        "morphology_sectors": morphology_sector_breadth(universe),
         "none": none,
         "errs": errs,
         "methodology": {
@@ -423,6 +505,7 @@ def main():
             "volume": "最近8小时均量 / 此前32小时均量，达到1.10视为放量",
             "open_interest": "近8小时持仓量增加且20小时价格动量与形态方向一致",
             "backtest": "逐小时滚动；每个时点只使用当时可见K线；未来12小时触发后，统计8/24小时方向收益",
+            "morphology_breadth": "120/160/200/250小时四个窗口独立识别；(偏多票-偏空票)/4；旧形态、已兑现形态和无形态记0",
         },
     }
     json.dump(payload,
