@@ -85,7 +85,7 @@ COMPOUND_BEAR = (
     r"上行空间.{0,8}(?:受限|有限|压制)",
 )
 TIER_WEIGHT = {1: 1.5, 2: 1.2, 3: 1.0}
-PRIOR_SIGNALS = 3
+PRIOR_MASS = 2  # Beta(1, 1): one bullish and one bearish pseudo-observation.
 
 
 def match_asset_keys(text: str) -> list[str]:
@@ -159,7 +159,7 @@ def _summarize_rows(rows: list[dict[str, Any]], date: str, *, source: str) -> di
         score = None
         if denominator:
             raw_score = 100 * sum(row["direction"] * row["weight"] for row in signals) / denominator
-            confidence = len(signals) / (len(signals) + PRIOR_SIGNALS)
+            confidence = len(signals) / (len(signals) + PRIOR_MASS)
             score = round(raw_score * confidence, 1)
         assets[key] = {
             "label_zh": spec["label_zh"],
@@ -203,10 +203,12 @@ def build_index_history(output_dir: str | Path) -> dict[str, Any]:
     history = {
         "method": {
             "range": [-100, 100],
-            "formula": "raw direction score * n/(n+3), where n is the directional viewpoint count",
+            "formula": "I = 100 * sum(normalized_weight_i * direction_i) / (n + 2)",
             "raw_formula": "100 * sum(direction * weight) / sum(weight), directional viewpoints only",
             "weight": "tier weight (1.5/1.2/1.0) * capped log engagement weight (1.0-2.0)",
-            "shrinkage": "three neutral pseudo-signals reduce small-sample extremes",
+            "weight_normalization": "directional weights are divided by their daily mean, so their sum equals n",
+            "prior": "Beta(1,1) uniform prior: one bullish and one bearish pseudo-observation",
+            "confidence": "n/(n+2)",
             "neutral": "views without deterministic direction are excluded from the score denominator",
         },
         "dates": [row["date"] for row in daily],

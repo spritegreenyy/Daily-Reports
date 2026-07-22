@@ -38,7 +38,7 @@ def test_daily_index_is_null_without_direction_and_weighted_with_signal():
     assert result["bullish"] == 1 and result["bearish"] == 1
     assert result["score"] > 0
     assert result["score"] < result["raw_score"]
-    assert result["confidence"] == 0.4
+    assert result["confidence"] == 0.5
 
     neutral = build_daily_index(
         _payload(_tweet("A", "Cotton may trade in a range")), "2026-07-20"
@@ -62,5 +62,5 @@ def test_structured_view_uses_trading_implication_and_shrinks_small_samples():
     }]}]}
     result = build_daily_index_from_digest(payload, "2026-07-21")
     assert result["source"] == "structured_views"
-    assert result["assets"]["energy"]["score"] == -25.0
-    assert result["assets"]["metals"]["score"] == 25.0
+    assert result["assets"]["energy"]["score"] == -33.3
+    assert result["assets"]["metals"]["score"] == 33.3
