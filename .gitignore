@@ -20,6 +20,10 @@
 !/automation/local/test_kol_emphasis.py
 !/automation/local/run_daily.sh
 !/automation/local/tide_report.py
+!/automation/local/chart_patterns.py
+!/automation/local/hourly_pattern_report.py
+!/automation/local/pattern_research.py
+!/automation/local/test_pattern_research.py
 !/kol_digest/
 /kol_digest/**
 !/kol_digest/scripts/
