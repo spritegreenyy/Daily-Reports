@@ -41,7 +41,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(KD / "src"))
 
 from kol_digest.digest import EnsoStatus, KolBlock, SectionDigest, TopicGroup, Viewpoint
-from kol_emphasis import emphasize_opinion
+from kol_emphasis import compact_core_points, emphasize_opinion
 from kol_indices import build_index_history, match_asset_keys
 from kol_digest.loader import Tweet
 from kol_digest import report as kd_report
@@ -254,7 +254,9 @@ def build_content_payload(
             " · 按板块→子领域分类 · 重点观点已高亮标注"
         ),
         "insights": [
-            {"title": item["title"], "points": [kd_report._emph(point) for point in item["bullets"]]}
+            {"title": item["title"], "points": [
+                kd_report._emph(point) for point in compact_core_points(item["bullets"], "zh")
+            ]}
             for item in dashboard.get("core_insights", [])
         ],
         "unique": [

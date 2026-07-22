@@ -10,7 +10,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "automation", "local"))
 
-from kol_emphasis import strip_numeric_emphasis
+from kol_emphasis import compact_report_insights, strip_numeric_emphasis
 from kol_indices import build_index_history, match_asset_keys
 
 ROOT = "/Users/yinyue/Downloads/JYWC海拓"
@@ -294,16 +294,18 @@ def main():
         "subtitle_zh": rep_raw.get("subtitle_stat", "") + "　·　英文推优先译中，缺失时保留原文",
         "subtitle_en": translate_text_en(rep_raw.get("subtitle_stat", "") + "　·　英文推优先译中，缺失时保留原文"),
     }
-    report_zh = strip_numeric_emphasis({"insights": rep_raw.get("insights", []), "unique": rep_raw.get("unique", []), "sections": rep_raw.get("sections", [])})
-    report_en = strip_numeric_emphasis(load_json_if_exists(content_en_path))
+    report_zh = compact_report_insights(strip_numeric_emphasis({"insights": rep_raw.get("insights", []), "unique": rep_raw.get("unique", []), "sections": rep_raw.get("sections", [])}), "zh")
+    report_en = compact_report_insights(strip_numeric_emphasis(load_json_if_exists(content_en_path)), "en")
     if not report_en and base_url and api_key and model:
         try:
-            report_en = translate_report_en_ai(report_zh, base_url=base_url, api_key=api_key, model=model)
+            report_en = compact_report_insights(
+                translate_report_en_ai(report_zh, base_url=base_url, api_key=api_key, model=model), "en"
+            )
             save_json(content_en_path, report_en)
         except Exception as exc:
             print(f"translate report zh->en failed: {exc}")
     if not report_en:
-        report_en = translate_report_en_fallback(report_zh)
+        report_en = compact_report_insights(translate_report_en_fallback(report_zh), "en")
 
     history_series = {
         key: [

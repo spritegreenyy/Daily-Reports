@@ -60,3 +60,42 @@ def strip_numeric_emphasis(value):
         return match.group(1) if _NUMBER_RE.fullmatch(content) else match.group(0)
 
     return re.sub(r'<b class="em">([^<]*)</b>', replace, value)
+
+
+def compact_core_points(points, lang: str = "zh") -> list[str]:
+    """Keep one core view and one trading conclusion; drop duplicated metadata."""
+    is_en = lang == "en"
+    view_label = "Core view: " if is_en else "核心观点："
+    conclusion_label = "Trading conclusion: " if is_en else "交易结论："
+    view_prefixes = ("Core view:", "核心观点：")
+    conclusion_prefixes = ("Trading implication:", "Trading conclusion:", "交易含义：", "交易结论：")
+    drop_prefixes = ("Key data:", "Interactions", "关键数据：", "互动")
+    view = conclusion = ""
+    for raw in points or []:
+        text = str(raw or "").strip()
+        plain = re.sub(r"<[^>]+>", "", text).strip()
+        if not plain or plain.startswith(drop_prefixes):
+            continue
+        if plain.startswith(conclusion_prefixes):
+            if not conclusion:
+                body = re.sub(
+                    r"(?:Trading implication|Trading conclusion|交易含义|交易结论)[：:]\s*",
+                    "",
+                    text,
+                    count=1,
+                )
+                conclusion = conclusion_label + body
+        elif not view:
+            view = text if plain.startswith(view_prefixes) else view_label + text
+    return [item for item in (view, conclusion) if item]
+
+
+def compact_report_insights(report, lang: str = "zh"):
+    if not isinstance(report, dict):
+        return report
+    result = dict(report)
+    result["insights"] = [
+        {**item, "points": compact_core_points(item.get("points", []), lang)}
+        for item in report.get("insights", [])
+    ]
+    return result
