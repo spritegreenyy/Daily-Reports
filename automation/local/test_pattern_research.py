@@ -1,7 +1,7 @@
 import pandas as pd
 
 from pattern_research import enrich_pattern, market_context, walk_forward_backtest
-from hourly_pattern_report import morphology_breadth
+from hourly_pattern_report import aggregate_backtests, extend_watch_state, morphology_breadth
 
 
 def frame(n=320):
@@ -82,3 +82,25 @@ def test_morphology_breadth_has_a_fixed_transparent_denominator(monkeypatch):
     assert result["neutral"] == 2
     assert result["breadth"] == 0.5
     assert result["label"] == "偏多共振"
+
+
+def test_aggregate_backtests_weights_contract_results_by_trade_count():
+    universe = [
+        {"backtest": {"samples": 2, "horizons": {"24": {"win_rate": 0.5, "avg_return": 0.01}}}},
+        {"backtest": {"samples": 3, "horizons": {"24": {"win_rate": 2 / 3, "avg_return": -0.002}}}},
+        {"backtest": {"samples": 0, "horizons": {}}},
+    ]
+    result = aggregate_backtests(universe)
+    assert result["samples"] == 5
+    assert result["horizons"]["24"]["wins"] == 3
+    assert result["horizons"]["24"]["win_rate"] == 0.6
+    assert round(result["horizons"]["24"]["avg_return"], 4) == 0.0028
+
+
+def test_extended_watch_is_visible_but_never_trade_eligible():
+    result = extend_watch_state(
+        {"trade_state": "stale", "bars_since": 76, "decision_eligible": True}
+    )
+    assert result["trade_state"] == "aging"
+    assert result["freshness_band"] == "extended_watch"
+    assert result["decision_eligible"] is False

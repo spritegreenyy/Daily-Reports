@@ -70,6 +70,7 @@ TQ_CONF = str(Path.home() / ".tqsdk_auth.json")  # {"user":..,"pass":..}; 也可
 WIN = 250          # 分析窗口(小时K根数)
 MORPH_WINDOWS = (120, 160, 200, 250)  # 华创式截面聚合: 每个观察窗口独立投一票
 RECENT_BARS = 45   # 形态右端在最近这么多根内 = 近端/可操作
+WATCH_BARS = 90    # 46-90根保留为延长观察，只展示、不进入交易准入
 CONF_MIN = 0.74    # 门槛(抵消"每品种取最优窗口"的选择偏差, 对齐原版6-8个的选择性); 老师要求只留高置信度
 # 只保留 三角/矩形/楔形/旗形 (老师2026-06-24要求)
 KEEP_PATTERNS = {"Ascending Triangle", "Descending Triangle", "Symmetric Triangle",
@@ -287,6 +288,19 @@ def morphology_breadth(df, windows=MORPH_WINDOWS):
     }
 
 
+def extend_watch_state(row):
+    """Keep aging geometry visible without relaxing the fresh-signal admission rule."""
+    if row.get("trade_state") == "stale" and row.get("bars_since", WATCH_BARS + 1) <= WATCH_BARS:
+        row["trade_state"] = "aging"
+        row["decision_eligible"] = False
+        row["freshness_band"] = "extended_watch"
+    elif row.get("trade_state") == "stale":
+        row["freshness_band"] = "expired"
+    else:
+        row["freshness_band"] = "fresh"
+    return row
+
+
 def eligible_hits(win):
     """Pattern detector used by the walk-forward audit, with the live-report universe."""
     return [
@@ -330,6 +344,37 @@ def morphology_sector_breadth(universe):
             "breadth": round(breadth, 4),
         })
     return output
+
+
+def aggregate_backtests(universe):
+    """Pool contract-level walk-forward trades into one auditable universe test."""
+    tests = [row.get("backtest", {}) for row in universe]
+    tests = [test for test in tests if test.get("samples", 0) > 0]
+    samples = sum(test["samples"] for test in tests)
+    horizons = {}
+    for horizon in ("8", "24"):
+        usable = [test for test in tests if test.get("horizons", {}).get(horizon)]
+        count = sum(test["samples"] for test in usable)
+        if not count:
+            continue
+        wins = sum(
+            test["horizons"][horizon]["win_rate"] * test["samples"]
+            for test in usable
+        )
+        returns = sum(
+            test["horizons"][horizon]["avg_return"] * test["samples"]
+            for test in usable
+        )
+        horizons[horizon] = {
+            "samples": count,
+            "wins": int(round(wins)),
+            "win_rate": wins / count,
+            "avg_return": returns / count,
+        }
+    return {
+        "samples": samples, "contracts": len(universe), "horizons": horizons,
+        "method": "15-contract pooled no-look-ahead walk-forward",
+    }
 
 
 def gg(x):
@@ -441,18 +486,20 @@ def main():
             asof_bars.append(str(df.index[-1]))
             context = market_context(df)
             morphology = morphology_breadth(df)
+            backtest = walk_forward_backtest(
+                df, eligible_hits, _levels,
+                confidence_min=CONF_MIN, recent_bars=RECENT_BARS, window=WIN,
+            )
             win = df.tail(WIN)
             a = analyze(win)
             if not a:
                 universe.append({"name": name, "code": code, "context": context,
                                  "morphology": morphology,
+                                 "backtest": backtest,
                                  "trade_state": "none", "decision_eligible": False})
                 results.append({"name": name, "code": code, "none": True}); continue
-            a = enrich_pattern(a, context, RECENT_BARS)
-            a["backtest"] = walk_forward_backtest(
-                df, eligible_hits, _levels,
-                confidence_min=CONF_MIN, recent_bars=RECENT_BARS, window=WIN,
-            )
+            a = extend_watch_state(enrich_pattern(a, context, RECENT_BARS))
+            a["backtest"] = backtest
             a["img"] = plot_kline(win, a)
             a["name"] = name; a["code"] = code
             a["morphology"] = morphology
@@ -475,7 +522,7 @@ def main():
             if not a:
                 results.append({"name": idx_name, "code": "指数", "none": True}); continue
             context = market_context(idf)
-            a = enrich_pattern(a, context, RECENT_BARS)
+            a = extend_watch_state(enrich_pattern(a, context, RECENT_BARS))
             a["backtest"] = walk_forward_backtest(
                 idf, eligible_hits, _levels,
                 confidence_min=CONF_MIN, recent_bars=RECENT_BARS, window=WIN,
@@ -497,6 +544,7 @@ def main():
         "universe": universe,
         "sectors": sector_breadth(universe),
         "morphology_sectors": morphology_sector_breadth(universe),
+        "portfolio_backtest": aggregate_backtests(universe),
         "none": none,
         "errs": errs,
         "methodology": {
