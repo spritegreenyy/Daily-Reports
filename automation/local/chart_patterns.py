@@ -171,7 +171,7 @@ def detect_chart_patterns(df, atr_mult=1.0):
             })
             break   # 该终点取最先命中的窗口
 
-    # ── 旗形/三角旗: 旗杆 + 短整理 ──
+    # ── 旗形/收敛三角: 旗杆 + 短整理 ──
     for end in range(len(piv) - 1, 2, -1):
         for size in (4, 5, 6):
             if end - size + 1 < 1:
@@ -201,7 +201,9 @@ def detect_chart_patterns(df, atr_mult=1.0):
             if parallel and counter:
                 pat = "Bull Flag" if up else "Bear Flag"
             elif conv:
-                pat = "Bull Pennant" if up else "Bear Pennant"
+                # 硬性几何口径：平行轨道才是旗形；收敛轨道统一归三角形，
+                # 不因前置旗杆存在就把收敛结构强行命名为“旗形”。
+                pat = "Symmetric Triangle"
             else:
                 continue
             bias = "bullish" if up else "bearish"

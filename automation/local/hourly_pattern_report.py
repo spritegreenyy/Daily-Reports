@@ -66,6 +66,7 @@ TQ_SYM = {
     "甲醇": "KQ.m@CZCE.MA", "PP": "KQ.m@DCE.pp",
 }
 TQ_CONF = str(Path.home() / ".tqsdk_auth.json")  # {"user":..,"pass":..}; 也可用环境变量 TQSDK_USER/TQSDK_PASS
+REPORT_CUTOFF = os.environ.get("PATTERN_ASOF")
 
 WIN = 250          # 分析窗口(小时K根数)
 MORPH_WINDOWS = (120, 160, 200, 250)  # 华创式截面聚合: 每个观察窗口独立投一票
@@ -83,6 +84,11 @@ PAT_CN = {
     "Bull Pennant": "多头三角旗", "Bear Pennant": "空头三角旗",
 }
 BIAS_CN = {"bullish": "偏多", "bearish": "偏空", "neutral": "中性"}
+
+
+def report_cutoff():
+    """Return a fixed cutoff for historical recovery runs, otherwise now."""
+    return pd.Timestamp(REPORT_CUTOFF) if REPORT_CUTOFF else pd.Timestamp.now()
 
 
 def tq_fetch(names):
@@ -115,7 +121,7 @@ def tq_fetch(names):
             if "open_oi" in df.columns:
                 df = df.rename(columns={"open_oi": "hold"})
             df.index = pd.to_datetime(k["datetime"]) + pd.Timedelta(hours=8)  # 天勤UTC -> CST
-            df = df[df.index <= pd.Timestamp.now()]
+            df = df[df.index <= report_cutoff()]
             out[n] = df
     except Exception as e:
         print("天勤取数异常:", str(e)[:80])
@@ -136,7 +142,7 @@ def fetch_hourly(code):
     df["dt"] = pd.to_datetime(df["datetime"])
     df = df.set_index("dt")
     # 丢掉"未收盘的成形中bar"(akshare用收盘时刻命名, 盘中会标到未来时间)
-    df = df[df.index <= pd.Timestamp.now()]
+    df = df[df.index <= report_cutoff()]
     return df
 
 
