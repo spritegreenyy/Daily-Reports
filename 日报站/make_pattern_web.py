@@ -94,7 +94,7 @@ def main():
         "借鉴 ETF 形态学的正负信号聚合，透明迁移到商品多窗口扫描":
             "基于商品自身小时K线的多窗口结构一致度扫描",
         "Transparent commodity adaptation of positive/negative ETF morphology aggregation":
-            "Multi-window structural agreement using each commodity's own hourly bars",
+            "Multi-window structural agreement using contract-native hourly bars",
         "该指标借鉴正负形态聚合思想，不是华创未公开的原始评分。":
             "该指标仅表示本品种不同时间长度的结构一致程度，不是涨跌幅或胜率。",
         "This adapts positive/negative aggregation, not HuaChuang’s undisclosed proprietary score.":
