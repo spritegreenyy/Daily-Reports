@@ -15,7 +15,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import chart_patterns as CP
-from pattern_research import enrich_pattern, market_context, walk_forward_backtest
+from pattern_research import enrich_pattern, market_context, technical_snapshot, walk_forward_backtest
 
 HERE = Path(__file__).parent
 OUT = str(HERE / "output")
@@ -346,6 +346,19 @@ def morphology_sector_breadth(universe):
     return output
 
 
+def technical_market_summary(universe):
+    snapshots = [row.get("technical", {}) for row in universe]
+    bull = sum(row.get("aligned") and row.get("alignment") == "bullish" for row in snapshots)
+    bear = sum(row.get("aligned") and row.get("alignment") == "bearish" for row in snapshots)
+    mixed = max(0, len(snapshots) - bull - bear)
+    long_build = sum(row.get("participation") == "long_build" for row in snapshots)
+    short_build = sum(row.get("participation") == "short_build" for row in snapshots)
+    return {
+        "contracts": len(snapshots), "aligned_bullish": bull, "aligned_bearish": bear,
+        "mixed": mixed, "long_build": long_build, "short_build": short_build,
+    }
+
+
 def aggregate_backtests(universe):
     """Pool contract-level walk-forward trades into one auditable universe test."""
     tests = [row.get("backtest", {}) for row in universe]
@@ -485,6 +498,7 @@ def main():
                 errs.append((name, "数据不足")); continue
             asof_bars.append(str(df.index[-1]))
             context = market_context(df)
+            technical = technical_snapshot(df)
             morphology = morphology_breadth(df)
             backtest = walk_forward_backtest(
                 df, eligible_hits, _levels,
@@ -494,6 +508,7 @@ def main():
             a = analyze(win)
             if not a:
                 universe.append({"name": name, "code": code, "context": context,
+                                 "technical": technical,
                                  "morphology": morphology,
                                  "backtest": backtest,
                                  "trade_state": "none", "decision_eligible": False})
@@ -502,6 +517,7 @@ def main():
             a["backtest"] = backtest
             a["img"] = plot_kline(win, a)
             a["name"] = name; a["code"] = code
+            a["technical"] = technical
             a["morphology"] = morphology
             results.append(a)
             universe.append({k: v for k, v in a.items() if k not in {"img", "key_points"}})
@@ -544,6 +560,7 @@ def main():
         "universe": universe,
         "sectors": sector_breadth(universe),
         "morphology_sectors": morphology_sector_breadth(universe),
+        "technical_summary": technical_market_summary(universe),
         "portfolio_backtest": aggregate_backtests(universe),
         "none": none,
         "errs": errs,

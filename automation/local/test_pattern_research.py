@@ -1,6 +1,6 @@
 import pandas as pd
 
-from pattern_research import enrich_pattern, market_context, walk_forward_backtest
+from pattern_research import enrich_pattern, market_context, technical_snapshot, walk_forward_backtest
 from hourly_pattern_report import aggregate_backtests, extend_watch_state, morphology_breadth
 
 
@@ -104,3 +104,12 @@ def test_extended_watch_is_visible_but_never_trade_eligible():
     assert result["trade_state"] == "aging"
     assert result["freshness_band"] == "extended_watch"
     assert result["decision_eligible"] is False
+
+
+def test_technical_snapshot_uses_futures_price_and_open_interest_context():
+    result = technical_snapshot(frame())
+    assert result["trends"]["hourly"] == "bullish"
+    assert result["rsi14"] > 50
+    assert result["macd_state"] == "bullish"
+    assert result["participation"] == "long_build"
+    assert result["support20"] < result["resistance20"]

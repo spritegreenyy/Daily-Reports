@@ -80,6 +80,108 @@ def market_context(df: pd.DataFrame) -> dict:
     }
 
 
+def _trend_from_close(close: pd.Series) -> str:
+    close = pd.to_numeric(close, errors="coerce").dropna()
+    if len(close) < 20:
+        return "neutral"
+    ema20 = close.ewm(span=20, adjust=False).mean()
+    ema60 = close.ewm(span=60, adjust=False).mean()
+    last = close.iloc[-1]
+    if last > ema20.iloc[-1] > ema60.iloc[-1]:
+        return "bullish"
+    if last < ema20.iloc[-1] < ema60.iloc[-1]:
+        return "bearish"
+    return "neutral"
+
+
+def _resample_ohlc(df: pd.DataFrame, rule: str) -> pd.DataFrame:
+    agg = {"open": "first", "high": "max", "low": "min", "close": "last"}
+    if "volume" in df:
+        agg["volume"] = "sum"
+    if "hold" in df:
+        agg["hold"] = "last"
+    return df.resample(rule, label="right", closed="right").agg(agg).dropna(subset=["close"])
+
+
+def _rsi(close: pd.Series, period: int = 14):
+    close = pd.to_numeric(close, errors="coerce")
+    delta = close.diff()
+    gain = delta.clip(lower=0).ewm(alpha=1 / period, adjust=False).mean()
+    loss = (-delta.clip(upper=0)).ewm(alpha=1 / period, adjust=False).mean()
+    avg_gain = _safe_float(gain.iloc[-1], 0.0) or 0.0
+    avg_loss = _safe_float(loss.iloc[-1], 0.0) or 0.0
+    if avg_loss == 0:
+        return 100.0 if avg_gain > 0 else 50.0
+    return 100 - 100 / (1 + avg_gain / avg_loss)
+
+
+def technical_snapshot(df: pd.DataFrame) -> dict:
+    """Murphy-style futures context from OHLCVI without cross-market inputs."""
+    hourly = df.copy()
+    four_hour = _resample_ohlc(hourly, "4h")
+    # Night-session bars are shifted into the following trading date before daily grouping.
+    daily_source = hourly.copy()
+    shifted = daily_source.index + pd.to_timedelta(
+        [1 if ts.hour >= 20 else 0 for ts in daily_source.index], unit="D"
+    )
+    daily_source.index = shifted.normalize()
+    daily = _resample_ohlc(daily_source, "1D")
+    trends = {
+        "hourly": _trend_from_close(hourly["close"]),
+        "four_hour": _trend_from_close(four_hour["close"]),
+        "daily": _trend_from_close(daily["close"]),
+    }
+
+    close = pd.to_numeric(hourly["close"], errors="coerce")
+    ema12 = close.ewm(span=12, adjust=False).mean()
+    ema26 = close.ewm(span=26, adjust=False).mean()
+    macd = ema12 - ema26
+    macd_signal = macd.ewm(span=9, adjust=False).mean()
+    macd_hist = _safe_float((macd - macd_signal).iloc[-1], 0.0)
+    rsi14 = _rsi(close)
+    recent = hourly.tail(60)
+    prior = recent.iloc[:-1] if len(recent) > 1 else recent
+    resistance20 = _safe_float(prior["high"].tail(20).max())
+    support20 = _safe_float(prior["low"].tail(20).min())
+    resistance60 = _safe_float(prior["high"].max())
+    support60 = _safe_float(prior["low"].min())
+
+    price_change = close.iloc[-1] / close.iloc[-9] - 1 if len(close) >= 9 else None
+    oi_change = None
+    if "hold" in hourly and len(hourly) >= 9:
+        oi = pd.to_numeric(hourly["hold"], errors="coerce")
+        if oi.iloc[-9]:
+            oi_change = oi.iloc[-1] / oi.iloc[-9] - 1
+    if price_change is None or oi_change is None:
+        participation = "unavailable"
+    elif price_change > 0 and oi_change > 0:
+        participation = "long_build"
+    elif price_change > 0 and oi_change < 0:
+        participation = "short_cover"
+    elif price_change < 0 and oi_change > 0:
+        participation = "short_build"
+    elif price_change < 0 and oi_change < 0:
+        participation = "long_exit"
+    else:
+        participation = "mixed"
+
+    directional = [trend for trend in trends.values() if trend != "neutral"]
+    aligned = len(directional) == 3 and len(set(directional)) == 1
+    return {
+        "trends": trends,
+        "aligned": aligned,
+        "alignment": directional[0] if aligned else "mixed",
+        "rsi14": rsi14,
+        "macd_hist": macd_hist,
+        "macd_state": "bullish" if macd_hist > 0 else "bearish" if macd_hist < 0 else "neutral",
+        "support20": support20, "resistance20": resistance20,
+        "support60": support60, "resistance60": resistance60,
+        "price_change8": _safe_float(price_change), "oi_change8": _safe_float(oi_change),
+        "participation": participation,
+        "bars": {"hourly": len(hourly), "four_hour": len(four_hour), "daily": len(daily)},
+    }
+
+
 def enrich_pattern(pattern: dict, context: dict, recent_bars: int = 45) -> dict:
     """Convert a geometric pattern into a trade-state assessment without hiding inputs."""
     row = dict(pattern)
@@ -226,4 +328,3 @@ def walk_forward_backtest(
             "avg_return": sum(values) / len(values) if values else None,
         }
     return summary
-
