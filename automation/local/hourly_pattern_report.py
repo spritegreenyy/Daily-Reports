@@ -390,6 +390,93 @@ def aggregate_backtests(universe):
     }
 
 
+def apply_evidence_framework(row):
+    """Separate a technically coherent research candidate from a verified setup."""
+    if not row.get("pattern"):
+        row.update({
+            "trend_votes": 0,
+            "multi_trend_confirmed": False,
+            "morphology_confirmed": False,
+            "indicator_confirmed": False,
+            "participation_confirmed": False,
+            "confluence_count": 0,
+            "research_eligible": False,
+            "individual_backtest_state": "insufficient",
+            "decision_eligible": False,
+        })
+        return row
+
+    bias = row.get("bias")
+    technical = row.get("technical", {})
+    trends = technical.get("trends", {})
+    trend_votes = sum(
+        trends.get(timeframe) == bias
+        for timeframe in ("hourly", "four_hour", "daily")
+    )
+    multi_trend_confirmed = trend_votes >= 2
+
+    breadth = row.get("morphology", {}).get("breadth", 0.0) or 0.0
+    morphology_confirmed = breadth >= 0.25 if bias == "bullish" else breadth <= -0.25
+
+    rsi = technical.get("rsi14")
+    rsi_confirmed = (
+        rsi is not None
+        and ((bias == "bullish" and rsi >= 50) or (bias == "bearish" and rsi <= 50))
+    )
+    macd_confirmed = technical.get("macd_state") == bias
+    indicator_confirmed = rsi_confirmed and macd_confirmed
+    participation_confirmed = bool(
+        row.get("volume_confirmed") or row.get("oi_confirmed")
+    )
+    confluence_count = sum((
+        morphology_confirmed,
+        indicator_confirmed,
+        participation_confirmed,
+    ))
+    research_eligible = (
+        row.get("trade_state") in {"active", "setup"}
+        and multi_trend_confirmed
+        and (row.get("reward_risk") or 0.0) >= 1.2
+        and confluence_count >= 2
+    )
+
+    backtest = row.get("backtest", {})
+    h24 = backtest.get("horizons", {}).get("24", {})
+    if backtest.get("samples", 0) < 5 or not h24:
+        individual_backtest_state = "insufficient"
+    elif h24.get("avg_return", 0.0) > 0 and h24.get("win_rate", 0.0) >= 0.5:
+        individual_backtest_state = "positive"
+    else:
+        individual_backtest_state = "negative"
+
+    row.update({
+        "trend_votes": trend_votes,
+        "multi_trend_confirmed": multi_trend_confirmed,
+        "morphology_confirmed": morphology_confirmed,
+        "indicator_confirmed": indicator_confirmed,
+        "participation_confirmed": participation_confirmed,
+        "confluence_count": confluence_count,
+        "research_eligible": research_eligible,
+        "individual_backtest_state": individual_backtest_state,
+        "decision_eligible": False,
+    })
+    return row
+
+
+def apply_portfolio_gate(rows, portfolio):
+    """Promote research candidates only when the pooled 24-hour test has an edge."""
+    h24 = portfolio.get("horizons", {}).get("24", {})
+    gate = bool(
+        h24.get("samples", 0) >= 15
+        and h24.get("win_rate", 0.0) >= 0.5
+        and h24.get("avg_return", 0.0) > 0
+    )
+    for row in rows:
+        row["portfolio_gate"] = gate
+        row["decision_eligible"] = bool(row.get("research_eligible") and gate)
+    return gate
+
+
 def gg(x):
     if x is None:
         return "—"
@@ -507,11 +594,10 @@ def main():
             win = df.tail(WIN)
             a = analyze(win)
             if not a:
-                universe.append({"name": name, "code": code, "context": context,
-                                 "technical": technical,
-                                 "morphology": morphology,
-                                 "backtest": backtest,
-                                 "trade_state": "none", "decision_eligible": False})
+                row = {"name": name, "code": code, "context": context,
+                       "technical": technical, "morphology": morphology,
+                       "backtest": backtest, "trade_state": "none"}
+                universe.append(apply_evidence_framework(row))
                 results.append({"name": name, "code": code, "none": True}); continue
             a = extend_watch_state(enrich_pattern(a, context, RECENT_BARS))
             a["backtest"] = backtest
@@ -519,6 +605,7 @@ def main():
             a["name"] = name; a["code"] = code
             a["technical"] = technical
             a["morphology"] = morphology
+            apply_evidence_framework(a)
             results.append(a)
             universe.append({k: v for k, v in a.items() if k not in {"img", "key_points"}})
         except Exception as e:
@@ -553,6 +640,9 @@ def main():
                   key=lambda r: (not r.get("is_index", False), r.get("exhausted", False), -r["confidence"]))
     none = [r["name"] for r in results if r.get("none")]
     asof = (max(asof_bars)[:16] if asof_bars else str(datetime.now())[:16])
+    portfolio = aggregate_backtests(universe)
+    portfolio_gate = apply_portfolio_gate(universe, portfolio)
+    apply_portfolio_gate(have, portfolio)
     payload = {
         "asof": asof,
         "idx_src": idx_src,
@@ -561,11 +651,12 @@ def main():
         "sectors": sector_breadth(universe),
         "morphology_sectors": morphology_sector_breadth(universe),
         "technical_summary": technical_market_summary(universe),
-        "portfolio_backtest": aggregate_backtests(universe),
+        "portfolio_backtest": portfolio,
+        "portfolio_gate": portfolio_gate,
         "none": none,
         "errs": errs,
         "methodology": {
-            "decision_rule": "仅新鲜且未失效的形态；趋势方向一致；按触发价计算的盈亏比不低于1.2",
+            "decision_rule": "研究候选需处于触发或临近触发、至少两个周期同向、盈亏比不低于1.2，且形态共振/RSI与MACD/量仓三类证据至少两类确认；组合回测24小时样本不少于15、胜率不低于50%、平均方向收益为正，才升级为已验证机会",
             "trend": "现价、EMA20、EMA60同向排列",
             "volume": "最近8小时均量 / 此前32小时均量，达到1.10视为放量",
             "open_interest": "近8小时持仓量增加且20小时价格动量与形态方向一致",

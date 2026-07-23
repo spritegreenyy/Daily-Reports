@@ -1,7 +1,13 @@
 import pandas as pd
 
 from pattern_research import enrich_pattern, market_context, technical_snapshot, walk_forward_backtest
-from hourly_pattern_report import aggregate_backtests, extend_watch_state, morphology_breadth
+from hourly_pattern_report import (
+    aggregate_backtests,
+    apply_evidence_framework,
+    apply_portfolio_gate,
+    extend_watch_state,
+    morphology_breadth,
+)
 
 
 def frame(n=320):
@@ -113,3 +119,42 @@ def test_technical_snapshot_uses_futures_price_and_open_interest_context():
     assert result["macd_state"] == "bullish"
     assert result["participation"] == "long_build"
     assert result["support20"] < result["resistance20"]
+
+
+def test_evidence_framework_requires_two_confirmation_categories():
+    row = {
+        "pattern": "Bull Flag",
+        "bias": "bullish",
+        "trade_state": "setup",
+        "reward_risk": 1.8,
+        "volume_confirmed": True,
+        "oi_confirmed": False,
+        "technical": {
+            "trends": {"hourly": "bullish", "four_hour": "bullish", "daily": "bearish"},
+            "rsi14": 58,
+            "macd_state": "bullish",
+        },
+        "morphology": {"breadth": 0.0},
+        "backtest": {"samples": 3, "horizons": {}},
+    }
+    result = apply_evidence_framework(row)
+    assert result["trend_votes"] == 2
+    assert result["confluence_count"] == 2
+    assert result["research_eligible"] is True
+    assert result["decision_eligible"] is False
+
+
+def test_portfolio_backtest_is_a_separate_promotion_gate():
+    rows = [{"research_eligible": True}, {"research_eligible": False}]
+    blocked = {"horizons": {"24": {
+        "samples": 20, "win_rate": 0.45, "avg_return": 0.01,
+    }}}
+    assert apply_portfolio_gate(rows, blocked) is False
+    assert rows[0]["decision_eligible"] is False
+
+    passed = {"horizons": {"24": {
+        "samples": 20, "win_rate": 0.55, "avg_return": 0.01,
+    }}}
+    assert apply_portfolio_gate(rows, passed) is True
+    assert rows[0]["decision_eligible"] is True
+    assert rows[1]["decision_eligible"] is False
