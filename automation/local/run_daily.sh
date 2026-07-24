@@ -70,12 +70,10 @@ DEST="$ROOT/日报/$YMD"; mkdir -p "$DEST"
 pull_kol > "$LOCAL/logs/kolpull_$YMD.log" 2>&1 &
 KOLPID=$!
 
-# ── 1) 形态: 不依赖席位, 最先出先推 (~16:20 上线) ──
-"$PY" "$LOCAL/hourly_pattern_report.py"
-cp "$LOCAL/output/hourly_pattern_report.pdf" "$DEST/期货形态_${YMD}.pdf" 2>/dev/null
-"$PY" "$ROOT/日报站/make_pattern_web.py"
+# ── 1) 形态: 15品种4h多结构, 不依赖席位, 最先出先推 (~16:20 上线) ──
+"$PY" "$LOCAL/four_hour_multi_product_prototype.py" --date "$TODAY"
 "$PY" "$ROOT/日报站/build_site.py"
-push "日报 $YMD: 期货形态(自动)"
+push "日报 $YMD: 4h多结构期货形态(自动)"
 
 # ── 2) 席位分组: 重试到当天龙虎榜发布 ──
 for a in $(seq 1 8); do
