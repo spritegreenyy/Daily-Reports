@@ -41,6 +41,13 @@
   #kolapp .idxfill{position:absolute;height:100%;border-radius:6px}.idxmeta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.idxstat{border-top:1px solid var(--line);padding-top:8px}.idxstat strong{display:block;font:700 14px "SF Mono",ui-monospace,monospace;color:var(--tx)}.idxstat strong small{font-size:9px;color:var(--mut);font-weight:600}.idxstat span{font-size:9.5px;color:var(--mut2)}
   #kolapp .idxtrend{display:flex;align-items:center;gap:10px;margin-top:11px}.idxtrendlabel{font-size:9.5px;color:var(--mut2);white-space:nowrap}.idxspark{height:30px;flex:1}.idxspark svg{width:100%;height:30px;display:block}
   #kolapp .idxempty{margin-top:13px;border:1px dashed var(--line);border-radius:9px;padding:17px 12px;text-align:center;color:var(--mut2);font-size:11px}.idxformula{display:inline-block;margin-top:12px;padding:6px 10px;border:1px solid rgba(231,178,77,.28);border-radius:7px;background:rgba(231,178,77,.07);color:#f1c76f;font:600 11px "SF Mono",ui-monospace,monospace}.idxnote{font-size:10.5px;color:var(--mut2);margin-top:7px;line-height:1.55}
+  #kolapp .comp{background:#f3efe5;color:#17202a;border:1px solid #d6ccb6;border-radius:15px;padding:18px;margin-bottom:14px;box-shadow:0 12px 28px rgba(0,0,0,.12)}
+  #kolapp .comphead{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}.comptitle{font:800 20px Georgia,"Songti SC",serif;color:#13251f}.compsub{font-size:10.5px;color:#7e7565;margin-top:3px}
+  #kolapp .range{display:inline-flex;border:1px solid #cfc3aa;border-radius:999px;padding:3px;background:#e8e0d0;white-space:nowrap}.range button{border:0;background:transparent;color:#746a5a;padding:4px 9px;border-radius:999px;font-size:10px;font-weight:700;cursor:pointer}.range button[data-on="1"]{background:#173f35;color:#fff}
+  #kolapp .compkpis{display:grid;grid-template-columns:1.25fr repeat(5,1fr);gap:8px;margin-bottom:13px}.compkpi{background:rgba(255,255,255,.58);border:1px solid #ddd3bf;border-radius:10px;padding:10px 11px;min-width:0}.compkpi.hero{background:#173f35;border-color:#173f35}.compkpi span{display:block;color:#837968;font-size:9.5px;white-space:nowrap}.compkpi strong{display:block;color:#17251f;font:800 19px "SF Mono",ui-monospace,monospace;margin-top:2px;white-space:nowrap}.compkpi.hero span{color:#bfcfc7}.compkpi.hero strong{color:#f0be4e;font-size:27px}.compkpi strong.up{color:#168264}.compkpi strong.down{color:#bd4438}.compkpi small{display:block;color:#958a78;font-size:8.5px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #kolapp .compchart{height:315px;background:#fbfaf6;border:1px solid #ded5c3;border-radius:11px;overflow:hidden}.compchart svg{display:block;width:100%;height:100%}.complegend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;color:#786f61;font-size:9.5px;margin:8px 2px 0}.complegend i{display:inline-block;width:12px;height:3px;margin-right:4px;vertical-align:middle}.complegend i.line{height:2px;background:#111}
+  #kolapp .compformula{margin-top:11px;padding:9px 11px;border-left:3px solid #b78a27;background:#ece4d4;color:#5e5547;font-size:10px;line-height:1.55}.compformula b{color:#173f35!important}
+  #kolapp .bt{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:14px}.bttop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.bttitle{font-size:13px;font-weight:800}.btmethod{font-size:9.5px;color:var(--mut2)}.bttable{width:100%;border-collapse:collapse;font-size:10.5px}.bttable th{text-align:left;color:var(--mut2);font-weight:600;padding:6px;border-bottom:1px solid var(--line)}.bttable td{padding:7px 6px;border-bottom:1px solid rgba(38,55,74,.65);font-variant-numeric:tabular-nums}.bttable tr:last-child td{border-bottom:0}.bttable .samplelow{color:#e7b24d}.bttable .positive{color:#55c9a5}.bttable .negative{color:#ef7f73}
   #kolapp .icard{padding:14px 16px} #kolapp .icard h3{margin:0 0 9px;font-size:14.5px;font-weight:700;line-height:1.4;color:#fff;display:flex;gap:8px}
   #kolapp .inum{flex:0 0 auto;width:20px;height:20px;border-radius:6px;background:var(--gold);color:#0e1620;font-size:12px;font-weight:800;display:grid;place-items:center;margin-top:1px}
   #kolapp .icard li{list-style:none;font-size:12.8px;color:#cdd8e6;margin:6px 0;padding-left:12px;position:relative}
@@ -83,8 +90,8 @@
   #kolapp .tag{font-size:10.5px;color:var(--mut);background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;cursor:pointer}
   #kolapp .open{margin-left:auto;font-size:11.5px;color:var(--gold);white-space:nowrap}
   #kolapp .empty{grid-column:1/-1;text-align:center;color:var(--mut2);padding:50px 20px}
-  @media (max-width:820px){#kolapp .idxgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream,#kolapp .idxgrid{grid-template-columns:1fr}}
+  @media (max-width:820px){#kolapp .idxgrid{grid-template-columns:repeat(2,minmax(0,1fr))}#kolapp .compkpis{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream,#kolapp .idxgrid{grid-template-columns:1fr}#kolapp .comp{padding:13px}#kolapp .comphead{display:block}#kolapp .range{margin-top:9px}#kolapp .compkpis{grid-template-columns:repeat(2,1fr)}#kolapp .compchart{height:270px}.bttable{font-size:9px}}
 </style>
 
 <div class="mast"><div class="wrap">
@@ -99,7 +106,17 @@
 
 <div class="wrap">
   <div class="sect"><div class="stitle" id="st1"></div><div class="ins" id="insights"></div></div>
-  <div class="sect"><div class="stitle" id="stidx"></div><div class="idxgrid" id="indices"></div><div class="idxformula" id="idxformula"></div><div class="idxnote" id="idxnote"></div></div>
+  <div class="sect"><div class="stitle" id="stidx"></div>
+    <div class="comp">
+      <div class="comphead"><div><div class="comptitle" id="comptitle"></div><div class="compsub" id="compsub"></div></div><div class="range"><button type="button" data-range="30">30D</button><button type="button" data-range="60">60D</button></div></div>
+      <div class="compkpis" id="compkpis"></div>
+      <div class="compchart" id="compchart"></div>
+      <div class="complegend" id="complegend"></div>
+      <div class="compformula" id="compformula"></div>
+    </div>
+    <div class="bt"><div class="bttop"><div class="bttitle" id="bttitle"></div><div class="btmethod" id="btmethod"></div></div><div id="backtest"></div></div>
+    <div class="idxgrid" id="indices"></div><div class="idxformula" id="idxformula"></div><div class="idxnote" id="idxnote"></div>
+  </div>
   <div class="sect"><div class="stitle" id="st2"></div><div id="sections"></div></div>
   <div class="sect"><div class="stitle" id="st3"></div><div class="uq" id="unique"></div></div>
   <div class="tdiv"></div>
@@ -124,8 +141,58 @@
 (function(){
   var app=document.getElementById("kolapp"),P=JSON.parse(document.getElementById("payload").textContent),DATA=P.data,BOARDS=P.boards,REPC=P.repColors,DATES=P.dates;
   var uiLang=(new URLSearchParams(location.search).get("lang")||localStorage.getItem("windrise_lang")||"zh");
-  var st={date:DATES[0],board:"all",tier:"all",lang:"all",sort:"hot",q:""};
-  var UI={zh:{title:'KOL 交易主线<span class="g"> · </span>可视化终端',s1:'一 · 本日核心交易启示',sidx:'二 · 可回测 KOL 方向指数',s2:'三 · 主题板块 · 逐条观点',s3:'四 · 独到 / 有启发性的观点',s4:'五 · 全部推文 · 可检索（点击跳转原推）',search:'搜索关键词 / @账号（按 / 聚焦，Esc 清空）',hot:'热度',latest:'最新',all:'全部',tier1:'一线',tier2:'二线',zhOnly:'中文',enOnly:'EN',bi:'中英',reset:'重置',open:'打开 ↗',more:'展开全文 ▾',less:'收起 ▴',empty:'没有匹配的推文 —— 换个词或点「重置」。',show:'当前显示',kols:'位 KOL',monitor:'监测',accounts:'账号',domains:'领域',items:'条',meaning:'交易含义：',langZh:'中',langEn:'EN',bull:'偏多',bear:'偏空',balanced:'方向均衡',noSignal:'今日无方向',noData:'今日未捕捉到相关观点',lowConf:'低置信',midConf:'中置信',highConf:'高置信',views:'相关观点',signals:'方向样本',activeDays:'30日有效天数',history30:'近30日',waiting:'等待更多样本后形成指数',indexFormula:'I = 100 × Σ(wᵢ·dᵢ) / (n+2)',indexNote:'dᵢ 为观点方向（偏多 +1、偏空 -1）；wᵢ 为按 KOL 层级和互动度计算后、再归一化至均值为 1 的权重；n 为当日方向样本数。分母中的 +2 来自 Beta(1,1) 均匀先验，等价于预置一条偏多和一条偏空观点，并非任意调参。无样本保持为空，仅用于价格回测。'},en:{title:'KOL Trading Themes<span class="g"> · </span>Visual Terminal',s1:'I · Core Trading Takeaways',sidx:'II · Backtest-Ready KOL Direction Indices',s2:'III · Thematic Sectors · View by View',s3:'IV · Distinctive / Insightful Views',s4:'V · All Tweets · Searchable (click to open source)',search:'Search keyword / @handle (press / to focus, Esc to clear)',hot:'Hot',latest:'Latest',all:'All',tier1:'Tier 1',tier2:'Tier 2',zhOnly:'Chinese',enOnly:'English',bi:'Both',reset:'Reset',open:'Open ↗',more:'Expand ▾',less:'Collapse ▴',empty:'No matching tweets. Try another keyword or reset.',show:'Showing',kols:'KOLs',monitor:'monitoring',accounts:'accounts',domains:'domains',items:'items',meaning:'Trading implication: ',langZh:'ZH',langEn:'EN',bull:'Bullish',bear:'Bearish',balanced:'Balanced',noSignal:'No direction today',noData:'No relevant view captured today',lowConf:'Low confidence',midConf:'Medium confidence',highConf:'High confidence',views:'Relevant views',signals:'Directional samples',activeDays:'Active days / 30D',history30:'Last 30D',waiting:'Index will appear after more samples arrive',indexFormula:'I = 100 × Σ(wᵢ·dᵢ) / (n+2)',indexNote:'dᵢ is view direction (+1 bullish, -1 bearish); wᵢ is the KOL-tier and engagement weight normalized to a daily mean of 1; n is the directional sample count. The +2 denominator comes from a Beta(1,1) uniform prior, equivalent to one bullish and one bearish pseudo-view rather than an arbitrary tuning constant. Missing data stays blank. For price backtests only.'}};
+  var st={date:DATES[0],board:"all",tier:"all",lang:"all",sort:"hot",q:"",range:60};
+  var UI={
+    zh:{
+      title:'KOL 交易主线<span class="g"> · </span>可视化终端',s1:'一 · 本日核心交易启示',
+      sidx:'二 · KOL大宗方向总指数与分项信号',s2:'三 · 主题板块 · 逐条观点',
+      s3:'四 · 独到 / 有启发性的观点',s4:'五 · 全部推文 · 可检索（点击跳转原推）',
+      search:'搜索关键词 / @账号（按 / 聚焦，Esc 清空）',hot:'热度',latest:'最新',all:'全部',
+      tier1:'一线',tier2:'二线',zhOnly:'中文',enOnly:'EN',bi:'中英',reset:'重置',open:'打开 ↗',
+      more:'展开全文 ▾',less:'收起 ▴',empty:'没有匹配的推文 —— 换个词或点「重置」。',
+      show:'当前显示',kols:'位 KOL',monitor:'监测',accounts:'账号',domains:'领域',items:'条',
+      meaning:'交易含义：',langZh:'中',langEn:'EN',bull:'偏多',bear:'偏空',balanced:'方向均衡',
+      noSignal:'今日无方向',noData:'今日未捕捉到相关观点',lowConf:'低置信',midConf:'中置信',
+      highConf:'高置信',views:'相关观点',signals:'方向样本',activeDays:'30日有效天数',
+      history30:'近30日',waiting:'等待更多样本后形成指数',
+      indexFormula:'分项 I = 100 × Σ(wᵢ·dᵢ) / (n+2)',
+      indexNote:'dᵢ 为观点方向（偏多 +1、偏空 -1）；wᵢ 为按 KOL 层级和互动度计算后、再归一化至均值为 1 的权重；n 为当日方向样本数。分母中的 +2 来自 Beta(1,1) 均匀先验。无样本保持为空，不用 0 代替。',
+      compTitle:'KOL大宗方向总指数',compSub:'黑线为总指数，柱形为能源、金属、谷物油籽、软商品对当日总指数的贡献',
+      current:'当前值',change5:'5日变化',change20:'较20日前',coverage:'有效覆盖率',attention:'关注度',
+      disagreement:'分歧度',validAssets:'类有效',attentionHelp:'提及量相对近20期',disagreementHelp:'100=多空最分歧',
+      missing:'暂无有效样本',compositeFormula:'总指数 = Σ（分项指数 × 方向样本数 × 置信度）÷ Σ（方向样本数 × 置信度）。关注度 = 50 + 15 × 提及量相对前20期的 z-score（截断至0–100）；分歧度 = 100 × [1 − |多 − 空| ÷ (多 + 空)]。',
+      energy:'能源',metals:'金属',grains:'谷物油籽',softs:'软商品',total:'总指数',
+      btTitle:'价格验证 · 指数出现后 1 / 3 / 5 个交易日',btMethod:'信号门槛 |总指数| ≥ 8；按日报当日收盘测算',
+      product:'品种',horizon:'期限',samples:'样本',winRate:'胜率',ic:'IC相关性',avgRet:'平均方向收益',
+      sampleLow:'样本少',noBacktest:'尚无可匹配的价格样本',day:'日',
+      crude:'原油',gold:'黄金',copper:'铜',soy_oil:'豆油'
+    },
+    en:{
+      title:'KOL Trading Themes<span class="g"> · </span>Visual Terminal',s1:'I · Core Trading Takeaways',
+      sidx:'II · KOL Commodity Composite & Component Signals',s2:'III · Thematic Sectors · View by View',
+      s3:'IV · Distinctive / Insightful Views',s4:'V · All Tweets · Searchable (click to open source)',
+      search:'Search keyword / @handle (press / to focus, Esc to clear)',hot:'Hot',latest:'Latest',all:'All',
+      tier1:'Tier 1',tier2:'Tier 2',zhOnly:'Chinese',enOnly:'English',bi:'Both',reset:'Reset',open:'Open ↗',
+      more:'Expand ▾',less:'Collapse ▴',empty:'No matching tweets. Try another keyword or reset.',
+      show:'Showing',kols:'KOLs',monitor:'monitoring',accounts:'accounts',domains:'domains',items:'items',
+      meaning:'Trading implication: ',langZh:'ZH',langEn:'EN',bull:'Bullish',bear:'Bearish',balanced:'Balanced',
+      noSignal:'No direction today',noData:'No relevant view captured today',lowConf:'Low confidence',
+      midConf:'Medium confidence',highConf:'High confidence',views:'Relevant views',signals:'Directional samples',
+      activeDays:'Active days / 30D',history30:'Last 30D',waiting:'Index will appear after more samples arrive',
+      indexFormula:'Component I = 100 × Σ(wᵢ·dᵢ) / (n+2)',
+      indexNote:'dᵢ is view direction (+1 bullish, -1 bearish); wᵢ is the normalized KOL-tier and engagement weight; n is the directional sample count. The +2 denominator is a Beta(1,1) uniform prior. Missing data stays blank and is never replaced with zero.',
+      compTitle:'KOL Commodity Direction Composite',compSub:'Black line: composite. Bars: energy, metals, grains & oilseeds, and soft-commodity contributions.',
+      current:'Current',change5:'5D change',change20:'vs 20 reports ago',coverage:'Effective coverage',
+      attention:'Attention',disagreement:'Disagreement',validAssets:'active groups',attentionHelp:'mentions vs prior 20 reports',
+      disagreementHelp:'100 = maximum bull/bear split',missing:'No valid sample',
+      compositeFormula:'Composite = Σ(component index × directional samples × confidence) ÷ Σ(directional samples × confidence). Attention = 50 + 15 × mention-count z-score versus the prior 20 reports (clipped to 0–100). Disagreement = 100 × [1 − |bull − bear| ÷ (bull + bear)].',
+      energy:'Energy',metals:'Metals',grains:'Grains & Oilseeds',softs:'Softs',total:'Composite',
+      btTitle:'Price validation · Forward 1 / 3 / 5 trading days',btMethod:'Signal threshold |composite| ≥ 8; report-date close',
+      product:'Product',horizon:'Horizon',samples:'N',winRate:'Win rate',ic:'IC',avgRet:'Avg directional return',
+      sampleLow:'Small sample',noBacktest:'No matched price sample yet',day:'D',
+      crude:'Crude',gold:'Gold',copper:'Copper',soy_oil:'Soy Oil'
+    }
+  };
   var $=function(s){return app.querySelector(s)};
   function esc(s){return (s||"").replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
   function tx(k){return UI[uiLang][k]||UI.zh[k]||k}
@@ -146,13 +213,62 @@
     [["#sortSeg",["hot","latest"]],["#tierSeg",["all","tier1","tier2"]],["#langSeg",["bi","zhOnly","enOnly"]]].forEach(function(pair){
       var btns=$(pair[0]).querySelectorAll("button"); pair[1].forEach(function(k,i){btns[i].textContent=tx(k)})});
     app.querySelectorAll(".langsw button").forEach(function(b){b.setAttribute("data-on",b.dataset.lang===uiLang?"1":"")});
+    app.querySelectorAll(".range button").forEach(function(b){b.setAttribute("data-on",+b.dataset.range===st.range?"1":"")});
   }
   var dsel=$("#dateSel"); DATES.forEach(function(d){var o=document.createElement("option");o.value=d;o.textContent=d;dsel.appendChild(o)}); dsel.value=st.date;
   dsel.onchange=function(){st.date=dsel.value;st.board="all";renderAll()};
 
   var IDXUNDER={zh:{energy:'原油 · 成品油 · 天然气 · LNG',metals:'黄金 · 白银 · 铜 · 铝 · 锌 · 镍 · 锂',grains:'玉米 · 小麦 · 大豆 · 豆粕 · 豆油',softs:'白糖 · 咖啡 · 可可 · 棉花 · 橙汁 · 天然橡胶'},en:{energy:'Crude · Products · Natural Gas · LNG',metals:'Gold · Silver · Copper · Aluminum · Zinc · Nickel · Lithium',grains:'Corn · Wheat · Soybeans · Meal · Soy Oil',softs:'Sugar · Coffee · Cocoa · Cotton · Orange Juice · Natural Rubber'}};
+  var IDXCOLOR={energy:'#ed8b49',metals:'#d9ad45',grains:'#78b76e',softs:'#d76e91'};
+  function signed(v,d){if(v===null||v===undefined)return '—';v=+v;return (v>0?'+':'')+v.toFixed(d===undefined?1:d)}
+  function numClass(v){return v>0?'up':(v<0?'down':'')}
+  function compositeSvg(rows){
+    rows=(rows||[]).slice(-st.range);
+    if(!rows.length||!rows.some(function(r){return r.score!==null&&r.score!==undefined}))return '<div class="empty">'+tx('missing')+'</div>';
+    var w=1100,h=315,l=44,r=16,t=34,b=35,pw=w-l-r,ph=h-t-b,zero=t+ph/2,step=pw/Math.max(1,rows.length-1),bw=Math.max(3,Math.min(12,step*.58));
+    function x(i){return l+i*step} function y(v){return t+(100-Math.max(-100,Math.min(100,+v)))/200*ph}
+    var out=['<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" role="img">'];
+    out.push('<rect x="'+l+'" y="'+t+'" width="'+pw+'" height="'+(ph/4)+'" fill="#f4dfd9" opacity=".55"/><rect x="'+l+'" y="'+(t+ph*3/4)+'" width="'+pw+'" height="'+(ph/4)+'" fill="#dcebe3" opacity=".75"/>');
+    [-100,-50,0,50,100].forEach(function(v){var yy=y(v);out.push('<line x1="'+l+'" y1="'+yy+'" x2="'+(w-r)+'" y2="'+yy+'" stroke="'+(v===0?'#877d6a':'#ded7c9')+'" stroke-width="'+(v===0?'1.4':'1')+'"/><text x="'+(l-7)+'" y="'+(yy+3)+'" text-anchor="end" fill="#8a806f" font-size="9">'+v+'</text>')});
+    rows.forEach(function(row,i){
+      var xp=x(i),pos=0,neg=0;
+      ['energy','metals','grains','softs'].forEach(function(key){var v=(row.contributions||{})[key];if(v===null||v===undefined)return;var from=v>=0?pos:neg,to=from+v,yt=Math.min(y(from),y(to)),hh=Math.max(1,Math.abs(y(from)-y(to)));out.push('<rect x="'+(xp-bw/2).toFixed(1)+'" y="'+yt.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+hh.toFixed(1)+'" fill="'+IDXCOLOR[key]+'" opacity=".8"><title>'+esc(row.date+' · '+tx(key)+' '+signed(v,1))+'</title></rect>');if(v>=0)pos=to;else neg=to});
+    });
+    var segments=[],current=[];
+    rows.forEach(function(row,i){if(row.score===null||row.score===undefined){if(current.length>1)segments.push(current);current=[];return}current.push(x(i).toFixed(1)+','+y(row.score).toFixed(1))});
+    if(current.length>1)segments.push(current);
+    segments.forEach(function(points){out.push('<polyline points="'+points.join(' ')+'" fill="none" stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>')});
+    rows.forEach(function(row,i){if(row.score===null||row.score===undefined)return;out.push('<circle cx="'+x(i).toFixed(1)+'" cy="'+y(row.score).toFixed(1)+'" r="2.4" fill="#111"><title>'+esc(row.date+' · '+tx('total')+' '+signed(row.score,1))+'</title></circle>')});
+    var events=rows.map(function(row,i){return{row:row,i:i}}).filter(function(item){return item.row.event}).slice(-5);
+    events.forEach(function(item,j){var xp=x(item.i),label=uiLang==='en'?item.row.event_en:item.row.event_zh;out.push('<line x1="'+xp+'" y1="'+t+'" x2="'+xp+'" y2="'+(t+ph)+'" stroke="#9b7c35" stroke-width="1" stroke-dasharray="3 4"/><text x="'+Math.min(w-170,Math.max(l+3,xp+4))+'" y="'+(13+(j%2)*12)+'" fill="#745a1c" font-size="8.5">'+esc(label)+'</text>')});
+    var tickEvery=Math.max(1,Math.floor(rows.length/5));rows.forEach(function(row,i){if(i%tickEvery&&i!==rows.length-1)return;out.push('<text x="'+x(i).toFixed(1)+'" y="'+(h-12)+'" text-anchor="middle" fill="#8a806f" font-size="9">'+esc(row.date.slice(5))+'</text>')});
+    out.push('</svg>');return out.join('');
+  }
+  function renderComposite(){
+    var c=cur(),x=c.composite||{},has=x.score!==null&&x.score!==undefined;
+    $("#comptitle").textContent=tx('compTitle');$("#compsub").textContent=tx('compSub');
+    var kpis=[
+      ['hero',tx('current'),has?signed(x.score,1):'—',has?(x.score>8?tx('bull'):(x.score<-8?tx('bear'):tx('balanced'))):tx('missing')],
+      ['',tx('change5'),signed(x.change_5d,1),tx('indexFormula').split('=')[0]],
+      ['',tx('change20'),signed(x.change_20d,1),tx('indexFormula').split('=')[0]],
+      ['',tx('coverage'),x.coverage===undefined?'—':x.coverage.toFixed(0)+'%',(x.active_assets||0)+'/4 '+tx('validAssets')],
+      ['',tx('attention'),x.attention===null||x.attention===undefined?'—':x.attention.toFixed(0),tx('attentionHelp')],
+      ['',tx('disagreement'),x.disagreement===null||x.disagreement===undefined?'—':x.disagreement.toFixed(0),tx('disagreementHelp')]
+    ];
+    $("#compkpis").innerHTML=kpis.map(function(k,i){var val=i===1?x.change_5d:(i===2?x.change_20d:null);return '<div class="compkpi '+k[0]+'"><span>'+k[1]+'</span><strong class="'+(val===null?'':numClass(val))+'">'+k[2]+'</strong><small>'+k[3]+'</small></div>'}).join('');
+    $("#compchart").innerHTML=compositeSvg(c.composite_history||[]);
+    $("#complegend").innerHTML=['total','energy','metals','grains','softs'].map(function(key){return '<span><i class="'+(key==='total'?'line':'')+'" style="'+(key==='total'?'':'background:'+IDXCOLOR[key])+'"></i>'+tx(key)+'</span>'}).join('');
+    $("#compformula").innerHTML='<b>'+tx('compTitle')+'：</b>'+tx('compositeFormula');
+    renderBacktest(c.backtests||{});
+  }
+  function renderBacktest(backtests){
+    $("#bttitle").textContent=tx('btTitle');$("#btmethod").textContent=tx('btMethod');
+    var products=(backtests||{}).products||{},keys=['crude','gold','copper','soy_oil'],rows=[];
+    keys.forEach(function(key){['1','3','5'].forEach(function(h){var m=((products[key]||{})[h])||{},n=m.n||0,low=n>0&&n<8;rows.push('<tr><td>'+tx(key)+'</td><td>'+h+tx('day')+'</td><td class="'+(low?'samplelow':'')+'">'+n+(low?' · '+tx('sampleLow'):'')+'</td><td class="'+numClass((m.win_rate||0)-50)+'">'+(m.win_rate===null||m.win_rate===undefined?'—':m.win_rate.toFixed(1)+'%')+'</td><td class="'+numClass(m.ic||0)+'">'+(m.ic===null||m.ic===undefined?'—':signed(m.ic,3))+'</td><td class="'+numClass(m.avg_directional_return||0)+'">'+(m.avg_directional_return===null||m.avg_directional_return===undefined?'—':signed(m.avg_directional_return,3)+'%')+'</td></tr>')})});
+    $("#backtest").innerHTML='<table class="bttable"><thead><tr><th>'+tx('product')+'</th><th>'+tx('horizon')+'</th><th>'+tx('samples')+'</th><th>'+tx('winRate')+'</th><th>'+tx('ic')+'</th><th>'+tx('avgRet')+'</th></tr></thead><tbody>'+rows.join('')+'</tbody></table>';
+  }
   function idxSpark(rows,color){var vals=(rows||[]).filter(function(r){return r.score!==null&&r.score!==undefined});if(vals.length<2)return '';var w=240,h=30,pts=vals.map(function(r,i){var x=i/(vals.length-1)*w,y=(1-(r.score+100)/200)*h;return x.toFixed(1)+','+y.toFixed(1)}).join(' ');return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="15" x2="240" y2="15" stroke="#394a5e" stroke-width="1"/><polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="2.2"/></svg>'}
-  function renderIndices(){var c=cur(),wrap=$("#indices"),keys=['energy','metals','grains','softs'];wrap.innerHTML='';keys.forEach(function(key){var x=(c.indices||{})[key]||{},score=x.score,col=x.color||'#8fa0b3',has=score!==null&&score!==undefined,noData=x.status==='no_data'||!(x.mentions||0),state=noData?tx('noData'):(!has?tx('noSignal'):(score>8?tx('bull'):(score<-8?tx('bear'):tx('balanced')))),left=has&&score<0?50-Math.abs(score)/2:50,width=has?Math.abs(score)/2:0,label=uiLang==='en'?(x.label_en||key):(x.label_zh||key),sig=x.signal_tweets||0,confClass=sig>=6?'high':(sig>=3?'mid':'low'),confText=sig>=6?tx('highConf'):(sig>=3?tx('midConf'):tx('lowConf')),hist=(c.index_history||{})[key]||[],active=hist.filter(function(r){return r.score!==null&&r.score!==undefined}).length,spark=idxSpark(hist,col),card=document.createElement('div');card.className='idxcard'+(!has?' nodata':'');card.style.setProperty('--ic',col);card.innerHTML='<div class="idxhead"><b>'+esc(label)+'</b>'+(has?'<span class="idxconf '+confClass+'">'+confText+' · '+Math.round((x.confidence||0)*100)+'%</span>':'')+'</div><div class="idxhero"><span class="idxscore '+(!has?'none':score>=0?'pos':'neg')+'">'+(has?(score>0?'+':'')+Math.round(score):'—')+'</span><span class="idxstate">'+state+'</span></div><div class="idxunder">'+IDXUNDER[uiLang][key]+'</div>'+(has?'<div class="idxaxis"><i class="idxfill" style="left:'+left+'%;width:'+width+'%;background:'+col+'"></i></div>':'<div class="idxempty">'+tx('waiting')+'</div>')+'<div class="idxmeta"><div class="idxstat"><strong>'+(x.mentions||0)+'</strong><span>'+tx('views')+'</span></div><div class="idxstat"><strong>'+sig+' <small>↑'+(x.bullish||0)+' ↓'+(x.bearish||0)+'</small></strong><span>'+tx('signals')+'</span></div><div class="idxstat"><strong>'+active+'</strong><span>'+tx('activeDays')+'</span></div></div>'+(has&&spark?'<div class="idxtrend"><span class="idxtrendlabel">'+tx('history30')+'</span><div class="idxspark">'+spark+'</div></div>':'');wrap.appendChild(card)});$("#idxnote").textContent=tx('indexNote')}
+  function renderIndices(){renderComposite();var c=cur(),wrap=$("#indices"),keys=['energy','metals','grains','softs'];wrap.innerHTML='';keys.forEach(function(key){var x=(c.indices||{})[key]||{},score=x.score,col=x.color||'#8fa0b3',has=score!==null&&score!==undefined,noData=x.status==='no_data'||!(x.mentions||0),state=noData?tx('noData'):(!has?tx('noSignal'):(score>8?tx('bull'):(score<-8?tx('bear'):tx('balanced')))),left=has&&score<0?50-Math.abs(score)/2:50,width=has?Math.abs(score)/2:0,label=uiLang==='en'?(x.label_en||key):(x.label_zh||key),sig=x.signal_tweets||0,confClass=sig>=6?'high':(sig>=3?'mid':'low'),confText=sig>=6?tx('highConf'):(sig>=3?tx('midConf'):tx('lowConf')),hist=(c.index_history||{})[key]||[],active=hist.filter(function(r){return r.score!==null&&r.score!==undefined}).length,spark=idxSpark(hist,col),card=document.createElement('div');card.className='idxcard'+(!has?' nodata':'');card.style.setProperty('--ic',col);card.innerHTML='<div class="idxhead"><b>'+esc(label)+'</b>'+(has?'<span class="idxconf '+confClass+'">'+confText+' · '+Math.round((x.confidence||0)*100)+'%</span>':'')+'</div><div class="idxhero"><span class="idxscore '+(!has?'none':score>=0?'pos':'neg')+'">'+(has?(score>0?'+':'')+Math.round(score):'—')+'</span><span class="idxstate">'+state+'</span></div><div class="idxunder">'+IDXUNDER[uiLang][key]+'</div>'+(has?'<div class="idxaxis"><i class="idxfill" style="left:'+left+'%;width:'+width+'%;background:'+col+'"></i></div>':'<div class="idxempty">'+tx('waiting')+'</div>')+'<div class="idxmeta"><div class="idxstat"><strong>'+(x.mentions||0)+'</strong><span>'+tx('views')+'</span></div><div class="idxstat"><strong>'+sig+' <small>↑'+(x.bullish||0)+' ↓'+(x.bearish||0)+'</small></strong><span>'+tx('signals')+'</span></div><div class="idxstat"><strong>'+active+'</strong><span>'+tx('activeDays')+'</span></div></div>'+(has&&spark?'<div class="idxtrend"><span class="idxtrendlabel">'+tx('history30')+'</span><div class="idxspark">'+spark+'</div></div>':'');wrap.appendChild(card)});$("#idxnote").textContent=tx('indexNote')}
 
   function renderReport(){
     var r=report(),m=cur().meta;
@@ -201,6 +317,7 @@
   seg("#sortSeg","sort"); seg("#tierSeg","tier"); seg("#langSeg","lang");
   $("#reset").onclick=function(){st.board="all";st.tier="all";st.lang="all";st.sort="hot";st.q="";qi.value="";clr.style.display="none";[["#sortSeg","hot"],["#tierSeg","all"],["#langSeg","all"]].forEach(function(p){var el=$(p[0]);el.querySelectorAll("button").forEach(function(x){x.setAttribute("data-on",x.dataset.v===p[1]?"1":"")})});buildPills();render()};
   app.querySelectorAll(".langsw button").forEach(function(b){b.onclick=function(){uiLang=b.dataset.lang;renderAll()}});
+  app.querySelectorAll(".range button").forEach(function(b){b.onclick=function(){st.range=+b.dataset.range;renderAll()}});
   renderAll();
 })();
 </script>

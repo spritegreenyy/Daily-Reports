@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """构建 KOL 交易观点交互网页(独立可打开 HTML)。"""
 import csv
+import html as html_lib
 import json
 import os
 import re
@@ -11,6 +12,7 @@ import urllib.request
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "automation", "local"))
 
 from kol_emphasis import compact_report_insights, strip_numeric_emphasis
+from kol_composite import build_composite_history, load_price_series, run_price_backtests
 from kol_indices import build_index_history, match_asset_keys
 
 ROOT = "/Users/yinyue/Downloads/JYWC海拓"
@@ -29,6 +31,12 @@ TW_BOARD = {
 REP_BOARD = {
     "宏观经济": "#5b8def", "地缘政治": "#ec6f57", "大宗商品": "#e0952f", "股票": "#3fb36a",
     "AI半导体": "#b18ef0", "AI半导体科技": "#b18ef0", "AI / 半导体": "#b18ef0", "天气气候": "#33bfad", "软商品": "#df6f91"
+}
+PRICE_SYMBOLS = {
+    "crude": "SC0",
+    "gold": "AU0",
+    "copper": "CU0",
+    "soy_oil": "Y0",
 }
 
 EN_MAP = [
@@ -192,8 +200,76 @@ def save_json(path, data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def export_indices(report_date, ymd, index_history):
+def clean_event_title(value, limit):
+    text = re.sub(r"<[^>]+>", "", html_lib.unescape(str(value or "")))
+    text = re.sub(r"^(最高热度|Top engagement|Hottest)\s*[·:：-]\s*", "", text, flags=re.I)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text if len(text) <= limit else text[:limit - 1].rstrip() + "…"
+
+
+def event_label_from_insight(item, limit):
+    title = clean_event_title(item.get("title", ""), limit)
+    generic = {
+        "宏观经济", "地缘政治", "大宗商品", "软商品", "中东", "贵金属",
+        "Macro", "Geopolitics", "Commodities", "Soft Commodities",
+        "Middle East", "Precious Metals",
+    }
+    if title not in generic:
+        return title
+    points = item.get("points") or []
+    if not points:
+        return title
+    point = clean_event_title(points[0], limit)
+    point = re.sub(r"^@[\w_]+(?:（[^）]*）|\([^)]*\))?\s*[:：]\s*", "", point)
+    point = re.sub(r"^(核心观点|交易观点|Core view)\s*[:：]\s*", "", point, flags=re.I)
+    return clean_event_title(f"{title} · {point}", limit)
+
+
+def load_event_labels():
+    labels = {}
+    for name in sorted(os.listdir(OUT)):
+        match = re.fullmatch(r"content_(\d{8})\.json", name)
+        if not match:
+            continue
+        ymd = match.group(1)
+        date = f"{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}"
+        zh = load_json_if_exists(os.path.join(OUT, name)) or {}
+        en = load_json_if_exists(os.path.join(OUT, f"content_en_{ymd}.json")) or {}
+        zh_items = zh.get("insights") or []
+        en_items = en.get("insights") or []
+        zh_title = event_label_from_insight(zh_items[0], 34) if zh_items else ""
+        en_title = event_label_from_insight(en_items[0], 68) if en_items else ""
+        if zh_title:
+            labels[date] = {"zh": zh_title, "en": en_title or translate_text_en(zh_title)}
+    return labels
+
+
+def fetch_price_history(report_date):
+    cache_path = os.path.join(OUT, "kol_price_history.json")
+    cache = load_json_if_exists(cache_path) or {}
+    series = cache.get("series", {}) if isinstance(cache, dict) else {}
+    should_fetch = cache.get("updated") != report_date or not series
+    if should_fetch:
+        try:
+            import akshare as ak
+
+            fresh = load_price_series(
+                lambda symbol: ak.futures_zh_daily_sina(symbol=symbol),
+                PRICE_SYMBOLS,
+            )
+            if fresh:
+                series.update(fresh)
+                save_json(cache_path, {"updated": report_date, "series": series})
+        except Exception as exc:
+            print(f"price history refresh failed, using cache: {exc}")
+    return series
+
+
+def export_indices(report_date, ymd, index_history, composite_history, backtests):
     daily = [row for row in index_history.get("daily", []) if row.get("date", "") <= report_date]
+    composite_daily = [
+        row for row in composite_history.get("daily", []) if row.get("date", "") <= report_date
+    ]
     report_dir = os.path.join(ROOT, "日报", ymd)
     os.makedirs(report_dir, exist_ok=True)
     export = {"as_of": report_date, "method": index_history.get("method", {}), "daily": daily}
@@ -210,6 +286,32 @@ def export_indices(report_date, ymd, index_history):
                 writer.writerow({"date": row["date"], "asset": asset, "source": row.get("source", ""), **{
                     key: values.get(key) for key in writer.fieldnames if key not in {"date", "asset", "source"}
                 }})
+    composite_export = {
+        "as_of": report_date,
+        "method": composite_history.get("method", {}),
+        "daily": composite_daily,
+        "price_backtests": backtests,
+    }
+    save_json(os.path.join(report_dir, f"KOL大宗方向总指数_{ymd}.json"), composite_export)
+    composite_csv = os.path.join(report_dir, f"KOL大宗方向总指数_{ymd}.csv")
+    with open(composite_csv, "w", encoding="utf-8-sig", newline="") as f:
+        fields = [
+            "date", "score", "energy_contribution", "metals_contribution",
+            "grains_contribution", "softs_contribution", "change_5d", "change_20d",
+            "coverage", "attention", "disagreement", "mentions",
+            "directional_samples", "bullish", "bearish", "event_zh",
+        ]
+        writer = csv.DictWriter(f, fieldnames=fields, lineterminator="\n")
+        writer.writeheader()
+        for row in composite_daily:
+            contributions = row.get("contributions", {})
+            writer.writerow({
+                **{key: row.get(key) for key in fields},
+                "energy_contribution": contributions.get("energy"),
+                "metals_contribution": contributions.get("metals"),
+                "grains_contribution": contributions.get("grains"),
+                "softs_contribution": contributions.get("softs"),
+            })
 
 
 def main():
@@ -230,7 +332,10 @@ def main():
     base_url, api_key, model = openai_cfg()
     index_history = build_index_history(OUT)
     index_by_date = {row["date"]: row for row in index_history.get("daily", [])}
-    export_indices(date, ymd, index_history)
+    composite_history = build_composite_history(index_history, load_event_labels())
+    price_series = fetch_price_history(date)
+    backtests = run_price_backtests(composite_history.get("daily", []), price_series)
+    export_indices(date, ymd, index_history, composite_history, backtests)
 
     pending_en = []
     tweets, kols, dropped = [], set(), 0
@@ -315,10 +420,21 @@ def main():
         for key in ("energy", "metals", "grains", "softs")
     }
     current_indices = index_by_date.get(date, {"date": date, "assets": {}})
+    composite_daily = [
+        row for row in composite_history.get("daily", []) if row.get("date", "") <= date
+    ]
+    current_composite = next(
+        (row for row in reversed(composite_daily) if row.get("date") == date),
+        composite_daily[-1] if composite_daily else {},
+    )
     data = {date: {
         "meta": meta, "report_zh": report_zh, "report_en": report_en, "tweets": tweets,
         "indices": current_indices.get("assets", {}), "index_history": history_series,
         "index_method": index_history.get("method", {}),
+        "composite": current_composite,
+        "composite_history": composite_daily[-60:],
+        "composite_method": composite_history.get("method", {}),
+        "backtests": backtests,
     }}
     boards = {
         k: {"label_zh": v[0], "label_en": v[1], "color": v[2], "short_zh": v[3], "short_en": v[4]}
