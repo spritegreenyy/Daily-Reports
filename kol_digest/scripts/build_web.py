@@ -8,6 +8,8 @@ import os
 import re
 import sys
 import urllib.request
+from datetime import datetime
+from pathlib import Path
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "automation", "local"))
 
@@ -265,6 +267,61 @@ def fetch_price_history(report_date):
     return series
 
 
+def section_row_count(section):
+    return sum(len(group[1]) for group in section[1]) if len(section) > 1 else 0
+
+
+def normalize_report(payload, lang):
+    base = {
+        "insights": payload.get("insights", []),
+        "unique": payload.get("unique", []),
+        "sections": payload.get("sections", []),
+    }
+    if lang == "zh":
+        base = strip_numeric_emphasis(base)
+    return compact_report_insights(base, lang)
+
+
+def fill_recent_section_fallbacks(report, lang, report_date, max_days=7):
+    """Fill only empty visual sections with dated, already-generated prior views."""
+    current_dt = datetime.strptime(report_date, "%Y-%m-%d")
+    sections = json.loads(json.dumps(report.get("sections", []), ensure_ascii=False))
+    empty_names = {section[0] for section in sections if section_row_count(section) == 0}
+    if not empty_names:
+        return {**report, "sections": sections}, []
+
+    used = {}
+    prefix = "最近有效" if lang == "zh" else "Latest valid"
+    pattern = "content_????????.json" if lang == "zh" else "content_en_????????.json"
+    for path in sorted(Path(OUT).glob(pattern), reverse=True):
+        ymd = path.stem[-8:]
+        candidate_dt = datetime.strptime(ymd, "%Y%m%d")
+        age = (current_dt - candidate_dt).days
+        if age <= 0 or age > max_days:
+            continue
+        payload = load_json_if_exists(path) or {}
+        prior = normalize_report(payload, lang)
+        for section in prior.get("sections", []):
+            name = section[0]
+            if name not in empty_names or section_row_count(section) == 0:
+                continue
+            dated_groups = [
+                [f"{prefix} · {ymd[4:6]}-{ymd[6:]} · {group[0]}", group[1]]
+                for group in section[1]
+                if group[1]
+            ]
+            if dated_groups:
+                for target in sections:
+                    if target[0] == name:
+                        target[1] = dated_groups
+                        break
+                used[name] = f"{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}"
+                empty_names.remove(name)
+        if not empty_names:
+            break
+    return {**report, "sections": sections}, used
+
+
 def export_indices(report_date, ymd, index_history, composite_history, backtests):
     daily = [row for row in index_history.get("daily", []) if row.get("date", "") <= report_date]
     composite_daily = [
@@ -391,15 +448,24 @@ def main():
             t["x_en"] = en_cache.get(t["sid"], "").strip() or translate_text_en(t["x_zh"])
         t.pop("sid", None)
 
+    signal_stat_zh = rep_raw.get("subtitle_stat", "")
+    signal_stat_en = translate_text_en(signal_stat_zh)
     meta = {
         "date": date, "n_tweets": len(tweets), "n_kols": len(kols), "n_accounts": tw.get("active_accounts_count", 0),
         "generated": tw.get("generated_at", "")[:16].replace("T", " "),
         "title_zh": rep_raw.get("title", ""), "title_en": translate_text_en(rep_raw.get("title", "")),
         "window_zh": rep_raw.get("window", ""), "window_en": translate_text_en(rep_raw.get("window", "")),
-        "subtitle_zh": rep_raw.get("subtitle_stat", "") + "　·　英文推优先译中，缺失时保留原文",
-        "subtitle_en": translate_text_en(rep_raw.get("subtitle_stat", "") + "　·　英文推优先译中，缺失时保留原文"),
+        "subtitle_zh": (
+            f"完整推文流 {len(tweets)} 条 / {len(kols)} 位 KOL　·　"
+            f"核心方向筛选：{signal_stat_zh}　·　英文推优先译中，缺失时保留原文"
+        ),
+        "subtitle_en": (
+            f"Full stream: {len(tweets)} tweets / {len(kols)} KOLs · "
+            f"Core directional filter: {signal_stat_en} · "
+            "English tweets are translated into Chinese first; if unavailable, the original is kept"
+        ),
     }
-    report_zh = compact_report_insights(strip_numeric_emphasis({"insights": rep_raw.get("insights", []), "unique": rep_raw.get("unique", []), "sections": rep_raw.get("sections", [])}), "zh")
+    report_zh = normalize_report(rep_raw, "zh")
     report_en = compact_report_insights(strip_numeric_emphasis(load_json_if_exists(content_en_path)), "en")
     if not report_en and base_url and api_key and model:
         try:
@@ -411,6 +477,11 @@ def main():
             print(f"translate report zh->en failed: {exc}")
     if not report_en:
         report_en = compact_report_insights(translate_report_en_fallback(report_zh), "en")
+    report_zh, fallback_zh = fill_recent_section_fallbacks(report_zh, "zh", date)
+    report_en, fallback_en = fill_recent_section_fallbacks(report_en, "en", date)
+    if fallback_zh:
+        meta["subtitle_zh"] += "　·　空板块显示近7日最近有效观点，并标注原日期"
+        meta["subtitle_en"] += " · Empty sections show the latest valid view from the prior 7 days, with its date"
 
     history_series = {
         key: [

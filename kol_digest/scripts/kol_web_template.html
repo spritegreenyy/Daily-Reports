@@ -45,7 +45,8 @@
   #kolapp .comphead{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}.comptitle{font:800 20px Georgia,"Songti SC",serif;color:#13251f}.compsub{font-size:10.5px;color:#7e7565;margin-top:3px}
   #kolapp .range{display:inline-flex;border:1px solid #cfc3aa;border-radius:999px;padding:3px;background:#e8e0d0;white-space:nowrap}.range button{border:0;background:transparent;color:#746a5a;padding:4px 9px;border-radius:999px;font-size:10px;font-weight:700;cursor:pointer}.range button[data-on="1"]{background:#173f35;color:#fff}
   #kolapp .compkpis{display:grid;grid-template-columns:1.25fr repeat(5,1fr);gap:8px;margin-bottom:13px}.compkpi{background:rgba(255,255,255,.58);border:1px solid #ddd3bf;border-radius:10px;padding:10px 11px;min-width:0}.compkpi.hero{background:#173f35;border-color:#173f35}.compkpi span{display:block;color:#837968;font-size:9.5px;white-space:nowrap}.compkpi strong{display:block;color:#17251f;font:800 19px "SF Mono",ui-monospace,monospace;margin-top:2px;white-space:nowrap}.compkpi.hero span{color:#bfcfc7}.compkpi.hero strong{color:#f0be4e;font-size:27px}.compkpi strong.up{color:#168264}.compkpi strong.down{color:#bd4438}.compkpi small{display:block;color:#958a78;font-size:8.5px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  #kolapp .compchart{height:315px;background:#fbfaf6;border:1px solid #ded5c3;border-radius:11px;overflow:hidden}.compchart svg{display:block;width:100%;height:100%}.complegend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;color:#786f61;font-size:9.5px;margin:8px 2px 0}.complegend i{display:inline-block;width:12px;height:3px;margin-right:4px;vertical-align:middle}.complegend i.line{height:2px;background:#111}
+  #kolapp .compchart{height:315px;background:#fbfaf6;border:1px solid #ded5c3;border-radius:11px;overflow:hidden;position:relative}.compchart svg{display:block;width:100%;height:100%}.complegend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;color:#786f61;font-size:9.5px;margin:8px 2px 0}.complegend i{display:inline-block;width:12px;height:3px;margin-right:4px;vertical-align:middle}.complegend i.line{height:2px;background:#111}.complegend i.event{height:8px;width:8px;background:#9b7c35;transform:rotate(45deg)}
+  #kolapp .charttip{display:none;position:absolute;z-index:3;max-width:270px;padding:8px 10px;border-radius:7px;background:rgba(19,37,31,.96);color:#fff;font-size:10px;line-height:1.55;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.24);white-space:pre-line}.compchart .hoverpoint{cursor:crosshair}
   #kolapp .compformula{margin-top:11px;padding:9px 11px;border-left:3px solid #b78a27;background:#ece4d4;color:#5e5547;font-size:10px;line-height:1.55}.compformula b{color:#173f35!important}
   #kolapp .bt{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:14px}.bttop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.bttitle{font-size:13px;font-weight:800}.btmethod{font-size:9.5px;color:var(--mut2)}.bttable{width:100%;border-collapse:collapse;font-size:10.5px}.bttable th{text-align:left;color:var(--mut2);font-weight:600;padding:6px;border-bottom:1px solid var(--line)}.bttable td{padding:7px 6px;border-bottom:1px solid rgba(38,55,74,.65);font-variant-numeric:tabular-nums}.bttable tr:last-child td{border-bottom:0}.bttable .samplelow{color:#e7b24d}.bttable .positive{color:#55c9a5}.bttable .negative{color:#ef7f73}
   #kolapp .icard{padding:14px 16px} #kolapp .icard h3{margin:0 0 9px;font-size:14.5px;font-weight:700;line-height:1.4;color:#fff;display:flex;gap:8px}
@@ -158,8 +159,10 @@
       indexFormula:'分项 I = 100 × Σ(wᵢ·dᵢ) / (n+2)',
       indexNote:'dᵢ 为观点方向（偏多 +1、偏空 -1）；wᵢ 为按 KOL 层级和互动度计算后、再归一化至均值为 1 的权重；n 为当日方向样本数。分母中的 +2 来自 Beta(1,1) 均匀先验。无样本保持为空，不用 0 代替。',
       compTitle:'KOL大宗方向总指数',compSub:'黑线为总指数，柱形为能源、金属、谷物油籽、软商品对当日总指数的贡献',
+      chartHover:'悬停查看当日指数、四类贡献与事件',event:'事件',
       current:'当前值',change5:'5日变化',change20:'较20日前',coverage:'有效覆盖率',attention:'关注度',
       disagreement:'分歧度',validAssets:'类有效',attentionHelp:'提及量相对近20期',disagreementHelp:'100=多空最分歧',
+      latestValid:'最近有效',noCurrentSignal:'本日无方向信号',
       missing:'暂无有效样本',compositeFormula:'总指数 = Σ（分项指数 × 方向样本数 × 置信度）÷ Σ（方向样本数 × 置信度）。关注度 = 50 + 15 × 提及量相对前20期的 z-score（截断至0–100）；分歧度 = 100 × [1 − |多 − 空| ÷ (多 + 空)]。',
       energy:'能源',metals:'金属',grains:'谷物油籽',softs:'软商品',total:'总指数',
       btTitle:'价格验证 · 指数出现后 1 / 3 / 5 个交易日',btMethod:'信号门槛 |总指数| ≥ 8；按日报当日收盘测算',
@@ -182,8 +185,10 @@
       indexFormula:'Component I = 100 × Σ(wᵢ·dᵢ) / (n+2)',
       indexNote:'dᵢ is view direction (+1 bullish, -1 bearish); wᵢ is the normalized KOL-tier and engagement weight; n is the directional sample count. The +2 denominator is a Beta(1,1) uniform prior. Missing data stays blank and is never replaced with zero.',
       compTitle:'KOL Commodity Direction Composite',compSub:'Black line: composite. Bars: energy, metals, grains & oilseeds, and soft-commodity contributions.',
+      chartHover:'Hover for the daily index, component contributions and event',event:'Event',
       current:'Current',change5:'5D change',change20:'vs 20 reports ago',coverage:'Effective coverage',
       attention:'Attention',disagreement:'Disagreement',validAssets:'active groups',attentionHelp:'mentions vs prior 20 reports',
+      latestValid:'Latest valid',noCurrentSignal:'No directional signal today',
       disagreementHelp:'100 = maximum bull/bear split',missing:'No valid sample',
       compositeFormula:'Composite = Σ(component index × directional samples × confidence) ÷ Σ(directional samples × confidence). Attention = 50 + 15 × mention-count z-score versus the prior 20 reports (clipped to 0–100). Disagreement = 100 × [1 − |bull − bear| ÷ (bull + bear)].',
       energy:'Energy',metals:'Metals',grains:'Grains & Oilseeds',softs:'Softs',total:'Composite',
@@ -195,6 +200,7 @@
   };
   var $=function(s){return app.querySelector(s)};
   function esc(s){return (s||"").replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+  function attr(s){return esc(s).replace(/"/g,"&quot;")}
   function tx(k){return UI[uiLang][k]||UI.zh[k]||k}
   function boardLabel(k){var b=BOARDS[k]||{};return uiLang==="en"?(b.label_en||b.label_zh||k):(b.label_zh||k)}
   function boardShort(k){var b=BOARDS[k]||{};return uiLang==="en"?(b.short_en||b.short_zh||k):(b.short_zh||k)}
@@ -232,32 +238,41 @@
     [-100,-50,0,50,100].forEach(function(v){var yy=y(v);out.push('<line x1="'+l+'" y1="'+yy+'" x2="'+(w-r)+'" y2="'+yy+'" stroke="'+(v===0?'#877d6a':'#ded7c9')+'" stroke-width="'+(v===0?'1.4':'1')+'"/><text x="'+(l-7)+'" y="'+(yy+3)+'" text-anchor="end" fill="#8a806f" font-size="9">'+v+'</text>')});
     rows.forEach(function(row,i){
       var xp=x(i),pos=0,neg=0;
-      ['energy','metals','grains','softs'].forEach(function(key){var v=(row.contributions||{})[key];if(v===null||v===undefined)return;var from=v>=0?pos:neg,to=from+v,yt=Math.min(y(from),y(to)),hh=Math.max(1,Math.abs(y(from)-y(to)));out.push('<rect x="'+(xp-bw/2).toFixed(1)+'" y="'+yt.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+hh.toFixed(1)+'" fill="'+IDXCOLOR[key]+'" opacity=".8"><title>'+esc(row.date+' · '+tx(key)+' '+signed(v,1))+'</title></rect>');if(v>=0)pos=to;else neg=to});
+      ['energy','metals','grains','softs'].forEach(function(key){var v=(row.contributions||{})[key];if(v===null||v===undefined)return;var from=v>=0?pos:neg,to=from+v,yt=Math.min(y(from),y(to)),hh=Math.max(1,Math.abs(y(from)-y(to)));out.push('<rect class="hoverpoint" data-tip="'+attr(row.date+'&#10;'+tx(key)+' '+signed(v,1))+'" x="'+(xp-bw/2).toFixed(1)+'" y="'+yt.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+hh.toFixed(1)+'" fill="'+IDXCOLOR[key]+'" opacity=".8"></rect>');if(v>=0)pos=to;else neg=to});
     });
     var segments=[],current=[];
     rows.forEach(function(row,i){if(row.score===null||row.score===undefined){if(current.length>1)segments.push(current);current=[];return}current.push(x(i).toFixed(1)+','+y(row.score).toFixed(1))});
     if(current.length>1)segments.push(current);
     segments.forEach(function(points){out.push('<polyline points="'+points.join(' ')+'" fill="none" stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>')});
-    rows.forEach(function(row,i){if(row.score===null||row.score===undefined)return;out.push('<circle cx="'+x(i).toFixed(1)+'" cy="'+y(row.score).toFixed(1)+'" r="2.4" fill="#111"><title>'+esc(row.date+' · '+tx('total')+' '+signed(row.score,1))+'</title></circle>')});
+    rows.forEach(function(row,i){if(row.score===null||row.score===undefined)return;var details=[row.date,tx('total')+' '+signed(row.score,1)];['energy','metals','grains','softs'].forEach(function(key){var v=(row.contributions||{})[key];if(v!==null&&v!==undefined)details.push(tx(key)+' '+signed(v,1))});if(row.event)details.push(tx('event')+' · '+(uiLang==='en'?(row.event_en||row.event_zh):(row.event_zh||row.event_en)));out.push('<circle class="hoverpoint" data-tip="'+attr(details.join('&#10;'))+'" cx="'+x(i).toFixed(1)+'" cy="'+y(row.score).toFixed(1)+'" r="4" fill="#111"></circle>')});
     var events=rows.map(function(row,i){return{row:row,i:i}}).filter(function(item){return item.row.event}).slice(-5);
-    events.forEach(function(item,j){var xp=x(item.i),label=uiLang==='en'?item.row.event_en:item.row.event_zh;out.push('<line x1="'+xp+'" y1="'+t+'" x2="'+xp+'" y2="'+(t+ph)+'" stroke="#9b7c35" stroke-width="1" stroke-dasharray="3 4"/><text x="'+Math.min(w-170,Math.max(l+3,xp+4))+'" y="'+(13+(j%2)*12)+'" fill="#745a1c" font-size="8.5">'+esc(label)+'</text>')});
+    events.forEach(function(item){var xp=x(item.i),label=uiLang==='en'?(item.row.event_en||item.row.event_zh):(item.row.event_zh||item.row.event_en);out.push('<line x1="'+xp+'" y1="'+t+'" x2="'+xp+'" y2="'+(t+ph)+'" stroke="#9b7c35" stroke-width="1" stroke-dasharray="3 4"/><rect class="hoverpoint" data-tip="'+attr(item.row.date+'&#10;'+tx('event')+' · '+label)+'" x="'+(xp-4)+'" y="'+(t-16)+'" width="8" height="8" fill="#9b7c35" transform="rotate(45 '+xp+' '+(t-12)+')"></rect>')});
     var tickEvery=Math.max(1,Math.floor(rows.length/5));rows.forEach(function(row,i){if(i%tickEvery&&i!==rows.length-1)return;out.push('<text x="'+x(i).toFixed(1)+'" y="'+(h-12)+'" text-anchor="middle" fill="#8a806f" font-size="9">'+esc(row.date.slice(5))+'</text>')});
     out.push('</svg>');return out.join('');
   }
+  function bindCompositeTooltip(){
+    var chart=$("#compchart"),tip=document.createElement("div");tip.className="charttip";chart.appendChild(tip);
+    chart.querySelectorAll(".hoverpoint").forEach(function(point){
+      point.addEventListener("mouseenter",function(){tip.textContent=(point.getAttribute("data-tip")||"").replace(/&#10;/g,"\n");tip.style.display="block"});
+      point.addEventListener("mousemove",function(e){var rect=chart.getBoundingClientRect(),left=e.clientX-rect.left+12,top=e.clientY-rect.top+12;if(left+tip.offsetWidth>rect.width-6)left=e.clientX-rect.left-tip.offsetWidth-12;if(top+tip.offsetHeight>rect.height-6)top=e.clientY-rect.top-tip.offsetHeight-12;tip.style.left=Math.max(6,left)+"px";tip.style.top=Math.max(6,top)+"px"});
+      point.addEventListener("mouseleave",function(){tip.style.display="none"});
+      point.addEventListener("click",function(e){tip.textContent=(point.getAttribute("data-tip")||"").replace(/&#10;/g,"\n");tip.style.display="block";var rect=chart.getBoundingClientRect(),left=e.clientX-rect.left+12,top=e.clientY-rect.top+12;if(left+tip.offsetWidth>rect.width-6)left=e.clientX-rect.left-tip.offsetWidth-12;if(top+tip.offsetHeight>rect.height-6)top=e.clientY-rect.top-tip.offsetHeight-12;tip.style.left=Math.max(6,left)+"px";tip.style.top=Math.max(6,top)+"px"});
+    })
+  }
   function renderComposite(){
-    var c=cur(),x=c.composite||{},has=x.score!==null&&x.score!==undefined;
-    $("#comptitle").textContent=tx('compTitle');$("#compsub").textContent=tx('compSub');
+    var c=cur(),x=c.composite||{},has=x.score!==null&&x.score!==undefined,hist=c.composite_history||[],latest=[].concat(hist).reverse().find(function(r){return r.score!==null&&r.score!==undefined}),display=has?x:(latest||x),stale=!has&&!!latest;
+    $("#comptitle").textContent=tx('compTitle');$("#compsub").textContent=tx('compSub')+' · '+tx('chartHover');
     var kpis=[
-      ['hero',tx('current'),has?signed(x.score,1):'—',has?(x.score>8?tx('bull'):(x.score<-8?tx('bear'):tx('balanced'))):tx('missing')],
-      ['',tx('change5'),signed(x.change_5d,1),tx('indexFormula').split('=')[0]],
-      ['',tx('change20'),signed(x.change_20d,1),tx('indexFormula').split('=')[0]],
+      ['hero',stale?tx('latestValid'):tx('current'),display.score===null||display.score===undefined?'—':signed(display.score,1),stale?tx('noCurrentSignal')+' · '+display.date:(has?(display.score>8?tx('bull'):(display.score<-8?tx('bear'):tx('balanced'))):tx('missing'))],
+      ['',tx('change5'),signed(display.change_5d,1),stale?tx('latestValid')+' · '+display.date:tx('indexFormula').split('=')[0]],
+      ['',tx('change20'),signed(display.change_20d,1),stale?tx('latestValid')+' · '+display.date:tx('indexFormula').split('=')[0]],
       ['',tx('coverage'),x.coverage===undefined?'—':x.coverage.toFixed(0)+'%',(x.active_assets||0)+'/4 '+tx('validAssets')],
       ['',tx('attention'),x.attention===null||x.attention===undefined?'—':x.attention.toFixed(0),tx('attentionHelp')],
       ['',tx('disagreement'),x.disagreement===null||x.disagreement===undefined?'—':x.disagreement.toFixed(0),tx('disagreementHelp')]
     ];
-    $("#compkpis").innerHTML=kpis.map(function(k,i){var val=i===1?x.change_5d:(i===2?x.change_20d:null);return '<div class="compkpi '+k[0]+'"><span>'+k[1]+'</span><strong class="'+(val===null?'':numClass(val))+'">'+k[2]+'</strong><small>'+k[3]+'</small></div>'}).join('');
-    $("#compchart").innerHTML=compositeSvg(c.composite_history||[]);
-    $("#complegend").innerHTML=['total','energy','metals','grains','softs'].map(function(key){return '<span><i class="'+(key==='total'?'line':'')+'" style="'+(key==='total'?'':'background:'+IDXCOLOR[key])+'"></i>'+tx(key)+'</span>'}).join('');
+    $("#compkpis").innerHTML=kpis.map(function(k,i){var val=i===1?display.change_5d:(i===2?display.change_20d:null);return '<div class="compkpi '+k[0]+'"><span>'+k[1]+'</span><strong class="'+(val===null?'':numClass(val))+'">'+k[2]+'</strong><small>'+k[3]+'</small></div>'}).join('');
+    $("#compchart").innerHTML=compositeSvg(c.composite_history||[]);bindCompositeTooltip();
+    $("#complegend").innerHTML=['total','energy','metals','grains','softs'].map(function(key){return '<span><i class="'+(key==='total'?'line':'')+'" style="'+(key==='total'?'':'background:'+IDXCOLOR[key])+'"></i>'+tx(key)+'</span>'}).join('')+'<span><i class="event"></i>'+tx('event')+'</span>';
     $("#compformula").innerHTML='<b>'+tx('compTitle')+'：</b>'+tx('compositeFormula');
     renderBacktest(c.backtests||{});
   }
@@ -268,7 +283,18 @@
     $("#backtest").innerHTML='<table class="bttable"><thead><tr><th>'+tx('product')+'</th><th>'+tx('horizon')+'</th><th>'+tx('samples')+'</th><th>'+tx('winRate')+'</th><th>'+tx('ic')+'</th><th>'+tx('avgRet')+'</th></tr></thead><tbody>'+rows.join('')+'</tbody></table>';
   }
   function idxSpark(rows,color){var vals=(rows||[]).filter(function(r){return r.score!==null&&r.score!==undefined});if(vals.length<2)return '';var w=240,h=30,pts=vals.map(function(r,i){var x=i/(vals.length-1)*w,y=(1-(r.score+100)/200)*h;return x.toFixed(1)+','+y.toFixed(1)}).join(' ');return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="15" x2="240" y2="15" stroke="#394a5e" stroke-width="1"/><polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="2.2"/></svg>'}
-  function renderIndices(){renderComposite();var c=cur(),wrap=$("#indices"),keys=['energy','metals','grains','softs'];wrap.innerHTML='';keys.forEach(function(key){var x=(c.indices||{})[key]||{},score=x.score,col=x.color||'#8fa0b3',has=score!==null&&score!==undefined,noData=x.status==='no_data'||!(x.mentions||0),state=noData?tx('noData'):(!has?tx('noSignal'):(score>8?tx('bull'):(score<-8?tx('bear'):tx('balanced')))),left=has&&score<0?50-Math.abs(score)/2:50,width=has?Math.abs(score)/2:0,label=uiLang==='en'?(x.label_en||key):(x.label_zh||key),sig=x.signal_tweets||0,confClass=sig>=6?'high':(sig>=3?'mid':'low'),confText=sig>=6?tx('highConf'):(sig>=3?tx('midConf'):tx('lowConf')),hist=(c.index_history||{})[key]||[],active=hist.filter(function(r){return r.score!==null&&r.score!==undefined}).length,spark=idxSpark(hist,col),card=document.createElement('div');card.className='idxcard'+(!has?' nodata':'');card.style.setProperty('--ic',col);card.innerHTML='<div class="idxhead"><b>'+esc(label)+'</b>'+(has?'<span class="idxconf '+confClass+'">'+confText+' · '+Math.round((x.confidence||0)*100)+'%</span>':'')+'</div><div class="idxhero"><span class="idxscore '+(!has?'none':score>=0?'pos':'neg')+'">'+(has?(score>0?'+':'')+Math.round(score):'—')+'</span><span class="idxstate">'+state+'</span></div><div class="idxunder">'+IDXUNDER[uiLang][key]+'</div>'+(has?'<div class="idxaxis"><i class="idxfill" style="left:'+left+'%;width:'+width+'%;background:'+col+'"></i></div>':'<div class="idxempty">'+tx('waiting')+'</div>')+'<div class="idxmeta"><div class="idxstat"><strong>'+(x.mentions||0)+'</strong><span>'+tx('views')+'</span></div><div class="idxstat"><strong>'+sig+' <small>↑'+(x.bullish||0)+' ↓'+(x.bearish||0)+'</small></strong><span>'+tx('signals')+'</span></div><div class="idxstat"><strong>'+active+'</strong><span>'+tx('activeDays')+'</span></div></div>'+(has&&spark?'<div class="idxtrend"><span class="idxtrendlabel">'+tx('history30')+'</span><div class="idxspark">'+spark+'</div></div>':'');wrap.appendChild(card)});$("#idxnote").textContent=tx('indexNote')}
+  function renderIndices(){
+    renderComposite();
+    var c=cur(),wrap=$("#indices"),keys=['energy','metals','grains','softs'];
+    wrap.innerHTML='';
+    keys.forEach(function(key){
+      var x=(c.indices||{})[key]||{},hist=(c.index_history||{})[key]||[],has=x.score!==null&&x.score!==undefined,latest=[].concat(hist).reverse().find(function(r){return r.score!==null&&r.score!==undefined}),display=has?x:(latest||x),stale=!has&&!!latest,score=display.score,col=x.color||display.color||'#8fa0b3',hasDisplay=score!==null&&score!==undefined,state=stale?tx('latestValid')+' · '+display.date:(!hasDisplay?(x.status==='no_data'?tx('noData'):tx('noSignal')):(score>8?tx('bull'):(score<-8?tx('bear'):tx('balanced')))),left=hasDisplay&&score<0?50-Math.abs(score)/2:50,width=hasDisplay?Math.abs(score)/2:0,label=uiLang==='en'?(x.label_en||display.label_en||key):(x.label_zh||display.label_zh||key),sig=display.signal_tweets||0,confClass=sig>=6?'high':(sig>=3?'mid':'low'),confText=stale?tx('latestValid'):(sig>=6?tx('highConf'):(sig>=3?tx('midConf'):tx('lowConf'))),active=hist.filter(function(r){return r.score!==null&&r.score!==undefined}).length,spark=idxSpark(hist,col),card=document.createElement('div');
+      card.className='idxcard'+(!has?' nodata':'');card.style.setProperty('--ic',col);
+      card.innerHTML='<div class="idxhead"><b>'+esc(label)+'</b>'+(hasDisplay?'<span class="idxconf '+confClass+'">'+confText+' · '+(stale?display.date:Math.round((display.confidence||0)*100)+'%')+'</span>':'')+'</div><div class="idxhero"><span class="idxscore '+(!hasDisplay?'none':score>=0?'pos':'neg')+'">'+(hasDisplay?(score>0?'+':'')+Math.round(score):'—')+'</span><span class="idxstate">'+state+'</span></div><div class="idxunder">'+IDXUNDER[uiLang][key]+'</div>'+(hasDisplay?'<div class="idxaxis"><i class="idxfill" style="left:'+left+'%;width:'+width+'%;background:'+col+'"></i></div>':'<div class="idxempty">'+tx('waiting')+'</div>')+'<div class="idxmeta"><div class="idxstat"><strong>'+(display.mentions||0)+'</strong><span>'+tx('views')+'</span></div><div class="idxstat"><strong>'+sig+' <small>↑'+(display.bullish||0)+' ↓'+(display.bearish||0)+'</small></strong><span>'+tx('signals')+'</span></div><div class="idxstat"><strong>'+active+'</strong><span>'+tx('activeDays')+'</span></div></div>'+(hasDisplay&&spark?'<div class="idxtrend"><span class="idxtrendlabel">'+tx('history30')+'</span><div class="idxspark">'+spark+'</div></div>':'');
+      wrap.appendChild(card)
+    });
+    $("#idxnote").textContent=tx('indexNote')
+  }
 
   function renderReport(){
     var r=report(),m=cur().meta;
