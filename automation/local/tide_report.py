@@ -437,8 +437,16 @@ def build():
         }
         fresh = {
             v for v in expected
-            if BDATA.get(v, {}).get(b, {}).get("dates")
-            and BDATA[v][b]["dates"][-1] == TARGET
+            if (
+                BDATA.get(v, {}).get(b, {}).get("dates")
+                and (
+                    BDATA[v][b]["dates"][-1] == TARGET
+                    or (
+                        BDATA[v][b].get("net")
+                        and all(x == 0 for x in BDATA[v][b]["net"][-40:])
+                    )
+                )
+            )
         }
         return len(fresh), len(expected)
 

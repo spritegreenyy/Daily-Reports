@@ -2,7 +2,8 @@
 Description=Refresh WINDRISE priority seat details after API cooldown
 
 [Timer]
-OnCalendar=Mon..Fri *-*-* 17:10:00 Asia/Shanghai
+OnCalendar=Mon..Fri *-*-* 18:10:00 Asia/Shanghai
+OnCalendar=Mon..Fri *-*-* 19:10:00 Asia/Shanghai
 Persistent=true
 RandomizedDelaySec=30
 Unit=windrise-tide-details.service
