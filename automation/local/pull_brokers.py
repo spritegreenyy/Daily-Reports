@@ -4,7 +4,7 @@
 供资金潮汐"各类资金净流向"下拉展开每家席位用。数据源/口径同 pull_cohorts(qhkch 游客接口)。
 支持断点续跑: 已到目标日的 (品种,席位) 自动跳过。
 """
-import json, sys, time, threading, logging, urllib.parse
+import argparse, json, sys, time, threading, logging, urllib.parse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
@@ -23,6 +23,12 @@ MEMBERS = {
 GOLD_ONLY = {'中财期货'}            # 与分组口径一致: 中财只采金银
 GOLD_VARS = ['沪金', '沪银']
 VARIETIES = list(json.load(open(D / "varieties.json", encoding="utf-8")))
+VARIETY_META = json.load(open(D / "varieties.json", encoding="utf-8"))
+PRIORITY_DISPLAYS = {
+    "铜", "铝", "锌", "锡", "碳酸锂", "焦煤", "铁矿石", "热卷", "PTA",
+    "沥青", "甲醇", "PP", "苯乙烯", "燃油", "棕榈油", "豆粕", "豆油",
+    "橡胶",
+}
 URL = "https://www.qhkch.com/ajax/variety_net_position.php?v=251011-1"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36",
@@ -66,7 +72,19 @@ def fetch(broker, variety, tries=4):
     return None
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--scope",
+        choices=("all", "priority"),
+        default="all",
+        help="priority 仅刷新日报重点观察的 18 个品种，适合云端限流环境",
+    )
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
     out = json.loads(OUT.read_text(encoding='utf-8')) if OUT.exists() else {}
     # 目标日 = cohort_today.json 里机构的最新日期(与分组数据对齐)
     try:
@@ -77,11 +95,18 @@ def main():
     log.info(f"目标日: {target}")
 
     all_brokers = [b for ms in MEMBERS.values() for b in ms]
+    selected_vars = VARIETIES
+    if args.scope == "priority":
+        selected_vars = [
+            v for v in VARIETIES
+            if VARIETY_META.get(v, {}).get("display") in PRIORITY_DISPLAYS
+        ]
+        log.info(f"云端重点品种范围: {len(selected_vars)} 个")
     from datetime import date as _d
     monday = _d.today().weekday() == 0   # 周一全量刷新零仓对子(防漏新进场席位)
     tasks, skipped_zero = [], 0
     for b in all_brokers:
-        vs = GOLD_VARS if b in GOLD_ONLY else VARIETIES
+        vs = GOLD_VARS if b in GOLD_ONLY else selected_vars
         for v in vs:
             cur = out.get(v, {}).get(b)
             if target and cur and cur.get("dates") and cur["dates"][-1] >= target:

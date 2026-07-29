@@ -171,7 +171,9 @@ def broker_flow(bname):
     tot = 0.0; ok = False
     for v in BDATA:
         m = BDATA.get(v, {}).get(bname)
-        if not m or not m.get("net") or len(m["net"]) < 2 or not m.get("close") or m["close"][-1] is None:
+        if (not m or not m.get("dates") or m["dates"][-1] != TARGET
+                or not m.get("net") or len(m["net"]) < 2
+                or not m.get("close") or m["close"][-1] is None):
             continue
         tot += (m["net"][-1] - m["net"][-2]) * MULT.get(DISP.get(v, v), 10) * m["close"][-1] / 1e8; ok = True
     return tot if ok else None
@@ -182,7 +184,9 @@ def broker_series(bname, win=40):
     L = win + 1; agg = None
     for v in BDATA:
         m = BDATA.get(v, {}).get(bname)
-        if not m or not m.get("net") or not m.get("close") or len(m["net"]) < L or len(m["close"]) < L:
+        if (not m or not m.get("dates") or m["dates"][-1] != TARGET
+                or not m.get("net") or not m.get("close")
+                or len(m["net"]) < L or len(m["close"]) < L):
             continue
         cl = m["close"][-L:]
         if any(x is None for x in cl):
@@ -418,20 +422,38 @@ def build():
                 "series": [round(float(x)) for x in m["net_series"]]}
     _secser = {sec: sector_series(sec, 40) for sec in SEC_ORDER}
 
-    _bdate = max((BDATA[v][b]["dates"][-1] for v in BDATA for b in BDATA[v]
-                  if BDATA[v][b].get("dates")), default=None)
-    _members_ok = (_bdate == TARGET)   # 逐席位数据没跟上主数据日期时, 先不带成员(稍后重出)
+    _priority = {
+        "铜", "铝", "锌", "锡", "碳酸锂", "焦煤", "铁矿石", "热卷", "PTA",
+        "沥青", "甲醇", "PP", "苯乙烯", "燃油", "棕榈油", "豆粕", "豆油",
+        "橡胶",
+    }
+
+    def _member_freshness(b):
+        expected = {"沪金", "沪银"} if b == "中财期货" else {
+            v for v in BDATA if DISP.get(v, v) in _priority
+        }
+        fresh = {
+            v for v in expected
+            if BDATA.get(v, {}).get(b, {}).get("dates")
+            and BDATA[v][b]["dates"][-1] == TARGET
+        }
+        return len(fresh), len(expected)
 
     def _cohort_json(c):
         cs = notional_series(c, 40)
         members = []
-        for b in (COHORT_MEMBERS.get(c, []) if _members_ok else []):
+        for b in COHORT_MEMBERS.get(c, []):
+            fresh, expected = _member_freshness(b)
+            minimum = max(1, int(expected * 0.6))
+            if fresh < minimum:
+                continue
             bf = broker_flow(b)
             if bf is None:
                 continue
             bs = broker_series(b, 40)
             members.append({"name": b, "flow": round(bf, 2),
-                            "series": [round(float(x), 1) for x in bs] if bs is not None else []})
+                            "series": [round(float(x), 1) for x in bs] if bs is not None else [],
+                            "fresh": fresh, "expected": expected})
         return {"name": c, "flow": round(cohort_flow(c), 2),
                 "series": [round(float(x), 1) for x in cs] if cs is not None else [], "members": members}
     web_data = {

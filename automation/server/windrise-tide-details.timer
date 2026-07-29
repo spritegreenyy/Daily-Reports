@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh WINDRISE priority seat details after API cooldown
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 17:10:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=30
+Unit=windrise-tide-details.service
+
+[Install]
+WantedBy=timers.target
