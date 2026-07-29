@@ -1,0 +1,12 @@
+[Unit]
+Description=WINDRISE institutional position tide report
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+WorkingDirectory=/home/ubuntu/windrise/Daily-Reports
+ExecStart=/home/ubuntu/windrise/Daily-Reports/automation/server/run_tide.sh
+TimeoutStartSec=3h
+Nice=5

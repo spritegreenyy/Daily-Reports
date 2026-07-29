@@ -1,0 +1,11 @@
+[Unit]
+Description=Run WINDRISE tide report on trading weekdays
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 16:25:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=30
+Unit=windrise-tide.service
+
+[Install]
+WantedBy=timers.target

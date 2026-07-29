@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kol-digest"
+version = "0.1.0"
+description = "Daily KOL (Twitter/X) digest from datamux unified_news.sqlite"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "httpx>=0.27",
+  "python-dotenv>=1.0",
+  "PyYAML>=6.0",
+]
+
+[project.scripts]
+kol-digest = "kol_digest.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

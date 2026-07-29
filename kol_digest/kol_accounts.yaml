@@ -1,0 +1,1311 @@
+accounts:
+- handle: elerianm
+  tier: 1
+  tags:
+  - macro
+  - central_banks
+  - framing
+- handle: biancoresearch
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - framing
+- handle: LizAnnSonders
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - sellside
+- handle: TimmerFidelity
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - framing
+- handle: FedGuy12
+  tier: 1
+  tags:
+  - central_banks
+  - rates_fx
+  - macro
+- handle: BobEUnlimited
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - framing
+- handle: MacroAlf
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - framing
+- handle: AndreasSteno
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - framing
+- handle: donnelly_brent
+  tier: 1
+  tags:
+  - rates_fx
+  - macro
+  - trader
+- handle: jam_croissant
+  tier: 1
+  tags:
+  - volatility
+  - equities
+  - trader
+- handle: LynAldenContact
+  tier: 1
+  tags:
+  - macro
+  - commodities
+  - framing
+- handle: LukeGromen
+  tier: 1
+  tags:
+  - macro
+  - commodities
+  - framing
+- handle: SantiagoAuFund
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - framing
+- handle: TaviCosta
+  tier: 1
+  tags:
+  - macro
+  - commodities
+  - framing
+- handle: WarrenPies
+  tier: 1
+  tags:
+  - macro
+  - oil_energy
+  - framing
+- handle: NickTimiraos
+  tier: 1
+  tags:
+  - central_banks
+  - journalist
+  - macro
+- handle: lisaabramowicz1
+  tier: 1
+  tags:
+  - rates_fx
+  - journalist
+  - macro
+- handle: tracyalloway
+  tier: 2
+  tags:
+  - macro
+  - journalist
+  - framing
+- handle: TheStalwart
+  tier: 2
+  tags:
+  - macro
+  - journalist
+  - framing
+- handle: apollotorsten
+  tier: 2
+  tags:
+  - macro
+  - sellside
+  - rates_fx
+- handle: pboockvar
+  tier: 2
+  tags:
+  - macro
+  - framing
+- handle: EconguyRosie
+  tier: 2
+  tags:
+  - macro
+  - framing
+- handle: yardeni
+  tier: 2
+  tags:
+  - macro
+  - sellside
+- handle: charliebilello
+  tier: 2
+  tags:
+  - macro
+  - equities
+  - data
+- handle: leadlagreport
+  tier: 2
+  tags:
+  - macro
+  - equities
+  - framing
+- handle: NorthmanTrader
+  tier: 2
+  tags:
+  - macro
+  - equities
+  - technical
+- handle: Convertbond
+  tier: 2
+  tags:
+  - macro
+  - credit
+  - framing
+- handle: ttmygh
+  tier: 2
+  tags:
+  - macro
+  - framing
+- handle: kevinmuir
+  tier: 2
+  tags:
+  - macro
+  - trader
+  - framing
+- handle: ChrisWeston_PS
+  tier: 2
+  tags:
+  - macro
+  - rates_fx
+  - sellside
+- handle: McClellanOsc
+  tier: 2
+  tags:
+  - technical
+  - macro
+  - equities
+- handle: DiMartinoBooth
+  tier: 2
+  tags:
+  - central_banks
+  - macro
+  - framing
+- handle: darioperkins
+  tier: 2
+  tags:
+  - macro
+  - framing
+- handle: mark_dow
+  tier: 2
+  tags:
+  - macro
+  - trader
+- handle: RaoulGMI
+  tier: 2
+  tags:
+  - macro
+  - crypto
+  - framing
+- handle: JulianMI2
+  tier: 2
+  tags:
+  - macro
+  - rates_fx
+  - framing
+- handle: pearkes
+  tier: 2
+  tags:
+  - macro
+  - data
+  - framing
+- handle: M_McDonough
+  tier: 2
+  tags:
+  - macro
+  - data
+  - sellside
+- handle: Neil_Irwin
+  tier: 3
+  tags:
+  - macro
+  - journalist
+- handle: SamRo
+  tier: 3
+  tags:
+  - macro
+  - journalist
+- handle: ianbremmer
+  tier: 1
+  tags:
+  - geopolitics
+  - thinktank
+  - framing
+- handle: Geo_papic
+  tier: 1
+  tags:
+  - geopolitics
+  - macro
+  - framing
+- handle: TinaFordham1
+  tier: 1
+  tags:
+  - geopolitics
+  - macro
+  - framing
+- handle: PeterZeihan
+  tier: 1
+  tags:
+  - geopolitics
+  - framing
+- handle: KofmanMichael
+  tier: 1
+  tags:
+  - geopolitics
+  - defense
+  - thinktank
+- handle: RALee85
+  tier: 1
+  tags:
+  - geopolitics
+  - defense
+  - osint
+- handle: MassDara
+  tier: 1
+  tags:
+  - geopolitics
+  - defense
+  - thinktank
+- handle: shashj
+  tier: 1
+  tags:
+  - geopolitics
+  - defense
+  - journalist
+- handle: DAlperovitch
+  tier: 1
+  tags:
+  - geopolitics
+  - technology
+  - framing
+- handle: BarakRavid
+  tier: 1
+  tags:
+  - geopolitics
+  - journalist
+  - middle_east
+- handle: SangerNYT
+  tier: 2
+  tags:
+  - geopolitics
+  - journalist
+  - national_security
+- handle: IgnatiusPost
+  tier: 2
+  tags:
+  - geopolitics
+  - journalist
+  - national_security
+- handle: noahbarkin
+  tier: 2
+  tags:
+  - china_macro
+  - geopolitics
+  - journalist
+- handle: BonnieGlaser
+  tier: 2
+  tags:
+  - china_macro
+  - geopolitics
+  - thinktank
+- handle: ryanl_hass
+  tier: 2
+  tags:
+  - china_macro
+  - geopolitics
+  - thinktank
+- handle: fravel
+  tier: 2
+  tags:
+  - china_macro
+  - geopolitics
+  - thinktank
+- handle: osmastro
+  tier: 2
+  tags:
+  - china_macro
+  - geopolitics
+  - defense
+- handle: EvanFeigenbaum
+  tier: 2
+  tags:
+  - geopolitics
+  - china_macro
+  - thinktank
+- handle: RushDoshi
+  tier: 2
+  tags:
+  - china_macro
+  - geopolitics
+  - thinktank
+- handle: DerekJGrossman
+  tier: 2
+  tags:
+  - geopolitics
+  - defense
+  - indo_pacific
+- handle: YunSun4China
+  tier: 2
+  tags:
+  - china_macro
+  - geopolitics
+  - thinktank
+- handle: Stanovaya
+  tier: 2
+  tags:
+  - geopolitics
+  - russia
+  - framing
+- handle: samagreene
+  tier: 2
+  tags:
+  - geopolitics
+  - russia
+  - thinktank
+- handle: amenka
+  tier: 2
+  tags:
+  - geopolitics
+  - russia
+  - macro
+- handle: SamRamani2
+  tier: 2
+  tags:
+  - geopolitics
+  - russia
+  - middle_east
+- handle: PhillipsPOBrien
+  tier: 2
+  tags:
+  - geopolitics
+  - defense
+  - framing
+- handle: LawDavF
+  tier: 2
+  tags:
+  - geopolitics
+  - defense
+  - thinktank
+- handle: michaeldweiss
+  tier: 2
+  tags:
+  - geopolitics
+  - journalist
+  - national_security
+- handle: vali_nasr
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - thinktank
+- handle: ksadjadpour
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - thinktank
+- handle: AliVaez
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - thinktank
+- handle: MaloneySuzanne
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - thinktank
+- handle: Charles_Lister
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - thinktank
+- handle: aaronstein1
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - defense
+- handle: joshua_landis
+  tier: 3
+  tags:
+  - geopolitics
+  - middle_east
+  - framing
+- handle: ELuttwak
+  tier: 3
+  tags:
+  - geopolitics
+  - framing
+- handle: stephenWalt
+  tier: 3
+  tags:
+  - geopolitics
+  - academic
+  - framing
+- handle: RichardHaass
+  tier: 3
+  tags:
+  - geopolitics
+  - framing
+- handle: anneapplebaum
+  tier: 3
+  tags:
+  - geopolitics
+  - journalist
+  - framing
+- handle: tanvi_madan
+  tier: 3
+  tags:
+  - geopolitics
+  - indo_pacific
+  - thinktank
+- handle: JavierBlas
+  tier: 1
+  tags:
+  - oil_energy
+  - commodities
+  - journalist
+- handle: JKempEnergy
+  tier: 1
+  tags:
+  - oil_energy
+  - commodities
+  - framing
+- handle: AndurandPierre
+  tier: 1
+  tags:
+  - oil_energy
+  - commodities
+  - trader
+- handle: hkuppy
+  tier: 1
+  tags:
+  - commodities
+  - macro
+  - trader
+- handle: ericnuttall
+  tier: 1
+  tags:
+  - oil_energy
+  - equities
+  - trader
+- handle: chigrl
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - trader
+- handle: Rory_Johnston
+  tier: 1
+  tags:
+  - oil_energy
+  - framing
+- handle: anasalhajji
+  tier: 1
+  tags:
+  - oil_energy
+  - framing
+- handle: staunovo
+  tier: 1
+  tags:
+  - oil_energy
+  - sellside
+  - commodities
+- handle: Ole_S_Hansen
+  tier: 1
+  tags:
+  - commodities
+  - sellside
+  - metals_industrial
+- handle: CroftHelima
+  tier: 1
+  tags:
+  - oil_energy
+  - geopolitics
+  - sellside
+- handle: ArjunNMurti
+  tier: 1
+  tags:
+  - oil_energy
+  - equities
+  - framing
+- handle: aeberman12
+  tier: 2
+  tags:
+  - oil_energy
+  - framing
+- handle: pwrhungry
+  tier: 2
+  tags:
+  - oil_energy
+  - power_carbon
+  - framing
+- handle: PickeringEnergy
+  tier: 2
+  tags:
+  - oil_energy
+  - equities
+  - sellside
+- handle: DoombergT
+  tier: 1
+  tags:
+  - oil_energy
+  - macro
+  - framing
+- handle: Josh_Young_1
+  tier: 1
+  tags:
+  - oil_energy
+  - equities
+  - trader
+- handle: ces921
+  tier: 1
+  tags:
+  - commodities
+  - macro
+  - trader
+- handle: RRapier
+  tier: 2
+  tags:
+  - oil_energy
+  - framing
+- handle: MarkPMills
+  tier: 2
+  tags:
+  - oil_energy
+  - power_carbon
+  - framing
+- handle: AndyHomeMetals
+  tier: 1
+  tags:
+  - metals_industrial
+  - journalist
+  - commodities
+- handle: ClydeCommods
+  tier: 1
+  tags:
+  - commodities
+  - journalist
+  - china_macro
+- handle: GavinJMaguire
+  tier: 1
+  tags:
+  - power_carbon
+  - commodities
+  - journalist
+- handle: JLeeEnergy
+  tier: 2
+  tags:
+  - oil_energy
+  - journalist
+- handle: AlexLongley1
+  tier: 2
+  tags:
+  - oil_energy
+  - journalist
+- handle: SStapczynski
+  tier: 1
+  tags:
+  - nat_gas_lng
+  - journalist
+- handle: danmurtaugh
+  tier: 2
+  tags:
+  - oil_energy
+  - china_macro
+  - journalist
+- handle: ronbousso1
+  tier: 2
+  tags:
+  - oil_energy
+  - journalist
+- handle: devikakrishnak
+  tier: 2
+  tags:
+  - oil_energy
+  - journalist
+- handle: LauraHurstBLM
+  tier: 2
+  tags:
+  - oil_energy
+  - journalist
+- handle: WillKennedyBlm
+  tier: 2
+  tags:
+  - oil_energy
+  - journalist
+- handle: TankerTrackers
+  tier: 1
+  tags:
+  - shipping_freight
+  - oil_energy
+  - sanctions_policy
+- handle: samirmadani
+  tier: 1
+  tags:
+  - shipping_freight
+  - oil_energy
+- handle: VortexaAnalytics
+  tier: 1
+  tags:
+  - shipping_freight
+  - oil_energy
+  - data
+- handle: Kpler
+  tier: 2
+  tags:
+  - shipping_freight
+  - oil_energy
+  - data
+- handle: BreakwaveAdvisors
+  tier: 2
+  tags:
+  - shipping_freight
+  - sellside
+- handle: John_A_Konrad
+  tier: 2
+  tags:
+  - shipping_freight
+  - journalist
+- handle: Lars_Jensen
+  tier: 2
+  tags:
+  - shipping_freight
+  - framing
+- handle: kannbwx
+  tier: 1
+  tags:
+  - agri_softs
+  - weather_climate
+  - journalist
+- handle: ArlanFF101
+  tier: 1
+  tags:
+  - agri_softs
+  - framing
+- handle: ScottIrwinUI
+  tier: 1
+  tags:
+  - agri_softs
+  - academic
+  - framing
+- handle: DarinNewsom
+  tier: 2
+  tags:
+  - agri_softs
+  - commodities
+  - framing
+- handle: GoddessofGrain
+  tier: 2
+  tags:
+  - agri_softs
+  - framing
+- handle: cer_hedge
+  tier: 2
+  tags:
+  - agri_softs
+  - trader
+- handle: TheTedSpread
+  tier: 2
+  tags:
+  - agri_softs
+  - trader
+- handle: PeterLBrandt
+  tier: 2
+  tags:
+  - commodities
+  - technical
+  - trader
+- handle: RealRickRule
+  tier: 1
+  tags:
+  - metals_industrial
+  - precious_metals
+  - trader
+- handle: Brent_Cook
+  tier: 2
+  tags:
+  - metals_industrial
+  - precious_metals
+  - framing
+- handle: resourcerules
+  tier: 2
+  tags:
+  - metals_industrial
+  - precious_metals
+  - framing
+- handle: TheDailyGold
+  tier: 2
+  tags:
+  - precious_metals
+  - framing
+- handle: silverguru22
+  tier: 2
+  tags:
+  - precious_metals
+  - framing
+- handle: LawrenceLepard
+  tier: 2
+  tags:
+  - precious_metals
+  - macro
+  - trader
+- handle: Go_Rozen
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - metals_industrial
+- handle: ColinHamiltonCBA
+  tier: 2
+  tags:
+  - metals_industrial
+  - sellside
+- handle: KitcoNewsNOW
+  tier: 3
+  tags:
+  - precious_metals
+  - journalist
+- handle: JeffCurrieGS
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - sellside
+- handle: damienpcourvalin
+  tier: 2
+  tags:
+  - oil_energy
+  - sellside
+- handle: BenNollWeather
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - framing
+- handle: MJVentrice
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - nat_gas_lng
+- handle: webberweather
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - framing
+- handle: PaulRoundy1
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - academic
+- handle: judah47
+  tier: 1
+  tags:
+  - weather_climate
+  - seasonal
+  - nat_gas_lng
+- handle: RyanMaue
+  tier: 1
+  tags:
+  - weather_climate
+  - models
+  - framing
+- handle: TropicalTidbits
+  tier: 1
+  tags:
+  - weather_climate
+  - models
+  - hurricanes
+- handle: Weather_West
+  tier: 1
+  tags:
+  - weather_climate
+  - climate_risk
+  - framing
+- handle: snodgrss
+  tier: 1
+  tags:
+  - weather_climate
+  - agri_softs
+  - nat_gas_lng
+- handle: MattMakens
+  tier: 1
+  tags:
+  - weather_climate
+  - agri_softs
+  - nat_gas_lng
+- handle: WorldWeatherInc
+  tier: 1
+  tags:
+  - weather_climate
+  - agri_softs
+  - commodities
+- handle: wxtruch
+  tier: 2
+  tags:
+  - weather_climate
+  - nat_gas_lng
+  - agri_softs
+- handle: BAMWxCom
+  tier: 2
+  tags:
+  - weather_climate
+  - nat_gas_lng
+  - agri_softs
+- handle: weatherbell
+  tier: 2
+  tags:
+  - weather_climate
+  - nat_gas_lng
+- handle: burgwx
+  tier: 2
+  tags:
+  - weather_climate
+  - models
+- handle: philklotzbach
+  tier: 2
+  tags:
+  - weather_climate
+  - hurricanes
+- handle: MichaelRLowry
+  tier: 2
+  tags:
+  - weather_climate
+  - hurricanes
+- handle: pppapin
+  tier: 2
+  tags:
+  - weather_climate
+  - hurricanes
+- handle: BMcNoldy
+  tier: 2
+  tags:
+  - weather_climate
+  - hurricanes
+- handle: gensiniwx
+  tier: 2
+  tags:
+  - weather_climate
+  - severe_weather
+- handle: MatthewCappucci
+  tier: 2
+  tags:
+  - weather_climate
+  - journalist
+- handle: DrJeffMasters
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - framing
+- handle: bhensonweather
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - journalist
+- handle: Climatologist49
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - data
+- handle: ZLabe
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - data
+- handle: ClimateOfGavin
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - academic
+- handle: hausfath
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - data
+- handle: ed_hawkins
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - data
+- handle: Peters_Glen
+  tier: 2
+  tags:
+  - weather_climate
+  - power_carbon
+  - data
+- handle: FrediOtto
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - academic
+- handle: DrShepherd2013
+  tier: 3
+  tags:
+  - weather_climate
+  - academic
+- handle: KHayhoe
+  tier: 3
+  tags:
+  - weather_climate
+  - climate_risk
+  - academic
+- handle: MichaelEMann
+  tier: 3
+  tags:
+  - weather_climate
+  - climate_risk
+  - academic
+- handle: AndrewDessler
+  tier: 3
+  tags:
+  - weather_climate
+  - climate_risk
+  - academic
+- handle: richardabetts
+  tier: 3
+  tags:
+  - weather_climate
+  - climate_risk
+  - academic
+- handle: SISeneviratne
+  tier: 3
+  tags:
+  - weather_climate
+  - climate_risk
+  - academic
+- handle: SimonLeeWx
+  tier: 2
+  tags:
+  - weather_climate
+  - seasonal
+  - models
+- handle: antmasiello
+  tier: 2
+  tags:
+  - weather_climate
+  - models
+- handle: ggweather
+  tier: 3
+  tags:
+  - weather_climate
+  - climate_risk
+  - data
+- handle: wxjerdman
+  tier: 3
+  tags:
+  - weather_climate
+  - journalist
+- handle: CathieDWood
+  tier: 1
+  tags:
+  - ai_semis
+  - technology
+  - fund_manager
+- handle: wintonARK
+  tier: 1
+  tags:
+  - ai_semis
+  - technology
+  - framing
+- handle: dylan522p
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - framing
+- handle: SemiAnalysis_
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - framing
+- handle: GavinSBaker
+  tier: 1
+  tags:
+  - ai_semis
+  - technology
+  - fund_manager
+- handle: Beth_Kindig
+  tier: 1
+  tags:
+  - ai_semis
+  - technology
+  - framing
+- handle: FabricatedQlty
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - framing
+- handle: PatrickMoorhead
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - framing
+- handle: BenBajarin
+  tier: 2
+  tags:
+  - technology
+  - ai_semis
+  - framing
+- handle: IanCutress
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - framing
+- handle: stacyrasgon
+  tier: 1
+  tags:
+  - semiconductors
+  - sellside
+  - ai_semis
+- handle: firstadopter
+  tier: 2
+  tags:
+  - technology
+  - journalist
+  - ai_semis
+- handle: benedictevans
+  tier: 1
+  tags:
+  - technology
+  - ai_semis
+  - framing
+- handle: benthompson
+  tier: 1
+  tags:
+  - technology
+  - ai_semis
+  - framing
+- handle: stratechery
+  tier: 2
+  tags:
+  - technology
+  - ai_semis
+  - framing
+- handle: ballmatthew
+  tier: 2
+  tags:
+  - technology
+  - ai_semis
+  - framing
+- handle: jaminball
+  tier: 2
+  tags:
+  - software
+  - technology
+  - investing
+- handle: EconomyApp
+  tier: 2
+  tags:
+  - technology
+  - software
+  - investing
+- handle: eric_seufert
+  tier: 2
+  tags:
+  - technology
+  - advertising
+  - software
+- handle: hhhypergrowth
+  tier: 2
+  tags:
+  - technology
+  - software
+  - investing
+- handle: Citrini7
+  tier: 2
+  tags:
+  - technology
+  - ai_semis
+  - trader
+- handle: pmarca
+  tier: 2
+  tags:
+  - technology
+  - venture
+  - framing
+- handle: bgurley
+  tier: 2
+  tags:
+  - technology
+  - venture
+  - framing
+- handle: vkhosla
+  tier: 2
+  tags:
+  - technology
+  - venture
+  - ai_semis
+- handle: eladgil
+  tier: 2
+  tags:
+  - technology
+  - venture
+  - ai_semis
+- handle: natfriedman
+  tier: 2
+  tags:
+  - technology
+  - ai_semis
+  - venture
+- handle: danielgross
+  tier: 2
+  tags:
+  - technology
+  - ai_semis
+  - venture
+- handle: karpathy
+  tier: 1
+  tags:
+  - ai_semis
+  - ai_research
+  - technology
+- handle: AndrewYNg
+  tier: 1
+  tags:
+  - ai_semis
+  - ai_research
+  - technology
+- handle: drfeifei
+  tier: 1
+  tags:
+  - ai_semis
+  - ai_research
+  - technology
+- handle: ylecun
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - technology
+- handle: fchollet
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - technology
+- handle: DrJimFan
+  tier: 1
+  tags:
+  - ai_semis
+  - ai_research
+  - technology
+- handle: swyx
+  tier: 2
+  tags:
+  - ai_semis
+  - developer
+  - technology
+- handle: simonw
+  tier: 2
+  tags:
+  - ai_semis
+  - developer
+  - technology
+- handle: JeffDean
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - technology
+- handle: LisaSu
+  tier: 1
+  tags:
+  - semiconductors
+  - ai_semis
+  - official
+- handle: cristianoamon
+  tier: 2
+  tags:
+  - semiconductors
+  - ai_semis
+  - official
+- handle: jimkxa
+  tier: 1
+  tags:
+  - semiconductors
+  - ai_semis
+  - framing
+- handle: realGeorgeHotz
+  tier: 2
+  tags:
+  - ai_semis
+  - technology
+  - engineering
+- handle: jordanschneider
+  tier: 2
+  tags:
+  - ai_semis
+  - china_macro
+  - technology
+- handle: natolambert
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - framing
+- handle: anshelsag
+  tier: 2
+  tags:
+  - ai_semis
+  - semiconductors
+  - framing
+- handle: danielnewmanUV
+  tier: 3
+  tags:
+  - technology
+  - ai_semis
+  - framing
+- handle: WaltLightShed
+  tier: 3
+  tags:
+  - technology
+  - sellside
+  - framing
+- handle: chamath
+  tier: 3
+  tags:
+  - technology
+  - fund_manager
+  - framing
+- handle: fredwilson
+  tier: 3
+  tags:
+  - technology
+  - venture
+  - framing
+- handle: skorusARK
+  tier: 3
+  tags:
+  - ai_semis
+  - semiconductors
+  - framing
+- handle: TashaARK
+  tier: 3
+  tags:
+  - technology
+  - ai_semis
+  - framing

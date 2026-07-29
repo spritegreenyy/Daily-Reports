@@ -1,0 +1,11 @@
+[Unit]
+Description=Run WINDRISE pattern report on trading weekdays
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 16:10:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=30
+Unit=windrise-pattern.service
+
+[Install]
+WantedBy=timers.target

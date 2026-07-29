@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "datamux"
+version = "0.1.0"
+description = "Multi-source financial data multiplexer"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "datamux contributors" }]
+keywords = ["finance", "data", "multiplexer", "news", "market-data", "websocket"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial",
+]
+dependencies = [
+    "aiohttp>=3.9",
+    "aiosqlite>=0.19",
+    "websockets>=12.0",
+    "apscheduler>=3.10",
+    "pyyaml>=6.0",
+    "feedparser>=6.0",
+]
+
+[project.optional-dependencies]
+news = ["newspaper4k>=0.9", "fundus>=0.5", "gdeltdoc>=1.5"]
+oil = ["yfinance>=1.2", "fredapi>=0.5"]
+rqdata = ["rqdatac>=3.4"]
+dashboard = ["fastapi>=0.115", "uvicorn[standard]>=0.34", "croniter>=6.0"]
+mcp = ["mcp>=1.0"]
+all = ["datamux[news,oil,rqdata,dashboard,mcp]"]
+
+[project.scripts]
+datamux = "datamux.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["datamux"]

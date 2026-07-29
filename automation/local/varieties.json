@@ -1,0 +1,214 @@
+{
+ "沪铜": {
+  "display": "铜",
+  "sector": "有色"
+ },
+ "沪铝": {
+  "display": "铝",
+  "sector": "有色"
+ },
+ "沪锌": {
+  "display": "锌",
+  "sector": "有色"
+ },
+ "沪铅": {
+  "display": "铅",
+  "sector": "有色"
+ },
+ "沪镍": {
+  "display": "镍",
+  "sector": "有色"
+ },
+ "沪锡": {
+  "display": "锡",
+  "sector": "有色"
+ },
+ "沪金": {
+  "display": "黄金",
+  "sector": "贵金属"
+ },
+ "沪银": {
+  "display": "白银",
+  "sector": "贵金属"
+ },
+ "氧化铝": {
+  "display": "氧化铝",
+  "sector": "有色"
+ },
+ "热卷": {
+  "display": "热卷",
+  "sector": "黑色"
+ },
+ "焦煤": {
+  "display": "焦煤",
+  "sector": "黑色"
+ },
+ "燃料油": {
+  "display": "燃油",
+  "sector": "能源"
+ },
+ "苯乙烯": {
+  "display": "苯乙烯",
+  "sector": "化工"
+ },
+ "PVC": {
+  "display": "PVC",
+  "sector": "化工"
+ },
+ "尿素": {
+  "display": "尿素",
+  "sector": "化工"
+ },
+ "豆二": {
+  "display": "豆二",
+  "sector": "农产品"
+ },
+ "棕榈油": {
+  "display": "棕榈油",
+  "sector": "农产品"
+ },
+ "棉花": {
+  "display": "棉花",
+  "sector": "农产品"
+ },
+ "鸡蛋": {
+  "display": "鸡蛋",
+  "sector": "农产品"
+ },
+ "红枣": {
+  "display": "红枣",
+  "sector": "农产品"
+ },
+ "不锈钢": {
+  "display": "不锈钢",
+  "sector": "有色"
+ },
+ "工业硅": {
+  "display": "工业硅",
+  "sector": "有色"
+ },
+ "碳酸锂": {
+  "display": "碳酸锂",
+  "sector": "有色"
+ },
+ "螺纹钢": {
+  "display": "螺纹钢",
+  "sector": "黑色"
+ },
+ "铁矿石": {
+  "display": "铁矿石",
+  "sector": "黑色"
+ },
+ "焦炭": {
+  "display": "焦炭",
+  "sector": "黑色"
+ },
+ "硅铁": {
+  "display": "硅铁",
+  "sector": "黑色"
+ },
+ "锰硅": {
+  "display": "锰硅",
+  "sector": "黑色"
+ },
+ "原油": {
+  "display": "原油",
+  "sector": "能源"
+ },
+ "沥青": {
+  "display": "沥青",
+  "sector": "能源"
+ },
+ "液化气": {
+  "display": "液化气",
+  "sector": "能源"
+ },
+ "PTA": {
+  "display": "PTA",
+  "sector": "化工"
+ },
+ "甲醇": {
+  "display": "甲醇",
+  "sector": "化工"
+ },
+ "乙二醇": {
+  "display": "乙二醇",
+  "sector": "化工"
+ },
+ "塑料": {
+  "display": "LLDPE",
+  "sector": "化工"
+ },
+ "PP": {
+  "display": "PP",
+  "sector": "化工"
+ },
+ "纯碱": {
+  "display": "纯碱",
+  "sector": "化工"
+ },
+ "玻璃": {
+  "display": "玻璃",
+  "sector": "化工"
+ },
+ "短纤": {
+  "display": "短纤",
+  "sector": "化工"
+ },
+ "20号胶": {
+  "display": "20号胶",
+  "sector": "化工"
+ },
+ "天然橡胶": {
+  "display": "橡胶",
+  "sector": "化工"
+ },
+ "纸浆": {
+  "display": "纸浆",
+  "sector": "化工"
+ },
+ "豆一": {
+  "display": "豆一",
+  "sector": "农产品"
+ },
+ "豆粕": {
+  "display": "豆粕",
+  "sector": "农产品"
+ },
+ "豆油": {
+  "display": "豆油",
+  "sector": "农产品"
+ },
+ "菜粕": {
+  "display": "菜粕",
+  "sector": "农产品"
+ },
+ "菜油": {
+  "display": "菜油",
+  "sector": "农产品"
+ },
+ "白糖": {
+  "display": "白糖",
+  "sector": "农产品"
+ },
+ "玉米": {
+  "display": "玉米",
+  "sector": "农产品"
+ },
+ "淀粉": {
+  "display": "淀粉",
+  "sector": "农产品"
+ },
+ "生猪": {
+  "display": "生猪",
+  "sector": "农产品"
+ },
+ "苹果": {
+  "display": "苹果",
+  "sector": "农产品"
+ },
+ "花生": {
+  "display": "花生",
+  "sector": "农产品"
+ }
+}

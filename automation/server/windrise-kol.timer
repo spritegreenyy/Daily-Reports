@@ -1,0 +1,11 @@
+[Unit]
+Description=Run WINDRISE KOL report every day
+
+[Timer]
+OnCalendar=*-*-* 10:30:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=30
+Unit=windrise-kol.service
+
+[Install]
+WantedBy=timers.target

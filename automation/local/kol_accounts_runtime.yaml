@@ -1,0 +1,1923 @@
+accounts:
+- handle: LynAldenContact
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - liquidity
+  - teacher_required
+  - viewpoint
+- handle: RaoulGMI
+  tier: 1
+  tags:
+  - macro
+  - crypto
+  - long_cycle
+  - teacher_required
+  - viewpoint
+- handle: biancoresearch
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - bonds
+  - teacher_required
+  - viewpoint
+- handle: elerianm
+  tier: 1
+  tags:
+  - macro
+  - central_banks
+  - teacher_required
+  - viewpoint
+- handle: CathieDWood
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - innovation
+  - teacher_required
+  - fund_manager
+- handle: ARKInvest
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - innovation
+  - teacher_required
+  - research
+- handle: BillAckman
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - activist
+  - teacher_required
+  - fund_manager
+- handle: chamath
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - technology
+  - teacher_required
+  - viewpoint
+- handle: jimcramer
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - teacher_required
+  - contrarian_signal
+  - viewpoint
+- handle: unusual_whales
+  tier: 2
+  tags:
+  - macro
+  - options_flow
+  - trader
+  - teacher_required
+  - data
+- handle: GRDecter
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - teacher_required
+  - market_narrative
+  - viewpoint
+- handle: LizAnnSonders
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - sellside
+  - viewpoint
+- handle: TimmerFidelity
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - cycle
+  - viewpoint
+- handle: FedGuy12
+  tier: 1
+  tags:
+  - macro
+  - central_banks
+  - rates_fx
+  - viewpoint
+- handle: BobEUnlimited
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - cycle
+  - viewpoint
+- handle: MacroAlf
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - portfolio
+  - viewpoint
+- handle: AndreasSteno
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - cross_asset
+  - viewpoint
+- handle: donnelly_brent
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - trader
+  - viewpoint
+- handle: jam_croissant
+  tier: 1
+  tags:
+  - macro
+  - volatility
+  - options
+  - trader
+- handle: LukeGromen
+  tier: 1
+  tags:
+  - macro
+  - sovereign_debt
+  - commodities
+  - viewpoint
+- handle: SantiagoAuFund
+  tier: 1
+  tags:
+  - macro
+  - rates_fx
+  - dollar
+  - viewpoint
+- handle: TaviCosta
+  tier: 1
+  tags:
+  - macro
+  - commodities
+  - cycle
+  - viewpoint
+- handle: WarrenPies
+  tier: 1
+  tags:
+  - macro
+  - oil_energy
+  - cycle
+  - viewpoint
+- handle: pboockvar
+  tier: 2
+  tags:
+  - macro
+  - rates_fx
+  - economics
+  - viewpoint
+- handle: EconguyRosie
+  tier: 2
+  tags:
+  - macro
+  - economics
+  - cycle
+  - viewpoint
+- handle: yardeni
+  tier: 2
+  tags:
+  - macro
+  - equities
+  - sellside
+  - viewpoint
+- handle: charliebilello
+  tier: 2
+  tags:
+  - macro
+  - data
+  - markets
+  - viewpoint
+- handle: leadlagreport
+  tier: 2
+  tags:
+  - macro
+  - cross_asset
+  - risk
+  - viewpoint
+- handle: NorthmanTrader
+  tier: 2
+  tags:
+  - macro
+  - technical
+  - equities
+  - viewpoint
+- handle: Convertbond
+  tier: 2
+  tags:
+  - macro
+  - credit
+  - bonds
+  - viewpoint
+- handle: kevinmuir
+  tier: 2
+  tags:
+  - macro
+  - trader
+  - cross_asset
+  - viewpoint
+- handle: ChrisWeston_PS
+  tier: 2
+  tags:
+  - macro
+  - rates_fx
+  - trader
+  - viewpoint
+- handle: McClellanOsc
+  tier: 2
+  tags:
+  - macro
+  - technical
+  - cycle
+  - viewpoint
+- handle: DiMartinoBooth
+  tier: 2
+  tags:
+  - macro
+  - central_banks
+  - economics
+  - viewpoint
+- handle: darioperkins
+  tier: 2
+  tags:
+  - macro
+  - central_banks
+  - economics
+  - viewpoint
+- handle: mark_dow
+  tier: 2
+  tags:
+  - macro
+  - rates_fx
+  - trader
+  - viewpoint
+- handle: JulianMI2
+  tier: 2
+  tags:
+  - macro
+  - liquidity
+  - cycle
+  - viewpoint
+- handle: pearkes
+  tier: 2
+  tags:
+  - macro
+  - cross_asset
+  - strategy
+  - viewpoint
+- handle: M_McDonough
+  tier: 2
+  tags:
+  - macro
+  - economics
+  - data
+  - viewpoint
+- handle: SamRo
+  tier: 2
+  tags:
+  - macro
+  - equities
+  - data
+  - viewpoint
+- handle: Geo_papic
+  tier: 2
+  tags:
+  - macro
+  - geopolitics
+  - strategy
+  - viewpoint
+- handle: TinaFordham1
+  tier: 2
+  tags:
+  - macro
+  - geopolitics
+  - political_risk
+  - viewpoint
+- handle: hkuppy
+  tier: 2
+  tags:
+  - macro
+  - commodities
+  - fund_manager
+  - viewpoint
+- handle: DoombergT
+  tier: 2
+  tags:
+  - macro
+  - energy
+  - narrative
+  - viewpoint
+- handle: LawrenceLepard
+  tier: 2
+  tags:
+  - macro
+  - gold
+  - hard_assets
+  - viewpoint
+- handle: MichaelAArouet
+  tier: 2
+  tags:
+  - macro
+  - economics
+  - data
+  - viewpoint
+- handle: DariusDale42
+  tier: 2
+  tags:
+  - macro
+  - risk_regime
+  - quant
+  - viewpoint
+- handle: Stephanie_Link
+  tier: 2
+  tags:
+  - macro
+  - equities
+  - fund_manager
+  - viewpoint
+- handle: Mayhem4Markets
+  tier: 2
+  tags:
+  - macro
+  - rates_fx
+  - market_narrative
+  - viewpoint
+- handle: michaelkantro
+  tier: 2
+  tags:
+  - macro
+  - cycle
+  - sellside
+  - viewpoint
+- handle: ianbremmer
+  tier: 1
+  tags:
+  - geopolitics
+  - political_risk
+  - global_macro
+  - viewpoint
+- handle: PeterZeihan
+  tier: 1
+  tags:
+  - geopolitics
+  - demographics
+  - supply_chain
+  - viewpoint
+- handle: KofmanMichael
+  tier: 1
+  tags:
+  - geopolitics
+  - russia
+  - military
+  - viewpoint
+- handle: RALee85
+  tier: 1
+  tags:
+  - geopolitics
+  - russia
+  - military
+  - viewpoint
+- handle: MassDara
+  tier: 1
+  tags:
+  - geopolitics
+  - defense
+  - military
+  - viewpoint
+- handle: shashj
+  tier: 1
+  tags:
+  - geopolitics
+  - defense
+  - europe
+  - viewpoint
+- handle: DAlperovitch
+  tier: 1
+  tags:
+  - geopolitics
+  - cyber
+  - russia
+  - viewpoint
+- handle: BarakRavid
+  tier: 1
+  tags:
+  - geopolitics
+  - middle_east
+  - diplomacy
+  - viewpoint
+- handle: AnkitPanda
+  tier: 1
+  tags:
+  - geopolitics
+  - nuclear
+  - indo_pacific
+  - viewpoint
+- handle: ElbridgeColby
+  tier: 1
+  tags:
+  - geopolitics
+  - defense
+  - indo_pacific
+  - viewpoint
+- handle: BonnieGlaser
+  tier: 1
+  tags:
+  - geopolitics
+  - china
+  - taiwan
+  - viewpoint
+- handle: ryanl_hass
+  tier: 1
+  tags:
+  - geopolitics
+  - china
+  - taiwan
+  - viewpoint
+- handle: fravel
+  tier: 1
+  tags:
+  - geopolitics
+  - china
+  - military
+  - viewpoint
+- handle: osmastro
+  tier: 1
+  tags:
+  - geopolitics
+  - china
+  - security
+  - viewpoint
+- handle: EvanFeigenbaum
+  tier: 1
+  tags:
+  - geopolitics
+  - asia
+  - policy
+  - viewpoint
+- handle: RushDoshi
+  tier: 1
+  tags:
+  - geopolitics
+  - china
+  - strategy
+  - viewpoint
+- handle: DerekJGrossman
+  tier: 1
+  tags:
+  - geopolitics
+  - indo_pacific
+  - security
+  - viewpoint
+- handle: YunSun4China
+  tier: 1
+  tags:
+  - geopolitics
+  - china
+  - africa
+  - viewpoint
+- handle: Stanovaya
+  tier: 1
+  tags:
+  - geopolitics
+  - russia
+  - kremlin
+  - viewpoint
+- handle: samagreene
+  tier: 1
+  tags:
+  - geopolitics
+  - russia
+  - political_risk
+  - viewpoint
+- handle: SamRamani2
+  tier: 2
+  tags:
+  - geopolitics
+  - russia
+  - middle_east
+  - viewpoint
+- handle: PhillipsPOBrien
+  tier: 2
+  tags:
+  - geopolitics
+  - ukraine
+  - military
+  - viewpoint
+- handle: LawDavF
+  tier: 2
+  tags:
+  - geopolitics
+  - ukraine
+  - military
+  - viewpoint
+- handle: michaeldweiss
+  tier: 2
+  tags:
+  - geopolitics
+  - russia
+  - middle_east
+  - viewpoint
+- handle: SangerNYT
+  tier: 2
+  tags:
+  - geopolitics
+  - national_security
+  - technology
+  - viewpoint
+- handle: IgnatiusPost
+  tier: 2
+  tags:
+  - geopolitics
+  - diplomacy
+  - middle_east
+  - viewpoint
+- handle: noahbarkin
+  tier: 2
+  tags:
+  - geopolitics
+  - europe
+  - china
+  - viewpoint
+- handle: vali_nasr
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - iran
+  - viewpoint
+- handle: ksadjadpour
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - iran
+  - viewpoint
+- handle: AliVaez
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - iran
+  - viewpoint
+- handle: MaloneySuzanne
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - iran
+  - viewpoint
+- handle: Charles_Lister
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - syria
+  - viewpoint
+- handle: aaronstein1
+  tier: 2
+  tags:
+  - geopolitics
+  - turkey
+  - middle_east
+  - viewpoint
+- handle: joshua_landis
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - syria
+  - viewpoint
+- handle: ELuttwak
+  tier: 2
+  tags:
+  - geopolitics
+  - strategy
+  - history
+  - viewpoint
+- handle: stephenWalt
+  tier: 2
+  tags:
+  - geopolitics
+  - strategy
+  - realism
+  - viewpoint
+- handle: RichardHaass
+  tier: 2
+  tags:
+  - geopolitics
+  - foreign_policy
+  - global_order
+  - viewpoint
+- handle: anneapplebaum
+  tier: 2
+  tags:
+  - geopolitics
+  - europe
+  - authoritarianism
+  - viewpoint
+- handle: tanvi_madan
+  tier: 2
+  tags:
+  - geopolitics
+  - india
+  - china
+  - viewpoint
+- handle: CroftHelima
+  tier: 2
+  tags:
+  - geopolitics
+  - oil_energy
+  - political_risk
+  - viewpoint
+- handle: matthewkroenig
+  tier: 2
+  tags:
+  - geopolitics
+  - nuclear
+  - security
+  - viewpoint
+- handle: james_acton32
+  tier: 2
+  tags:
+  - geopolitics
+  - nuclear
+  - arms_control
+  - viewpoint
+- handle: AlexGabuev
+  tier: 2
+  tags:
+  - geopolitics
+  - russia
+  - china
+  - viewpoint
+- handle: FranzStefanGady
+  tier: 2
+  tags:
+  - geopolitics
+  - military
+  - europe
+  - viewpoint
+- handle: CollinSLKoh
+  tier: 2
+  tags:
+  - geopolitics
+  - maritime
+  - indo_pacific
+  - viewpoint
+- handle: tparsi
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - diplomacy
+  - viewpoint
+- handle: SecKermani
+  tier: 2
+  tags:
+  - geopolitics
+  - middle_east
+  - journalist_analysis
+  - viewpoint
+- handle: gideonrachman
+  tier: 2
+  tags:
+  - geopolitics
+  - global_order
+  - journalist_analysis
+  - viewpoint
+- handle: maxseddon
+  tier: 2
+  tags:
+  - geopolitics
+  - russia
+  - journalist_analysis
+  - viewpoint
+- handle: yarotrof
+  tier: 2
+  tags:
+  - geopolitics
+  - war
+  - journalist_analysis
+  - viewpoint
+- handle: JavierBlas
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - supply_demand
+  - viewpoint
+- handle: JKempEnergy
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - data
+  - viewpoint
+- handle: AndurandPierre
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - trader
+  - viewpoint
+- handle: chigrl
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - metals
+  - trader
+- handle: staunovo
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - sellside
+  - viewpoint
+- handle: Ole_S_Hansen
+  tier: 1
+  tags:
+  - commodities
+  - cross_commodity
+  - sellside
+  - viewpoint
+- handle: AndyHomeMetals
+  tier: 1
+  tags:
+  - commodities
+  - metals_industrial
+  - journalist_analysis
+  - viewpoint
+- handle: ClydeCommods
+  tier: 1
+  tags:
+  - commodities
+  - energy
+  - metals
+  - viewpoint
+- handle: GavinJMaguire
+  tier: 1
+  tags:
+  - commodities
+  - power_carbon
+  - energy_transition
+  - viewpoint
+- handle: DarinNewsom
+  tier: 1
+  tags:
+  - commodities
+  - agri_softs
+  - technical
+  - viewpoint
+- handle: PeterLBrandt
+  tier: 1
+  tags:
+  - commodities
+  - technical
+  - trader
+  - viewpoint
+- handle: Go_Rozen
+  tier: 1
+  tags:
+  - commodities
+  - energy
+  - natural_resources
+  - viewpoint
+- handle: JeffCurrieGS
+  tier: 1
+  tags:
+  - commodities
+  - supercycle
+  - oil_energy
+  - viewpoint
+- handle: HFI_Research
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - nat_gas_lng
+  - research
+- handle: ericnuttall
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - equities
+  - fund_manager
+- handle: Rory_Johnston
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - data
+  - viewpoint
+- handle: anasalhajji
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - middle_east
+  - viewpoint
+- handle: ArjunNMurti
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - energy_transition
+  - viewpoint
+- handle: aeberman12
+  tier: 1
+  tags:
+  - commodities
+  - oil_energy
+  - geology
+  - viewpoint
+- handle: pwrhungry
+  tier: 1
+  tags:
+  - commodities
+  - power
+  - energy_policy
+  - viewpoint
+- handle: PickeringEnergy
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - equities
+  - viewpoint
+- handle: Josh_Young_1
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - fund_manager
+  - viewpoint
+- handle: RRapier
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - energy_policy
+  - viewpoint
+- handle: MarkPMills
+  tier: 2
+  tags:
+  - commodities
+  - energy_policy
+  - power
+  - viewpoint
+- handle: JLeeEnergy
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - journalist_analysis
+  - viewpoint
+- handle: AlexLongley1
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - journalist_analysis
+  - viewpoint
+- handle: danmurtaugh
+  tier: 2
+  tags:
+  - commodities
+  - energy
+  - china
+  - journalist_analysis
+- handle: ronbousso1
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - majors
+  - journalist_analysis
+- handle: devikakrishnak
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - journalist_analysis
+  - viewpoint
+- handle: LauraHurstBLM
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - majors
+  - journalist_analysis
+- handle: WillKennedyBlm
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - journalist_analysis
+  - viewpoint
+- handle: damienpcourvalin
+  tier: 2
+  tags:
+  - commodities
+  - oil_energy
+  - sellside
+  - viewpoint
+- handle: SStapczynski
+  tier: 2
+  tags:
+  - commodities
+  - nat_gas_lng
+  - journalist_analysis
+  - viewpoint
+- handle: TankerTrackers
+  tier: 2
+  tags:
+  - commodities
+  - shipping_freight
+  - oil_energy
+  - data
+- handle: samirmadani
+  tier: 2
+  tags:
+  - commodities
+  - shipping_freight
+  - oil_energy
+  - viewpoint
+- handle: VortexaAnalytics
+  tier: 2
+  tags:
+  - commodities
+  - shipping_freight
+  - oil_energy
+  - data
+- handle: Kpler
+  tier: 2
+  tags:
+  - commodities
+  - shipping_freight
+  - oil_energy
+  - data
+- handle: BreakwaveAdvisors
+  tier: 2
+  tags:
+  - commodities
+  - shipping_freight
+  - trader
+  - viewpoint
+- handle: John_A_Konrad
+  tier: 2
+  tags:
+  - commodities
+  - shipping_freight
+  - maritime
+  - viewpoint
+- handle: Lars_Jensen
+  tier: 2
+  tags:
+  - commodities
+  - shipping_freight
+  - supply_chain
+  - viewpoint
+- handle: RealRickRule
+  tier: 2
+  tags:
+  - commodities
+  - metals_industrial
+  - mining
+  - viewpoint
+- handle: Brent_Cook
+  tier: 2
+  tags:
+  - commodities
+  - metals_industrial
+  - mining
+  - viewpoint
+- handle: resourcerules
+  tier: 2
+  tags:
+  - commodities
+  - metals_industrial
+  - mining
+  - viewpoint
+- handle: ColinHamiltonCBA
+  tier: 2
+  tags:
+  - commodities
+  - metals_industrial
+  - sellside
+  - viewpoint
+- handle: TheDailyGold
+  tier: 2
+  tags:
+  - commodities
+  - precious_metals
+  - technical
+  - viewpoint
+- handle: silverguru22
+  tier: 2
+  tags:
+  - commodities
+  - precious_metals
+  - trader
+  - viewpoint
+- handle: ScottIrwinUI
+  tier: 2
+  tags:
+  - commodities
+  - agri_softs
+  - academic
+  - viewpoint
+- handle: ArlanFF101
+  tier: 2
+  tags:
+  - commodities
+  - agri_softs
+  - trader
+  - viewpoint
+- handle: GoddessofGrain
+  tier: 2
+  tags:
+  - commodities
+  - agri_softs
+  - trader
+  - viewpoint
+- handle: cer_hedge
+  tier: 2
+  tags:
+  - commodities
+  - agri_softs
+  - trader
+  - viewpoint
+- handle: snodgrss
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - agri_weather
+  - commodities
+  - viewpoint
+- handle: kannbwx
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - agri_weather
+  - viewpoint
+- handle: BenNollWeather
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - global_weather
+  - viewpoint
+- handle: MJVentrice
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - energy_weather
+  - viewpoint
+- handle: webberweather
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - tropics
+  - viewpoint
+- handle: PaulRoundy1
+  tier: 1
+  tags:
+  - weather_climate
+  - enso
+  - mjo
+  - academic
+- handle: judah47
+  tier: 1
+  tags:
+  - weather_climate
+  - seasonal
+  - winter
+  - viewpoint
+- handle: RyanMaue
+  tier: 1
+  tags:
+  - weather_climate
+  - models
+  - tropics
+  - viewpoint
+- handle: TropicalTidbits
+  tier: 1
+  tags:
+  - weather_climate
+  - tropics
+  - models
+  - viewpoint
+- handle: Weather_West
+  tier: 1
+  tags:
+  - weather_climate
+  - climate_risk
+  - us_west
+  - viewpoint
+- handle: MattMakens
+  tier: 1
+  tags:
+  - weather_climate
+  - commodities
+  - seasonal
+  - viewpoint
+- handle: wxtruch
+  tier: 1
+  tags:
+  - weather_climate
+  - models
+  - energy_weather
+  - viewpoint
+- handle: BAMWxCom
+  tier: 1
+  tags:
+  - weather_climate
+  - commodities
+  - agri_weather
+  - forecasting
+- handle: weatherbell
+  tier: 1
+  tags:
+  - weather_climate
+  - models
+  - energy_weather
+  - forecasting
+- handle: burgwx
+  tier: 1
+  tags:
+  - weather_climate
+  - models
+  - tropics
+  - viewpoint
+- handle: philklotzbach
+  tier: 1
+  tags:
+  - weather_climate
+  - hurricanes
+  - seasonal
+  - academic
+- handle: MichaelRLowry
+  tier: 1
+  tags:
+  - weather_climate
+  - hurricanes
+  - tropics
+  - viewpoint
+- handle: pppapin
+  tier: 1
+  tags:
+  - weather_climate
+  - hurricanes
+  - tropics
+  - viewpoint
+- handle: BMcNoldy
+  tier: 1
+  tags:
+  - weather_climate
+  - hurricanes
+  - tropics
+  - academic
+- handle: gensiniwx
+  tier: 1
+  tags:
+  - weather_climate
+  - severe_weather
+  - climate_risk
+  - academic
+- handle: MatthewCappucci
+  tier: 2
+  tags:
+  - weather_climate
+  - extreme_weather
+  - journalist_analysis
+  - viewpoint
+- handle: DrJeffMasters
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - hurricanes
+  - viewpoint
+- handle: bhensonweather
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - hurricanes
+  - viewpoint
+- handle: Climatologist49
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - drought
+  - viewpoint
+- handle: ZLabe
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - data
+  - academic
+- handle: ClimateOfGavin
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - models
+  - academic
+- handle: hausfath
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - data
+  - viewpoint
+- handle: ed_hawkins
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - data
+  - viewpoint
+- handle: Peters_Glen
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_policy
+  - emissions
+  - viewpoint
+- handle: FrediOtto
+  tier: 2
+  tags:
+  - weather_climate
+  - extreme_weather
+  - attribution
+  - academic
+- handle: DrShepherd2013
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - forecasting
+  - viewpoint
+- handle: KHayhoe
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - communication
+  - viewpoint
+- handle: MichaelEMann
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - policy
+  - viewpoint
+- handle: AndrewDessler
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - policy
+  - viewpoint
+- handle: richardabetts
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - models
+  - viewpoint
+- handle: SISeneviratne
+  tier: 2
+  tags:
+  - weather_climate
+  - extreme_weather
+  - climate_risk
+  - academic
+- handle: SimonLeeWx
+  tier: 2
+  tags:
+  - weather_climate
+  - seasonal
+  - stratosphere
+  - viewpoint
+- handle: antmasiello
+  tier: 2
+  tags:
+  - weather_climate
+  - models
+  - energy_weather
+  - viewpoint
+- handle: ggweather
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - us_west
+  - viewpoint
+- handle: wxjerdman
+  tier: 2
+  tags:
+  - weather_climate
+  - forecasting
+  - extreme_weather
+  - viewpoint
+- handle: RARohde
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - data
+  - viewpoint
+- handle: afreedma
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - journalist_analysis
+  - viewpoint
+- handle: chriscmooney
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - journalist_analysis
+  - viewpoint
+- handle: DekeArndt
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - data
+  - viewpoint
+- handle: WorldClimateSvc
+  tier: 2
+  tags:
+  - weather_climate
+  - enso
+  - seasonal
+  - commodities
+- handle: WorldWeatherInc
+  tier: 2
+  tags:
+  - weather_climate
+  - enso
+  - agri_weather
+  - commodities
+- handle: commoditywx
+  tier: 2
+  tags:
+  - weather_climate
+  - commodities
+  - agri_weather
+  - energy_weather
+- handle: BradPanovich
+  tier: 2
+  tags:
+  - weather_climate
+  - forecasting
+  - extreme_weather
+  - viewpoint
+- handle: EricHolthaus
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_risk
+  - policy
+  - viewpoint
+- handle: climateguyw
+  tier: 2
+  tags:
+  - weather_climate
+  - climate_science
+  - communication
+  - viewpoint
+- handle: dylan522p
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - ai_infra
+  - teacher_required
+  - supply_chain
+- handle: SemiAnalysis_
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - ai_infra
+  - teacher_required
+  - research
+- handle: mule_capital
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - teacher_required
+  - alias_review
+  - viewpoint
+- handle: fabknowledge
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - fundamental
+  - teacher_required
+  - viewpoint
+- handle: jukan05
+  tier: 1
+  tags:
+  - ai_semis
+  - memory_hbm
+  - supply_chain
+  - teacher_required
+  - viewpoint
+- handle: firstadopter
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - ai_infra
+  - teacher_required
+  - journalist_analysis
+- handle: Beth_Kindig
+  tier: 1
+  tags:
+  - ai_semis
+  - tech_equities
+  - ai_infra
+  - teacher_required
+  - fund_manager
+- handle: GavinSBaker
+  tier: 1
+  tags:
+  - ai_semis
+  - tech_equities
+  - fund_manager
+  - viewpoint
+- handle: PatrickMoorhead
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - enterprise_tech
+  - viewpoint
+- handle: BenBajarin
+  tier: 1
+  tags:
+  - ai_semis
+  - consumer_tech
+  - semiconductors
+  - viewpoint
+- handle: IanCutress
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - hardware
+  - viewpoint
+- handle: stacyrasgon
+  tier: 1
+  tags:
+  - ai_semis
+  - semiconductors
+  - sellside
+  - viewpoint
+- handle: benedictevans
+  tier: 1
+  tags:
+  - ai_semis
+  - technology
+  - platforms
+  - viewpoint
+- handle: benthompson
+  tier: 1
+  tags:
+  - ai_semis
+  - technology
+  - strategy
+  - viewpoint
+- handle: stratechery
+  tier: 1
+  tags:
+  - ai_semis
+  - technology
+  - strategy
+  - research
+- handle: ballmatthew
+  tier: 1
+  tags:
+  - ai_semis
+  - technology
+  - platforms
+  - viewpoint
+- handle: Citrini7
+  tier: 1
+  tags:
+  - ai_semis
+  - tech_equities
+  - thematic
+  - viewpoint
+- handle: vkhosla
+  tier: 1
+  tags:
+  - ai_semis
+  - venture
+  - ai
+  - viewpoint
+- handle: eladgil
+  tier: 1
+  tags:
+  - ai_semis
+  - venture
+  - ai
+  - viewpoint
+- handle: natfriedman
+  tier: 1
+  tags:
+  - ai_semis
+  - ai
+  - developer
+  - viewpoint
+- handle: danielgross
+  tier: 2
+  tags:
+  - ai_semis
+  - ai
+  - venture
+  - viewpoint
+- handle: karpathy
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - developer
+  - viewpoint
+- handle: AndrewYNg
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - enterprise_ai
+  - viewpoint
+- handle: drfeifei
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - vision_ai
+  - viewpoint
+- handle: ylecun
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - models
+  - viewpoint
+- handle: fchollet
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - models
+  - viewpoint
+- handle: DrJimFan
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - robotics
+  - viewpoint
+- handle: swyx
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_engineering
+  - developer
+  - viewpoint
+- handle: simonw
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_engineering
+  - developer
+  - viewpoint
+- handle: JeffDean
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_infra
+  - ai_research
+  - viewpoint
+- handle: LisaSu
+  tier: 2
+  tags:
+  - ai_semis
+  - semiconductors
+  - hardware
+  - executive
+- handle: cristianoamon
+  tier: 2
+  tags:
+  - ai_semis
+  - semiconductors
+  - edge_ai
+  - executive
+- handle: jimkxa
+  tier: 2
+  tags:
+  - ai_semis
+  - semiconductors
+  - hardware
+  - viewpoint
+- handle: realGeorgeHotz
+  tier: 2
+  tags:
+  - ai_semis
+  - ai
+  - hardware
+  - viewpoint
+- handle: jordanschneider
+  tier: 2
+  tags:
+  - ai_semis
+  - china_tech
+  - industrial_policy
+  - viewpoint
+- handle: natolambert
+  tier: 2
+  tags:
+  - ai_semis
+  - ai_research
+  - models
+  - viewpoint
+- handle: anshelsag
+  tier: 2
+  tags:
+  - ai_semis
+  - semiconductors
+  - hardware
+  - viewpoint
+- handle: danielnewmanUV
+  tier: 2
+  tags:
+  - ai_semis
+  - enterprise_tech
+  - semiconductors
+  - viewpoint
+- handle: skorusARK
+  tier: 2
+  tags:
+  - ai_semis
+  - innovation
+  - autonomy
+  - viewpoint
+- handle: TashaARK
+  tier: 2
+  tags:
+  - ai_semis
+  - innovation
+  - tech_equities
+  - viewpoint
+- handle: EconomyApp
+  tier: 2
+  tags:
+  - ai_semis
+  - app_economy
+  - technology
+  - viewpoint
+- handle: eric_seufert
+  tier: 2
+  tags:
+  - ai_semis
+  - advertising
+  - technology
+  - viewpoint
+- handle: hhhypergrowth
+  tier: 2
+  tags:
+  - ai_semis
+  - software
+  - tech_equities
+  - viewpoint
+- handle: pmarca
+  tier: 2
+  tags:
+  - ai_semis
+  - venture
+  - technology
+  - viewpoint
+- handle: bgurley
+  tier: 2
+  tags:
+  - ai_semis
+  - venture
+  - technology
+  - viewpoint
+- handle: fredwilson
+  tier: 2
+  tags:
+  - ai_semis
+  - venture
+  - technology
+  - viewpoint
+- handle: jaminball
+  tier: 2
+  tags:
+  - ai_semis
+  - software
+  - tech_equities
+  - viewpoint
+- handle: sama
+  tier: 2
+  tags:
+  - ai_semis
+  - ai
+  - executive
+  - viewpoint
+- handle: gdb
+  tier: 2
+  tags:
+  - ai_semis
+  - ai
+  - executive
+  - viewpoint
+- handle: tomtunguz
+  tier: 2
+  tags:
+  - ai_semis
+  - software
+  - venture
+  - viewpoint
+- handle: aleabitorreddit
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - wsb
+  - memes
+  - viewpoint
+- handle: 168XMIZ
+  tier: 1
+  tags:
+  - ai_semis
+  - equities
+  - tech_equities
+  - viewpoint
+- handle: XXY177
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - value_investing
+  - viewpoint
+- handle: artinmemes
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - us_stocks
+  - viewpoint
+- handle: tychozzz
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - tech_equities
+  - viewpoint
+- handle: xiamujistock
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - options
+  - viewpoint
+- handle: BTCdayu
+  tier: 1
+  tags:
+  - ai_semis
+  - crypto
+  - equities
+  - viewpoint
+- handle: hanking66
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - us_stocks
+  - viewpoint
+- handle: darrencao2024
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - credit
+  - viewpoint
+- handle: bitfoo11
+  tier: 1
+  tags:
+  - crypto
+  - equities
+  - ai_semis
+  - viewpoint
+- handle: oragines
+  tier: 1
+  tags:
+  - crypto
+  - bitcoin
+  - equities
+  - viewpoint
+- handle: Shanghain
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - institutional
+  - viewpoint
+- handle: PhyrexNI
+  tier: 1
+  tags:
+  - crypto
+  - bitcoin
+  - equities
+  - viewpoint
+- handle: bboczz
+  tier: 1
+  tags:
+  - macro
+  - equities
+  - us_stocks
+  - viewpoint
+- handle: Steve_Hanke
+  tier: 1
+  tags:
+  - macro
+  - monetary
+  - fx
+  - commodities
+  - viewpoint
+- handle: globalmacro
+  tier: 1
+  tags:
+  - macro
+  - framing
+  - viewpoint
+- handle: CiovaccoCapital
+  tier: 1
+  tags:
+  - macro
+  - market_research
+  - viewpoint
+- handle: Fxflow
+  tier: 1
+  tags:
+  - fx
+  - macro
+  - strategy
+  - viewpoint
+- handle: HenrikZeberg
+  tier: 1
+  tags:
+  - macro
+  - technical
+  - cross_asset
+  - viewpoint
+- handle: RickRuleRulz
+  tier: 1
+  tags:
+  - commodities
+  - mining
+  - precious_metals
+  - viewpoint
+- handle: bullionanalytic
+  tier: 1
+  tags:
+  - precious_metals
+  - mining
+  - viewpoint
+- handle: mkt_intl
+  tier: 2
+  tags:
+  - commodities
+  - agri_softs
+  - soft_commodities
+  - research
+  - viewpoint

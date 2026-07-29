@@ -1,0 +1,12 @@
+[Unit]
+Description=WINDRISE 4-hour commodity pattern report
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+WorkingDirectory=/home/ubuntu/windrise/Daily-Reports
+ExecStart=/home/ubuntu/windrise/Daily-Reports/automation/server/run_pattern.sh
+TimeoutStartSec=45min
+Nice=5
