@@ -23,7 +23,7 @@ OUT = HERE / "output"
 OUT.mkdir(exist_ok=True)
 sys.path.insert(0, str(HERE))
 
-from hourly_pattern_report import fetch_hourly
+from hourly_pattern_report import deadline, fetch_hourly
 from hourly_pattern_soybean_oil_prototype import compress_bars
 from soybean_oil_skill_scan_prototype import dedupe, scan_timeframe
 
@@ -182,7 +182,8 @@ def current_levels(frame, candidate):
 
 def plot_contract(name, frame, candidates):
     plt.rcParams["font.sans-serif"] = [
-        "PingFang SC", "Hiragino Sans GB", "Arial Unicode MS", "DejaVu Sans"
+        "Noto Sans CJK SC", "WenQuanYi Zen Hei", "PingFang SC",
+        "Hiragino Sans GB", "Arial Unicode MS", "DejaVu Sans"
     ]
     plt.rcParams["axes.unicode_minus"] = False
 
@@ -461,7 +462,8 @@ def main():
     errors = []
     for name, code in PRODUCTS:
         try:
-            hourly = fetch_hourly(code).tail(260)
+            with deadline(30):
+                hourly = fetch_hourly(code).tail(260)
             frame = compress_bars(hourly, 4)
             candidates = choose_candidates(frame)
             fig = plot_contract(name, frame, candidates)
