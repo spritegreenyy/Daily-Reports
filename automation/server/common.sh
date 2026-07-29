@@ -39,7 +39,12 @@ publish_report() {
   shift
   cd "$ROOT"
   "$PY" "$ROOT/日报站/build_site.py"
-  git add -- "$@" "$ROOT/日报站/index.html"
+  git add -- \
+    "$@" \
+    "$ROOT/日报站/index.html" \
+    "$ROOT/日报站/形态/index.html" \
+    "$ROOT/日报站/资金潮汐/index.html" \
+    "$ROOT/日报站/kol/index.html"
   if git diff --cached --quiet; then
     echo "No report changes to publish."
     return 0
