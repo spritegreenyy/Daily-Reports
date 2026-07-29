@@ -48,7 +48,6 @@ PY
 
 publish_report \
   "日报 $YMD: 资金潮汐席位明细(云端自动)" \
-  "$DEST/期货资金潮汐_${YMD}_data.json" \
   "$WEB" \
   "$ROOT/日报站/资金潮汐/index.html"
 finish_log tide_details

@@ -63,7 +63,6 @@ print(f"Tide validation OK: {len(payload.get('rows', []))} rows")
 PY
 
 paths=(
-  "$DEST/期货资金潮汐_${YMD}_data.json"
   "$WEB"
   "$ROOT/日报站/资金潮汐/index.html"
 )
