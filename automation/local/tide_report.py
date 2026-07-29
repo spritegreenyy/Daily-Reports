@@ -11,7 +11,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 plt.rcParams["font.family"] = [
-    "Noto Sans CJK SC", "WenQuanYi Zen Hei",
+    "Noto Sans CJK JP", "Noto Sans CJK SC", "WenQuanYi Zen Hei",
     "Arial Unicode MS", "PingFang SC", "Heiti SC",
 ]
 sys.path.insert(0, str(Path(__file__).parent.parent))
