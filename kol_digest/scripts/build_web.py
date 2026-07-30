@@ -6,6 +6,7 @@ import html as html_lib
 import json
 import os
 import re
+import signal
 import sys
 import urllib.request
 from datetime import datetime
@@ -255,8 +256,23 @@ def fetch_price_history(report_date):
         try:
             import akshare as ak
 
+            def fetch_with_deadline(symbol):
+                if not hasattr(signal, "SIGALRM"):
+                    return ak.futures_zh_daily_sina(symbol=symbol)
+
+                def timeout_handler(_signum, _frame):
+                    raise TimeoutError(f"price fetch timed out: {symbol}")
+
+                previous = signal.signal(signal.SIGALRM, timeout_handler)
+                signal.alarm(20)
+                try:
+                    return ak.futures_zh_daily_sina(symbol=symbol)
+                finally:
+                    signal.alarm(0)
+                    signal.signal(signal.SIGALRM, previous)
+
             fresh = load_price_series(
-                lambda symbol: ak.futures_zh_daily_sina(symbol=symbol),
+                fetch_with_deadline,
                 PRICE_SYMBOLS,
             )
             if fresh:
