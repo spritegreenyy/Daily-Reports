@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh coworker daily-pattern iframe after WINDRISE pattern report
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 16:40:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=30
+Unit=windrise-workbench-pattern.service
+
+[Install]
+WantedBy=timers.target

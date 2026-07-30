@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh coworker workbench daily-pattern cache only
+After=network-online.target windrise-pattern.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+ExecStart=/home/ubuntu/windrise/Daily-Reports/automation/server/sync_workbench_pattern.sh
+TimeoutStartSec=20m
+Nice=5
