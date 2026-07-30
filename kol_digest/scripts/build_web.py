@@ -17,7 +17,7 @@ from kol_emphasis import compact_report_insights, strip_numeric_emphasis
 from kol_composite import build_composite_history, load_price_series, run_price_backtests
 from kol_indices import build_index_history, match_asset_keys
 
-ROOT = "/Users/yinyue/Downloads/JYWC海拓"
+ROOT = str(Path(__file__).resolve().parents[2])
 KD = ROOT + "/kol_digest"
 OUT = KD + "/output"
 TMPL = KD + "/scripts/kol_web_template.html"

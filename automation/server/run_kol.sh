@@ -8,14 +8,20 @@ lock_pipeline
 sync_repo
 
 pulled=0
-for attempt in 1 2 3; do
-  if "$PY" "$LOCAL/kol_pull.py" --hours 24; then
-    pulled=1
-    break
-  fi
-  echo "KOL pull retry $attempt/3"
-  sleep 180
-done
+if [ "${WINDRISE_SKIP_PULL:-0}" = "1" ]; then
+  test -s "$ROOT/kol_digest/output/kol_tweets_${YMD}.json"
+  echo "Reusing the validated KOL pull for $TODAY."
+  pulled=1
+else
+  for attempt in 1 2 3; do
+    if "$PY" "$LOCAL/kol_pull.py" --hours 24; then
+      pulled=1
+      break
+    fi
+    echo "KOL pull retry $attempt/3"
+    sleep 180
+  done
+fi
 if [ "$pulled" -ne 1 ]; then
   echo "KOL pull failed; preserving the previous report."
   exit 2
