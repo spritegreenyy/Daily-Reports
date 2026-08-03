@@ -25,6 +25,8 @@
 !/automation/local/chart_patterns.py
 !/automation/local/hourly_pattern_report.py
 !/automation/local/four_hour_multi_product_prototype.py
+!/automation/local/pattern_live_scan.py
+!/automation/local/pattern_alert_email.py
 !/automation/local/hourly_pattern_soybean_oil_prototype.py
 !/automation/local/soybean_oil_skill_scan_prototype.py
 !/automation/local/pattern_research.py

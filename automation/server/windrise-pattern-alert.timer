@@ -1,0 +1,12 @@
+[Unit]
+Description=Scan for new WINDRISE patterns every 15 minutes during market hours
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 09..11:00/15:00 Asia/Shanghai
+OnCalendar=Mon..Fri *-*-* 13..15:00/15:00 Asia/Shanghai
+Persistent=false
+RandomizedDelaySec=20
+Unit=windrise-pattern-alert.service
+
+[Install]
+WantedBy=timers.target

@@ -26,6 +26,7 @@
   #kolapp select.date{margin-left:auto;background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:13px;cursor:pointer}
   #kolapp .sect{padding:22px 0 6px} #kolapp .stitle{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut);text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:14px}
   #kolapp .stitle::before{content:"";width:5px;height:15px;background:var(--gold);border-radius:2px}
+  #kolapp .alert-hub{margin:16px 0 0;padding:15px;background:linear-gradient(135deg,#1d2b3a,#141f2c);border:1px solid #3b4e62;border-radius:14px}#kolapp .alert-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:11px}#kolapp .alert-head b{color:var(--gold);font:800 12px Georgia,serif;letter-spacing:2px}#kolapp .alert-head span{color:var(--mut);font-size:11px}#kolapp .alert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}#kolapp .alert-card{background:rgba(255,255,255,.035);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:9px;padding:11px 12px;min-width:0}#kolapp .alert-card .an{color:var(--gold);font-size:9px;font-weight:800;letter-spacing:1px}#kolapp .alert-card strong{display:block;color:#fff;font-size:14px;line-height:1.45;margin:5px 0}#kolapp .alert-card p{color:#b8c7d8;font-size:11.5px;line-height:1.55;margin:0}#kolapp .alert-card small{display:block;color:var(--mut2);font-size:10px;margin-top:7px}
   #kolapp .ins,#kolapp .uq,#kolapp .stream{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
   #kolapp .icard,#kolapp .ucard,#kolapp .card,#kolapp .bsec{background:var(--panel);border:1px solid var(--line);border-radius:11px}
   #kolapp .idxgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -92,7 +93,7 @@
   #kolapp .open{margin-left:auto;font-size:11.5px;color:var(--gold);white-space:nowrap}
   #kolapp .empty{grid-column:1/-1;text-align:center;color:var(--mut2);padding:50px 20px}
   @media (max-width:820px){#kolapp .idxgrid{grid-template-columns:repeat(2,minmax(0,1fr))}#kolapp .compkpis{grid-template-columns:repeat(3,1fr)}}
-  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream,#kolapp .idxgrid{grid-template-columns:1fr}#kolapp .comp{padding:13px}#kolapp .comphead{display:block}#kolapp .range{margin-top:9px}#kolapp .compkpis{grid-template-columns:repeat(2,1fr)}#kolapp .compchart{height:270px}.bttable{font-size:9px}}
+  @media (max-width:560px){#kolapp .ins,#kolapp .uq,#kolapp .stream,#kolapp .idxgrid,#kolapp .alert-grid{grid-template-columns:1fr}#kolapp .comp{padding:13px}#kolapp .comphead{display:block}#kolapp .range{margin-top:9px}#kolapp .compkpis{grid-template-columns:repeat(2,1fr)}#kolapp .compchart{height:270px}.bttable{font-size:9px}}
 </style>
 
 <div class="mast"><div class="wrap">
@@ -106,6 +107,7 @@
 </div></div>
 
 <div class="wrap">
+  <section class="alert-hub"><div class="alert-head"><b>WINDRISE ALERT</b><span id="alertSub"></span></div><div class="alert-grid" id="alerts"></div></section>
   <div class="sect"><div class="stitle" id="st1"></div><div class="ins" id="insights"></div></div>
   <div class="sect"><div class="stitle" id="stidx"></div>
     <div class="comp">
@@ -145,7 +147,7 @@
   var st={date:DATES[0],board:"all",tier:"all",lang:"all",sort:"hot",q:"",range:60};
   var UI={
     zh:{
-      title:'KOL 交易主线<span class="g"> · </span>可视化终端',s1:'一 · 本日核心交易启示',
+      title:'KOL 交易主线<span class="g"> · </span>可视化终端',alertSub:'今日最重要的叙事与方向变化',s1:'一 · 本日核心交易启示',
       sidx:'二 · KOL大宗方向总指数与分项信号',s2:'三 · 主题板块 · 逐条观点',
       s3:'四 · 独到 / 有启发性的观点',s4:'五 · 全部推文 · 可检索（点击跳转原推）',
       search:'搜索关键词 / @账号（按 / 聚焦，Esc 清空）',hot:'热度',latest:'最新',all:'全部',
@@ -171,7 +173,7 @@
       crude:'原油',gold:'黄金',copper:'铜',soy_oil:'豆油'
     },
     en:{
-      title:'KOL Trading Themes<span class="g"> · </span>Visual Terminal',s1:'I · Core Trading Takeaways',
+      title:'KOL Trading Themes<span class="g"> · </span>Visual Terminal',alertSub:'Today’s most important narratives and directional shifts',s1:'I · Core Trading Takeaways',
       sidx:'II · KOL Commodity Composite & Component Signals',s2:'III · Thematic Sectors · View by View',
       s3:'IV · Distinctive / Insightful Views',s4:'V · All Tweets · Searchable (click to open source)',
       search:'Search keyword / @handle (press / to focus, Esc to clear)',hot:'Hot',latest:'Latest',all:'All',
@@ -296,7 +298,14 @@
     $("#idxnote").textContent=tx('indexNote')
   }
 
+  function renderAlerts(){
+    var r=report(),m=cur().meta,items=(r.insights||[]).slice(0,3);
+    $("#alertSub").textContent=tx("alertSub");
+    $("#alerts").innerHTML=items.map(function(it,i){var points=it.points||[],main=points[0]||it.title,impact=points[1]||"";return '<div class="alert-card"><span class="an">ALERT '+String(i+1).padStart(2,"0")+'</span><strong>'+it.title+'</strong><p>'+main+'</p><small>'+impact+' · '+m.date+'</small></div>'}).join("");
+  }
+
   function renderReport(){
+    renderAlerts();
     var r=report(),m=cur().meta;
     $("#win").textContent=uiLang==="en"?m.window_en:m.window_zh; $("#sub").textContent=uiLang==="en"?m.subtitle_en:m.subtitle_zh;
     var ih=$("#insights");ih.innerHTML=""; r.insights.forEach(function(it,i){var c=document.createElement("div");c.className="icard";c.innerHTML='<h3><span class="inum">'+(i+1)+'</span><span>'+it.title+'</span></h3><ul>'+it.points.map(function(p){return "<li>"+p+"</li>"}).join("")+'</ul>';ih.appendChild(c)});

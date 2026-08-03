@@ -340,6 +340,21 @@ def render_html(rows, images, generated):
         for name, code, item in ranked
         if item["state"] != "形成中"
     ]
+    alert_ranked = confirmed[:2]
+    alert_ranked.extend(
+        item for item in forming
+        if item not in alert_ranked
+    )
+    alert_ranked = alert_ranked[:3]
+    alert_cards = "".join(
+        f"""<a class="alert-card" href="#contract-{code}" data-target="contract-{code}">
+<div><span class="alert-no">ALERT {index:02d}</span><span class="alert-state" data-en="{'Breakout confirmed' if item['state'] != '形成中' else 'Forming'}">{'突破确认' if item['state'] != '形成中' else '形成中'}</span></div>
+<h3 data-en="{attr(PRODUCT_EN[name] + ' · ' + item['pattern'])}">{name} · {item['pattern_cn']}</h3>
+<p data-en="{attr(item['direction_en'])}">{item['direction']}</p>
+<small data-en="Confidence {item['confidence']:.3f} · Upper {item['upper']:,.0f} / Lower {item['lower']:,.0f}">置信度 {item['confidence']:.3f} · 上轨 {item['upper']:,.0f} / 下轨 {item['lower']:,.0f}</small>
+</a>"""
+        for index, (name, code, item) in enumerate(alert_ranked, 1)
+    ) or '<div class="alert-empty" data-en="No qualified pattern alert at this scan.">本次扫描暂无达到门槛的形态提醒。</div>'
     forming_cards = "".join(
         f"""<a class="watch" href="#contract-{code}" data-target="contract-{code}">
 <div><b data-en="{attr(PRODUCT_EN[name] + ' · ' + item['pattern'])}">{name} · {item['pattern_cn']}</b><span class="band {'high' if item['confidence'] >= 0.70 else ''}" data-en="{item['confidence_band_en']} {item['confidence']:.3f}">{item['confidence_band']} {item['confidence']:.3f}</span></div>
@@ -407,6 +422,7 @@ main{{max-width:1800px;margin:auto;padding:28px}}header{{display:flex;justify-co
 h1{{margin:4px 0;font-size:30px}}.eyebrow{{color:var(--gold);font-weight:700;letter-spacing:.18em}}.muted{{color:var(--muted)}}
 .header-tools{{display:flex;align-items:center;gap:12px}}.langsw{{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}}.langsw button{{border:0;background:none;color:var(--muted);padding:5px 9px;border-radius:999px;cursor:pointer;font-weight:700}}.langsw button[data-on="1"]{{background:var(--gold);color:#101417}}
 .rule{{margin:18px 0;padding:13px 16px;border-left:4px solid var(--gold);background:#171a18;color:#d8d5c9;line-height:1.7}}
+.alert-hub{{margin:18px 0;padding:16px;background:linear-gradient(135deg,#17130b,#10171c);border:1px solid #5f4b1f;border-radius:14px}}.alert-head{{display:flex;justify-content:space-between;align-items:end;margin-bottom:11px}}.alert-head b{{color:var(--gold);font-size:13px;letter-spacing:.15em}}.alert-head span{{color:var(--muted);font-size:11px}}.alert-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}}.alert-card{{display:block;color:inherit;text-decoration:none;background:#0d1317;border:1px solid #36434b;border-left:4px solid var(--gold);border-radius:10px;padding:12px 13px;transition:transform .16s,border-color .16s}}.alert-card:hover{{transform:translateY(-2px);border-color:var(--gold)}}.alert-card>div{{display:flex;justify-content:space-between;gap:8px}}.alert-no{{color:var(--gold);font-size:10px;font-weight:800;letter-spacing:.1em}}.alert-state{{color:#dce4e8;font-size:10px;border:1px solid #46545d;border-radius:999px;padding:1px 7px}}.alert-card h3{{margin:9px 0 5px;font-size:16px}}.alert-card p{{margin:0;color:#d8e0e4;font-size:12px;line-height:1.55}}.alert-card small{{display:block;color:var(--muted);font-size:10px;margin-top:8px}}.alert-empty{{color:var(--muted);font-size:12px;padding:10px}}
 .summary{{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}}.kpi{{background:#11171c;border:1px solid var(--line);border-radius:12px;padding:14px}}.kpi b{{display:block;color:var(--gold);font-size:23px}}.kpi span{{color:var(--muted);font-size:12px}}
 .watch-title{{display:flex;align-items:end;justify-content:space-between;margin:20px 2px 9px}}.watch-title h2{{margin:0;color:var(--ink);font-size:18px}}.watch-title span{{color:var(--muted);font-size:11px}}.watchlist{{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px}}.watch{{display:block;background:#10171c;border:1px solid var(--line);border-top:3px solid #00bafa;border-radius:10px;padding:12px;color:inherit;text-decoration:none;transition:transform .16s,border-color .16s,box-shadow .16s}}.watch:hover{{transform:translateY(-2px);border-color:#00bafa;box-shadow:0 8px 24px #00aef31f}}.watch.confirmed{{border-top-color:#66747d;opacity:.88}}.watch.empty{{color:var(--muted)}}.watch>div,.analysis-row>div{{display:flex;justify-content:space-between;gap:8px;align-items:center}}.watch strong,.analysis-row strong{{display:block;color:#dce8eb;margin:8px 0 4px}}.watch small,.analysis-row p{{display:block;color:var(--muted);font-size:11px;line-height:1.65;margin:0}}.watch em{{display:block;color:#00bafa;font-size:10px;font-style:normal;margin-top:8px}}.band{{border:1px solid #41515b;border-radius:999px;padding:2px 7px;color:#aeb8be;font-size:10px;white-space:nowrap}}.band.high{{border-color:#b98c25;color:#f1c448;background:#312811}}
 .grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}}.card{{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;overflow:hidden;transition:border-color .2s,box-shadow .2s}}.card:target,.card.flash{{border-color:var(--gold);box-shadow:0 0 0 2px #f1c44855,0 18px 45px #0008}}
@@ -414,9 +430,10 @@ h1{{margin:4px 0;font-size:30px}}.eyebrow{{color:var(--gold);font-weight:700;let
 h2{{margin:0 0 5px;color:var(--gold)}}.head span,.foot{{color:var(--muted);font-size:13px}}.latest{{text-align:right;color:var(--muted)}}.latest b{{color:var(--ink);font-size:19px}}
 .analysis{{display:grid;gap:8px;margin:11px 0}}.analysis-row{{background:#0b1014;border-left:3px solid #00aef3;border-radius:7px;padding:10px 11px}}.analysis-row:first-child{{border-left-color:#ff505a}}.analysis-row.empty{{border-left-color:#52606a;color:var(--muted);font-size:12px}}
 .foot{{border-top:1px solid var(--line);padding-top:11px}}footer{{margin-top:18px;color:var(--muted);font-size:12px}}
-@media(max-width:1100px){{.watchlist{{grid-template-columns:repeat(2,1fr)}}}}@media(max-width:950px){{main{{padding:15px}}header{{display:block}}.grid,.summary,.watchlist{{grid-template-columns:1fr}}}}
+@media(max-width:1100px){{.watchlist{{grid-template-columns:repeat(2,1fr)}}}}@media(max-width:950px){{main{{padding:15px}}header{{display:block}}.grid,.summary,.watchlist,.alert-grid{{grid-template-columns:1fr}}}}
 </style></head><body><main>
 <header><div><div class="eyebrow">WINDRISE · 4H SHAPE SCAN</div><h1 data-en="15 Key Contracts · 4-Hour Pattern Scan">15个重点品种 · 4小时形态扫描</h1></div><div class="header-tools"><div class="muted"><span data-en="Generated">生成于</span> {generated}</div><div class="langsw"><button data-lang="zh">中</button><button data-lang="en">EN</button></div></div></header>
+<section class="alert-hub"><div class="alert-head"><b>WINDRISE ALERT</b><span data-en="Today’s most important pattern changes">今日最重要的形态变化</span></div><div class="alert-grid">{alert_cards}</div></section>
 <div class="rule" data-en="Method: 4-hour structures only; no 1h/2h overlays. Up to three recent, non-overlapping structures with confidence ≥{MIN_CONFIDENCE:.2f} are retained per contract. Red marks the primary structure; blue/gold mark secondary structures. Exchange update times differ, so use each card's data timestamp. A forming bias is not a trade signal; confirmation requires a completed 4h close beyond the boundary."><b>统一口径：</b>每个品种只扫描4小时周期，不叠加2h/1h结构；最多保留3个彼此不高度重叠、置信度不低于{MIN_CONFIDENCE:.2f}的近期结构。红色为主结构，蓝色/金色为次级结构。各交易所更新时间不同，以每张卡片“数据至”为准。形成中显示结构倾向，但不等同于交易信号，需等待4h收盘有效越过边界。</div>
 <section class="summary"><div class="kpi"><b>{len(ranked)}</b><span data-en="Qualified 4h structures">合格4h结构</span></div><div class="kpi"><b>{high_count}</b><span data-en="High-confidence structures (≥0.70)">高置信度结构（≥0.70）</span></div><div class="kpi"><b>{forming_count}</b><span data-en="Forming; awaiting breakout confirmation">仍在形成，等待突破确认</span></div></section>
 <div class="watch-title"><h2 data-en="Priority · Forming Structures">优先关注 · 待突破结构</h2><span data-en="Ranked by confidence; up to 12">按置信度排序，最多展示12项</span></div>

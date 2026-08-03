@@ -1,0 +1,12 @@
+[Unit]
+Description=WINDRISE live 4-hour pattern email alerts
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+WorkingDirectory=/home/ubuntu/windrise/Daily-Reports
+ExecStart=/home/ubuntu/windrise/Daily-Reports/automation/server/run_pattern_alert.sh
+TimeoutStartSec=20min
+Nice=5

@@ -72,6 +72,9 @@ TEMPLATE = r"""<!doctype html>
   .pano .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:middle}
   .brief{background:linear-gradient(135deg,#fffdf6,#f4eede);border:1px solid var(--line);border-radius:14px;padding:6px 22px}
   .brief li{font-size:13.5px;line-height:1.7;margin:9px 0 9px 6px}
+  .alert-hub{margin:16px 0 2px;padding:15px;background:linear-gradient(135deg,#153f35,#0e332b);border-radius:14px;color:#fff;box-shadow:0 9px 25px rgba(15,70,56,.16)}
+  .alert-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:11px}.alert-head b{color:#f0c46a;font-family:Georgia,serif;font-size:13px;letter-spacing:2px}.alert-head span{color:#bcd0c8;font-size:11px}
+  .alert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.alert-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-left:3px solid #f0c46a;border-radius:9px;padding:11px 12px;min-width:0}.alert-card .an{color:#f0c46a;font-size:9px;font-weight:800;letter-spacing:1px}.alert-card strong{display:block;color:#fff;font-size:14px;margin:5px 0 3px}.alert-card p{color:#d3e0db;font-size:11.5px;line-height:1.55}.alert-card small{display:block;color:#9fb8ae;font-size:10px;margin-top:6px}
   .cohbars{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
   .cbrow{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:13px}
   .cbrow .cn{width:44px;font-weight:700;flex:none}
@@ -194,6 +197,7 @@ TEMPLATE = r"""<!doctype html>
   .icrankrow .ival{font:700 11px Georgia,serif;text-align:right}.icrankrow .imeta{color:var(--mut);font-size:9px;text-align:right;line-height:1.2}
   @media(max-width:650px){.btresearch{grid-template-columns:1fr}.focusgrid{grid-template-columns:1fr}.btmetrics{margin-left:0;width:100%;justify-content:space-between}.btmetric{text-align:left}}
   @media(max-width:650px){.mast{align-items:center;flex-wrap:wrap}.mast .asof{order:4;width:100%;margin-left:0}.icdash{grid-template-columns:1fr}.iclist{max-height:320px}.scancards{grid-template-columns:1fr}.scanmeta{width:100%;margin-left:0}.scancorr{margin-left:0}#sec-table+.controls+table{display:block;overflow-x:auto}}
+  @media(max-width:760px){.alert-grid{grid-template-columns:1fr}}
   .foot{margin-top:24px;border-top:1px solid var(--line);padding-top:10px;font-size:11.5px;color:var(--mut)}
   .empty{padding:30px;text-align:center;color:var(--mut)}
   html[lang="en"] .brow .bn{width:108px;font-size:11px;line-height:1.15}
@@ -210,6 +214,8 @@ TEMPLATE = r"""<!doctype html>
 </style></head><body>
 <div class="wrap">
   <div class="mast"><div class="brand">WINDRISE</div><h1 id="title"></h1><div class="asof" id="asof"></div><div class="langsw"><button type="button" data-lang="zh">中</button><button type="button" data-lang="en">EN</button></div></div>
+
+  <section class="alert-hub"><div class="alert-head"><b>WINDRISE ALERT</b><span id="alert-sub"></span></div><div class="alert-grid" id="alerts"></div></section>
 
   <div class="hero">
     <div class="netcard"><div class="lb" id="netlb"></div><b id="netv"></b><div class="sub" id="netsub"></div></div>
@@ -277,6 +283,7 @@ const UI={
     title:'期货资金潮汐 · 交互终端',asof:'__DATE__ · 盘后主力席位资金视图',netlb:'机构资金潮汐净值 · 名义净持仓(亿)',
     tide:'机构资金潮汐净值 · 40日走势',tideSub:'鼠标移到线上看每日数值 · 点图放大',
     pano:'多空动作全景',panoSub:'加多/减多/加空/减空分布 · 情绪偏向',
+    alertSub:'今日最重要的资金变化',alertMove:'最大资金动作',alertReson:'最高一致性',alertDiv:'价仓背离',
     brief:'今日速览',briefSub:'基于当日主力席位数据自动生成',
     cohorts:'各类资金今日净流向',cohortsSub:'机构/外资/杭州/中财/散户 · 名义(亿) · 点行展开成员席位 · 点曲线看40日',
     heat:'板块资金热力',heatSub:'机构名义净持仓 · 红多绿空 · 点块看40日曲线 / 点击筛选',
@@ -308,6 +315,7 @@ const UI={
     title:'Futures Tide of Funds · Interactive Terminal',asof:'__DATE__ · Post-close view of major seat positioning',netlb:'Institutional Tide NAV · Nominal Net Position (CNY 100m)',
     tide:'Institutional Tide NAV · 40-Day Trend',tideSub:'Hover for daily values · Click to enlarge',
     pano:'Long/Short Action Panorama',panoSub:'Add Long / Trim Long / Add Short / Trim Short · Sentiment bias',
+    alertSub:'Today’s most important positioning changes',alertMove:'Largest flow',alertReson:'Strongest alignment',alertDiv:'Price-position divergence',
     brief:'Today at a Glance',briefSub:'Auto-generated from today’s major-seat data',
     cohorts:'Net Flow by Participant Type Today',cohortsSub:'Institutions / Foreign / Hangzhou / Zhongcai / Retail · Nominal (CNY 100m) · Expand member seats · Open 40-day curve',
     heat:'Sector Heatmap of Funds',heatSub:'Institutional nominal net positions · Red=long Green=short · Click tiles for 40-day curves',
@@ -487,6 +495,18 @@ function header(){
     tile('<span style="color:'+(D.senti>=0?RED:GRN)+'">'+(D.senti>0?'+':'')+D.senti+'%</span>',t('senti'))+
     tile(D.in_play,t('inPlay'))+tile(D.amt_add_long+(lang==='en'?' CNY 100m':'亿'),t('amtLong'))+tile(D.amt_add_short+(lang==='en'?' CNY 100m':'亿'),t('amtShort'));
   $('#foot').textContent=t('dataSource')+': '+sourceText(D.source)+' · '+t('nominal')+' · '+t('desc')+' · WINDRISE';
+}
+
+function alerts(){
+  $('#alert-sub').textContent=t('alertSub');
+  const rows=(D.rows||[]), top=[].concat(rows).sort((a,b)=>(b.amt||0)-(a.amt||0))[0];
+  const reson=[].concat(rows).filter(r=>r.dir&&r.conf!=null).sort((a,b)=>b.conf-a.conf)[0];
+  const div=[].concat(rows).filter(r=>(r.act==='加多'&&r.pc!=null&&r.pc<-.2)||(r.act==='加空'&&r.pc!=null&&r.pc>.2)).sort((a,b)=>Math.abs(b.pc)-Math.abs(a.pc))[0];
+  const cards=[];
+  if(top)cards.push([t('alertMove'),term(top.name)+' · '+actText(top.act),amtLabel(top)+(lang==='en'?' CNY 100m':'亿')+' · '+t('ratio')+' '+(top.ratio||0).toFixed(0)+'%']);
+  if(reson)cards.push([t('alertReson'),term(reson.name)+' · '+actText(reson.dir),t('tierDot')+' '+reson.conf+' · '+tierText(reson.tier)+' · '+actText(reson.act)]);
+  if(div)cards.push([t('alertDiv'),term(div.name)+' · '+actText(div.act),(lang==='en'?'Price ':'价格 ')+(div.pc>0?'+':'')+div.pc+'% · '+(lang==='en'?'flow-price divergence':'资金与价格反向')]);
+  $('#alerts').innerHTML=cards.slice(0,3).map((x,i)=>'<div class="alert-card"><span class="an">ALERT '+String(i+1).padStart(2,'0')+' · '+x[0]+'</span><strong>'+x[1]+'</strong><p>'+x[2]+'</p><small>'+D.date+'</small></div>').join('');
 }
 
 /* ── 多空全景 环形+仪表 ── */
@@ -696,6 +716,7 @@ document.querySelectorAll('.langsw button').forEach(b=>b.onclick=()=>{lang=b.dat
 
 function renderAll(){
   header();
+  alerts();
   lineChart($('#tidechart'),D.tide,D.dates40,{h:150,fmt:v=>v.toFixed(1)+' '+(lang==='en'?'CNY 100m':'亿')});
   pano();brief();cohbars();backtests();heat();boards();render();persradar();scatter($('#quadbox'));reson();
 }
