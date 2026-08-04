@@ -46,6 +46,7 @@
 /kol_digest/scripts/**
 !/kol_digest/scripts/build_web.py
 !/kol_digest/scripts/kol_web_template.html
+!/kol_digest/scripts/kol_ranking.py
 !/kol_digest/src/
 /kol_digest/src/**
 !/kol_digest/src/kol_digest/
@@ -58,6 +59,7 @@
 !/kol_digest/tests/
 /kol_digest/tests/**
 !/kol_digest/tests/test_sections_report.py
+!/kol_digest/tests/test_ranking.py
 !/datamux/
 /datamux/**
 !/datamux/__init__.py

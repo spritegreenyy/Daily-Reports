@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
 from kol_emphasis import compact_report_insights, strip_numeric_emphasis
 from kol_composite import build_composite_history, load_price_series, run_price_backtests
 from kol_indices import build_index_history, match_asset_keys
+from kol_ranking import build_rankings
 
 ROOT = str(Path(__file__).resolve().parents[2])
 KD = ROOT + "/kol_digest"
@@ -447,7 +448,8 @@ def main():
                 "t": item.get("published_at", "")[:16].replace("T", " "),
                 "x_zh": body_zh, "x_en": body_en, "u": item.get("url", ""),
                 "lk": item.get("likes", 0), "rt": item.get("retweets", 0), "rp": item.get("replies", 0),
-                "eng": item.get("engagement", 0), "lang": src_lang, "tags": tags
+                "eng": item.get("engagement", 0), "lang": src_lang, "tags": tags,
+                "important": bool(item.get("important")),
             })
 
     if pending_en and base_url and api_key and model:
@@ -514,6 +516,7 @@ def main():
         (row for row in reversed(composite_daily) if row.get("date") == date),
         composite_daily[-1] if composite_daily else {},
     )
+    rankings = build_rankings(tweets, tw.get("generated_at", ""))
     data = {date: {
         "meta": meta, "report_zh": report_zh, "report_en": report_en, "tweets": tweets,
         "indices": current_indices.get("assets", {}), "index_history": history_series,
@@ -522,6 +525,7 @@ def main():
         "composite_history": composite_daily[-60:],
         "composite_method": composite_history.get("method", {}),
         "backtests": backtests,
+        "rankings": rankings,
     }}
     boards = {
         k: {"label_zh": v[0], "label_en": v[1], "color": v[2], "short_zh": v[3], "short_en": v[4]}
