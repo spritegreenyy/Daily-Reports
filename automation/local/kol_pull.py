@@ -15,7 +15,7 @@ HERE = Path(__file__).parent
 ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT))                    # import datamux.*
 from kol_accounts_merge import merged_accounts_file
-from kol_followers import write_daily_snapshot
+from kol_followers import fetch_public_profile_metrics, load_accounts, write_daily_snapshot
 
 ACCOUNTS = str(merged_accounts_file(
     ROOT / "datamux/kol_accounts_viewpoint_250.yaml",
@@ -54,6 +54,12 @@ def main():
         all_items += r.items
 
     date = datetime.now().strftime("%Y-%m-%d")
+    configured_handles = [item["handle"] for item in load_accounts(ACCOUNTS)]
+    missing_handles = [handle for handle in configured_handles if handle.lower() not in all_profile_metrics]
+    if missing_handles:
+        public_metrics = fetch_public_profile_metrics(missing_handles)
+        all_profile_metrics.update(public_metrics)
+        print(f"followers fallback: {len(public_metrics)}/{len(missing_handles)} profiles")
     if all_profile_metrics:
         snapshot_path = write_daily_snapshot(
             accounts_file=ACCOUNTS,

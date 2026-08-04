@@ -3,14 +3,17 @@
 from __future__ import annotations
 
 import json
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date as date_type, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 import yaml
+import httpx
 
 
-def _load_accounts(path: str | Path) -> list[dict[str, Any]]:
+def load_accounts(path: str | Path) -> list[dict[str, Any]]:
     payload = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
     accounts = []
     for item in payload.get("accounts", []):
@@ -23,6 +26,60 @@ def _load_accounts(path: str | Path) -> list[dict[str, Any]]:
             "tags": list(item.get("tags") or []),
         })
     return accounts
+
+
+def _metric_from_public_payload(payload: dict[str, Any], expected_handle: str) -> dict[str, Any] | None:
+    user = payload.get("user") or {}
+    actual_handle = str(user.get("screen_name") or "").strip()
+    followers = user.get("followers")
+    if not actual_handle or actual_handle.lower() != expected_handle.lower() or followers is None:
+        return None
+    return {
+        "handle": actual_handle,
+        "followers_count": int(followers),
+        "following_count": int(user.get("following") or 0),
+        "source": "fxtwitter_public_api",
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def fetch_public_profile_metrics(
+    handles: list[str],
+    *,
+    max_workers: int = 8,
+    retries: int = 3,
+    timeout_seconds: float = 20.0,
+) -> dict[str, dict[str, Any]]:
+    """Fetch exact public X profile counters through the FxTwitter public API."""
+    unique = list(dict.fromkeys(handle.strip() for handle in handles if handle.strip()))
+
+    def fetch_one(handle: str) -> tuple[str, dict[str, Any] | None]:
+        for attempt in range(1, retries + 1):
+            try:
+                response = httpx.get(
+                    f"https://api.fxtwitter.com/{handle}",
+                    headers={"User-Agent": "Windrise-KOL-Research/1.0"},
+                    timeout=timeout_seconds,
+                    follow_redirects=True,
+                )
+                if response.status_code == 200:
+                    metric = _metric_from_public_payload(response.json(), handle)
+                    if metric:
+                        return handle, metric
+            except (httpx.HTTPError, ValueError, TypeError):
+                pass
+            if attempt < retries:
+                time.sleep(float(attempt))
+        return handle, None
+
+    metrics = {}
+    with ThreadPoolExecutor(max_workers=max(1, max_workers)) as pool:
+        futures = [pool.submit(fetch_one, handle) for handle in unique]
+        for future in as_completed(futures):
+            handle, metric = future.result()
+            if metric:
+                metrics[handle.lower()] = metric
+    return metrics
 
 
 def _load_prior_snapshots(report_root: Path, report_date: date_type) -> list[dict[str, Any]]:
@@ -81,7 +138,7 @@ def build_snapshot(
         delta_1d = followers - int(previous_followers) if followers is not None and previous_followers is not None else None
         delta_7d = followers - int(seven_followers) if followers is not None and seven_followers is not None else None
         source = str(metric.get("source") or "")
-        if source == "x_profile_response":
+        if source in {"x_profile_response", "fxtwitter_public_api"}:
             exact_count += 1
         elif source:
             compact_count += 1
@@ -144,7 +201,7 @@ def write_daily_snapshot(
     destination = report_root / report_date.replace("-", "") / f"KOL粉丝_{report_date.replace('-', '')}.json"
     destination.parent.mkdir(parents=True, exist_ok=True)
     payload = build_snapshot(
-        accounts=_load_accounts(accounts_file),
+        accounts=load_accounts(accounts_file),
         metrics={key.lower(): value for key, value in metrics.items()},
         report_date=day,
         prior_snapshots=_load_prior_snapshots(report_root, day),
@@ -153,4 +210,3 @@ def write_daily_snapshot(
     temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     temporary.replace(destination)
     return destination
-

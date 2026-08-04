@@ -321,7 +321,11 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
             cursor={"last_ids": new_last_ids},
         )
 
-    def collect_profile_metrics_only(self, settle_ms: int = 300) -> dict[str, dict[str, Any]]:
+    def collect_profile_metrics_only(
+        self,
+        settle_ms: int = 300,
+        handles: set[str] | None = None,
+    ) -> dict[str, dict[str, Any]]:
         """Collect public profile metrics without waiting for tweet articles."""
         cookies_raw = self._load_cookies()
         if not cookies_raw:
@@ -343,7 +347,8 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
                 context.route("**/*", _route_profile_resource)
                 page = context.new_page()
                 page.on("response", self._capture_profile_response)
-                for index, spec in enumerate(self._specs, 1):
+                specs = self._specs if handles is None else [spec for spec in self._specs if spec["handle"].lower() in handles]
+                for index, spec in enumerate(specs, 1):
                     handle = spec["handle"]
                     try:
                         with page.expect_response(
@@ -361,7 +366,7 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
                         if handle.lower() not in self.profile_metrics:
                             logger.warning("%s: follower collection failed @%s: %s", self.name, handle, exc)
                     if index % 25 == 0:
-                        logger.info("%s: follower progress %d/%d", self.name, index, len(self._specs))
+                        logger.info("%s: follower progress %d/%d", self.name, index, len(specs))
             finally:
                 browser.close()
         return dict(self.profile_metrics)

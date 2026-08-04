@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT))
 
 from datamux.sources.news.twitter_monitor import TwitterMonitorSource
 from kol_accounts_merge import merged_accounts_file
-from kol_followers import write_daily_snapshot
+from kol_followers import fetch_public_profile_metrics, load_accounts, write_daily_snapshot
 
 
 ACCOUNTS = str(merged_accounts_file(
@@ -31,8 +31,14 @@ def main() -> int:
     parser.add_argument("--settle-ms", type=int, default=300)
     args = parser.parse_args()
 
-    metrics = {}
+    accounts = load_accounts(ACCOUNTS)
+    handles = [item["handle"] for item in accounts]
+    metrics = fetch_public_profile_metrics(handles)
+    print(f"public API: {len(metrics)}/{len(handles)} follower profiles")
+    missing = {handle.lower() for handle in handles if handle.lower() not in metrics}
     for tier in (1, 2, 3):
+        if not missing:
+            break
         source = TwitterMonitorSource(
             accounts_file=ACCOUNTS,
             tier=tier,
@@ -40,9 +46,10 @@ def main() -> int:
             cookies_file=COOKIES,
             max_tweets_per_account=0,
         )
-        tier_metrics = source.collect_profile_metrics_only(settle_ms=args.settle_ms)
+        tier_metrics = source.collect_profile_metrics_only(settle_ms=args.settle_ms, handles=missing)
         metrics.update(tier_metrics)
-        print(f"tier{tier}: {len(tier_metrics)} follower profiles")
+        missing.difference_update(tier_metrics)
+        print(f"X fallback tier{tier}: {len(tier_metrics)} profiles · {len(missing)} missing")
 
     if not metrics:
         print("Follower collection returned no profiles", file=sys.stderr)

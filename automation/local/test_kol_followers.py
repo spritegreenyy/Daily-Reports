@@ -1,7 +1,7 @@
 import json
 from datetime import date
 
-from kol_followers import build_snapshot
+from kol_followers import _metric_from_public_payload, build_snapshot
 from datamux.sources.news.twitter_monitor import _parse_count
 
 
@@ -9,6 +9,15 @@ def test_parse_localized_counts():
     assert _parse_count("39.6万 关注者") == 396_000
     assert _parse_count("1.2M Followers") == 1_200_000
     assert _parse_count("2.1亿") == 210_000_000
+
+
+def test_parse_exact_public_profile_payload():
+    metric = _metric_from_public_payload(
+        {"user": {"screen_name": "JavierBlas", "followers": 396_230, "following": 1_508}},
+        "javierblas",
+    )
+    assert metric["followers_count"] == 396_230
+    assert metric["source"] == "fxtwitter_public_api"
 
 
 def test_build_snapshot_computes_real_growth():
