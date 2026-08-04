@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 from kol_indices import direction
+from kol_anomalies import detect_anomalies
 
 
 MARKET_TERMS = (
@@ -106,6 +107,7 @@ def build_rankings(
     tweets: list[dict[str, Any]],
     generated_at: str = "",
     follower_snapshot: dict[str, Any] | None = None,
+    attention_baseline: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Return scored views, diversified top views, and daily KOL rankings."""
     generated = _parse_generated(generated_at)
@@ -168,6 +170,7 @@ def build_rankings(
             "engagement": int(row.get("eng") or 0),
             "tier": tier,
             "direction": signal_direction,
+            "tags": sorted(tags),
             "score": total,
             "breakdown": {
                 "relevance": round(relevance, 1),
@@ -248,6 +251,8 @@ def build_rankings(
             if len(selected) == 5:
                 break
 
+    anomalies = detect_anomalies(scored, follower_snapshot, attention_baseline)
+
     return {
         "method": {
             "view_score": {
@@ -266,13 +271,14 @@ def build_rankings(
             },
             "noise_penalty": "off-topic, low-relevance, or very short low-information content",
             "front_selection": "80% view research score + 20% follower-reach percentile; follower growth never changes correctness scores",
-            "note_zh": "分数衡量当日研究优先级，不代表观点正确率；暂不包含粉丝量。",
-            "note_en": "Scores measure daily research priority, not forecast accuracy; follower data is not yet included.",
+            "note_zh": "分数衡量当日研究优先级，不代表观点正确率；粉丝数仅用于衡量传播影响力。",
+            "note_en": "Scores measure daily research priority, not forecast accuracy; followers measure propagation reach only.",
         },
         "top_views": selected,
         "top_kols": kol_rows[:10],
         "follower_summary": follower_snapshot.get("summary", {}),
         "growth_leaders": (follower_snapshot.get("growth_leaders") or [])[:10],
         "reach_leaders": (follower_snapshot.get("reach_leaders") or [])[:10],
+        "anomalies": anomalies,
         "scored_views": len(scored),
     }

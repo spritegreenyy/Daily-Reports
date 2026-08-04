@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
 from kol_emphasis import compact_report_insights, strip_numeric_emphasis
 from kol_composite import build_composite_history, load_price_series, run_price_backtests
 from kol_indices import build_index_history, match_asset_keys
+from kol_anomalies import build_attention_baseline
 from kol_ranking import build_rankings
 
 ROOT = str(Path(__file__).resolve().parents[2])
@@ -519,7 +520,10 @@ def main():
     follower_snapshot = load_json_if_exists(
         os.path.join(ROOT, "日报", ymd, f"KOL粉丝_{ymd}.json")
     ) or {}
-    rankings = build_rankings(tweets, tw.get("generated_at", ""), follower_snapshot)
+    attention_baseline = build_attention_baseline(OUT, date)
+    rankings = build_rankings(
+        tweets, tw.get("generated_at", ""), follower_snapshot, attention_baseline
+    )
     data = {date: {
         "meta": meta, "report_zh": report_zh, "report_en": report_en, "tweets": tweets,
         "indices": current_indices.get("assets", {}), "index_history": history_series,

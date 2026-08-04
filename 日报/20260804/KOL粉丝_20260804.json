@@ -1,6 +1,6 @@
 {
   "date": "2026-08-04",
-  "generated_at": "2026-08-04T07:59:29.639622+00:00",
+  "generated_at": "2026-08-04T08:36:24.137975+00:00",
   "summary": {
     "total_accounts": 272,
     "covered_accounts": 241,
@@ -9,7 +9,7 @@
     "compact_fallback_accounts": 0,
     "missing_accounts": 31,
     "comparable_1d_accounts": 0,
-    "total_followers": 77089400,
+    "total_followers": 77093299,
     "previous_snapshot_date": null,
     "seven_day_base_date": null
   },
@@ -26,14 +26,14 @@
         "teacher_required",
         "viewpoint"
       ],
-      "followers_count": 1073261,
+      "followers_count": 1073313,
       "following_count": 1030,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.519106+00:00"
+      "fetched_at": "2026-08-04T08:34:51.988444+00:00"
     },
     {
       "handle": "RaoulGMI",
@@ -45,14 +45,14 @@
         "teacher_required",
         "viewpoint"
       ],
-      "followers_count": 1459037,
+      "followers_count": 1459053,
       "following_count": 1714,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.509080+00:00"
+      "fetched_at": "2026-08-04T08:34:51.980406+00:00"
     },
     {
       "handle": "biancoresearch",
@@ -64,14 +64,14 @@
         "teacher_required",
         "viewpoint"
       ],
-      "followers_count": 724694,
+      "followers_count": 724671,
       "following_count": 1484,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.530425+00:00"
+      "fetched_at": "2026-08-04T08:34:52.267323+00:00"
     },
     {
       "handle": "elerianm",
@@ -82,14 +82,14 @@
         "teacher_required",
         "viewpoint"
       ],
-      "followers_count": 1030915,
+      "followers_count": 1030980,
       "following_count": 1150,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.511821+00:00"
+      "fetched_at": "2026-08-04T08:34:51.951220+00:00"
     },
     {
       "handle": "CathieDWood",
@@ -101,14 +101,14 @@
         "teacher_required",
         "fund_manager"
       ],
-      "followers_count": 2735141,
+      "followers_count": 2735320,
       "following_count": 522,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.541013+00:00"
+      "fetched_at": "2026-08-04T08:34:51.953194+00:00"
     },
     {
       "handle": "ARKInvest",
@@ -127,7 +127,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.534678+00:00"
+      "fetched_at": "2026-08-04T08:34:52.512608+00:00"
     },
     {
       "handle": "BillAckman",
@@ -139,14 +139,14 @@
         "teacher_required",
         "fund_manager"
       ],
-      "followers_count": 2739525,
+      "followers_count": 2739707,
       "following_count": 1180,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.723967+00:00"
+      "fetched_at": "2026-08-04T08:34:51.992819+00:00"
     },
     {
       "handle": "chamath",
@@ -158,14 +158,14 @@
         "teacher_required",
         "viewpoint"
       ],
-      "followers_count": 2308483,
+      "followers_count": 2308586,
       "following_count": 1131,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.510013+00:00"
+      "fetched_at": "2026-08-04T08:34:52.011917+00:00"
     },
     {
       "handle": "jimcramer",
@@ -177,14 +177,14 @@
         "contrarian_signal",
         "viewpoint"
       ],
-      "followers_count": 2454713,
+      "followers_count": 2454735,
       "following_count": 704,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.812235+00:00"
+      "fetched_at": "2026-08-04T08:34:52.233045+00:00"
     },
     {
       "handle": "unusual_whales",
@@ -196,14 +196,14 @@
         "teacher_required",
         "data"
       ],
-      "followers_count": 4916409,
+      "followers_count": 4916794,
       "following_count": 2369,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.008900+00:00"
+      "fetched_at": "2026-08-04T08:34:52.569857+00:00"
     },
     {
       "handle": "GRDecter",
@@ -215,14 +215,14 @@
         "market_narrative",
         "viewpoint"
       ],
-      "followers_count": 412567,
+      "followers_count": 412571,
       "following_count": 1021,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.794675+00:00"
+      "fetched_at": "2026-08-04T08:34:52.256606+00:00"
     },
     {
       "handle": "LizAnnSonders",
@@ -233,14 +233,14 @@
         "sellside",
         "viewpoint"
       ],
-      "followers_count": 740522,
+      "followers_count": 740582,
       "following_count": 775,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.808332+00:00"
+      "fetched_at": "2026-08-04T08:34:52.298616+00:00"
     },
     {
       "handle": "TimmerFidelity",
@@ -258,7 +258,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.085652+00:00"
+      "fetched_at": "2026-08-04T08:34:52.286348+00:00"
     },
     {
       "handle": "FedGuy12",
@@ -287,14 +287,14 @@
         "cycle",
         "viewpoint"
       ],
-      "followers_count": 279937,
+      "followers_count": 279950,
       "following_count": 790,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:42.898685+00:00"
+      "fetched_at": "2026-08-04T08:34:52.524408+00:00"
     },
     {
       "handle": "MacroAlf",
@@ -305,14 +305,14 @@
         "portfolio",
         "viewpoint"
       ],
-      "followers_count": 465575,
+      "followers_count": 465578,
       "following_count": 353,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.024796+00:00"
+      "fetched_at": "2026-08-04T08:34:52.531406+00:00"
     },
     {
       "handle": "AndreasSteno",
@@ -323,14 +323,14 @@
         "cross_asset",
         "viewpoint"
       ],
-      "followers_count": 293954,
+      "followers_count": 293950,
       "following_count": 1782,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.083225+00:00"
+      "fetched_at": "2026-08-04T08:34:52.625686+00:00"
     },
     {
       "handle": "donnelly_brent",
@@ -341,14 +341,14 @@
         "trader",
         "viewpoint"
       ],
-      "followers_count": 94220,
+      "followers_count": 94223,
       "following_count": 964,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.094853+00:00"
+      "fetched_at": "2026-08-04T08:34:52.560436+00:00"
     },
     {
       "handle": "jam_croissant",
@@ -359,14 +359,14 @@
         "options",
         "trader"
       ],
-      "followers_count": 258596,
+      "followers_count": 258609,
       "following_count": 2206,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.105576+00:00"
+      "fetched_at": "2026-08-04T08:34:52.941716+00:00"
     },
     {
       "handle": "LukeGromen",
@@ -377,14 +377,14 @@
         "commodities",
         "viewpoint"
       ],
-      "followers_count": 574387,
+      "followers_count": 574436,
       "following_count": 2480,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.187306+00:00"
+      "fetched_at": "2026-08-04T08:34:52.800361+00:00"
     },
     {
       "handle": "SantiagoAuFund",
@@ -395,14 +395,14 @@
         "dollar",
         "viewpoint"
       ],
-      "followers_count": 340102,
+      "followers_count": 340098,
       "following_count": 2393,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.304073+00:00"
+      "fetched_at": "2026-08-04T08:34:52.922279+00:00"
     },
     {
       "handle": "TaviCosta",
@@ -413,14 +413,14 @@
         "cycle",
         "viewpoint"
       ],
-      "followers_count": 319283,
+      "followers_count": 319286,
       "following_count": 2310,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.314285+00:00"
+      "fetched_at": "2026-08-04T08:34:53.082464+00:00"
     },
     {
       "handle": "WarrenPies",
@@ -438,7 +438,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.403490+00:00"
+      "fetched_at": "2026-08-04T08:34:53.206016+00:00"
     },
     {
       "handle": "pboockvar",
@@ -449,14 +449,14 @@
         "economics",
         "viewpoint"
       ],
-      "followers_count": 46065,
+      "followers_count": 46063,
       "following_count": 3181,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.376244+00:00"
+      "fetched_at": "2026-08-04T08:34:52.844050+00:00"
     },
     {
       "handle": "EconguyRosie",
@@ -474,7 +474,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.389508+00:00"
+      "fetched_at": "2026-08-04T08:34:52.900546+00:00"
     },
     {
       "handle": "yardeni",
@@ -485,14 +485,14 @@
         "sellside",
         "viewpoint"
       ],
-      "followers_count": 64308,
+      "followers_count": 64307,
       "following_count": 51,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.716423+00:00"
+      "fetched_at": "2026-08-04T08:34:53.123593+00:00"
     },
     {
       "handle": "charliebilello",
@@ -503,14 +503,14 @@
         "markets",
         "viewpoint"
       ],
-      "followers_count": 832288,
+      "followers_count": 832290,
       "following_count": 143,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.792133+00:00"
+      "fetched_at": "2026-08-04T08:34:53.457382+00:00"
     },
     {
       "handle": "leadlagreport",
@@ -522,13 +522,13 @@
         "viewpoint"
       ],
       "followers_count": 772334,
-      "following_count": 15316,
+      "following_count": 15317,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.605490+00:00"
+      "fetched_at": "2026-08-04T08:34:53.511942+00:00"
     },
     {
       "handle": "NorthmanTrader",
@@ -546,7 +546,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.594650+00:00"
+      "fetched_at": "2026-08-04T08:34:53.222506+00:00"
     },
     {
       "handle": "Convertbond",
@@ -564,7 +564,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.014484+00:00"
+      "fetched_at": "2026-08-04T08:34:53.589953+00:00"
     },
     {
       "handle": "kevinmuir",
@@ -582,7 +582,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.687632+00:00"
+      "fetched_at": "2026-08-04T08:34:53.364185+00:00"
     },
     {
       "handle": "ChrisWeston_PS",
@@ -600,7 +600,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.010283+00:00"
+      "fetched_at": "2026-08-04T08:34:53.396854+00:00"
     },
     {
       "handle": "McClellanOsc",
@@ -611,14 +611,14 @@
         "cycle",
         "viewpoint"
       ],
-      "followers_count": 149627,
+      "followers_count": 149626,
       "following_count": 295,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.882209+00:00"
+      "fetched_at": "2026-08-04T08:34:53.501838+00:00"
     },
     {
       "handle": "DiMartinoBooth",
@@ -636,7 +636,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.898599+00:00"
+      "fetched_at": "2026-08-04T08:34:53.500618+00:00"
     },
     {
       "handle": "darioperkins",
@@ -654,7 +654,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.987561+00:00"
+      "fetched_at": "2026-08-04T08:34:53.660257+00:00"
     },
     {
       "handle": "mark_dow",
@@ -672,7 +672,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:43.997575+00:00"
+      "fetched_at": "2026-08-04T08:34:53.812961+00:00"
     },
     {
       "handle": "JulianMI2",
@@ -683,14 +683,14 @@
         "cycle",
         "viewpoint"
       ],
-      "followers_count": 85037,
+      "followers_count": 85038,
       "following_count": 434,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.063644+00:00"
+      "fetched_at": "2026-08-04T08:34:54.156798+00:00"
     },
     {
       "handle": "pearkes",
@@ -708,7 +708,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.455837+00:00"
+      "fetched_at": "2026-08-04T08:34:53.946334+00:00"
     },
     {
       "handle": "M_McDonough",
@@ -726,7 +726,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.260837+00:00"
+      "fetched_at": "2026-08-04T08:34:53.794946+00:00"
     },
     {
       "handle": "SamRo",
@@ -744,7 +744,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.262978+00:00"
+      "fetched_at": "2026-08-04T08:34:53.804943+00:00"
     },
     {
       "handle": "Geo_papic",
@@ -762,7 +762,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.342252+00:00"
+      "fetched_at": "2026-08-04T08:34:54.080043+00:00"
     },
     {
       "handle": "TinaFordham1",
@@ -780,7 +780,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.755377+00:00"
+      "fetched_at": "2026-08-04T08:34:53.968254+00:00"
     },
     {
       "handle": "hkuppy",
@@ -791,14 +791,14 @@
         "fund_manager",
         "viewpoint"
       ],
-      "followers_count": 179648,
+      "followers_count": 179650,
       "following_count": 1952,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.555289+00:00"
+      "fetched_at": "2026-08-04T08:34:54.071835+00:00"
     },
     {
       "handle": "DoombergT",
@@ -816,7 +816,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.365824+00:00"
+      "fetched_at": "2026-08-04T08:34:54.066907+00:00"
     },
     {
       "handle": "LawrenceLepard",
@@ -827,14 +827,14 @@
         "hard_assets",
         "viewpoint"
       ],
-      "followers_count": 255297,
+      "followers_count": 255299,
       "following_count": 29331,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.278733+00:00"
+      "fetched_at": "2026-08-04T08:34:54.122587+00:00"
     },
     {
       "handle": "MichaelAArouet",
@@ -845,14 +845,14 @@
         "data",
         "viewpoint"
       ],
-      "followers_count": 472061,
+      "followers_count": 472119,
       "following_count": 1239,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.547952+00:00"
+      "fetched_at": "2026-08-04T08:34:54.220360+00:00"
     },
     {
       "handle": "DariusDale42",
@@ -863,14 +863,14 @@
         "quant",
         "viewpoint"
       ],
-      "followers_count": 104382,
+      "followers_count": 104383,
       "following_count": 1310,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.624421+00:00"
+      "fetched_at": "2026-08-04T08:34:54.276637+00:00"
     },
     {
       "handle": "Stephanie_Link",
@@ -881,14 +881,14 @@
         "fund_manager",
         "viewpoint"
       ],
-      "followers_count": 211113,
+      "followers_count": 211112,
       "following_count": 394,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.589587+00:00"
+      "fetched_at": "2026-08-04T08:34:54.360481+00:00"
     },
     {
       "handle": "Mayhem4Markets",
@@ -899,14 +899,14 @@
         "market_narrative",
         "viewpoint"
       ],
-      "followers_count": 270462,
+      "followers_count": 270463,
       "following_count": 1337,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.731680+00:00"
+      "fetched_at": "2026-08-04T08:34:55.027801+00:00"
     },
     {
       "handle": "michaelkantro",
@@ -924,7 +924,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.844180+00:00"
+      "fetched_at": "2026-08-04T08:34:54.432194+00:00"
     },
     {
       "handle": "ianbremmer",
@@ -935,14 +935,14 @@
         "global_macro",
         "viewpoint"
       ],
-      "followers_count": 1360373,
+      "followers_count": 1360384,
       "following_count": 1862,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.820449+00:00"
+      "fetched_at": "2026-08-04T08:34:54.395681+00:00"
     },
     {
       "handle": "PeterZeihan",
@@ -953,14 +953,14 @@
         "supply_chain",
         "viewpoint"
       ],
-      "followers_count": 303058,
+      "followers_count": 303059,
       "following_count": 235,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:44.930628+00:00"
+      "fetched_at": "2026-08-04T08:34:54.415700+00:00"
     },
     {
       "handle": "KofmanMichael",
@@ -971,14 +971,14 @@
         "military",
         "viewpoint"
       ],
-      "followers_count": 435932,
+      "followers_count": 435934,
       "following_count": 407,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.006611+00:00"
+      "fetched_at": "2026-08-04T08:34:54.522716+00:00"
     },
     {
       "handle": "RALee85",
@@ -989,14 +989,14 @@
         "military",
         "viewpoint"
       ],
-      "followers_count": 702738,
+      "followers_count": 702734,
       "following_count": 3885,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.081750+00:00"
+      "fetched_at": "2026-08-04T08:34:54.575084+00:00"
     },
     {
       "handle": "MassDara",
@@ -1007,14 +1007,14 @@
         "military",
         "viewpoint"
       ],
-      "followers_count": 82622,
+      "followers_count": 82633,
       "following_count": 746,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.114387+00:00"
+      "fetched_at": "2026-08-04T08:34:54.942738+00:00"
     },
     {
       "handle": "shashj",
@@ -1025,14 +1025,14 @@
         "europe",
         "viewpoint"
       ],
-      "followers_count": 234878,
+      "followers_count": 234880,
       "following_count": 1726,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.127570+00:00"
+      "fetched_at": "2026-08-04T08:34:54.688802+00:00"
     },
     {
       "handle": "DAlperovitch",
@@ -1050,7 +1050,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.214239+00:00"
+      "fetched_at": "2026-08-04T08:34:54.718027+00:00"
     },
     {
       "handle": "BarakRavid",
@@ -1061,14 +1061,14 @@
         "diplomacy",
         "viewpoint"
       ],
-      "followers_count": 512065,
+      "followers_count": 512069,
       "following_count": 860,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.327065+00:00"
+      "fetched_at": "2026-08-04T08:34:55.366886+00:00"
     },
     {
       "handle": "AnkitPanda",
@@ -1086,7 +1086,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.033198+00:00"
+      "fetched_at": "2026-08-04T08:34:54.801656+00:00"
     },
     {
       "handle": "ElbridgeColby",
@@ -1097,14 +1097,14 @@
         "indo_pacific",
         "viewpoint"
       ],
-      "followers_count": 110434,
+      "followers_count": 110431,
       "following_count": 4153,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.730638+00:00"
+      "fetched_at": "2026-08-04T08:34:54.854577+00:00"
     },
     {
       "handle": "BonnieGlaser",
@@ -1115,14 +1115,14 @@
         "taiwan",
         "viewpoint"
       ],
-      "followers_count": 118174,
+      "followers_count": 118177,
       "following_count": 928,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.407567+00:00"
+      "fetched_at": "2026-08-04T08:34:54.989991+00:00"
     },
     {
       "handle": "ryanl_hass",
@@ -1140,7 +1140,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.497078+00:00"
+      "fetched_at": "2026-08-04T08:34:55.082016+00:00"
     },
     {
       "handle": "fravel",
@@ -1158,7 +1158,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.862835+00:00"
+      "fetched_at": "2026-08-04T08:34:55.074687+00:00"
     },
     {
       "handle": "osmastro",
@@ -1169,14 +1169,14 @@
         "security",
         "viewpoint"
       ],
-      "followers_count": 19153,
+      "followers_count": 19151,
       "following_count": 106,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.281350+00:00"
+      "fetched_at": "2026-08-04T08:34:55.153692+00:00"
     },
     {
       "handle": "EvanFeigenbaum",
@@ -1187,14 +1187,14 @@
         "policy",
         "viewpoint"
       ],
-      "followers_count": 54226,
+      "followers_count": 54227,
       "following_count": 8237,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.685728+00:00"
+      "fetched_at": "2026-08-04T08:34:55.308494+00:00"
     },
     {
       "handle": "RushDoshi",
@@ -1212,7 +1212,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.067844+00:00"
+      "fetched_at": "2026-08-04T08:34:55.457952+00:00"
     },
     {
       "handle": "DerekJGrossman",
@@ -1223,14 +1223,14 @@
         "security",
         "viewpoint"
       ],
-      "followers_count": 117851,
+      "followers_count": 117848,
       "following_count": 6816,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:45.947491+00:00"
+      "fetched_at": "2026-08-04T08:34:55.353843+00:00"
     },
     {
       "handle": "YunSun4China",
@@ -1259,14 +1259,14 @@
         "kremlin",
         "viewpoint"
       ],
-      "followers_count": 61946,
+      "followers_count": 61945,
       "following_count": 795,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.020351+00:00"
+      "fetched_at": "2026-08-04T08:34:55.363935+00:00"
     },
     {
       "handle": "samagreene",
@@ -1277,14 +1277,14 @@
         "political_risk",
         "viewpoint"
       ],
-      "followers_count": 74005,
+      "followers_count": 74002,
       "following_count": 2441,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.177993+00:00"
+      "fetched_at": "2026-08-04T08:34:55.432449+00:00"
     },
     {
       "handle": "SamRamani2",
@@ -1302,7 +1302,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.513018+00:00"
+      "fetched_at": "2026-08-04T08:34:55.596794+00:00"
     },
     {
       "handle": "PhillipsPOBrien",
@@ -1320,7 +1320,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.317578+00:00"
+      "fetched_at": "2026-08-04T08:34:55.659240+00:00"
     },
     {
       "handle": "LawDavF",
@@ -1338,7 +1338,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.351990+00:00"
+      "fetched_at": "2026-08-04T08:34:55.676586+00:00"
     },
     {
       "handle": "michaeldweiss",
@@ -1349,14 +1349,14 @@
         "middle_east",
         "viewpoint"
       ],
-      "followers_count": 281297,
+      "followers_count": 281296,
       "following_count": 4949,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.370904+00:00"
+      "fetched_at": "2026-08-04T08:34:55.646019+00:00"
     },
     {
       "handle": "SangerNYT",
@@ -1374,7 +1374,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.466624+00:00"
+      "fetched_at": "2026-08-04T08:34:55.694847+00:00"
     },
     {
       "handle": "IgnatiusPost",
@@ -1385,14 +1385,14 @@
         "middle_east",
         "viewpoint"
       ],
-      "followers_count": 126145,
+      "followers_count": 126144,
       "following_count": 1737,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.600945+00:00"
+      "fetched_at": "2026-08-04T08:34:55.737164+00:00"
     },
     {
       "handle": "noahbarkin",
@@ -1403,14 +1403,14 @@
         "china",
         "viewpoint"
       ],
-      "followers_count": 29148,
+      "followers_count": 29147,
       "following_count": 4007,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.648586+00:00"
+      "fetched_at": "2026-08-04T08:34:55.895859+00:00"
     },
     {
       "handle": "vali_nasr",
@@ -1428,7 +1428,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.667931+00:00"
+      "fetched_at": "2026-08-04T08:34:55.947660+00:00"
     },
     {
       "handle": "ksadjadpour",
@@ -1439,14 +1439,14 @@
         "iran",
         "viewpoint"
       ],
-      "followers_count": 140656,
+      "followers_count": 140658,
       "following_count": 1813,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.670951+00:00"
+      "fetched_at": "2026-08-04T08:34:56.196578+00:00"
     },
     {
       "handle": "AliVaez",
@@ -1457,14 +1457,14 @@
         "iran",
         "viewpoint"
       ],
-      "followers_count": 90768,
+      "followers_count": 90763,
       "following_count": 998,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.748106+00:00"
+      "fetched_at": "2026-08-04T08:34:55.960683+00:00"
     },
     {
       "handle": "MaloneySuzanne",
@@ -1475,14 +1475,14 @@
         "iran",
         "viewpoint"
       ],
-      "followers_count": 35586,
+      "followers_count": 35584,
       "following_count": 5051,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.815698+00:00"
+      "fetched_at": "2026-08-04T08:34:56.012152+00:00"
     },
     {
       "handle": "Charles_Lister",
@@ -1493,14 +1493,14 @@
         "syria",
         "viewpoint"
       ],
-      "followers_count": 218613,
+      "followers_count": 218610,
       "following_count": 1818,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.893480+00:00"
+      "fetched_at": "2026-08-04T08:34:56.359841+00:00"
     },
     {
       "handle": "aaronstein1",
@@ -1511,14 +1511,14 @@
         "middle_east",
         "viewpoint"
       ],
-      "followers_count": 32505,
+      "followers_count": 32506,
       "following_count": 791,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.940161+00:00"
+      "fetched_at": "2026-08-04T08:34:56.181177+00:00"
     },
     {
       "handle": "joshua_landis",
@@ -1529,14 +1529,14 @@
         "syria",
         "viewpoint"
       ],
-      "followers_count": 93645,
+      "followers_count": 93646,
       "following_count": 5518,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.959233+00:00"
+      "fetched_at": "2026-08-04T08:34:56.233608+00:00"
     },
     {
       "handle": "ELuttwak",
@@ -1554,7 +1554,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:46.948501+00:00"
+      "fetched_at": "2026-08-04T08:34:56.276827+00:00"
     },
     {
       "handle": "stephenWalt",
@@ -1565,14 +1565,14 @@
         "realism",
         "viewpoint"
       ],
-      "followers_count": 113557,
+      "followers_count": 113553,
       "following_count": 564,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.267485+00:00"
+      "fetched_at": "2026-08-04T08:34:56.300679+00:00"
     },
     {
       "handle": "RichardHaass",
@@ -1590,7 +1590,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.128731+00:00"
+      "fetched_at": "2026-08-04T08:34:56.803106+00:00"
     },
     {
       "handle": "anneapplebaum",
@@ -1601,14 +1601,14 @@
         "authoritarianism",
         "viewpoint"
       ],
-      "followers_count": 584626,
+      "followers_count": 584627,
       "following_count": 874,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.318127+00:00"
+      "fetched_at": "2026-08-04T08:34:56.756237+00:00"
     },
     {
       "handle": "tanvi_madan",
@@ -1619,14 +1619,14 @@
         "china",
         "viewpoint"
       ],
-      "followers_count": 94606,
+      "followers_count": 94607,
       "following_count": 4389,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.229315+00:00"
+      "fetched_at": "2026-08-04T08:34:56.875723+00:00"
     },
     {
       "handle": "CroftHelima",
@@ -1644,7 +1644,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.232175+00:00"
+      "fetched_at": "2026-08-04T08:34:56.541728+00:00"
     },
     {
       "handle": "matthewkroenig",
@@ -1655,14 +1655,14 @@
         "security",
         "viewpoint"
       ],
-      "followers_count": 19142,
+      "followers_count": 19141,
       "following_count": 2041,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.250429+00:00"
+      "fetched_at": "2026-08-04T08:34:56.596771+00:00"
     },
     {
       "handle": "james_acton32",
@@ -1680,7 +1680,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.427139+00:00"
+      "fetched_at": "2026-08-04T08:34:56.671379+00:00"
     },
     {
       "handle": "AlexGabuev",
@@ -1698,7 +1698,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.412413+00:00"
+      "fetched_at": "2026-08-04T08:34:56.756686+00:00"
     },
     {
       "handle": "FranzStefanGady",
@@ -1727,14 +1727,14 @@
         "indo_pacific",
         "viewpoint"
       ],
-      "followers_count": 48279,
+      "followers_count": 48280,
       "following_count": 4589,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.519677+00:00"
+      "fetched_at": "2026-08-04T08:34:56.923383+00:00"
     },
     {
       "handle": "tparsi",
@@ -1745,14 +1745,14 @@
         "diplomacy",
         "viewpoint"
       ],
-      "followers_count": 232825,
+      "followers_count": 232828,
       "following_count": 4001,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.540482+00:00"
+      "fetched_at": "2026-08-04T08:34:57.031252+00:00"
     },
     {
       "handle": "SecKermani",
@@ -1770,7 +1770,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.561241+00:00"
+      "fetched_at": "2026-08-04T08:34:57.065539+00:00"
     },
     {
       "handle": "gideonrachman",
@@ -1781,14 +1781,14 @@
         "journalist_analysis",
         "viewpoint"
       ],
-      "followers_count": 130153,
+      "followers_count": 130158,
       "following_count": 1008,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.590473+00:00"
+      "fetched_at": "2026-08-04T08:34:57.380030+00:00"
     },
     {
       "handle": "maxseddon",
@@ -1799,14 +1799,14 @@
         "journalist_analysis",
         "viewpoint"
       ],
-      "followers_count": 351523,
+      "followers_count": 351524,
       "following_count": 4618,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.705064+00:00"
+      "fetched_at": "2026-08-04T08:34:57.096574+00:00"
     },
     {
       "handle": "yarotrof",
@@ -1817,14 +1817,14 @@
         "journalist_analysis",
         "viewpoint"
       ],
-      "followers_count": 166170,
+      "followers_count": 166169,
       "following_count": 4755,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.739656+00:00"
+      "fetched_at": "2026-08-04T08:34:57.164139+00:00"
     },
     {
       "handle": "JavierBlas",
@@ -1835,14 +1835,14 @@
         "supply_demand",
         "viewpoint"
       ],
-      "followers_count": 396230,
+      "followers_count": 396237,
       "following_count": 1508,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.819781+00:00"
+      "fetched_at": "2026-08-04T08:34:57.202933+00:00"
     },
     {
       "handle": "JKempEnergy",
@@ -1860,7 +1860,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.910291+00:00"
+      "fetched_at": "2026-08-04T08:34:57.649681+00:00"
     },
     {
       "handle": "AndurandPierre",
@@ -1871,14 +1871,14 @@
         "trader",
         "viewpoint"
       ],
-      "followers_count": 73887,
+      "followers_count": 73888,
       "following_count": 1911,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.241909+00:00"
+      "fetched_at": "2026-08-04T08:34:57.361423+00:00"
     },
     {
       "handle": "chigrl",
@@ -1889,14 +1889,14 @@
         "metals",
         "trader"
       ],
-      "followers_count": 361675,
+      "followers_count": 361678,
       "following_count": 979,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:47.884663+00:00"
+      "fetched_at": "2026-08-04T08:34:57.378753+00:00"
     },
     {
       "handle": "staunovo",
@@ -1907,14 +1907,14 @@
         "sellside",
         "viewpoint"
       ],
-      "followers_count": 121907,
+      "followers_count": 121913,
       "following_count": 480,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.037180+00:00"
+      "fetched_at": "2026-08-04T08:34:57.651582+00:00"
     },
     {
       "handle": "Ole_S_Hansen",
@@ -1925,14 +1925,14 @@
         "sellside",
         "viewpoint"
       ],
-      "followers_count": 88077,
+      "followers_count": 88076,
       "following_count": 691,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.264397+00:00"
+      "fetched_at": "2026-08-04T08:34:57.579306+00:00"
     },
     {
       "handle": "AndyHomeMetals",
@@ -1950,7 +1950,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.104497+00:00"
+      "fetched_at": "2026-08-04T08:34:57.655405+00:00"
     },
     {
       "handle": "ClydeCommods",
@@ -1968,7 +1968,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.157121+00:00"
+      "fetched_at": "2026-08-04T08:34:57.974371+00:00"
     },
     {
       "handle": "GavinJMaguire",
@@ -1986,7 +1986,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.279337+00:00"
+      "fetched_at": "2026-08-04T08:34:57.671911+00:00"
     },
     {
       "handle": "DarinNewsom",
@@ -2015,14 +2015,14 @@
         "trader",
         "viewpoint"
       ],
-      "followers_count": 1222326,
+      "followers_count": 1222416,
       "following_count": 2227,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.377415+00:00"
+      "fetched_at": "2026-08-04T08:34:57.986121+00:00"
     },
     {
       "handle": "Go_Rozen",
@@ -2040,7 +2040,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.467729+00:00"
+      "fetched_at": "2026-08-04T08:34:57.924421+00:00"
     },
     {
       "handle": "JeffCurrieGS",
@@ -2069,14 +2069,14 @@
         "nat_gas_lng",
         "research"
       ],
-      "followers_count": 121103,
+      "followers_count": 121107,
       "following_count": 77,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.839137+00:00"
+      "fetched_at": "2026-08-04T08:34:57.977820+00:00"
     },
     {
       "handle": "ericnuttall",
@@ -2094,7 +2094,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.883837+00:00"
+      "fetched_at": "2026-08-04T08:34:58.225842+00:00"
     },
     {
       "handle": "Rory_Johnston",
@@ -2105,14 +2105,14 @@
         "data",
         "viewpoint"
       ],
-      "followers_count": 106680,
+      "followers_count": 106681,
       "following_count": 1496,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.650220+00:00"
+      "fetched_at": "2026-08-04T08:34:58.286861+00:00"
     },
     {
       "handle": "anasalhajji",
@@ -2123,14 +2123,14 @@
         "middle_east",
         "viewpoint"
       ],
-      "followers_count": 248412,
+      "followers_count": 248411,
       "following_count": 501,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.749562+00:00"
+      "fetched_at": "2026-08-04T08:34:58.294755+00:00"
     },
     {
       "handle": "ArjunNMurti",
@@ -2148,7 +2148,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:48.933802+00:00"
+      "fetched_at": "2026-08-04T08:34:58.282050+00:00"
     },
     {
       "handle": "aeberman12",
@@ -2166,7 +2166,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.066695+00:00"
+      "fetched_at": "2026-08-04T08:34:58.508549+00:00"
     },
     {
       "handle": "pwrhungry",
@@ -2184,7 +2184,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.123603+00:00"
+      "fetched_at": "2026-08-04T08:34:58.575376+00:00"
     },
     {
       "handle": "PickeringEnergy",
@@ -2195,14 +2195,14 @@
         "equities",
         "viewpoint"
       ],
-      "followers_count": 36515,
+      "followers_count": 36513,
       "following_count": 565,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.301704+00:00"
+      "fetched_at": "2026-08-04T08:34:58.566982+00:00"
     },
     {
       "handle": "Josh_Young_1",
@@ -2238,7 +2238,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.342086+00:00"
+      "fetched_at": "2026-08-04T08:34:58.792042+00:00"
     },
     {
       "handle": "MarkPMills",
@@ -2249,14 +2249,14 @@
         "power",
         "viewpoint"
       ],
-      "followers_count": 8229,
+      "followers_count": 8228,
       "following_count": 166,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.425621+00:00"
+      "fetched_at": "2026-08-04T08:34:58.861583+00:00"
     },
     {
       "handle": "JLeeEnergy",
@@ -2267,14 +2267,14 @@
         "journalist_analysis",
         "viewpoint"
       ],
-      "followers_count": 3523,
+      "followers_count": 3524,
       "following_count": 85,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.597078+00:00"
+      "fetched_at": "2026-08-04T08:34:58.995648+00:00"
     },
     {
       "handle": "AlexLongley1",
@@ -2292,7 +2292,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.654963+00:00"
+      "fetched_at": "2026-08-04T08:34:59.156846+00:00"
     },
     {
       "handle": "danmurtaugh",
@@ -2310,7 +2310,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.703847+00:00"
+      "fetched_at": "2026-08-04T08:34:59.124999+00:00"
     },
     {
       "handle": "ronbousso1",
@@ -2328,7 +2328,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.898332+00:00"
+      "fetched_at": "2026-08-04T08:34:59.287571+00:00"
     },
     {
       "handle": "devikakrishnak",
@@ -2346,7 +2346,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:49.941230+00:00"
+      "fetched_at": "2026-08-04T08:34:59.405090+00:00"
     },
     {
       "handle": "LauraHurstBLM",
@@ -2418,7 +2418,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:51.054946+00:00"
+      "fetched_at": "2026-08-04T08:35:00.111284+00:00"
     },
     {
       "handle": "TankerTrackers",
@@ -2429,14 +2429,14 @@
         "oil_energy",
         "data"
       ],
-      "followers_count": 226842,
+      "followers_count": 226849,
       "following_count": 158,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:51.356556+00:00"
+      "fetched_at": "2026-08-04T08:35:00.650295+00:00"
     },
     {
       "handle": "samirmadani",
@@ -2483,14 +2483,14 @@
         "oil_energy",
         "data"
       ],
-      "followers_count": 38256,
+      "followers_count": 38257,
       "following_count": 636,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:52.740980+00:00"
+      "fetched_at": "2026-08-04T08:35:02.626344+00:00"
     },
     {
       "handle": "BreakwaveAdvisors",
@@ -2544,7 +2544,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:53.844155+00:00"
+      "fetched_at": "2026-08-04T08:35:03.512349+00:00"
     },
     {
       "handle": "RealRickRule",
@@ -2555,14 +2555,14 @@
         "mining",
         "viewpoint"
       ],
-      "followers_count": 99380,
+      "followers_count": 99381,
       "following_count": 2743,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:54.137978+00:00"
+      "fetched_at": "2026-08-04T08:35:03.779164+00:00"
     },
     {
       "handle": "Brent_Cook",
@@ -2580,7 +2580,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:54.693932+00:00"
+      "fetched_at": "2026-08-04T08:35:03.818404+00:00"
     },
     {
       "handle": "resourcerules",
@@ -2598,7 +2598,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:54.464653+00:00"
+      "fetched_at": "2026-08-04T08:35:04.211520+00:00"
     },
     {
       "handle": "ColinHamiltonCBA",
@@ -2627,14 +2627,14 @@
         "technical",
         "viewpoint"
       ],
-      "followers_count": 30849,
+      "followers_count": 30850,
       "following_count": 489,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:54.976282+00:00"
+      "fetched_at": "2026-08-04T08:35:04.061738+00:00"
     },
     {
       "handle": "silverguru22",
@@ -2645,14 +2645,14 @@
         "trader",
         "viewpoint"
       ],
-      "followers_count": 131323,
+      "followers_count": 131327,
       "following_count": 6865,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.058963+00:00"
+      "fetched_at": "2026-08-04T08:35:04.098296+00:00"
     },
     {
       "handle": "ScottIrwinUI",
@@ -2670,7 +2670,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.170961+00:00"
+      "fetched_at": "2026-08-04T08:35:04.362967+00:00"
     },
     {
       "handle": "ArlanFF101",
@@ -2688,7 +2688,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.883282+00:00"
+      "fetched_at": "2026-08-04T08:35:04.523101+00:00"
     },
     {
       "handle": "GoddessofGrain",
@@ -2706,7 +2706,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.336375+00:00"
+      "fetched_at": "2026-08-04T08:35:04.523270+00:00"
     },
     {
       "handle": "cer_hedge",
@@ -2724,7 +2724,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.449480+00:00"
+      "fetched_at": "2026-08-04T08:35:04.749780+00:00"
     },
     {
       "handle": "snodgrss",
@@ -2743,7 +2743,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.634282+00:00"
+      "fetched_at": "2026-08-04T08:35:04.810453+00:00"
     },
     {
       "handle": "kannbwx",
@@ -2754,14 +2754,14 @@
         "agri_weather",
         "viewpoint"
       ],
-      "followers_count": 93122,
+      "followers_count": 93124,
       "following_count": 156,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.735377+00:00"
+      "fetched_at": "2026-08-04T08:35:04.818950+00:00"
     },
     {
       "handle": "BenNollWeather",
@@ -2779,7 +2779,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.779922+00:00"
+      "fetched_at": "2026-08-04T08:35:04.820699+00:00"
     },
     {
       "handle": "MJVentrice",
@@ -2797,7 +2797,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.116341+00:00"
+      "fetched_at": "2026-08-04T08:35:04.890818+00:00"
     },
     {
       "handle": "webberweather",
@@ -2808,14 +2808,14 @@
         "tropics",
         "viewpoint"
       ],
-      "followers_count": 85988,
+      "followers_count": 85989,
       "following_count": 1757,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:55.969947+00:00"
+      "fetched_at": "2026-08-04T08:35:05.323451+00:00"
     },
     {
       "handle": "PaulRoundy1",
@@ -2833,7 +2833,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.017179+00:00"
+      "fetched_at": "2026-08-04T08:35:05.091261+00:00"
     },
     {
       "handle": "judah47",
@@ -2844,14 +2844,14 @@
         "winter",
         "viewpoint"
       ],
-      "followers_count": 31512,
+      "followers_count": 31513,
       "following_count": 4026,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.079682+00:00"
+      "fetched_at": "2026-08-04T08:35:05.197238+00:00"
     },
     {
       "handle": "RyanMaue",
@@ -2880,14 +2880,14 @@
         "models",
         "viewpoint"
       ],
-      "followers_count": 115405,
+      "followers_count": 115406,
       "following_count": 1214,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.291434+00:00"
+      "fetched_at": "2026-08-04T08:35:05.198964+00:00"
     },
     {
       "handle": "Weather_West",
@@ -2905,7 +2905,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.295856+00:00"
+      "fetched_at": "2026-08-04T08:35:05.390715+00:00"
     },
     {
       "handle": "MattMakens",
@@ -2923,7 +2923,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.340683+00:00"
+      "fetched_at": "2026-08-04T08:35:05.500503+00:00"
     },
     {
       "handle": "wxtruch",
@@ -2959,7 +2959,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.511369+00:00"
+      "fetched_at": "2026-08-04T08:35:05.628357+00:00"
     },
     {
       "handle": "weatherbell",
@@ -2977,7 +2977,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.574333+00:00"
+      "fetched_at": "2026-08-04T08:35:05.668724+00:00"
     },
     {
       "handle": "burgwx",
@@ -2995,7 +2995,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.872191+00:00"
+      "fetched_at": "2026-08-04T08:35:05.794710+00:00"
     },
     {
       "handle": "philklotzbach",
@@ -3013,7 +3013,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.983074+00:00"
+      "fetched_at": "2026-08-04T08:35:05.887072+00:00"
     },
     {
       "handle": "MichaelRLowry",
@@ -3031,7 +3031,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.793289+00:00"
+      "fetched_at": "2026-08-04T08:35:05.953512+00:00"
     },
     {
       "handle": "pppapin",
@@ -3049,7 +3049,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:56.869622+00:00"
+      "fetched_at": "2026-08-04T08:35:06.002767+00:00"
     },
     {
       "handle": "BMcNoldy",
@@ -3067,7 +3067,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.064201+00:00"
+      "fetched_at": "2026-08-04T08:35:06.371274+00:00"
     },
     {
       "handle": "gensiniwx",
@@ -3085,7 +3085,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.143853+00:00"
+      "fetched_at": "2026-08-04T08:35:06.167583+00:00"
     },
     {
       "handle": "MatthewCappucci",
@@ -3096,14 +3096,14 @@
         "journalist_analysis",
         "viewpoint"
       ],
-      "followers_count": 126893,
+      "followers_count": 126891,
       "following_count": 416,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.271756+00:00"
+      "fetched_at": "2026-08-04T08:35:06.276962+00:00"
     },
     {
       "handle": "DrJeffMasters",
@@ -3121,7 +3121,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.297488+00:00"
+      "fetched_at": "2026-08-04T08:35:06.660519+00:00"
     },
     {
       "handle": "bhensonweather",
@@ -3139,7 +3139,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.349861+00:00"
+      "fetched_at": "2026-08-04T08:35:06.755232+00:00"
     },
     {
       "handle": "Climatologist49",
@@ -3168,14 +3168,14 @@
         "data",
         "academic"
       ],
-      "followers_count": 62257,
+      "followers_count": 62260,
       "following_count": 1076,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.613862+00:00"
+      "fetched_at": "2026-08-04T08:35:06.793350+00:00"
     },
     {
       "handle": "ClimateOfGavin",
@@ -3204,14 +3204,14 @@
         "data",
         "viewpoint"
       ],
-      "followers_count": 92714,
+      "followers_count": 92721,
       "following_count": 729,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.631892+00:00"
+      "fetched_at": "2026-08-04T08:35:07.065842+00:00"
     },
     {
       "handle": "ed_hawkins",
@@ -3222,14 +3222,14 @@
         "data",
         "viewpoint"
       ],
-      "followers_count": 94555,
+      "followers_count": 94556,
       "following_count": 1301,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.902945+00:00"
+      "fetched_at": "2026-08-04T08:35:07.418602+00:00"
     },
     {
       "handle": "Peters_Glen",
@@ -3247,7 +3247,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.941449+00:00"
+      "fetched_at": "2026-08-04T08:35:07.121937+00:00"
     },
     {
       "handle": "FrediOtto",
@@ -3265,7 +3265,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:57.912739+00:00"
+      "fetched_at": "2026-08-04T08:35:07.349709+00:00"
     },
     {
       "handle": "DrShepherd2013",
@@ -3294,14 +3294,14 @@
         "communication",
         "viewpoint"
       ],
-      "followers_count": 223326,
+      "followers_count": 223327,
       "following_count": 4459,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:58.194931+00:00"
+      "fetched_at": "2026-08-04T08:35:07.647226+00:00"
     },
     {
       "handle": "MichaelEMann",
@@ -3319,7 +3319,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:58.459667+00:00"
+      "fetched_at": "2026-08-04T08:35:07.690937+00:00"
     },
     {
       "handle": "AndrewDessler",
@@ -3330,14 +3330,14 @@
         "policy",
         "viewpoint"
       ],
-      "followers_count": 36560,
+      "followers_count": 36564,
       "following_count": 652,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:58.447824+00:00"
+      "fetched_at": "2026-08-04T08:35:07.956724+00:00"
     },
     {
       "handle": "richardabetts",
@@ -3355,7 +3355,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:58.720639+00:00"
+      "fetched_at": "2026-08-04T08:35:07.952678+00:00"
     },
     {
       "handle": "SISeneviratne",
@@ -3373,7 +3373,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:58.776113+00:00"
+      "fetched_at": "2026-08-04T08:35:08.102143+00:00"
     },
     {
       "handle": "SimonLeeWx",
@@ -3409,7 +3409,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:59.014579+00:00"
+      "fetched_at": "2026-08-04T08:35:08.268535+00:00"
     },
     {
       "handle": "ggweather",
@@ -3427,7 +3427,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:59.077247+00:00"
+      "fetched_at": "2026-08-04T08:35:08.377598+00:00"
     },
     {
       "handle": "wxjerdman",
@@ -3445,7 +3445,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:59.299063+00:00"
+      "fetched_at": "2026-08-04T08:35:08.533230+00:00"
     },
     {
       "handle": "RARohde",
@@ -3456,14 +3456,14 @@
         "data",
         "viewpoint"
       ],
-      "followers_count": 73480,
+      "followers_count": 73483,
       "following_count": 884,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:59.699461+00:00"
+      "fetched_at": "2026-08-04T08:35:08.735148+00:00"
     },
     {
       "handle": "afreedma",
@@ -3481,7 +3481,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:59.577517+00:00"
+      "fetched_at": "2026-08-04T08:35:08.845020+00:00"
     },
     {
       "handle": "chriscmooney",
@@ -3499,7 +3499,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:59.855103+00:00"
+      "fetched_at": "2026-08-04T08:35:09.357608+00:00"
     },
     {
       "handle": "DekeArndt",
@@ -3517,7 +3517,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:55:59.987845+00:00"
+      "fetched_at": "2026-08-04T08:35:09.113471+00:00"
     },
     {
       "handle": "WorldClimateSvc",
@@ -3535,7 +3535,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:00.453282+00:00"
+      "fetched_at": "2026-08-04T08:35:09.436189+00:00"
     },
     {
       "handle": "WorldWeatherInc",
@@ -3564,14 +3564,14 @@
         "agri_weather",
         "energy_weather"
       ],
-      "followers_count": 9620,
+      "followers_count": 9619,
       "following_count": 68,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:01.568129+00:00"
+      "fetched_at": "2026-08-04T08:35:09.723383+00:00"
     },
     {
       "handle": "BradPanovich",
@@ -3607,7 +3607,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:01.248642+00:00"
+      "fetched_at": "2026-08-04T08:35:09.982332+00:00"
     },
     {
       "handle": "climateguyw",
@@ -3618,14 +3618,14 @@
         "communication",
         "viewpoint"
       ],
-      "followers_count": 12486,
+      "followers_count": 12487,
       "following_count": 3042,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:01.523573+00:00"
+      "fetched_at": "2026-08-04T08:35:09.996492+00:00"
     },
     {
       "handle": "dylan522p",
@@ -3637,14 +3637,14 @@
         "teacher_required",
         "supply_chain"
       ],
-      "followers_count": 154479,
+      "followers_count": 154482,
       "following_count": 1026,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:01.809587+00:00"
+      "fetched_at": "2026-08-04T08:35:10.541773+00:00"
     },
     {
       "handle": "SemiAnalysis_",
@@ -3656,14 +3656,14 @@
         "teacher_required",
         "research"
       ],
-      "followers_count": 146670,
+      "followers_count": 146686,
       "following_count": 29,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:01.977237+00:00"
+      "fetched_at": "2026-08-04T08:35:10.718986+00:00"
     },
     {
       "handle": "mule_capital",
@@ -3694,14 +3694,14 @@
         "teacher_required",
         "viewpoint"
       ],
-      "followers_count": 33636,
+      "followers_count": 33637,
       "following_count": 883,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:02.362846+00:00"
+      "fetched_at": "2026-08-04T08:35:11.377184+00:00"
     },
     {
       "handle": "jukan05",
@@ -3713,14 +3713,14 @@
         "teacher_required",
         "viewpoint"
       ],
-      "followers_count": 184958,
+      "followers_count": 184963,
       "following_count": 371,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:02.140516+00:00"
+      "fetched_at": "2026-08-04T08:35:11.346991+00:00"
     },
     {
       "handle": "firstadopter",
@@ -3732,14 +3732,14 @@
         "teacher_required",
         "journalist_analysis"
       ],
-      "followers_count": 101538,
+      "followers_count": 101540,
       "following_count": 10137,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:02.468122+00:00"
+      "fetched_at": "2026-08-04T08:35:11.410950+00:00"
     },
     {
       "handle": "Beth_Kindig",
@@ -3751,14 +3751,14 @@
         "teacher_required",
         "fund_manager"
       ],
-      "followers_count": 180892,
+      "followers_count": 180893,
       "following_count": 4987,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:02.445849+00:00"
+      "fetched_at": "2026-08-04T08:35:11.628085+00:00"
     },
     {
       "handle": "GavinSBaker",
@@ -3769,14 +3769,14 @@
         "fund_manager",
         "viewpoint"
       ],
-      "followers_count": 304387,
+      "followers_count": 304392,
       "following_count": 6180,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:02.765819+00:00"
+      "fetched_at": "2026-08-04T08:35:12.076009+00:00"
     },
     {
       "handle": "PatrickMoorhead",
@@ -3787,14 +3787,14 @@
         "enterprise_tech",
         "viewpoint"
       ],
-      "followers_count": 67285,
+      "followers_count": 67283,
       "following_count": 4676,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:02.734853+00:00"
+      "fetched_at": "2026-08-04T08:35:12.052469+00:00"
     },
     {
       "handle": "BenBajarin",
@@ -3812,7 +3812,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:02.745832+00:00"
+      "fetched_at": "2026-08-04T08:35:11.970361+00:00"
     },
     {
       "handle": "IanCutress",
@@ -3823,14 +3823,14 @@
         "hardware",
         "viewpoint"
       ],
-      "followers_count": 56661,
+      "followers_count": 56660,
       "following_count": 1294,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:02.938818+00:00"
+      "fetched_at": "2026-08-04T08:35:12.230023+00:00"
     },
     {
       "handle": "stacyrasgon",
@@ -3859,14 +3859,14 @@
         "platforms",
         "viewpoint"
       ],
-      "followers_count": 350639,
+      "followers_count": 350640,
       "following_count": 952,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.018314+00:00"
+      "fetched_at": "2026-08-04T08:35:12.329911+00:00"
     },
     {
       "handle": "benthompson",
@@ -3877,14 +3877,14 @@
         "strategy",
         "viewpoint"
       ],
-      "followers_count": 277105,
+      "followers_count": 277106,
       "following_count": 1603,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.083950+00:00"
+      "fetched_at": "2026-08-04T08:35:12.353694+00:00"
     },
     {
       "handle": "stratechery",
@@ -3895,14 +3895,14 @@
         "strategy",
         "research"
       ],
-      "followers_count": 1183733,
+      "followers_count": 1183977,
       "following_count": 3,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.223465+00:00"
+      "fetched_at": "2026-08-04T08:35:12.533132+00:00"
     },
     {
       "handle": "ballmatthew",
@@ -3913,14 +3913,14 @@
         "platforms",
         "viewpoint"
       ],
-      "followers_count": 114184,
+      "followers_count": 114183,
       "following_count": 115,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.328828+00:00"
+      "fetched_at": "2026-08-04T08:35:12.640142+00:00"
     },
     {
       "handle": "Citrini7",
@@ -3938,7 +3938,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.428210+00:00"
+      "fetched_at": "2026-08-04T08:35:12.788652+00:00"
     },
     {
       "handle": "vkhosla",
@@ -3949,14 +3949,14 @@
         "ai",
         "viewpoint"
       ],
-      "followers_count": 739833,
+      "followers_count": 739855,
       "following_count": 655,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.519705+00:00"
+      "fetched_at": "2026-08-04T08:35:12.706989+00:00"
     },
     {
       "handle": "eladgil",
@@ -3967,14 +3967,14 @@
         "ai",
         "viewpoint"
       ],
-      "followers_count": 590241,
+      "followers_count": 590344,
       "following_count": 1803,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.601568+00:00"
+      "fetched_at": "2026-08-04T08:35:12.833133+00:00"
     },
     {
       "handle": "natfriedman",
@@ -3985,14 +3985,14 @@
         "developer",
         "viewpoint"
       ],
-      "followers_count": 415957,
+      "followers_count": 416002,
       "following_count": 827,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.709417+00:00"
+      "fetched_at": "2026-08-04T08:35:12.918132+00:00"
     },
     {
       "handle": "danielgross",
@@ -4003,14 +4003,14 @@
         "venture",
         "viewpoint"
       ],
-      "followers_count": 316700,
+      "followers_count": 316757,
       "following_count": 0,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.761051+00:00"
+      "fetched_at": "2026-08-04T08:35:13.343949+00:00"
     },
     {
       "handle": "karpathy",
@@ -4021,14 +4021,14 @@
         "developer",
         "viewpoint"
       ],
-      "followers_count": 3668887,
+      "followers_count": 3669438,
       "following_count": 1121,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.896001+00:00"
+      "fetched_at": "2026-08-04T08:35:13.065492+00:00"
     },
     {
       "handle": "AndrewYNg",
@@ -4039,14 +4039,14 @@
         "enterprise_ai",
         "viewpoint"
       ],
-      "followers_count": 1752020,
+      "followers_count": 1752045,
       "following_count": 1099,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.964923+00:00"
+      "fetched_at": "2026-08-04T08:35:13.361837+00:00"
     },
     {
       "handle": "drfeifei",
@@ -4057,14 +4057,14 @@
         "vision_ai",
         "viewpoint"
       ],
-      "followers_count": 929077,
+      "followers_count": 929175,
       "following_count": 1177,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:03.978358+00:00"
+      "fetched_at": "2026-08-04T08:35:13.229263+00:00"
     },
     {
       "handle": "ylecun",
@@ -4075,14 +4075,14 @@
         "models",
         "viewpoint"
       ],
-      "followers_count": 1258329,
+      "followers_count": 1258353,
       "following_count": 788,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.108764+00:00"
+      "fetched_at": "2026-08-04T08:35:13.340075+00:00"
     },
     {
       "handle": "fchollet",
@@ -4093,14 +4093,14 @@
         "models",
         "viewpoint"
       ],
-      "followers_count": 712760,
+      "followers_count": 712772,
       "following_count": 827,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.182146+00:00"
+      "fetched_at": "2026-08-04T08:35:13.531365+00:00"
     },
     {
       "handle": "DrJimFan",
@@ -4111,14 +4111,14 @@
         "robotics",
         "viewpoint"
       ],
-      "followers_count": 526684,
+      "followers_count": 526722,
       "following_count": 3140,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.282308+00:00"
+      "fetched_at": "2026-08-04T08:35:13.631723+00:00"
     },
     {
       "handle": "swyx",
@@ -4129,14 +4129,14 @@
         "developer",
         "viewpoint"
       ],
-      "followers_count": 178687,
+      "followers_count": 178691,
       "following_count": 3875,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.356956+00:00"
+      "fetched_at": "2026-08-04T08:35:13.797685+00:00"
     },
     {
       "handle": "simonw",
@@ -4147,14 +4147,14 @@
         "developer",
         "viewpoint"
       ],
-      "followers_count": 202347,
+      "followers_count": 202352,
       "following_count": 5650,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.438200+00:00"
+      "fetched_at": "2026-08-04T08:35:13.639672+00:00"
     },
     {
       "handle": "JeffDean",
@@ -4165,14 +4165,14 @@
         "ai_research",
         "viewpoint"
       ],
-      "followers_count": 451463,
+      "followers_count": 451469,
       "following_count": 6427,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.481299+00:00"
+      "fetched_at": "2026-08-04T08:35:13.822783+00:00"
     },
     {
       "handle": "LisaSu",
@@ -4183,14 +4183,14 @@
         "hardware",
         "executive"
       ],
-      "followers_count": 286499,
+      "followers_count": 286516,
       "following_count": 456,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.968777+00:00"
+      "fetched_at": "2026-08-04T08:35:14.020828+00:00"
     },
     {
       "handle": "cristianoamon",
@@ -4201,14 +4201,14 @@
         "edge_ai",
         "executive"
       ],
-      "followers_count": 109242,
+      "followers_count": 109250,
       "following_count": 916,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.885809+00:00"
+      "fetched_at": "2026-08-04T08:35:13.938144+00:00"
     },
     {
       "handle": "jimkxa",
@@ -4219,14 +4219,14 @@
         "hardware",
         "viewpoint"
       ],
-      "followers_count": 55467,
+      "followers_count": 55468,
       "following_count": 165,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.061750+00:00"
+      "fetched_at": "2026-08-04T08:35:14.088398+00:00"
     },
     {
       "handle": "realGeorgeHotz",
@@ -4237,14 +4237,14 @@
         "hardware",
         "viewpoint"
       ],
-      "followers_count": 303663,
+      "followers_count": 303664,
       "following_count": 203,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.731449+00:00"
+      "fetched_at": "2026-08-04T08:35:14.476973+00:00"
     },
     {
       "handle": "jordanschneider",
@@ -4262,7 +4262,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:04.755054+00:00"
+      "fetched_at": "2026-08-04T08:35:14.228139+00:00"
     },
     {
       "handle": "natolambert",
@@ -4273,14 +4273,14 @@
         "models",
         "viewpoint"
       ],
-      "followers_count": 96671,
+      "followers_count": 96673,
       "following_count": 931,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.041982+00:00"
+      "fetched_at": "2026-08-04T08:35:14.299663+00:00"
     },
     {
       "handle": "anshelsag",
@@ -4298,7 +4298,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.046089+00:00"
+      "fetched_at": "2026-08-04T08:35:14.302419+00:00"
     },
     {
       "handle": "danielnewmanUV",
@@ -4316,7 +4316,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.342144+00:00"
+      "fetched_at": "2026-08-04T08:35:14.414526+00:00"
     },
     {
       "handle": "skorusARK",
@@ -4334,7 +4334,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.786488+00:00"
+      "fetched_at": "2026-08-04T08:35:14.509575+00:00"
     },
     {
       "handle": "TashaARK",
@@ -4352,7 +4352,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.340828+00:00"
+      "fetched_at": "2026-08-04T08:35:14.514934+00:00"
     },
     {
       "handle": "EconomyApp",
@@ -4363,14 +4363,14 @@
         "technology",
         "viewpoint"
       ],
-      "followers_count": 240449,
+      "followers_count": 240444,
       "following_count": 391,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.429144+00:00"
+      "fetched_at": "2026-08-04T08:35:14.579104+00:00"
     },
     {
       "handle": "eric_seufert",
@@ -4388,7 +4388,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.694230+00:00"
+      "fetched_at": "2026-08-04T08:35:14.593767+00:00"
     },
     {
       "handle": "hhhypergrowth",
@@ -4406,7 +4406,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.648165+00:00"
+      "fetched_at": "2026-08-04T08:35:14.704955+00:00"
     },
     {
       "handle": "pmarca",
@@ -4417,14 +4417,14 @@
         "technology",
         "viewpoint"
       ],
-      "followers_count": 5356796,
-      "following_count": 32288,
+      "followers_count": 5357889,
+      "following_count": 32290,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.644195+00:00"
+      "fetched_at": "2026-08-04T08:35:14.771413+00:00"
     },
     {
       "handle": "bgurley",
@@ -4435,14 +4435,14 @@
         "technology",
         "viewpoint"
       ],
-      "followers_count": 784451,
+      "followers_count": 784449,
       "following_count": 2149,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.723372+00:00"
+      "fetched_at": "2026-08-04T08:35:14.811553+00:00"
     },
     {
       "handle": "fredwilson",
@@ -4453,14 +4453,14 @@
         "technology",
         "viewpoint"
       ],
-      "followers_count": 640878,
+      "followers_count": 640880,
       "following_count": 1345,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.952901+00:00"
+      "fetched_at": "2026-08-04T08:35:14.796077+00:00"
     },
     {
       "handle": "jaminball",
@@ -4471,14 +4471,14 @@
         "tech_equities",
         "viewpoint"
       ],
-      "followers_count": 92017,
+      "followers_count": 92019,
       "following_count": 1443,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:05.950085+00:00"
+      "fetched_at": "2026-08-04T08:35:14.874971+00:00"
     },
     {
       "handle": "sama",
@@ -4489,14 +4489,14 @@
         "executive",
         "viewpoint"
       ],
-      "followers_count": 5730491,
+      "followers_count": 5730637,
       "following_count": 1021,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:06.002942+00:00"
+      "fetched_at": "2026-08-04T08:35:14.884516+00:00"
     },
     {
       "handle": "gdb",
@@ -4507,14 +4507,14 @@
         "executive",
         "viewpoint"
       ],
-      "followers_count": 1025512,
+      "followers_count": 1025522,
       "following_count": 8,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:06.116856+00:00"
+      "fetched_at": "2026-08-04T08:35:15.043797+00:00"
     },
     {
       "handle": "tomtunguz",
@@ -4580,14 +4580,14 @@
         "value_investing",
         "viewpoint"
       ],
-      "followers_count": 97948,
+      "followers_count": 97954,
       "following_count": 76,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:06.678576+00:00"
+      "fetched_at": "2026-08-04T08:35:15.160167+00:00"
     },
     {
       "handle": "artinmemes",
@@ -4605,7 +4605,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:06.327505+00:00"
+      "fetched_at": "2026-08-04T08:35:15.166493+00:00"
     },
     {
       "handle": "tychozzz",
@@ -4616,14 +4616,14 @@
         "tech_equities",
         "viewpoint"
       ],
-      "followers_count": 91175,
+      "followers_count": 91180,
       "following_count": 444,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:06.396418+00:00"
+      "fetched_at": "2026-08-04T08:35:15.208964+00:00"
     },
     {
       "handle": "xiamujistock",
@@ -4652,14 +4652,14 @@
         "equities",
         "viewpoint"
       ],
-      "followers_count": 317171,
+      "followers_count": 317175,
       "following_count": 4523,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:06.626809+00:00"
+      "fetched_at": "2026-08-04T08:35:15.453967+00:00"
     },
     {
       "handle": "hanking66",
@@ -4677,7 +4677,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:06.699508+00:00"
+      "fetched_at": "2026-08-04T08:35:15.460773+00:00"
     },
     {
       "handle": "darrencao2024",
@@ -4688,14 +4688,14 @@
         "credit",
         "viewpoint"
       ],
-      "followers_count": 24177,
+      "followers_count": 24176,
       "following_count": 204,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:06.909511+00:00"
+      "fetched_at": "2026-08-04T08:35:15.482288+00:00"
     },
     {
       "handle": "bitfoo11",
@@ -4749,7 +4749,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:07.265922+00:00"
+      "fetched_at": "2026-08-04T08:35:15.753065+00:00"
     },
     {
       "handle": "PhyrexNI",
@@ -4760,14 +4760,14 @@
         "equities",
         "viewpoint"
       ],
-      "followers_count": 398435,
+      "followers_count": 398430,
       "following_count": 5551,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:07.629671+00:00"
+      "fetched_at": "2026-08-04T08:35:16.344199+00:00"
     },
     {
       "handle": "bboczz",
@@ -4797,14 +4797,14 @@
         "commodities",
         "viewpoint"
       ],
-      "followers_count": 852843,
+      "followers_count": 852846,
       "following_count": 6341,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:07.931416+00:00"
+      "fetched_at": "2026-08-04T08:35:17.070717+00:00"
     },
     {
       "handle": "globalmacro",
@@ -4821,7 +4821,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:08.220992+00:00"
+      "fetched_at": "2026-08-04T08:35:17.354744+00:00"
     },
     {
       "handle": "CiovaccoCapital",
@@ -4831,14 +4831,14 @@
         "market_research",
         "viewpoint"
       ],
-      "followers_count": 79048,
+      "followers_count": 79051,
       "following_count": 578,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:08.504721+00:00"
+      "fetched_at": "2026-08-04T08:35:17.872906+00:00"
     },
     {
       "handle": "Fxflow",
@@ -4849,14 +4849,14 @@
         "strategy",
         "viewpoint"
       ],
-      "followers_count": 44263,
+      "followers_count": 44262,
       "following_count": 901,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:08.766471+00:00"
+      "fetched_at": "2026-08-04T08:35:18.168296+00:00"
     },
     {
       "handle": "HenrikZeberg",
@@ -4867,14 +4867,14 @@
         "cross_asset",
         "viewpoint"
       ],
-      "followers_count": 217089,
+      "followers_count": 217091,
       "following_count": 1237,
       "delta_1d": null,
       "growth_1d_pct": null,
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:09.043713+00:00"
+      "fetched_at": "2026-08-04T08:35:18.452116+00:00"
     },
     {
       "handle": "RickRuleRulz",
@@ -4892,7 +4892,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:09.342544+00:00"
+      "fetched_at": "2026-08-04T08:35:18.757335+00:00"
     },
     {
       "handle": "bullionanalytic",
@@ -4909,7 +4909,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:09.648993+00:00"
+      "fetched_at": "2026-08-04T08:35:18.854588+00:00"
     },
     {
       "handle": "mkt_intl",
@@ -4928,7 +4928,7 @@
       "delta_7d": null,
       "growth_7d_pct": null,
       "source": "fxtwitter_public_api",
-      "fetched_at": "2026-08-04T07:56:09.899553+00:00"
+      "fetched_at": "2026-08-04T08:35:19.030402+00:00"
     }
   ],
   "method": {
