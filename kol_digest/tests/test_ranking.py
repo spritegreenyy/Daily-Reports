@@ -58,3 +58,22 @@ def test_kol_score_rewards_consistent_quality():
     result = build_rankings(rows, "2026-08-04T03:00:00+00:00")
     scores = {item["handle"]: item["score"] for item in result["top_kols"]}
     assert scores["steady"] > scores["oneoff"]
+
+
+def test_follower_reach_affects_front_selection_not_view_score():
+    rows = [
+        _row("small", "macro", "Inflation risk means rates may stay high and bond yields could rise.", tier=1, engagement=300),
+        _row("large", "macro", "Inflation risk means rates may stay high and bond yields could rise.", tier=1, engagement=300),
+    ]
+    snapshot = {
+        "summary": {"total_accounts": 2, "covered_accounts": 2, "coverage_pct": 100.0},
+        "accounts": [
+            {"handle": "small", "followers_count": 1_000, "delta_1d": 10, "growth_1d_pct": 1.0},
+            {"handle": "large", "followers_count": 1_000_000, "delta_1d": 100, "growth_1d_pct": 0.01},
+        ],
+    }
+    result = build_rankings(rows, "2026-08-04T03:00:00+00:00", snapshot)
+    by_handle = {item["handle"]: item for item in result["top_views"]}
+    assert by_handle["small"]["score"] == by_handle["large"]["score"]
+    assert by_handle["large"]["front_score"] > by_handle["small"]["front_score"]
+    assert result["top_views"][0]["handle"] == "large"

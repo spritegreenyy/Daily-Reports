@@ -516,7 +516,10 @@ def main():
         (row for row in reversed(composite_daily) if row.get("date") == date),
         composite_daily[-1] if composite_daily else {},
     )
-    rankings = build_rankings(tweets, tw.get("generated_at", ""))
+    follower_snapshot = load_json_if_exists(
+        os.path.join(ROOT, "日报", ymd, f"KOL粉丝_{ymd}.json")
+    ) or {}
+    rankings = build_rankings(tweets, tw.get("generated_at", ""), follower_snapshot)
     data = {date: {
         "meta": meta, "report_zh": report_zh, "report_en": report_en, "tweets": tweets,
         "indices": current_indices.get("assets", {}), "index_history": history_series,

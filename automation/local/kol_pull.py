@@ -15,6 +15,7 @@ HERE = Path(__file__).parent
 ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT))                    # import datamux.*
 from kol_accounts_merge import merged_accounts_file
+from kol_followers import write_daily_snapshot
 
 ACCOUNTS = str(merged_accounts_file(
     ROOT / "datamux/kol_accounts_viewpoint_250.yaml",
@@ -42,13 +43,25 @@ def main():
     from datamux.sources.news.twitter_monitor import TwitterMonitorSource
 
     all_items = []
+    all_profile_metrics = {}
     for tier in (1, 2, 3):
         src = TwitterMonitorSource(accounts_file=ACCOUNTS, tier=tier,
                                    name_suffix=f"t{tier}", cookies_file=COOKIES,
                                    max_tweets_per_account=10)
         r = src._fetch_sync(None)      # 一次性抓取, 不用游标
-        print(f"tier{tier}: {len(r.items)} 条")
+        all_profile_metrics.update(src.profile_metrics)
+        print(f"tier{tier}: {len(r.items)} 条 · {len(src.profile_metrics)} 个粉丝快照")
         all_items += r.items
+
+    date = datetime.now().strftime("%Y-%m-%d")
+    if all_profile_metrics:
+        snapshot_path = write_daily_snapshot(
+            accounts_file=ACCOUNTS,
+            metrics=all_profile_metrics,
+            root=ROOT,
+            report_date=date,
+        )
+        print(f"followers: {len(all_profile_metrics)} 个账号 -> {snapshot_path}")
 
     if not all_items:
         print("KOL 抓取结果为 0，保留上次数据库并停止发布", file=sys.stderr)
@@ -66,7 +79,6 @@ def main():
     con.commit(); con.close()
     print(f"sqlite: {len(all_items)} 条 -> {DB}")
 
-    date = datetime.now().strftime("%Y-%m-%d")
     env = {"PYTHONPATH": str(KD / "src")}
     import os
     env = {**os.environ, **env}

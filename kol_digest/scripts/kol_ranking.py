@@ -102,9 +102,24 @@ def _parse_generated(value: str) -> datetime | None:
             return None
 
 
-def build_rankings(tweets: list[dict[str, Any]], generated_at: str = "") -> dict[str, Any]:
+def build_rankings(
+    tweets: list[dict[str, Any]],
+    generated_at: str = "",
+    follower_snapshot: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Return scored views, diversified top views, and daily KOL rankings."""
     generated = _parse_generated(generated_at)
+    follower_snapshot = follower_snapshot or {}
+    follower_rows = [
+        row for row in follower_snapshot.get("accounts", [])
+        if row.get("handle") and row.get("followers_count") is not None
+    ]
+    follower_map = {str(row["handle"]).lower(): row for row in follower_rows}
+    follower_percentiles = _percentiles([int(row["followers_count"]) for row in follower_rows])
+    influence_map = {
+        str(row["handle"]).lower(): round(100.0 * percentile, 1)
+        for row, percentile in zip(follower_rows, follower_percentiles)
+    }
     engagement_percentiles = _percentiles([int(row.get("eng") or 0) for row in tweets])
     scored: list[dict[str, Any]] = []
 
@@ -195,8 +210,22 @@ def build_rankings(tweets: list[dict[str, Any]], generated_at: str = "") -> dict
     kol_score_by_handle = {item["handle"].lower(): item["score"] for item in kol_rows}
     for item in scored:
         item["kol_score"] = kol_score_by_handle.get(item["handle"].lower(), 0.0)
+        follower = follower_map.get(item["handle"].lower()) or {}
+        influence = influence_map.get(item["handle"].lower())
+        item["followers_count"] = follower.get("followers_count")
+        item["follower_delta_1d"] = follower.get("delta_1d")
+        item["follower_growth_1d_pct"] = follower.get("growth_1d_pct")
+        item["influence_score"] = influence
+        item["front_score"] = round(0.8 * item["score"] + 0.2 * influence, 1) if influence is not None else item["score"]
 
-    scored.sort(key=lambda item: (-item["score"], -item["kol_score"], -item["engagement"]))
+    for item in kol_rows:
+        follower = follower_map.get(item["handle"].lower()) or {}
+        item["followers_count"] = follower.get("followers_count")
+        item["delta_1d"] = follower.get("delta_1d")
+        item["growth_1d_pct"] = follower.get("growth_1d_pct")
+        item["influence_score"] = influence_map.get(item["handle"].lower())
+
+    scored.sort(key=lambda item: (-item["front_score"], -item["score"], -item["kol_score"], -item["engagement"]))
     selected: list[dict[str, Any]] = []
     used_handles: set[str] = set()
     board_counts: dict[str, int] = defaultdict(int)
@@ -236,10 +265,14 @@ def build_rankings(tweets: list[dict[str, Any]], generated_at: str = "") -> dict
                 "consistent_output": 15,
             },
             "noise_penalty": "off-topic, low-relevance, or very short low-information content",
+            "front_selection": "80% view research score + 20% follower-reach percentile; follower growth never changes correctness scores",
             "note_zh": "分数衡量当日研究优先级，不代表观点正确率；暂不包含粉丝量。",
             "note_en": "Scores measure daily research priority, not forecast accuracy; follower data is not yet included.",
         },
         "top_views": selected,
         "top_kols": kol_rows[:10],
+        "follower_summary": follower_snapshot.get("summary", {}),
+        "growth_leaders": (follower_snapshot.get("growth_leaders") or [])[:10],
+        "reach_leaders": (follower_snapshot.get("reach_leaders") or [])[:10],
         "scored_views": len(scored),
     }

@@ -15,11 +15,14 @@
 !/automation/local/kol_indices.py
 !/automation/local/kol_composite.py
 !/automation/local/kol_emphasis.py
+!/automation/local/kol_followers.py
+!/automation/local/kol_followers_pull.py
 !/automation/local/kol_accounts_merge.py
 !/automation/local/kol_soft_accounts.yaml
 !/automation/local/test_kol_indices.py
 !/automation/local/test_kol_composite.py
 !/automation/local/test_kol_emphasis.py
+!/automation/local/test_kol_followers.py
 !/automation/local/run_daily.sh
 !/automation/local/tide_report.py
 !/automation/local/chart_patterns.py

@@ -69,16 +69,18 @@ def _route_profile_resource(route: Any) -> None:
 
 
 def _parse_count(text: str) -> int:
-    """Parse Twitter count strings like '1.2K', '3.4M'."""
+    """Parse Twitter count strings like '1.2K', '3.4M', or '39.6万'."""
     if not text:
         return 0
-    text = text.strip().lower().replace(",", "")
+    text = text.strip().lower().replace(",", "").replace("，", "")
     try:
-        if text.endswith("k"):
-            return int(float(text[:-1]) * 1_000)
-        if text.endswith("m"):
-            return int(float(text[:-1]) * 1_000_000)
-        return int(text)
+        match = re.search(r"([0-9]+(?:\.[0-9]+)?)\s*([kmb万亿]?)", text)
+        if not match:
+            return 0
+        value = float(match.group(1))
+        unit = match.group(2)
+        multipliers = {"": 1, "k": 1_000, "m": 1_000_000, "b": 1_000_000_000, "万": 10_000, "亿": 100_000_000}
+        return int(value * multipliers[unit])
     except (ValueError, TypeError):
         return 0
 
@@ -196,6 +198,7 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
         self._cookies_env = cookies_env
         self._max_tweets = int(max_tweets_per_account)
         self._budget = wall_clock_budget_seconds
+        self.profile_metrics: dict[str, dict[str, Any]] = {}
 
         all_specs = _load_accounts(accounts_file)
         self._specs: list[dict] = [s for s in all_specs if s["tier"] == self._tier]
@@ -241,6 +244,7 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
             )
 
         items: list[dict] = []
+        self.profile_metrics = {}
         new_last_ids = dict(last_ids)
 
         try:
@@ -262,6 +266,7 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
                 context.add_cookies(pw_cookies)
                 context.route("**/*", _route_profile_resource)
                 page = context.new_page()
+                page.on("response", self._capture_profile_response)
 
                 for spec in self._specs:
                     if self._budget and (time.monotonic() - started) > self._budget:
@@ -277,6 +282,8 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
                     h_t0 = time.monotonic()
                     try:
                         tweets = self._scrape_profile(page, handle, prev_last_id)
+                        if handle.lower() not in self.profile_metrics:
+                            self._capture_profile_dom(page, handle)
                         h_dur = time.monotonic() - h_t0
                         for tweet in tweets:
                             items.append(self._normalize(tweet, handle, tags))
@@ -313,6 +320,87 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
             items=items,
             cursor={"last_ids": new_last_ids},
         )
+
+    def collect_profile_metrics_only(self, settle_ms: int = 900) -> dict[str, dict[str, Any]]:
+        """Collect public profile metrics without waiting for tweet articles."""
+        cookies_raw = self._load_cookies()
+        if not cookies_raw:
+            logger.warning("%s: no cookies for follower collection", self.name)
+            return {}
+        try:
+            pw_cookies = _parse_cookies(cookies_raw)
+            from playwright.sync_api import sync_playwright
+        except Exception as exc:
+            logger.error("%s: follower collector setup failed: %s", self.name, exc)
+            return {}
+
+        self.profile_metrics = {}
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            try:
+                context = browser.new_context(user_agent=USER_AGENT)
+                context.add_cookies(pw_cookies)
+                context.route("**/*", _route_profile_resource)
+                page = context.new_page()
+                page.on("response", self._capture_profile_response)
+                for index, spec in enumerate(self._specs, 1):
+                    handle = spec["handle"]
+                    try:
+                        page.goto(f"https://x.com/{handle}", wait_until="domcontentloaded", timeout=8_000)
+                        page.wait_for_timeout(settle_ms)
+                        if handle.lower() not in self.profile_metrics:
+                            self._capture_profile_dom(page, handle)
+                    except Exception as exc:
+                        logger.warning("%s: follower collection failed @%s: %s", self.name, handle, exc)
+                    if index % 25 == 0:
+                        logger.info("%s: follower progress %d/%d", self.name, index, len(self._specs))
+            finally:
+                browser.close()
+        return dict(self.profile_metrics)
+
+    def _capture_profile_response(self, response: Any) -> None:
+        """Capture exact public follower counts from X's profile response."""
+        if "UserByScreenName" not in str(getattr(response, "url", "")):
+            return
+        try:
+            payload = response.json()
+            result = (((payload.get("data") or {}).get("user") or {}).get("result") or {})
+            core = result.get("core") or {}
+            counts = result.get("relationship_counts") or {}
+            handle = str(core.get("screen_name") or "").strip()
+            followers = counts.get("followers")
+            if not handle or followers is None:
+                return
+            self.profile_metrics[handle.lower()] = {
+                "handle": handle,
+                "followers_count": int(followers),
+                "following_count": int(counts.get("following") or 0),
+                "source": "x_profile_response",
+                "fetched_at": utcnow_iso(),
+            }
+        except Exception:
+            logger.debug("%s: failed to parse profile metrics response", self.name)
+
+    def _capture_profile_dom(self, page: Any, handle: str) -> None:
+        """Fallback to the visible compact follower count when API capture misses."""
+        try:
+            selector = (
+                f'a[href="/{handle}/verified_followers"],'
+                f'a[href="/{handle}/followers"]'
+            )
+            link = page.query_selector(selector)
+            followers = _parse_count(link.inner_text() if link else "")
+            if followers <= 0:
+                return
+            self.profile_metrics[handle.lower()] = {
+                "handle": handle,
+                "followers_count": followers,
+                "following_count": None,
+                "source": "x_profile_dom_compact",
+                "fetched_at": utcnow_iso(),
+            }
+        except Exception:
+            logger.debug("%s: failed DOM follower fallback for @%s", self.name, handle)
 
     def normalize(self, raw: Any) -> list[dict]:
         return [raw] if isinstance(raw, dict) else []
