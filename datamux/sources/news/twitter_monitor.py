@@ -321,7 +321,7 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
             cursor={"last_ids": new_last_ids},
         )
 
-    def collect_profile_metrics_only(self, settle_ms: int = 900) -> dict[str, dict[str, Any]]:
+    def collect_profile_metrics_only(self, settle_ms: int = 300) -> dict[str, dict[str, Any]]:
         """Collect public profile metrics without waiting for tweet articles."""
         cookies_raw = self._load_cookies()
         if not cookies_raw:
@@ -346,12 +346,20 @@ class TwitterMonitorSource(SyncSourceMixin, BasePollingSource):
                 for index, spec in enumerate(self._specs, 1):
                     handle = spec["handle"]
                     try:
-                        page.goto(f"https://x.com/{handle}", wait_until="domcontentloaded", timeout=8_000)
-                        page.wait_for_timeout(settle_ms)
+                        with page.expect_response(
+                            lambda response: "UserByScreenName" in response.url,
+                            timeout=6_000,
+                        ) as response_info:
+                            page.goto(f"https://x.com/{handle}", wait_until="domcontentloaded", timeout=8_000)
+                        self._capture_profile_response(response_info.value)
                         if handle.lower() not in self.profile_metrics:
+                            page.wait_for_timeout(settle_ms)
                             self._capture_profile_dom(page, handle)
                     except Exception as exc:
-                        logger.warning("%s: follower collection failed @%s: %s", self.name, handle, exc)
+                        page.wait_for_timeout(settle_ms)
+                        self._capture_profile_dom(page, handle)
+                        if handle.lower() not in self.profile_metrics:
+                            logger.warning("%s: follower collection failed @%s: %s", self.name, handle, exc)
                     if index % 25 == 0:
                         logger.info("%s: follower progress %d/%d", self.name, index, len(self._specs))
             finally:

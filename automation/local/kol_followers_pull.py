@@ -28,7 +28,7 @@ COOKIES = str(Path.home() / ".x_cookies.json")
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--date", default=datetime.now().strftime("%Y-%m-%d"))
-    parser.add_argument("--settle-ms", type=int, default=900)
+    parser.add_argument("--settle-ms", type=int, default=300)
     args = parser.parse_args()
 
     metrics = {}
