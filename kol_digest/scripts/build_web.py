@@ -26,15 +26,18 @@ OUT = KD + "/output"
 TMPL = KD + "/scripts/kol_web_template.html"
 
 TW_BOARD = {
-    "macro": ("宏观经济", "Macro", "#5b8def", "宏观", "Macro"),
-    "geopolitics": ("地缘政治", "Geopolitics", "#ec6f57", "地缘", "Geo"),
-    "commodities": ("大宗商品", "Commodities", "#e0952f", "大宗", "Cmdty"),
-    "softs": ("软商品", "Soft Commodities", "#df6f91", "软商品", "Softs"),
-    "weather": ("天气气候", "Weather", "#33bfad", "天气", "Weather"),
-    "ai_semis": ("AI半导体", "AI & Semis", "#b18ef0", "AI", "AI"),
+    "macro": ("宏观经济", "Macro", "#5b8def", "宏观", "Macro", True),
+    "geopolitics": ("地缘政治", "Geopolitics", "#ec6f57", "地缘", "Geo", True),
+    "energy": ("能源", "Energy", "#ed8b49", "能源", "Energy", True),
+    "metals": ("金属", "Metals", "#d9ad45", "金属", "Metals", True),
+    "agriculture": ("农产品", "Agriculture", "#78b76e", "农产品", "Agri", True),
+    "commodities": ("大宗综合", "Cross-Commodity", "#a7895a", "大宗综合", "Cross", False),
+    "ai_semis": ("AI半导体", "AI & Semis", "#b18ef0", "AI", "AI", True),
 }
 REP_BOARD = {
     "宏观经济": "#5b8def", "地缘政治": "#ec6f57", "大宗商品": "#e0952f", "股票": "#3fb36a",
+    "能源": "#ed8b49", "Energy": "#ed8b49", "金属": "#d9ad45", "Metals": "#d9ad45",
+    "农产品": "#78b76e", "Agriculture": "#78b76e",
     "AI半导体": "#b18ef0", "AI半导体科技": "#b18ef0", "AI / 半导体": "#b18ef0", "天气气候": "#33bfad", "软商品": "#df6f91"
 }
 PRICE_SYMBOLS = {
@@ -300,6 +303,67 @@ def normalize_report(payload, lang):
     return compact_report_insights(base, lang)
 
 
+def classify_tweet_board(section_key, text, tags=None):
+    """Map the old commodity buckets into Energy, Metals, and Agriculture."""
+    section_key = str(section_key or "macro")
+    tags = {str(tag).lower() for tag in (tags or [])}
+    if section_key in {"softs", "weather"}:
+        return "agriculture"
+    if section_key != "commodities":
+        return section_key if section_key in TW_BOARD else "macro"
+
+    assets = set(match_asset_keys(text))
+    if "energy" in assets or tags & {"oil_energy", "energy", "natural_gas", "power"}:
+        return "energy"
+    if "metals" in assets or tags & {"metals", "mining", "critical_minerals"}:
+        return "metals"
+    if assets & {"grains", "softs"} or tags & {
+        "agriculture", "grains", "softs", "weather_climate", "climate_science"
+    }:
+        return "agriculture"
+    return "commodities"
+
+
+def regroup_report_sections(report, lang):
+    """Split the visual commodity report into the requested three families."""
+    names = {
+        "energy": "能源" if lang == "zh" else "Energy",
+        "metals": "金属" if lang == "zh" else "Metals",
+        "agriculture": "农产品" if lang == "zh" else "Agriculture",
+    }
+    source_names = {
+        "大宗商品", "Commodities", "天气气候", "Weather & Climate",
+        "软商品", "Soft Commodities",
+    }
+    family_groups = {key: [] for key in names}
+    kept = []
+    for section in report.get("sections", []):
+        section_name, groups = section[0], section[1]
+        if section_name not in source_names:
+            kept.append(section)
+            continue
+        for group in groups:
+            combined = " ".join([str(group[0])] + [str(row[2]) for row in group[1]])
+            if section_name in {"天气气候", "Weather & Climate", "软商品", "Soft Commodities"}:
+                family = "agriculture"
+            else:
+                assets = set(match_asset_keys(combined))
+                family = "energy" if "energy" in assets else (
+                    "metals" if "metals" in assets else "agriculture"
+                )
+            family_groups[family].append(group)
+
+    commodity_sections = [
+        [names[key], family_groups[key]] for key in ("energy", "metals", "agriculture")
+        if family_groups[key]
+    ]
+    insert_at = next(
+        (i for i, section in enumerate(kept) if section[0] in {"AI半导体", "AI & Semiconductors"}),
+        len(kept),
+    )
+    return {**report, "sections": kept[:insert_at] + commodity_sections + kept[insert_at:]}
+
+
 def fill_recent_section_fallbacks(report, lang, report_date, max_days=7):
     """Fill only empty visual sections with dated, already-generated prior views."""
     current_dt = datetime.strptime(report_date, "%Y-%m-%d")
@@ -415,7 +479,7 @@ def main():
     pending_en = []
     tweets, kols, dropped = [], set(), 0
     for sec in tw["sections"]:
-        bk = sec["key"] if sec["key"] in TW_BOARD else "macro"
+        section_key = sec["key"]
         for item in sec["tweets"]:
             sid = item["source_id"].replace("tw_", "")[-6:]
             src_lang = item.get("language", "en")
@@ -436,11 +500,7 @@ def main():
             elif not body_en:
                 body_en = translate_text_en(body_zh)
 
-            asset_keys = match_asset_keys(body_src)
-            if "softs" in asset_keys:
-                bk = "softs"
-            else:
-                bk = sec["key"] if sec["key"] in TW_BOARD else "macro"
+            bk = classify_tweet_board(section_key, body_src, item.get("tags", []))
             kols.add(item["handle"])
             tags = [x for x in item.get("tags", []) if x != "viewpoint"][:3]
             tweets.append({
@@ -498,6 +558,8 @@ def main():
         report_en = compact_report_insights(translate_report_en_fallback(report_zh), "en")
     report_zh, fallback_zh = fill_recent_section_fallbacks(report_zh, "zh", date)
     report_en, fallback_en = fill_recent_section_fallbacks(report_en, "en", date)
+    report_zh = regroup_report_sections(report_zh, "zh")
+    report_en = regroup_report_sections(report_en, "en")
     if fallback_zh:
         meta["subtitle_zh"] += "　·　空板块显示近7日最近有效观点，并标注原日期"
         meta["subtitle_en"] += " · Empty sections show the latest valid view from the prior 7 days, with its date"
@@ -535,7 +597,7 @@ def main():
         "rankings": rankings,
     }}
     boards = {
-        k: {"label_zh": v[0], "label_en": v[1], "color": v[2], "short_zh": v[3], "short_en": v[4]}
+        k: {"label_zh": v[0], "label_en": v[1], "color": v[2], "short_zh": v[3], "short_en": v[4], "show": v[5]}
         for k, v in TW_BOARD.items()
     }
     payload = json.dumps({"data": data, "boards": boards, "repColors": REP_BOARD, "dates": [date]}, ensure_ascii=False)

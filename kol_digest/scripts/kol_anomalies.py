@@ -10,11 +10,16 @@ from datetime import date as date_type
 from pathlib import Path
 from typing import Any
 
+from kol_indices import match_asset_keys
+
 
 BOARD_ZH = {
     "macro": "宏观",
     "geopolitics": "地缘政治",
     "commodities": "大宗商品",
+    "energy": "能源",
+    "metals": "金属",
+    "agriculture": "农产品",
     "softs": "软商品",
     "weather": "天气气候",
     "ai_semis": "AI / 半导体",
@@ -23,6 +28,9 @@ BOARD_EN = {
     "macro": "Macro",
     "geopolitics": "Geopolitics",
     "commodities": "Commodities",
+    "energy": "Energy",
+    "metals": "Metals",
+    "agriculture": "Agriculture",
     "softs": "Soft Commodities",
     "weather": "Weather",
     "ai_semis": "AI / Semis",
@@ -37,6 +45,22 @@ MACRO_TERMS = (
 )
 SEVERITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 TYPE_ORDER = {"follower_spike": 0, "extreme_stance": 1, "consensus_crowding": 2, "attention_surge": 3, "macro_key_variable": 4}
+
+
+def _historical_board(section_key: str, tweet: dict[str, Any]) -> str:
+    if section_key in {"softs", "weather"}:
+        return "agriculture"
+    if section_key != "commodities":
+        return section_key
+    assets = set(match_asset_keys(str(tweet.get("body") or tweet.get("title") or "")))
+    tags = {str(tag).lower() for tag in tweet.get("tags", [])}
+    if "energy" in assets or tags & {"oil_energy", "energy", "natural_gas", "power"}:
+        return "energy"
+    if "metals" in assets or tags & {"metals", "mining", "critical_minerals"}:
+        return "metals"
+    if assets & {"grains", "softs"} or tags & {"agriculture", "grains", "softs", "weather_climate", "climate_science"}:
+        return "agriculture"
+    return "commodities"
 
 
 def build_attention_baseline(output_dir: str | Path, report_date: str, limit: int = 20) -> dict[str, Any]:
@@ -56,10 +80,10 @@ def build_attention_baseline(output_dir: str | Path, report_date: str, limit: in
         counts = Counter()
         total = 0
         for section in payload.get("sections", []):
-            key = str(section.get("key") or "macro")
-            count = len(section.get("tweets", []))
-            counts[key] += count
-            total += count
+            section_key = str(section.get("key") or "macro")
+            for tweet in section.get("tweets", []):
+                counts[_historical_board(section_key, tweet)] += 1
+                total += 1
         if total:
             rows.append({"date": day.isoformat(), "shares": {key: value / total for key, value in counts.items()}})
         if len(rows) >= limit:

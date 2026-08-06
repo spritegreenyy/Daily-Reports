@@ -397,7 +397,7 @@
   function buildPills(){
     var tw=cur().tweets,wrap=$("#boardPills");wrap.innerHTML=""; var counts={all:tw.length};Object.keys(BOARDS).forEach(function(k){counts[k]=0}); tw.forEach(function(t){counts[t.b]=(counts[t.b]||0)+1});
     function mk(key,label,color){var p=document.createElement("button");p.className="pill";p.innerHTML=label+' <span class="cnt">'+(counts[key]||0)+'</span>';if(st.board===key){p.setAttribute("data-on","1");p.style.background=color;p.style.borderColor=color} p.onclick=function(){st.board=key;buildPills();render()};return p}
-    wrap.appendChild(mk("all",tx("all"),"#e7b24d")); Object.keys(BOARDS).forEach(function(k){wrap.appendChild(mk(k,boardLabel(k),BOARDS[k].color))});
+    wrap.appendChild(mk("all",tx("all"),"#e7b24d")); Object.keys(BOARDS).filter(function(k){return BOARDS[k].show!==false}).forEach(function(k){wrap.appendChild(mk(k,boardLabel(k),BOARDS[k].color))});
   }
   function pass(t){
     if(st.board!=="all"&&t.b!==st.board)return false;
