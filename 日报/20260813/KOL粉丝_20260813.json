@@ -1,0 +1,5671 @@
+{
+  "date": "2026-08-13",
+  "generated_at": "2026-08-13T03:03:09.673874+00:00",
+  "summary": {
+    "total_accounts": 272,
+    "covered_accounts": 241,
+    "coverage_pct": 88.6,
+    "exact_accounts": 241,
+    "compact_fallback_accounts": 0,
+    "missing_accounts": 31,
+    "comparable_1d_accounts": 241,
+    "total_followers": 78322968,
+    "previous_snapshot_date": "2026-08-11",
+    "seven_day_base_date": "2026-08-06"
+  },
+  "growth_leaders": [
+    {
+      "handle": "GavinSBaker",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "tech_equities",
+        "fund_manager",
+        "viewpoint"
+      ],
+      "followers_count": 312951,
+      "following_count": 6213,
+      "delta_1d": 5258,
+      "growth_1d_pct": 1.7088,
+      "delta_7d": 7134,
+      "growth_7d_pct": 2.3328,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:40:09Z"
+    },
+    {
+      "handle": "stratechery",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "technology",
+        "strategy",
+        "research"
+      ],
+      "followers_count": 1261666,
+      "following_count": 3,
+      "delta_1d": 17032,
+      "growth_1d_pct": 1.3684,
+      "delta_7d": 60566,
+      "growth_7d_pct": 5.0425,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:41:21Z"
+    },
+    {
+      "handle": "danielgross",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "venture",
+        "viewpoint"
+      ],
+      "followers_count": 332645,
+      "following_count": 0,
+      "delta_1d": 3614,
+      "growth_1d_pct": 1.0984,
+      "delta_7d": 12897,
+      "growth_7d_pct": 4.0335,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:43Z"
+    },
+    {
+      "handle": "MichaelAArouet",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "economics",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 494801,
+      "following_count": 1236,
+      "delta_1d": 5130,
+      "growth_1d_pct": 1.0476,
+      "delta_7d": 18346,
+      "growth_7d_pct": 3.8505,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:13Z"
+    },
+    {
+      "handle": "eladgil",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "ai",
+        "viewpoint"
+      ],
+      "followers_count": 619616,
+      "following_count": 1804,
+      "delta_1d": 6283,
+      "growth_1d_pct": 1.0244,
+      "delta_7d": 23846,
+      "growth_7d_pct": 4.0026,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.657933+00:00"
+    },
+    {
+      "handle": "cristianoamon",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "edge_ai",
+        "executive"
+      ],
+      "followers_count": 113847,
+      "following_count": 918,
+      "delta_1d": 1116,
+      "growth_1d_pct": 0.99,
+      "delta_7d": 3828,
+      "growth_7d_pct": 3.4794,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:26Z"
+    },
+    {
+      "handle": "pmarca",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "technology",
+        "viewpoint"
+      ],
+      "followers_count": 5598538,
+      "following_count": 32401,
+      "delta_1d": 53239,
+      "growth_1d_pct": 0.9601,
+      "delta_7d": 190534,
+      "growth_7d_pct": 3.5232,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:15Z"
+    },
+    {
+      "handle": "jukan05",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "memory_hbm",
+        "supply_chain",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 197862,
+      "following_count": 379,
+      "delta_1d": 1550,
+      "growth_1d_pct": 0.7896,
+      "delta_7d": 11879,
+      "growth_7d_pct": 6.3871,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:39:38Z"
+    },
+    {
+      "handle": "drfeifei",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "vision_ai",
+        "viewpoint"
+      ],
+      "followers_count": 957882,
+      "following_count": 1179,
+      "delta_1d": 6795,
+      "growth_1d_pct": 0.7144,
+      "delta_7d": 23142,
+      "growth_7d_pct": 2.4758,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:53Z"
+    },
+    {
+      "handle": "karpathy",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "developer",
+        "viewpoint"
+      ],
+      "followers_count": 3751575,
+      "following_count": 1124,
+      "delta_1d": 25786,
+      "growth_1d_pct": 0.6921,
+      "delta_7d": 64213,
+      "growth_7d_pct": 1.7414,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:46Z"
+    },
+    {
+      "handle": "natfriedman",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "developer",
+        "viewpoint"
+      ],
+      "followers_count": 428741,
+      "following_count": 825,
+      "delta_1d": 2944,
+      "growth_1d_pct": 0.6914,
+      "delta_7d": 10297,
+      "growth_7d_pct": 2.4608,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.922891+00:00"
+    },
+    {
+      "handle": "DrJimFan",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "robotics",
+        "viewpoint"
+      ],
+      "followers_count": 541886,
+      "following_count": 3143,
+      "delta_1d": 3479,
+      "growth_1d_pct": 0.6462,
+      "delta_7d": 12470,
+      "growth_7d_pct": 2.3554,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:04Z"
+    },
+    {
+      "handle": "jam_croissant",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "volatility",
+        "options",
+        "trader"
+      ],
+      "followers_count": 264504,
+      "following_count": 2217,
+      "delta_1d": 1361,
+      "growth_1d_pct": 0.5172,
+      "delta_7d": 4803,
+      "growth_7d_pct": 1.8494,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:35Z"
+    },
+    {
+      "handle": "LukeGromen",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "sovereign_debt",
+        "commodities",
+        "viewpoint"
+      ],
+      "followers_count": 587769,
+      "following_count": 2484,
+      "delta_1d": 2989,
+      "growth_1d_pct": 0.5111,
+      "delta_7d": 10812,
+      "growth_7d_pct": 1.874,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:39Z"
+    },
+    {
+      "handle": "artinmemes",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "us_stocks",
+        "viewpoint"
+      ],
+      "followers_count": 83940,
+      "following_count": 38,
+      "delta_1d": 425,
+      "growth_1d_pct": 0.5089,
+      "delta_7d": 487,
+      "growth_7d_pct": 0.5836,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:04.368801+00:00"
+    },
+    {
+      "handle": "LizAnnSonders",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": 757357,
+      "following_count": 778,
+      "delta_1d": 3780,
+      "growth_1d_pct": 0.5016,
+      "delta_7d": 13479,
+      "growth_7d_pct": 1.812,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:04Z"
+    },
+    {
+      "handle": "unusual_whales",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "options_flow",
+        "trader",
+        "teacher_required",
+        "data"
+      ],
+      "followers_count": 5031232,
+      "following_count": 2371,
+      "delta_1d": 24994,
+      "growth_1d_pct": 0.4993,
+      "delta_7d": 90255,
+      "growth_7d_pct": 1.8267,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:39Z"
+    },
+    {
+      "handle": "BillAckman",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "activist",
+        "teacher_required",
+        "fund_manager"
+      ],
+      "followers_count": 2800208,
+      "following_count": 1185,
+      "delta_1d": 13863,
+      "growth_1d_pct": 0.4975,
+      "delta_7d": 48681,
+      "growth_7d_pct": 1.7692,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:51Z"
+    },
+    {
+      "handle": "BobEUnlimited",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "cycle",
+        "viewpoint"
+      ],
+      "followers_count": 286447,
+      "following_count": 789,
+      "delta_1d": 1412,
+      "growth_1d_pct": 0.4954,
+      "delta_7d": 5387,
+      "growth_7d_pct": 1.9167,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:22Z"
+    },
+    {
+      "handle": "RARohde",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 75169,
+      "following_count": 884,
+      "delta_1d": 364,
+      "growth_1d_pct": 0.4866,
+      "delta_7d": 1327,
+      "growth_7d_pct": 1.7971,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.957634+00:00"
+    }
+  ],
+  "reach_leaders": [
+    {
+      "handle": "pmarca",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "technology",
+        "viewpoint"
+      ],
+      "followers_count": 5598538,
+      "following_count": 32401,
+      "delta_1d": 53239,
+      "growth_1d_pct": 0.9601,
+      "delta_7d": 190534,
+      "growth_7d_pct": 3.5232,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:15Z"
+    },
+    {
+      "handle": "karpathy",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "developer",
+        "viewpoint"
+      ],
+      "followers_count": 3751575,
+      "following_count": 1124,
+      "delta_1d": 25786,
+      "growth_1d_pct": 0.6921,
+      "delta_7d": 64213,
+      "growth_7d_pct": 1.7414,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:46Z"
+    },
+    {
+      "handle": "unusual_whales",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "options_flow",
+        "trader",
+        "teacher_required",
+        "data"
+      ],
+      "followers_count": 5031232,
+      "following_count": 2371,
+      "delta_1d": 24994,
+      "growth_1d_pct": 0.4993,
+      "delta_7d": 90255,
+      "growth_7d_pct": 1.8267,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:39Z"
+    },
+    {
+      "handle": "sama",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "executive",
+        "viewpoint"
+      ],
+      "followers_count": 5823351,
+      "following_count": 1021,
+      "delta_1d": 19773,
+      "growth_1d_pct": 0.3407,
+      "delta_7d": 73027,
+      "growth_7d_pct": 1.27,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:29Z"
+    },
+    {
+      "handle": "stratechery",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "technology",
+        "strategy",
+        "research"
+      ],
+      "followers_count": 1261666,
+      "following_count": 3,
+      "delta_1d": 17032,
+      "growth_1d_pct": 1.3684,
+      "delta_7d": 60566,
+      "growth_7d_pct": 5.0425,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:41:21Z"
+    },
+    {
+      "handle": "BillAckman",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "activist",
+        "teacher_required",
+        "fund_manager"
+      ],
+      "followers_count": 2800208,
+      "following_count": 1185,
+      "delta_1d": 13863,
+      "growth_1d_pct": 0.4975,
+      "delta_7d": 48681,
+      "growth_7d_pct": 1.7692,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:51Z"
+    },
+    {
+      "handle": "CathieDWood",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "innovation",
+        "teacher_required",
+        "fund_manager"
+      ],
+      "followers_count": 2789306,
+      "following_count": 522,
+      "delta_1d": 11445,
+      "growth_1d_pct": 0.412,
+      "delta_7d": 42934,
+      "growth_7d_pct": 1.5633,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:44Z"
+    },
+    {
+      "handle": "drfeifei",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "vision_ai",
+        "viewpoint"
+      ],
+      "followers_count": 957882,
+      "following_count": 1179,
+      "delta_1d": 6795,
+      "growth_1d_pct": 0.7144,
+      "delta_7d": 23142,
+      "growth_7d_pct": 2.4758,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:53Z"
+    },
+    {
+      "handle": "eladgil",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "ai",
+        "viewpoint"
+      ],
+      "followers_count": 619616,
+      "following_count": 1804,
+      "delta_1d": 6283,
+      "growth_1d_pct": 1.0244,
+      "delta_7d": 23846,
+      "growth_7d_pct": 4.0026,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.657933+00:00"
+    },
+    {
+      "handle": "chamath",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "technology",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 2336129,
+      "following_count": 1132,
+      "delta_1d": 5783,
+      "growth_1d_pct": 0.2482,
+      "delta_7d": 21800,
+      "growth_7d_pct": 0.942,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:54Z"
+    },
+    {
+      "handle": "GavinSBaker",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "tech_equities",
+        "fund_manager",
+        "viewpoint"
+      ],
+      "followers_count": 312951,
+      "following_count": 6213,
+      "delta_1d": 5258,
+      "growth_1d_pct": 1.7088,
+      "delta_7d": 7134,
+      "growth_7d_pct": 2.3328,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:40:09Z"
+    },
+    {
+      "handle": "MichaelAArouet",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "economics",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 494801,
+      "following_count": 1236,
+      "delta_1d": 5130,
+      "growth_1d_pct": 1.0476,
+      "delta_7d": 18346,
+      "growth_7d_pct": 3.8505,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:13Z"
+    },
+    {
+      "handle": "ianbremmer",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "political_risk",
+        "global_macro",
+        "viewpoint"
+      ],
+      "followers_count": 1389038,
+      "following_count": 1864,
+      "delta_1d": 5094,
+      "growth_1d_pct": 0.3681,
+      "delta_7d": 20539,
+      "growth_7d_pct": 1.5008,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:52Z"
+    },
+    {
+      "handle": "AndrewYNg",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "enterprise_ai",
+        "viewpoint"
+      ],
+      "followers_count": 1774777,
+      "following_count": 1102,
+      "delta_1d": 5084,
+      "growth_1d_pct": 0.2873,
+      "delta_7d": 18181,
+      "growth_7d_pct": 1.035,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:50Z"
+    },
+    {
+      "handle": "PeterLBrandt",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "technical",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 1249239,
+      "following_count": 2228,
+      "delta_1d": 4865,
+      "growth_1d_pct": 0.391,
+      "delta_7d": 19457,
+      "growth_7d_pct": 1.5822,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:34:02Z"
+    },
+    {
+      "handle": "elerianm",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "central_banks",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 1048922,
+      "following_count": 1154,
+      "delta_1d": 4026,
+      "growth_1d_pct": 0.3853,
+      "delta_7d": 14591,
+      "growth_7d_pct": 1.4107,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:40Z"
+    },
+    {
+      "handle": "LizAnnSonders",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": 757357,
+      "following_count": 778,
+      "delta_1d": 3780,
+      "growth_1d_pct": 0.5016,
+      "delta_7d": 13479,
+      "growth_7d_pct": 1.812,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:04Z"
+    },
+    {
+      "handle": "danielgross",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "venture",
+        "viewpoint"
+      ],
+      "followers_count": 332645,
+      "following_count": 0,
+      "delta_1d": 3614,
+      "growth_1d_pct": 1.0984,
+      "delta_7d": 12897,
+      "growth_7d_pct": 4.0335,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:43Z"
+    },
+    {
+      "handle": "DrJimFan",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "robotics",
+        "viewpoint"
+      ],
+      "followers_count": 541886,
+      "following_count": 3143,
+      "delta_1d": 3479,
+      "growth_1d_pct": 0.6462,
+      "delta_7d": 12470,
+      "growth_7d_pct": 2.3554,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:04Z"
+    },
+    {
+      "handle": "biancoresearch",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "bonds",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 738495,
+      "following_count": 1486,
+      "delta_1d": 3026,
+      "growth_1d_pct": 0.4114,
+      "delta_7d": 10953,
+      "growth_7d_pct": 1.5055,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:35Z"
+    }
+  ],
+  "accounts": [
+    {
+      "handle": "LynAldenContact",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "liquidity",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 1088553,
+      "following_count": 1031,
+      "delta_1d": 2470,
+      "growth_1d_pct": 0.2274,
+      "delta_7d": 12015,
+      "growth_7d_pct": 1.1161,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:27Z"
+    },
+    {
+      "handle": "RaoulGMI",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "crypto",
+        "long_cycle",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 1467978,
+      "following_count": 1723,
+      "delta_1d": 1309,
+      "growth_1d_pct": 0.0892,
+      "delta_7d": 6904,
+      "growth_7d_pct": 0.4725,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:31Z"
+    },
+    {
+      "handle": "biancoresearch",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "bonds",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 738495,
+      "following_count": 1486,
+      "delta_1d": 3026,
+      "growth_1d_pct": 0.4114,
+      "delta_7d": 10953,
+      "growth_7d_pct": 1.5055,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:35Z"
+    },
+    {
+      "handle": "elerianm",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "central_banks",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 1048922,
+      "following_count": 1154,
+      "delta_1d": 4026,
+      "growth_1d_pct": 0.3853,
+      "delta_7d": 14591,
+      "growth_7d_pct": 1.4107,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:40Z"
+    },
+    {
+      "handle": "CathieDWood",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "innovation",
+        "teacher_required",
+        "fund_manager"
+      ],
+      "followers_count": 2789306,
+      "following_count": 522,
+      "delta_1d": 11445,
+      "growth_1d_pct": 0.412,
+      "delta_7d": 42934,
+      "growth_7d_pct": 1.5633,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:44Z"
+    },
+    {
+      "handle": "ARKInvest",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "innovation",
+        "teacher_required",
+        "research"
+      ],
+      "followers_count": 818633,
+      "following_count": 938,
+      "delta_1d": 801,
+      "growth_1d_pct": 0.0979,
+      "delta_7d": 1234,
+      "growth_7d_pct": 0.151,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:47Z"
+    },
+    {
+      "handle": "BillAckman",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "activist",
+        "teacher_required",
+        "fund_manager"
+      ],
+      "followers_count": 2800208,
+      "following_count": 1185,
+      "delta_1d": 13863,
+      "growth_1d_pct": 0.4975,
+      "delta_7d": 48681,
+      "growth_7d_pct": 1.7692,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:51Z"
+    },
+    {
+      "handle": "chamath",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "technology",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 2336129,
+      "following_count": 1132,
+      "delta_1d": 5783,
+      "growth_1d_pct": 0.2482,
+      "delta_7d": 21800,
+      "growth_7d_pct": 0.942,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:54Z"
+    },
+    {
+      "handle": "jimcramer",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "teacher_required",
+        "contrarian_signal",
+        "viewpoint"
+      ],
+      "followers_count": 2459460,
+      "following_count": 704,
+      "delta_1d": 854,
+      "growth_1d_pct": 0.0347,
+      "delta_7d": 3570,
+      "growth_7d_pct": 0.1454,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:30:57Z"
+    },
+    {
+      "handle": "unusual_whales",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "options_flow",
+        "trader",
+        "teacher_required",
+        "data"
+      ],
+      "followers_count": 5031232,
+      "following_count": 2371,
+      "delta_1d": 24994,
+      "growth_1d_pct": 0.4993,
+      "delta_7d": 90255,
+      "growth_7d_pct": 1.8267,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:39Z"
+    },
+    {
+      "handle": "GRDecter",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "teacher_required",
+        "market_narrative",
+        "viewpoint"
+      ],
+      "followers_count": 412291,
+      "following_count": 1020,
+      "delta_1d": -28,
+      "growth_1d_pct": -0.0068,
+      "delta_7d": -221,
+      "growth_7d_pct": -0.0536,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:01Z"
+    },
+    {
+      "handle": "LizAnnSonders",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": 757357,
+      "following_count": 778,
+      "delta_1d": 3780,
+      "growth_1d_pct": 0.5016,
+      "delta_7d": 13479,
+      "growth_7d_pct": 1.812,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:04Z"
+    },
+    {
+      "handle": "TimmerFidelity",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "cycle",
+        "viewpoint"
+      ],
+      "followers_count": 216045,
+      "following_count": 1393,
+      "delta_1d": 31,
+      "growth_1d_pct": 0.0144,
+      "delta_7d": 365,
+      "growth_7d_pct": 0.1692,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:08Z"
+    },
+    {
+      "handle": "FedGuy12",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "central_banks",
+        "rates_fx",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "BobEUnlimited",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "cycle",
+        "viewpoint"
+      ],
+      "followers_count": 286447,
+      "following_count": 789,
+      "delta_1d": 1412,
+      "growth_1d_pct": 0.4954,
+      "delta_7d": 5387,
+      "growth_7d_pct": 1.9167,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:22Z"
+    },
+    {
+      "handle": "MacroAlf",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "portfolio",
+        "viewpoint"
+      ],
+      "followers_count": 465253,
+      "following_count": 354,
+      "delta_1d": -70,
+      "growth_1d_pct": -0.015,
+      "delta_7d": -282,
+      "growth_7d_pct": -0.0606,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:25Z"
+    },
+    {
+      "handle": "AndreasSteno",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "cross_asset",
+        "viewpoint"
+      ],
+      "followers_count": 294288,
+      "following_count": 1782,
+      "delta_1d": 53,
+      "growth_1d_pct": 0.018,
+      "delta_7d": 254,
+      "growth_7d_pct": 0.0864,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:28Z"
+    },
+    {
+      "handle": "donnelly_brent",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 94456,
+      "following_count": 964,
+      "delta_1d": 29,
+      "growth_1d_pct": 0.0307,
+      "delta_7d": 154,
+      "growth_7d_pct": 0.1633,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:32Z"
+    },
+    {
+      "handle": "jam_croissant",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "volatility",
+        "options",
+        "trader"
+      ],
+      "followers_count": 264504,
+      "following_count": 2217,
+      "delta_1d": 1361,
+      "growth_1d_pct": 0.5172,
+      "delta_7d": 4803,
+      "growth_7d_pct": 1.8494,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:35Z"
+    },
+    {
+      "handle": "LukeGromen",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "sovereign_debt",
+        "commodities",
+        "viewpoint"
+      ],
+      "followers_count": 587769,
+      "following_count": 2484,
+      "delta_1d": 2989,
+      "growth_1d_pct": 0.5111,
+      "delta_7d": 10812,
+      "growth_7d_pct": 1.874,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:39Z"
+    },
+    {
+      "handle": "SantiagoAuFund",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "dollar",
+        "viewpoint"
+      ],
+      "followers_count": 340452,
+      "following_count": 2396,
+      "delta_1d": 76,
+      "growth_1d_pct": 0.0223,
+      "delta_7d": 232,
+      "growth_7d_pct": 0.0682,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:42Z"
+    },
+    {
+      "handle": "TaviCosta",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "commodities",
+        "cycle",
+        "viewpoint"
+      ],
+      "followers_count": 319936,
+      "following_count": 2308,
+      "delta_1d": 110,
+      "growth_1d_pct": 0.0344,
+      "delta_7d": 553,
+      "growth_7d_pct": 0.1731,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:46Z"
+    },
+    {
+      "handle": "WarrenPies",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "oil_energy",
+        "cycle",
+        "viewpoint"
+      ],
+      "followers_count": 76240,
+      "following_count": 1840,
+      "delta_1d": 38,
+      "growth_1d_pct": 0.0499,
+      "delta_7d": 141,
+      "growth_7d_pct": 0.1853,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:49Z"
+    },
+    {
+      "handle": "pboockvar",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "economics",
+        "viewpoint"
+      ],
+      "followers_count": 46068,
+      "following_count": 3184,
+      "delta_1d": 5,
+      "growth_1d_pct": 0.0109,
+      "delta_7d": -7,
+      "growth_7d_pct": -0.0152,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:44Z"
+    },
+    {
+      "handle": "EconguyRosie",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "economics",
+        "cycle",
+        "viewpoint"
+      ],
+      "followers_count": 307972,
+      "following_count": 338,
+      "delta_1d": 51,
+      "growth_1d_pct": 0.0166,
+      "delta_7d": 232,
+      "growth_7d_pct": 0.0754,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:49Z"
+    },
+    {
+      "handle": "yardeni",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "equities",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": 64609,
+      "following_count": 51,
+      "delta_1d": 52,
+      "growth_1d_pct": 0.0805,
+      "delta_7d": 253,
+      "growth_7d_pct": 0.3931,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:53Z"
+    },
+    {
+      "handle": "charliebilello",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "data",
+        "markets",
+        "viewpoint"
+      ],
+      "followers_count": 839729,
+      "following_count": 143,
+      "delta_1d": 1886,
+      "growth_1d_pct": 0.2251,
+      "delta_7d": 6202,
+      "growth_7d_pct": 0.7441,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:57Z"
+    },
+    {
+      "handle": "leadlagreport",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "cross_asset",
+        "risk",
+        "viewpoint"
+      ],
+      "followers_count": 772370,
+      "following_count": 15307,
+      "delta_1d": -75,
+      "growth_1d_pct": -0.0097,
+      "delta_7d": 82,
+      "growth_7d_pct": 0.0106,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:01Z"
+    },
+    {
+      "handle": "NorthmanTrader",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "technical",
+        "equities",
+        "viewpoint"
+      ],
+      "followers_count": 0,
+      "following_count": 80,
+      "delta_1d": 0,
+      "growth_1d_pct": null,
+      "delta_7d": 0,
+      "growth_7d_pct": null,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:04Z"
+    },
+    {
+      "handle": "Convertbond",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "credit",
+        "bonds",
+        "viewpoint"
+      ],
+      "followers_count": 144679,
+      "following_count": 13871,
+      "delta_1d": 20,
+      "growth_1d_pct": 0.0138,
+      "delta_7d": 187,
+      "growth_7d_pct": 0.1294,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:15Z"
+    },
+    {
+      "handle": "kevinmuir",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "trader",
+        "cross_asset",
+        "viewpoint"
+      ],
+      "followers_count": 53789,
+      "following_count": 3181,
+      "delta_1d": -6,
+      "growth_1d_pct": -0.0112,
+      "delta_7d": -29,
+      "growth_7d_pct": -0.0539,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:18Z"
+    },
+    {
+      "handle": "ChrisWeston_PS",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 28187,
+      "following_count": 1411,
+      "delta_1d": -3,
+      "growth_1d_pct": -0.0106,
+      "delta_7d": -21,
+      "growth_7d_pct": -0.0744,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:23Z"
+    },
+    {
+      "handle": "McClellanOsc",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "technical",
+        "cycle",
+        "viewpoint"
+      ],
+      "followers_count": 149813,
+      "following_count": 295,
+      "delta_1d": 60,
+      "growth_1d_pct": 0.0401,
+      "delta_7d": 180,
+      "growth_7d_pct": 0.1203,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:27Z"
+    },
+    {
+      "handle": "DiMartinoBooth",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "central_banks",
+        "economics",
+        "viewpoint"
+      ],
+      "followers_count": 337228,
+      "following_count": 454,
+      "delta_1d": 20,
+      "growth_1d_pct": 0.0059,
+      "delta_7d": 121,
+      "growth_7d_pct": 0.0359,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:30Z"
+    },
+    {
+      "handle": "darioperkins",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "central_banks",
+        "economics",
+        "viewpoint"
+      ],
+      "followers_count": 76714,
+      "following_count": 2568,
+      "delta_1d": 8,
+      "growth_1d_pct": 0.0104,
+      "delta_7d": 40,
+      "growth_7d_pct": 0.0522,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:34Z"
+    },
+    {
+      "handle": "mark_dow",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 117877,
+      "following_count": 4391,
+      "delta_1d": -32,
+      "growth_1d_pct": -0.0271,
+      "delta_7d": -46,
+      "growth_7d_pct": -0.039,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:37Z"
+    },
+    {
+      "handle": "JulianMI2",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "liquidity",
+        "cycle",
+        "viewpoint"
+      ],
+      "followers_count": 85026,
+      "following_count": 435,
+      "delta_1d": -2,
+      "growth_1d_pct": -0.0024,
+      "delta_7d": 0,
+      "growth_7d_pct": 0.0,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:41Z"
+    },
+    {
+      "handle": "pearkes",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "cross_asset",
+        "strategy",
+        "viewpoint"
+      ],
+      "followers_count": 140,
+      "following_count": 31,
+      "delta_1d": 8,
+      "growth_1d_pct": 6.0606,
+      "delta_7d": 115,
+      "growth_7d_pct": 460.0,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:45Z"
+    },
+    {
+      "handle": "M_McDonough",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "economics",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 58152,
+      "following_count": 175,
+      "delta_1d": -10,
+      "growth_1d_pct": -0.0172,
+      "delta_7d": -35,
+      "growth_7d_pct": -0.0602,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:48Z"
+    },
+    {
+      "handle": "SamRo",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "equities",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 75839,
+      "following_count": 3054,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 5,
+      "growth_7d_pct": 0.0066,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:51Z"
+    },
+    {
+      "handle": "Geo_papic",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "geopolitics",
+        "strategy",
+        "viewpoint"
+      ],
+      "followers_count": 68357,
+      "following_count": 145,
+      "delta_1d": 25,
+      "growth_1d_pct": 0.0366,
+      "delta_7d": 88,
+      "growth_7d_pct": 0.1289,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:55Z"
+    },
+    {
+      "handle": "TinaFordham1",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "geopolitics",
+        "political_risk",
+        "viewpoint"
+      ],
+      "followers_count": 4697,
+      "following_count": 2260,
+      "delta_1d": 1,
+      "growth_1d_pct": 0.0213,
+      "delta_7d": -1,
+      "growth_7d_pct": -0.0213,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:46:58Z"
+    },
+    {
+      "handle": "hkuppy",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "commodities",
+        "fund_manager",
+        "viewpoint"
+      ],
+      "followers_count": 179930,
+      "following_count": 1954,
+      "delta_1d": 117,
+      "growth_1d_pct": 0.0651,
+      "delta_7d": 247,
+      "growth_7d_pct": 0.1375,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:02Z"
+    },
+    {
+      "handle": "DoombergT",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "energy",
+        "narrative",
+        "viewpoint"
+      ],
+      "followers_count": 241954,
+      "following_count": 1423,
+      "delta_1d": -9,
+      "growth_1d_pct": -0.0037,
+      "delta_7d": -136,
+      "growth_7d_pct": -0.0562,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:06Z"
+    },
+    {
+      "handle": "LawrenceLepard",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "gold",
+        "hard_assets",
+        "viewpoint"
+      ],
+      "followers_count": 256162,
+      "following_count": 29328,
+      "delta_1d": 87,
+      "growth_1d_pct": 0.034,
+      "delta_7d": 779,
+      "growth_7d_pct": 0.305,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:09Z"
+    },
+    {
+      "handle": "MichaelAArouet",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "economics",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 494801,
+      "following_count": 1236,
+      "delta_1d": 5130,
+      "growth_1d_pct": 1.0476,
+      "delta_7d": 18346,
+      "growth_7d_pct": 3.8505,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:13Z"
+    },
+    {
+      "handle": "DariusDale42",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "risk_regime",
+        "quant",
+        "viewpoint"
+      ],
+      "followers_count": 104489,
+      "following_count": 1312,
+      "delta_1d": 45,
+      "growth_1d_pct": 0.0431,
+      "delta_7d": 58,
+      "growth_7d_pct": 0.0555,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:16Z"
+    },
+    {
+      "handle": "Stephanie_Link",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "equities",
+        "fund_manager",
+        "viewpoint"
+      ],
+      "followers_count": 211592,
+      "following_count": 396,
+      "delta_1d": 85,
+      "growth_1d_pct": 0.0402,
+      "delta_7d": 377,
+      "growth_7d_pct": 0.1785,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:20Z"
+    },
+    {
+      "handle": "Mayhem4Markets",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "rates_fx",
+        "market_narrative",
+        "viewpoint"
+      ],
+      "followers_count": 270887,
+      "following_count": 1336,
+      "delta_1d": 75,
+      "growth_1d_pct": 0.0277,
+      "delta_7d": 332,
+      "growth_7d_pct": 0.1227,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:24Z"
+    },
+    {
+      "handle": "michaelkantro",
+      "tier": 2,
+      "tags": [
+        "macro",
+        "cycle",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": 112111,
+      "following_count": 963,
+      "delta_1d": 15,
+      "growth_1d_pct": 0.0134,
+      "delta_7d": 163,
+      "growth_7d_pct": 0.1456,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:28Z"
+    },
+    {
+      "handle": "ianbremmer",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "political_risk",
+        "global_macro",
+        "viewpoint"
+      ],
+      "followers_count": 1389038,
+      "following_count": 1864,
+      "delta_1d": 5094,
+      "growth_1d_pct": 0.3681,
+      "delta_7d": 20539,
+      "growth_7d_pct": 1.5008,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:52Z"
+    },
+    {
+      "handle": "PeterZeihan",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "demographics",
+        "supply_chain",
+        "viewpoint"
+      ],
+      "followers_count": 303488,
+      "following_count": 236,
+      "delta_1d": 34,
+      "growth_1d_pct": 0.0112,
+      "delta_7d": 374,
+      "growth_7d_pct": 0.1234,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:56Z"
+    },
+    {
+      "handle": "KofmanMichael",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "russia",
+        "military",
+        "viewpoint"
+      ],
+      "followers_count": 435898,
+      "following_count": 409,
+      "delta_1d": 2,
+      "growth_1d_pct": 0.0005,
+      "delta_7d": -42,
+      "growth_7d_pct": -0.0096,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:31:59Z"
+    },
+    {
+      "handle": "RALee85",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "russia",
+        "military",
+        "viewpoint"
+      ],
+      "followers_count": 702666,
+      "following_count": 3892,
+      "delta_1d": -58,
+      "growth_1d_pct": -0.0083,
+      "delta_7d": -128,
+      "growth_7d_pct": -0.0182,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:02Z"
+    },
+    {
+      "handle": "MassDara",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "defense",
+        "military",
+        "viewpoint"
+      ],
+      "followers_count": 82890,
+      "following_count": 747,
+      "delta_1d": 61,
+      "growth_1d_pct": 0.0736,
+      "delta_7d": 97,
+      "growth_7d_pct": 0.1172,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:06Z"
+    },
+    {
+      "handle": "shashj",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "defense",
+        "europe",
+        "viewpoint"
+      ],
+      "followers_count": 234838,
+      "following_count": 1726,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": -53,
+      "growth_7d_pct": -0.0226,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:09Z"
+    },
+    {
+      "handle": "DAlperovitch",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "cyber",
+        "russia",
+        "viewpoint"
+      ],
+      "followers_count": 202821,
+      "following_count": 2422,
+      "delta_1d": -28,
+      "growth_1d_pct": -0.0138,
+      "delta_7d": -116,
+      "growth_7d_pct": -0.0572,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:12Z"
+    },
+    {
+      "handle": "BarakRavid",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "diplomacy",
+        "viewpoint"
+      ],
+      "followers_count": 512700,
+      "following_count": 859,
+      "delta_1d": 10,
+      "growth_1d_pct": 0.002,
+      "delta_7d": 459,
+      "growth_7d_pct": 0.0896,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:16Z"
+    },
+    {
+      "handle": "AnkitPanda",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "nuclear",
+        "indo_pacific",
+        "viewpoint"
+      ],
+      "followers_count": 10,
+      "following_count": 0,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 0,
+      "growth_7d_pct": 0.0,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:19Z"
+    },
+    {
+      "handle": "ElbridgeColby",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "defense",
+        "indo_pacific",
+        "viewpoint"
+      ],
+      "followers_count": 110340,
+      "following_count": 4149,
+      "delta_1d": -14,
+      "growth_1d_pct": -0.0127,
+      "delta_7d": -63,
+      "growth_7d_pct": -0.0571,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:30Z"
+    },
+    {
+      "handle": "BonnieGlaser",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "china",
+        "taiwan",
+        "viewpoint"
+      ],
+      "followers_count": 118159,
+      "following_count": 929,
+      "delta_1d": -11,
+      "growth_1d_pct": -0.0093,
+      "delta_7d": -2,
+      "growth_7d_pct": -0.0017,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:33Z"
+    },
+    {
+      "handle": "ryanl_hass",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "china",
+        "taiwan",
+        "viewpoint"
+      ],
+      "followers_count": 40649,
+      "following_count": 1349,
+      "delta_1d": -2,
+      "growth_1d_pct": -0.0049,
+      "delta_7d": 18,
+      "growth_7d_pct": 0.0443,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:37Z"
+    },
+    {
+      "handle": "fravel",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "china",
+        "military",
+        "viewpoint"
+      ],
+      "followers_count": 48173,
+      "following_count": 2198,
+      "delta_1d": -18,
+      "growth_1d_pct": -0.0374,
+      "delta_7d": -12,
+      "growth_7d_pct": -0.0249,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:40Z"
+    },
+    {
+      "handle": "osmastro",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "china",
+        "security",
+        "viewpoint"
+      ],
+      "followers_count": 19137,
+      "following_count": 106,
+      "delta_1d": -5,
+      "growth_1d_pct": -0.0261,
+      "delta_7d": -12,
+      "growth_7d_pct": -0.0627,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:43Z"
+    },
+    {
+      "handle": "EvanFeigenbaum",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "asia",
+        "policy",
+        "viewpoint"
+      ],
+      "followers_count": 54227,
+      "following_count": 8245,
+      "delta_1d": 9,
+      "growth_1d_pct": 0.0166,
+      "delta_7d": 32,
+      "growth_7d_pct": 0.059,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:47Z"
+    },
+    {
+      "handle": "RushDoshi",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "china",
+        "strategy",
+        "viewpoint"
+      ],
+      "followers_count": 39136,
+      "following_count": 3969,
+      "delta_1d": 27,
+      "growth_1d_pct": 0.069,
+      "delta_7d": 51,
+      "growth_7d_pct": 0.1305,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:50Z"
+    },
+    {
+      "handle": "DerekJGrossman",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "indo_pacific",
+        "security",
+        "viewpoint"
+      ],
+      "followers_count": 117858,
+      "following_count": 6817,
+      "delta_1d": 4,
+      "growth_1d_pct": 0.0034,
+      "delta_7d": 4,
+      "growth_7d_pct": 0.0034,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:32:54Z"
+    },
+    {
+      "handle": "YunSun4China",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "china",
+        "africa",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "Stanovaya",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "russia",
+        "kremlin",
+        "viewpoint"
+      ],
+      "followers_count": 61933,
+      "following_count": 795,
+      "delta_1d": -8,
+      "growth_1d_pct": -0.0129,
+      "delta_7d": -17,
+      "growth_7d_pct": -0.0274,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:07Z"
+    },
+    {
+      "handle": "samagreene",
+      "tier": 1,
+      "tags": [
+        "geopolitics",
+        "russia",
+        "political_risk",
+        "viewpoint"
+      ],
+      "followers_count": 73962,
+      "following_count": 2443,
+      "delta_1d": -9,
+      "growth_1d_pct": -0.0122,
+      "delta_7d": -30,
+      "growth_7d_pct": -0.0405,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:11Z"
+    },
+    {
+      "handle": "SamRamani2",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "russia",
+        "middle_east",
+        "viewpoint"
+      ],
+      "followers_count": 200410,
+      "following_count": 3744,
+      "delta_1d": -19,
+      "growth_1d_pct": -0.0095,
+      "delta_7d": -108,
+      "growth_7d_pct": -0.0539,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:31Z"
+    },
+    {
+      "handle": "PhillipsPOBrien",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "ukraine",
+        "military",
+        "viewpoint"
+      ],
+      "followers_count": 217395,
+      "following_count": 1726,
+      "delta_1d": 187,
+      "growth_1d_pct": 0.0861,
+      "delta_7d": 196,
+      "growth_7d_pct": 0.0902,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:35Z"
+    },
+    {
+      "handle": "LawDavF",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "ukraine",
+        "military",
+        "viewpoint"
+      ],
+      "followers_count": 125158,
+      "following_count": 1010,
+      "delta_1d": -27,
+      "growth_1d_pct": -0.0216,
+      "delta_7d": -41,
+      "growth_7d_pct": -0.0327,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:39Z"
+    },
+    {
+      "handle": "michaeldweiss",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "russia",
+        "middle_east",
+        "viewpoint"
+      ],
+      "followers_count": 281170,
+      "following_count": 4955,
+      "delta_1d": -19,
+      "growth_1d_pct": -0.0068,
+      "delta_7d": -89,
+      "growth_7d_pct": -0.0316,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:42Z"
+    },
+    {
+      "handle": "SangerNYT",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "national_security",
+        "technology",
+        "viewpoint"
+      ],
+      "followers_count": 96692,
+      "following_count": 2710,
+      "delta_1d": -15,
+      "growth_1d_pct": -0.0155,
+      "delta_7d": -25,
+      "growth_7d_pct": -0.0258,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:46Z"
+    },
+    {
+      "handle": "IgnatiusPost",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "diplomacy",
+        "middle_east",
+        "viewpoint"
+      ],
+      "followers_count": 126080,
+      "following_count": 1738,
+      "delta_1d": -22,
+      "growth_1d_pct": -0.0174,
+      "delta_7d": -59,
+      "growth_7d_pct": -0.0468,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:50Z"
+    },
+    {
+      "handle": "noahbarkin",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "europe",
+        "china",
+        "viewpoint"
+      ],
+      "followers_count": 29124,
+      "following_count": 4008,
+      "delta_1d": -4,
+      "growth_1d_pct": -0.0137,
+      "delta_7d": -22,
+      "growth_7d_pct": -0.0755,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:47:53Z"
+    },
+    {
+      "handle": "vali_nasr",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "iran",
+        "viewpoint"
+      ],
+      "followers_count": 137550,
+      "following_count": 1671,
+      "delta_1d": 94,
+      "growth_1d_pct": 0.0684,
+      "delta_7d": 259,
+      "growth_7d_pct": 0.1887,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:04Z"
+    },
+    {
+      "handle": "ksadjadpour",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "iran",
+        "viewpoint"
+      ],
+      "followers_count": 140608,
+      "following_count": 1813,
+      "delta_1d": -29,
+      "growth_1d_pct": -0.0206,
+      "delta_7d": -65,
+      "growth_7d_pct": -0.0462,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:07Z"
+    },
+    {
+      "handle": "AliVaez",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "iran",
+        "viewpoint"
+      ],
+      "followers_count": 90836,
+      "following_count": 1001,
+      "delta_1d": 8,
+      "growth_1d_pct": 0.0088,
+      "delta_7d": 12,
+      "growth_7d_pct": 0.0132,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:11Z"
+    },
+    {
+      "handle": "MaloneySuzanne",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "iran",
+        "viewpoint"
+      ],
+      "followers_count": 35577,
+      "following_count": 5054,
+      "delta_1d": 3,
+      "growth_1d_pct": 0.0084,
+      "delta_7d": -13,
+      "growth_7d_pct": -0.0365,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:14Z"
+    },
+    {
+      "handle": "Charles_Lister",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "syria",
+        "viewpoint"
+      ],
+      "followers_count": 218470,
+      "following_count": 1822,
+      "delta_1d": -46,
+      "growth_1d_pct": -0.0211,
+      "delta_7d": -144,
+      "growth_7d_pct": -0.0659,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:18Z"
+    },
+    {
+      "handle": "aaronstein1",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "turkey",
+        "middle_east",
+        "viewpoint"
+      ],
+      "followers_count": 32473,
+      "following_count": 791,
+      "delta_1d": -10,
+      "growth_1d_pct": -0.0308,
+      "delta_7d": -26,
+      "growth_7d_pct": -0.08,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:21Z"
+    },
+    {
+      "handle": "joshua_landis",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "syria",
+        "viewpoint"
+      ],
+      "followers_count": 93571,
+      "following_count": 5519,
+      "delta_1d": -25,
+      "growth_1d_pct": -0.0267,
+      "delta_7d": -66,
+      "growth_7d_pct": -0.0705,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:25Z"
+    },
+    {
+      "handle": "ELuttwak",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "strategy",
+        "history",
+        "viewpoint"
+      ],
+      "followers_count": 76282,
+      "following_count": 15,
+      "delta_1d": 21,
+      "growth_1d_pct": 0.0275,
+      "delta_7d": -25,
+      "growth_7d_pct": -0.0328,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:28Z"
+    },
+    {
+      "handle": "stephenWalt",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "strategy",
+        "realism",
+        "viewpoint"
+      ],
+      "followers_count": 113502,
+      "following_count": 564,
+      "delta_1d": -19,
+      "growth_1d_pct": -0.0167,
+      "delta_7d": -57,
+      "growth_7d_pct": -0.0502,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:32Z"
+    },
+    {
+      "handle": "RichardHaass",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "foreign_policy",
+        "global_order",
+        "viewpoint"
+      ],
+      "followers_count": 234335,
+      "following_count": 1340,
+      "delta_1d": 8,
+      "growth_1d_pct": 0.0034,
+      "delta_7d": -25,
+      "growth_7d_pct": -0.0107,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:35Z"
+    },
+    {
+      "handle": "anneapplebaum",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "europe",
+        "authoritarianism",
+        "viewpoint"
+      ],
+      "followers_count": 585073,
+      "following_count": 878,
+      "delta_1d": 44,
+      "growth_1d_pct": 0.0075,
+      "delta_7d": 347,
+      "growth_7d_pct": 0.0593,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:38Z"
+    },
+    {
+      "handle": "tanvi_madan",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "india",
+        "china",
+        "viewpoint"
+      ],
+      "followers_count": 94633,
+      "following_count": 4387,
+      "delta_1d": 9,
+      "growth_1d_pct": 0.0095,
+      "delta_7d": 19,
+      "growth_7d_pct": 0.0201,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:42Z"
+    },
+    {
+      "handle": "CroftHelima",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "oil_energy",
+        "political_risk",
+        "viewpoint"
+      ],
+      "followers_count": 21450,
+      "following_count": 877,
+      "delta_1d": 19,
+      "growth_1d_pct": 0.0887,
+      "delta_7d": 29,
+      "growth_7d_pct": 0.1354,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:45Z"
+    },
+    {
+      "handle": "matthewkroenig",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "nuclear",
+        "security",
+        "viewpoint"
+      ],
+      "followers_count": 19151,
+      "following_count": 2041,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 5,
+      "growth_7d_pct": 0.0261,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:49Z"
+    },
+    {
+      "handle": "james_acton32",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "nuclear",
+        "arms_control",
+        "viewpoint"
+      ],
+      "followers_count": 25155,
+      "following_count": 652,
+      "delta_1d": 2,
+      "growth_1d_pct": 0.008,
+      "delta_7d": -5,
+      "growth_7d_pct": -0.0199,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:48:59Z"
+    },
+    {
+      "handle": "AlexGabuev",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "russia",
+        "china",
+        "viewpoint"
+      ],
+      "followers_count": 43574,
+      "following_count": 2627,
+      "delta_1d": -12,
+      "growth_1d_pct": -0.0275,
+      "delta_7d": -14,
+      "growth_7d_pct": -0.0321,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:49:10Z"
+    },
+    {
+      "handle": "FranzStefanGady",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "military",
+        "europe",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "CollinSLKoh",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "maritime",
+        "indo_pacific",
+        "viewpoint"
+      ],
+      "followers_count": 48305,
+      "following_count": 4599,
+      "delta_1d": 13,
+      "growth_1d_pct": 0.0269,
+      "delta_7d": 18,
+      "growth_7d_pct": 0.0373,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:49:30Z"
+    },
+    {
+      "handle": "tparsi",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "diplomacy",
+        "viewpoint"
+      ],
+      "followers_count": 233798,
+      "following_count": 4002,
+      "delta_1d": 248,
+      "growth_1d_pct": 0.1062,
+      "delta_7d": 710,
+      "growth_7d_pct": 0.3046,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:49:40Z"
+    },
+    {
+      "handle": "SecKermani",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "middle_east",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 91980,
+      "following_count": 4037,
+      "delta_1d": 57,
+      "growth_1d_pct": 0.062,
+      "delta_7d": 207,
+      "growth_7d_pct": 0.2256,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:49:51Z"
+    },
+    {
+      "handle": "gideonrachman",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "global_order",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 130821,
+      "following_count": 1008,
+      "delta_1d": 104,
+      "growth_1d_pct": 0.0796,
+      "delta_7d": 601,
+      "growth_7d_pct": 0.4615,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:50:01Z"
+    },
+    {
+      "handle": "maxseddon",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "russia",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 351313,
+      "following_count": 4619,
+      "delta_1d": -83,
+      "growth_1d_pct": -0.0236,
+      "delta_7d": -198,
+      "growth_7d_pct": -0.0563,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:50:11Z"
+    },
+    {
+      "handle": "yarotrof",
+      "tier": 2,
+      "tags": [
+        "geopolitics",
+        "war",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 166073,
+      "following_count": 4758,
+      "delta_1d": -24,
+      "growth_1d_pct": -0.0144,
+      "delta_7d": -78,
+      "growth_7d_pct": -0.0469,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:50:21Z"
+    },
+    {
+      "handle": "JavierBlas",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "supply_demand",
+        "viewpoint"
+      ],
+      "followers_count": 397034,
+      "following_count": 1515,
+      "delta_1d": 121,
+      "growth_1d_pct": 0.0305,
+      "delta_7d": 479,
+      "growth_7d_pct": 0.1208,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:14Z"
+    },
+    {
+      "handle": "JKempEnergy",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 81172,
+      "following_count": 391,
+      "delta_1d": 27,
+      "growth_1d_pct": 0.0333,
+      "delta_7d": 60,
+      "growth_7d_pct": 0.074,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:18Z"
+    },
+    {
+      "handle": "AndurandPierre",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 73921,
+      "following_count": 1911,
+      "delta_1d": -4,
+      "growth_1d_pct": -0.0054,
+      "delta_7d": 20,
+      "growth_7d_pct": 0.0271,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:21Z"
+    },
+    {
+      "handle": "chigrl",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "metals",
+        "trader"
+      ],
+      "followers_count": 362230,
+      "following_count": 981,
+      "delta_1d": 170,
+      "growth_1d_pct": 0.047,
+      "delta_7d": 414,
+      "growth_7d_pct": 0.1144,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:25Z"
+    },
+    {
+      "handle": "staunovo",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": 122316,
+      "following_count": 443,
+      "delta_1d": 112,
+      "growth_1d_pct": 0.0917,
+      "delta_7d": 346,
+      "growth_7d_pct": 0.2837,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:28Z"
+    },
+    {
+      "handle": "Ole_S_Hansen",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "cross_commodity",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": 88300,
+      "following_count": 694,
+      "delta_1d": 108,
+      "growth_1d_pct": 0.1225,
+      "delta_7d": 193,
+      "growth_7d_pct": 0.2191,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:31Z"
+    },
+    {
+      "handle": "AndyHomeMetals",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "metals_industrial",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 7727,
+      "following_count": 180,
+      "delta_1d": 3,
+      "growth_1d_pct": 0.0388,
+      "delta_7d": 3,
+      "growth_7d_pct": 0.0388,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:35Z"
+    },
+    {
+      "handle": "ClydeCommods",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "energy",
+        "metals",
+        "viewpoint"
+      ],
+      "followers_count": 12031,
+      "following_count": 628,
+      "delta_1d": -2,
+      "growth_1d_pct": -0.0166,
+      "delta_7d": -3,
+      "growth_7d_pct": -0.0249,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:38Z"
+    },
+    {
+      "handle": "GavinJMaguire",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "power_carbon",
+        "energy_transition",
+        "viewpoint"
+      ],
+      "followers_count": 8700,
+      "following_count": 6169,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": -2,
+      "growth_7d_pct": -0.023,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:33:41Z"
+    },
+    {
+      "handle": "DarinNewsom",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "agri_softs",
+        "technical",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "PeterLBrandt",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "technical",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 1249239,
+      "following_count": 2228,
+      "delta_1d": 4865,
+      "growth_1d_pct": 0.391,
+      "delta_7d": 19457,
+      "growth_7d_pct": 1.5822,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:34:02Z"
+    },
+    {
+      "handle": "Go_Rozen",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "energy",
+        "natural_resources",
+        "viewpoint"
+      ],
+      "followers_count": 27973,
+      "following_count": 56,
+      "delta_1d": 14,
+      "growth_1d_pct": 0.0501,
+      "delta_7d": 199,
+      "growth_7d_pct": 0.7165,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:34:06Z"
+    },
+    {
+      "handle": "JeffCurrieGS",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "supercycle",
+        "oil_energy",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "HFI_Research",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "nat_gas_lng",
+        "research"
+      ],
+      "followers_count": 121996,
+      "following_count": 77,
+      "delta_1d": 243,
+      "growth_1d_pct": 0.1996,
+      "delta_7d": 690,
+      "growth_7d_pct": 0.5688,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:34:19Z"
+    },
+    {
+      "handle": "ericnuttall",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "equities",
+        "fund_manager"
+      ],
+      "followers_count": 133050,
+      "following_count": 462,
+      "delta_1d": 102,
+      "growth_1d_pct": 0.0767,
+      "delta_7d": 188,
+      "growth_7d_pct": 0.1415,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:34:30Z"
+    },
+    {
+      "handle": "Rory_Johnston",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 107769,
+      "following_count": 1503,
+      "delta_1d": 465,
+      "growth_1d_pct": 0.4333,
+      "delta_7d": 1016,
+      "growth_7d_pct": 0.9517,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:34:40Z"
+    },
+    {
+      "handle": "anasalhajji",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "middle_east",
+        "viewpoint"
+      ],
+      "followers_count": 248412,
+      "following_count": 501,
+      "delta_1d": -4,
+      "growth_1d_pct": -0.0016,
+      "delta_7d": -46,
+      "growth_7d_pct": -0.0185,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:34:50Z"
+    },
+    {
+      "handle": "ArjunNMurti",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "energy_transition",
+        "viewpoint"
+      ],
+      "followers_count": 17325,
+      "following_count": 730,
+      "delta_1d": -1,
+      "growth_1d_pct": -0.0058,
+      "delta_7d": -16,
+      "growth_7d_pct": -0.0923,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:35:00Z"
+    },
+    {
+      "handle": "aeberman12",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "geology",
+        "viewpoint"
+      ],
+      "followers_count": 53978,
+      "following_count": 233,
+      "delta_1d": 37,
+      "growth_1d_pct": 0.0686,
+      "delta_7d": 87,
+      "growth_7d_pct": 0.1614,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:35:11Z"
+    },
+    {
+      "handle": "pwrhungry",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "power",
+        "energy_policy",
+        "viewpoint"
+      ],
+      "followers_count": 23752,
+      "following_count": 708,
+      "delta_1d": -2,
+      "growth_1d_pct": -0.0084,
+      "delta_7d": -11,
+      "growth_7d_pct": -0.0463,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:35:21Z"
+    },
+    {
+      "handle": "PickeringEnergy",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "equities",
+        "viewpoint"
+      ],
+      "followers_count": 36543,
+      "following_count": 565,
+      "delta_1d": -3,
+      "growth_1d_pct": -0.0082,
+      "delta_7d": 26,
+      "growth_7d_pct": 0.0712,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:50:32Z"
+    },
+    {
+      "handle": "Josh_Young_1",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "fund_manager",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "RRapier",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "energy_policy",
+        "viewpoint"
+      ],
+      "followers_count": 6289,
+      "following_count": 122,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": -5,
+      "growth_7d_pct": -0.0794,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:50:52Z"
+    },
+    {
+      "handle": "MarkPMills",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "energy_policy",
+        "power",
+        "viewpoint"
+      ],
+      "followers_count": 8227,
+      "following_count": 166,
+      "delta_1d": 1,
+      "growth_1d_pct": 0.0122,
+      "delta_7d": -1,
+      "growth_7d_pct": -0.0122,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:51:03Z"
+    },
+    {
+      "handle": "JLeeEnergy",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 3525,
+      "following_count": 85,
+      "delta_1d": -1,
+      "growth_1d_pct": -0.0284,
+      "delta_7d": -1,
+      "growth_7d_pct": -0.0284,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:51:13Z"
+    },
+    {
+      "handle": "AlexLongley1",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 12465,
+      "following_count": 1019,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 6,
+      "growth_7d_pct": 0.0482,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:51:23Z"
+    },
+    {
+      "handle": "danmurtaugh",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "energy",
+        "china",
+        "journalist_analysis"
+      ],
+      "followers_count": 5492,
+      "following_count": 331,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": -2,
+      "growth_7d_pct": -0.0364,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:51:33Z"
+    },
+    {
+      "handle": "ronbousso1",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "majors",
+        "journalist_analysis"
+      ],
+      "followers_count": 7667,
+      "following_count": 592,
+      "delta_1d": -1,
+      "growth_1d_pct": -0.013,
+      "delta_7d": 1,
+      "growth_7d_pct": 0.013,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:51:44Z"
+    },
+    {
+      "handle": "devikakrishnak",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 5710,
+      "following_count": 1047,
+      "delta_1d": 1,
+      "growth_1d_pct": 0.0175,
+      "delta_7d": -4,
+      "growth_7d_pct": -0.07,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:51:54Z"
+    },
+    {
+      "handle": "LauraHurstBLM",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "majors",
+        "journalist_analysis"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "WillKennedyBlm",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "damienpcourvalin",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "oil_energy",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "SStapczynski",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "nat_gas_lng",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 71222,
+      "following_count": 3265,
+      "delta_1d": 18,
+      "growth_1d_pct": 0.0253,
+      "delta_7d": 25,
+      "growth_7d_pct": 0.0351,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:52:35Z"
+    },
+    {
+      "handle": "TankerTrackers",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "shipping_freight",
+        "oil_energy",
+        "data"
+      ],
+      "followers_count": 227534,
+      "following_count": 158,
+      "delta_1d": 359,
+      "growth_1d_pct": 0.158,
+      "delta_7d": 707,
+      "growth_7d_pct": 0.3117,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:52:46Z"
+    },
+    {
+      "handle": "samirmadani",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "shipping_freight",
+        "oil_energy",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "VortexaAnalytics",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "shipping_freight",
+        "oil_energy",
+        "data"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "Kpler",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "shipping_freight",
+        "oil_energy",
+        "data"
+      ],
+      "followers_count": 38541,
+      "following_count": 637,
+      "delta_1d": 103,
+      "growth_1d_pct": 0.268,
+      "delta_7d": 216,
+      "growth_7d_pct": 0.5636,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:53:16Z"
+    },
+    {
+      "handle": "BreakwaveAdvisors",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "shipping_freight",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "John_A_Konrad",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "shipping_freight",
+        "maritime",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "Lars_Jensen",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "shipping_freight",
+        "supply_chain",
+        "viewpoint"
+      ],
+      "followers_count": 2,
+      "following_count": 1,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 1,
+      "growth_7d_pct": 100.0,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:53:47Z"
+    },
+    {
+      "handle": "RealRickRule",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "metals_industrial",
+        "mining",
+        "viewpoint"
+      ],
+      "followers_count": 99614,
+      "following_count": 2752,
+      "delta_1d": 73,
+      "growth_1d_pct": 0.0733,
+      "delta_7d": 164,
+      "growth_7d_pct": 0.1649,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:53:57Z"
+    },
+    {
+      "handle": "Brent_Cook",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "metals_industrial",
+        "mining",
+        "viewpoint"
+      ],
+      "followers_count": 16,
+      "following_count": 16,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 0,
+      "growth_7d_pct": 0.0,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:54:08Z"
+    },
+    {
+      "handle": "resourcerules",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "metals_industrial",
+        "mining",
+        "viewpoint"
+      ],
+      "followers_count": 3943,
+      "following_count": 1429,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": -1,
+      "growth_7d_pct": -0.0254,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:54:18Z"
+    },
+    {
+      "handle": "ColinHamiltonCBA",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "metals_industrial",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "TheDailyGold",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "precious_metals",
+        "technical",
+        "viewpoint"
+      ],
+      "followers_count": 31320,
+      "following_count": 490,
+      "delta_1d": 44,
+      "growth_1d_pct": 0.1407,
+      "delta_7d": 435,
+      "growth_7d_pct": 1.4085,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:54:39Z"
+    },
+    {
+      "handle": "silverguru22",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "precious_metals",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 131429,
+      "following_count": 6866,
+      "delta_1d": 33,
+      "growth_1d_pct": 0.0251,
+      "delta_7d": 88,
+      "growth_7d_pct": 0.067,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:54:49Z"
+    },
+    {
+      "handle": "ScottIrwinUI",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "agri_softs",
+        "academic",
+        "viewpoint"
+      ],
+      "followers_count": 33615,
+      "following_count": 13223,
+      "delta_1d": 15,
+      "growth_1d_pct": 0.0446,
+      "delta_7d": 11,
+      "growth_7d_pct": 0.0327,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:54:59Z"
+    },
+    {
+      "handle": "ArlanFF101",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "agri_softs",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 53002,
+      "following_count": 4402,
+      "delta_1d": 15,
+      "growth_1d_pct": 0.0283,
+      "delta_7d": 37,
+      "growth_7d_pct": 0.0699,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:55:09Z"
+    },
+    {
+      "handle": "GoddessofGrain",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "agri_softs",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 59344,
+      "following_count": 1525,
+      "delta_1d": 22,
+      "growth_1d_pct": 0.0371,
+      "delta_7d": 39,
+      "growth_7d_pct": 0.0658,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:55:20Z"
+    },
+    {
+      "handle": "cer_hedge",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "agri_softs",
+        "trader",
+        "viewpoint"
+      ],
+      "followers_count": 9359,
+      "following_count": 2443,
+      "delta_1d": 8,
+      "growth_1d_pct": 0.0856,
+      "delta_7d": 21,
+      "growth_7d_pct": 0.2249,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:55:30Z"
+    },
+    {
+      "handle": "snodgrss",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "enso",
+        "agri_weather",
+        "commodities",
+        "viewpoint"
+      ],
+      "followers_count": 17765,
+      "following_count": 1506,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 8,
+      "growth_7d_pct": 0.0451,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:35:31Z"
+    },
+    {
+      "handle": "kannbwx",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "enso",
+        "agri_weather",
+        "viewpoint"
+      ],
+      "followers_count": 93188,
+      "following_count": 156,
+      "delta_1d": 46,
+      "growth_1d_pct": 0.0494,
+      "delta_7d": 42,
+      "growth_7d_pct": 0.0451,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:35:42Z"
+    },
+    {
+      "handle": "BenNollWeather",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "enso",
+        "global_weather",
+        "viewpoint"
+      ],
+      "followers_count": 96647,
+      "following_count": 174,
+      "delta_1d": 89,
+      "growth_1d_pct": 0.0922,
+      "delta_7d": 1070,
+      "growth_7d_pct": 1.1195,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:35:52Z"
+    },
+    {
+      "handle": "MJVentrice",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "enso",
+        "energy_weather",
+        "viewpoint"
+      ],
+      "followers_count": 49466,
+      "following_count": 1555,
+      "delta_1d": -5,
+      "growth_1d_pct": -0.0101,
+      "delta_7d": -14,
+      "growth_7d_pct": -0.0283,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:36:02Z"
+    },
+    {
+      "handle": "webberweather",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "enso",
+        "tropics",
+        "viewpoint"
+      ],
+      "followers_count": 86038,
+      "following_count": 1757,
+      "delta_1d": 5,
+      "growth_1d_pct": 0.0058,
+      "delta_7d": 27,
+      "growth_7d_pct": 0.0314,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:36:12Z"
+    },
+    {
+      "handle": "PaulRoundy1",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "enso",
+        "mjo",
+        "academic"
+      ],
+      "followers_count": 5364,
+      "following_count": 1412,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 17,
+      "growth_7d_pct": 0.3179,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:36:23Z"
+    },
+    {
+      "handle": "judah47",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "seasonal",
+        "winter",
+        "viewpoint"
+      ],
+      "followers_count": 31555,
+      "following_count": 4026,
+      "delta_1d": 3,
+      "growth_1d_pct": 0.0095,
+      "delta_7d": 33,
+      "growth_7d_pct": 0.1047,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:36:33Z"
+    },
+    {
+      "handle": "RyanMaue",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "models",
+        "tropics",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "TropicalTidbits",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "tropics",
+        "models",
+        "viewpoint"
+      ],
+      "followers_count": 115398,
+      "following_count": 1214,
+      "delta_1d": 9,
+      "growth_1d_pct": 0.0078,
+      "delta_7d": -4,
+      "growth_7d_pct": -0.0035,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:36:54Z"
+    },
+    {
+      "handle": "Weather_West",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "us_west",
+        "viewpoint"
+      ],
+      "followers_count": 105935,
+      "following_count": 2959,
+      "delta_1d": -1,
+      "growth_1d_pct": -0.0009,
+      "delta_7d": 184,
+      "growth_7d_pct": 0.174,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:37:04Z"
+    },
+    {
+      "handle": "MattMakens",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "commodities",
+        "seasonal",
+        "viewpoint"
+      ],
+      "followers_count": 14865,
+      "following_count": 4450,
+      "delta_1d": -3,
+      "growth_1d_pct": -0.0202,
+      "delta_7d": -6,
+      "growth_7d_pct": -0.0403,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:37:14Z"
+    },
+    {
+      "handle": "wxtruch",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "models",
+        "energy_weather",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "BAMWxCom",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "commodities",
+        "agri_weather",
+        "forecasting"
+      ],
+      "followers_count": 16,
+      "following_count": 2,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 0,
+      "growth_7d_pct": 0.0,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:37:35Z"
+    },
+    {
+      "handle": "weatherbell",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "models",
+        "energy_weather",
+        "forecasting"
+      ],
+      "followers_count": 31344,
+      "following_count": 1564,
+      "delta_1d": -5,
+      "growth_1d_pct": -0.0159,
+      "delta_7d": -14,
+      "growth_7d_pct": -0.0446,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:37:45Z"
+    },
+    {
+      "handle": "burgwx",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "models",
+        "tropics",
+        "viewpoint"
+      ],
+      "followers_count": 55368,
+      "following_count": 597,
+      "delta_1d": 80,
+      "growth_1d_pct": 0.1447,
+      "delta_7d": 139,
+      "growth_7d_pct": 0.2517,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:37:55Z"
+    },
+    {
+      "handle": "philklotzbach",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "hurricanes",
+        "seasonal",
+        "academic"
+      ],
+      "followers_count": 64241,
+      "following_count": 1127,
+      "delta_1d": -2,
+      "growth_1d_pct": -0.0031,
+      "delta_7d": -14,
+      "growth_7d_pct": -0.0218,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:38:05Z"
+    },
+    {
+      "handle": "MichaelRLowry",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "hurricanes",
+        "tropics",
+        "viewpoint"
+      ],
+      "followers_count": 34253,
+      "following_count": 1048,
+      "delta_1d": 16,
+      "growth_1d_pct": 0.0467,
+      "delta_7d": 5,
+      "growth_7d_pct": 0.0146,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:38:16Z"
+    },
+    {
+      "handle": "pppapin",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "hurricanes",
+        "tropics",
+        "viewpoint"
+      ],
+      "followers_count": 33764,
+      "following_count": 1350,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": -5,
+      "growth_7d_pct": -0.0148,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:38:26Z"
+    },
+    {
+      "handle": "BMcNoldy",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "hurricanes",
+        "tropics",
+        "academic"
+      ],
+      "followers_count": 28909,
+      "following_count": 5993,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 1,
+      "growth_7d_pct": 0.0035,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:38:36Z"
+    },
+    {
+      "handle": "gensiniwx",
+      "tier": 1,
+      "tags": [
+        "weather_climate",
+        "severe_weather",
+        "climate_risk",
+        "academic"
+      ],
+      "followers_count": 7322,
+      "following_count": 1442,
+      "delta_1d": 9,
+      "growth_1d_pct": 0.1231,
+      "delta_7d": 9,
+      "growth_7d_pct": 0.1231,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:38:47Z"
+    },
+    {
+      "handle": "MatthewCappucci",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "extreme_weather",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 127228,
+      "following_count": 418,
+      "delta_1d": 206,
+      "growth_1d_pct": 0.1622,
+      "delta_7d": 211,
+      "growth_7d_pct": 0.1661,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:55:40Z"
+    },
+    {
+      "handle": "DrJeffMasters",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "hurricanes",
+        "viewpoint"
+      ],
+      "followers_count": 10387,
+      "following_count": 455,
+      "delta_1d": 6,
+      "growth_1d_pct": 0.0578,
+      "delta_7d": 4,
+      "growth_7d_pct": 0.0385,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:55:51Z"
+    },
+    {
+      "handle": "bhensonweather",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "hurricanes",
+        "viewpoint"
+      ],
+      "followers_count": 12171,
+      "following_count": 908,
+      "delta_1d": 2,
+      "growth_1d_pct": 0.0164,
+      "delta_7d": -1,
+      "growth_7d_pct": -0.0082,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:56:01Z"
+    },
+    {
+      "handle": "Climatologist49",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "drought",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "ZLabe",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "data",
+        "academic"
+      ],
+      "followers_count": 62357,
+      "following_count": 1077,
+      "delta_1d": 37,
+      "growth_1d_pct": 0.0594,
+      "delta_7d": 84,
+      "growth_7d_pct": 0.1349,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:56:22Z"
+    },
+    {
+      "handle": "ClimateOfGavin",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "models",
+        "academic"
+      ],
+      "followers_count": 6,
+      "following_count": 32,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 1,
+      "growth_7d_pct": 20.0,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:56:32Z"
+    },
+    {
+      "handle": "hausfath",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 93437,
+      "following_count": 730,
+      "delta_1d": 148,
+      "growth_1d_pct": 0.1586,
+      "delta_7d": 373,
+      "growth_7d_pct": 0.4008,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:56:42Z"
+    },
+    {
+      "handle": "ed_hawkins",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 94580,
+      "following_count": 1301,
+      "delta_1d": 21,
+      "growth_1d_pct": 0.0222,
+      "delta_7d": 20,
+      "growth_7d_pct": 0.0212,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.015552+00:00"
+    },
+    {
+      "handle": "Peters_Glen",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_policy",
+        "emissions",
+        "viewpoint"
+      ],
+      "followers_count": 46093,
+      "following_count": 520,
+      "delta_1d": -6,
+      "growth_1d_pct": -0.013,
+      "delta_7d": -19,
+      "growth_7d_pct": -0.0412,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.011417+00:00"
+    },
+    {
+      "handle": "FrediOtto",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "extreme_weather",
+        "attribution",
+        "academic"
+      ],
+      "followers_count": 21679,
+      "following_count": 90,
+      "delta_1d": 3,
+      "growth_1d_pct": 0.0138,
+      "delta_7d": -5,
+      "growth_7d_pct": -0.0231,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.008289+00:00"
+    },
+    {
+      "handle": "DrShepherd2013",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "forecasting",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "KHayhoe",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "communication",
+        "viewpoint"
+      ],
+      "followers_count": 223563,
+      "following_count": 4456,
+      "delta_1d": 64,
+      "growth_1d_pct": 0.0286,
+      "delta_7d": 178,
+      "growth_7d_pct": 0.0797,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.274086+00:00"
+    },
+    {
+      "handle": "MichaelEMann",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "policy",
+        "viewpoint"
+      ],
+      "followers_count": 209104,
+      "following_count": 1838,
+      "delta_1d": 25,
+      "growth_1d_pct": 0.012,
+      "delta_7d": -13,
+      "growth_7d_pct": -0.0062,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.295832+00:00"
+    },
+    {
+      "handle": "AndrewDessler",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "policy",
+        "viewpoint"
+      ],
+      "followers_count": 36580,
+      "following_count": 652,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 12,
+      "growth_7d_pct": 0.0328,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.426464+00:00"
+    },
+    {
+      "handle": "richardabetts",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "models",
+        "viewpoint"
+      ],
+      "followers_count": 31917,
+      "following_count": 2009,
+      "delta_1d": -2,
+      "growth_1d_pct": -0.0063,
+      "delta_7d": -12,
+      "growth_7d_pct": -0.0376,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.546776+00:00"
+    },
+    {
+      "handle": "SISeneviratne",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "extreme_weather",
+        "climate_risk",
+        "academic"
+      ],
+      "followers_count": 11466,
+      "following_count": 2025,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": -1,
+      "growth_7d_pct": -0.0087,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.572968+00:00"
+    },
+    {
+      "handle": "SimonLeeWx",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "seasonal",
+        "stratosphere",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "antmasiello",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "models",
+        "energy_weather",
+        "viewpoint"
+      ],
+      "followers_count": 8568,
+      "following_count": 879,
+      "delta_1d": -2,
+      "growth_1d_pct": -0.0233,
+      "delta_7d": -4,
+      "growth_7d_pct": -0.0467,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.831252+00:00"
+    },
+    {
+      "handle": "ggweather",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "us_west",
+        "viewpoint"
+      ],
+      "followers_count": 6337,
+      "following_count": 1111,
+      "delta_1d": -3,
+      "growth_1d_pct": -0.0473,
+      "delta_7d": -8,
+      "growth_7d_pct": -0.1261,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.832212+00:00"
+    },
+    {
+      "handle": "wxjerdman",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "forecasting",
+        "extreme_weather",
+        "viewpoint"
+      ],
+      "followers_count": 16015,
+      "following_count": 2107,
+      "delta_1d": 2,
+      "growth_1d_pct": 0.0125,
+      "delta_7d": 1,
+      "growth_7d_pct": 0.0062,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.868404+00:00"
+    },
+    {
+      "handle": "RARohde",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 75169,
+      "following_count": 884,
+      "delta_1d": 364,
+      "growth_1d_pct": 0.4866,
+      "delta_7d": 1327,
+      "growth_7d_pct": 1.7971,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:02:59.957634+00:00"
+    },
+    {
+      "handle": "afreedma",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 158271,
+      "following_count": 5969,
+      "delta_1d": -13,
+      "growth_1d_pct": -0.0082,
+      "delta_7d": -25,
+      "growth_7d_pct": -0.0158,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.113733+00:00"
+    },
+    {
+      "handle": "chriscmooney",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "journalist_analysis",
+        "viewpoint"
+      ],
+      "followers_count": 35302,
+      "following_count": 3651,
+      "delta_1d": -11,
+      "growth_1d_pct": -0.0312,
+      "delta_7d": -17,
+      "growth_7d_pct": -0.0481,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.131149+00:00"
+    },
+    {
+      "handle": "DekeArndt",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "data",
+        "viewpoint"
+      ],
+      "followers_count": 2501,
+      "following_count": 237,
+      "delta_1d": 1,
+      "growth_1d_pct": 0.04,
+      "delta_7d": 2,
+      "growth_7d_pct": 0.08,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.117125+00:00"
+    },
+    {
+      "handle": "WorldClimateSvc",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "enso",
+        "seasonal",
+        "commodities"
+      ],
+      "followers_count": 9915,
+      "following_count": 1048,
+      "delta_1d": -6,
+      "growth_1d_pct": -0.0605,
+      "delta_7d": 4,
+      "growth_7d_pct": 0.0404,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.371713+00:00"
+    },
+    {
+      "handle": "WorldWeatherInc",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "enso",
+        "agri_weather",
+        "commodities"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "commoditywx",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "commodities",
+        "agri_weather",
+        "energy_weather"
+      ],
+      "followers_count": 9653,
+      "following_count": 68,
+      "delta_1d": 7,
+      "growth_1d_pct": 0.0726,
+      "delta_7d": 12,
+      "growth_7d_pct": 0.1245,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.396344+00:00"
+    },
+    {
+      "handle": "BradPanovich",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "forecasting",
+        "extreme_weather",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "EricHolthaus",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_risk",
+        "policy",
+        "viewpoint"
+      ],
+      "followers_count": 429828,
+      "following_count": 19712,
+      "delta_1d": -46,
+      "growth_1d_pct": -0.0107,
+      "delta_7d": -115,
+      "growth_7d_pct": -0.0267,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:29Z"
+    },
+    {
+      "handle": "climateguyw",
+      "tier": 2,
+      "tags": [
+        "weather_climate",
+        "climate_science",
+        "communication",
+        "viewpoint"
+      ],
+      "followers_count": 12534,
+      "following_count": 3042,
+      "delta_1d": 6,
+      "growth_1d_pct": 0.0479,
+      "delta_7d": 41,
+      "growth_7d_pct": 0.3282,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:39Z"
+    },
+    {
+      "handle": "dylan522p",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "ai_infra",
+        "teacher_required",
+        "supply_chain"
+      ],
+      "followers_count": 155622,
+      "following_count": 1027,
+      "delta_1d": 181,
+      "growth_1d_pct": 0.1164,
+      "delta_7d": 848,
+      "growth_7d_pct": 0.5479,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:38:57Z"
+    },
+    {
+      "handle": "SemiAnalysis_",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "ai_infra",
+        "teacher_required",
+        "research"
+      ],
+      "followers_count": 149777,
+      "following_count": 29,
+      "delta_1d": 532,
+      "growth_1d_pct": 0.3565,
+      "delta_7d": 2654,
+      "growth_7d_pct": 1.8039,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:39:07Z"
+    },
+    {
+      "handle": "mule_capital",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "teacher_required",
+        "alias_review",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "fabknowledge",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "fundamental",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 33809,
+      "following_count": 884,
+      "delta_1d": 21,
+      "growth_1d_pct": 0.0622,
+      "delta_7d": 163,
+      "growth_7d_pct": 0.4845,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:39:28Z"
+    },
+    {
+      "handle": "jukan05",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "memory_hbm",
+        "supply_chain",
+        "teacher_required",
+        "viewpoint"
+      ],
+      "followers_count": 197862,
+      "following_count": 379,
+      "delta_1d": 1550,
+      "growth_1d_pct": 0.7896,
+      "delta_7d": 11879,
+      "growth_7d_pct": 6.3871,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:39:38Z"
+    },
+    {
+      "handle": "firstadopter",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "ai_infra",
+        "teacher_required",
+        "journalist_analysis"
+      ],
+      "followers_count": 103365,
+      "following_count": 10156,
+      "delta_1d": 241,
+      "growth_1d_pct": 0.2337,
+      "delta_7d": 1257,
+      "growth_7d_pct": 1.231,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:39:48Z"
+    },
+    {
+      "handle": "Beth_Kindig",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "tech_equities",
+        "ai_infra",
+        "teacher_required",
+        "fund_manager"
+      ],
+      "followers_count": 181023,
+      "following_count": 4983,
+      "delta_1d": 15,
+      "growth_1d_pct": 0.0083,
+      "delta_7d": 104,
+      "growth_7d_pct": 0.0575,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:39:59Z"
+    },
+    {
+      "handle": "GavinSBaker",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "tech_equities",
+        "fund_manager",
+        "viewpoint"
+      ],
+      "followers_count": 312951,
+      "following_count": 6213,
+      "delta_1d": 5258,
+      "growth_1d_pct": 1.7088,
+      "delta_7d": 7134,
+      "growth_7d_pct": 2.3328,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:40:09Z"
+    },
+    {
+      "handle": "PatrickMoorhead",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "enterprise_tech",
+        "viewpoint"
+      ],
+      "followers_count": 67693,
+      "following_count": 4684,
+      "delta_1d": 107,
+      "growth_1d_pct": 0.1583,
+      "delta_7d": 336,
+      "growth_7d_pct": 0.4988,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:40:19Z"
+    },
+    {
+      "handle": "BenBajarin",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "consumer_tech",
+        "semiconductors",
+        "viewpoint"
+      ],
+      "followers_count": 49570,
+      "following_count": 2349,
+      "delta_1d": 44,
+      "growth_1d_pct": 0.0888,
+      "delta_7d": 406,
+      "growth_7d_pct": 0.8258,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:40:29Z"
+    },
+    {
+      "handle": "IanCutress",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "hardware",
+        "viewpoint"
+      ],
+      "followers_count": 56855,
+      "following_count": 1295,
+      "delta_1d": 48,
+      "growth_1d_pct": 0.0845,
+      "delta_7d": 160,
+      "growth_7d_pct": 0.2822,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:40:40Z"
+    },
+    {
+      "handle": "stacyrasgon",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "sellside",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "benedictevans",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "technology",
+        "platforms",
+        "viewpoint"
+      ],
+      "followers_count": 350462,
+      "following_count": 952,
+      "delta_1d": -44,
+      "growth_1d_pct": -0.0126,
+      "delta_7d": -149,
+      "growth_7d_pct": -0.0425,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:41:00Z"
+    },
+    {
+      "handle": "benthompson",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "technology",
+        "strategy",
+        "viewpoint"
+      ],
+      "followers_count": 278090,
+      "following_count": 1602,
+      "delta_1d": 264,
+      "growth_1d_pct": 0.095,
+      "delta_7d": 881,
+      "growth_7d_pct": 0.3178,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:41:11Z"
+    },
+    {
+      "handle": "stratechery",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "technology",
+        "strategy",
+        "research"
+      ],
+      "followers_count": 1261666,
+      "following_count": 3,
+      "delta_1d": 17032,
+      "growth_1d_pct": 1.3684,
+      "delta_7d": 60566,
+      "growth_7d_pct": 5.0425,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:41:21Z"
+    },
+    {
+      "handle": "ballmatthew",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "technology",
+        "platforms",
+        "viewpoint"
+      ],
+      "followers_count": 114253,
+      "following_count": 115,
+      "delta_1d": 150,
+      "growth_1d_pct": 0.1315,
+      "delta_7d": 82,
+      "growth_7d_pct": 0.0718,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:41:31Z"
+    },
+    {
+      "handle": "Citrini7",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "tech_equities",
+        "thematic",
+        "viewpoint"
+      ],
+      "followers_count": 0,
+      "following_count": 1,
+      "delta_1d": 0,
+      "growth_1d_pct": null,
+      "delta_7d": 0,
+      "growth_7d_pct": null,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:41:41Z"
+    },
+    {
+      "handle": "vkhosla",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "ai",
+        "viewpoint"
+      ],
+      "followers_count": 748156,
+      "following_count": 657,
+      "delta_1d": 1479,
+      "growth_1d_pct": 0.1981,
+      "delta_7d": 6715,
+      "growth_7d_pct": 0.9057,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:41:52Z"
+    },
+    {
+      "handle": "eladgil",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "ai",
+        "viewpoint"
+      ],
+      "followers_count": 619616,
+      "following_count": 1804,
+      "delta_1d": 6283,
+      "growth_1d_pct": 1.0244,
+      "delta_7d": 23846,
+      "growth_7d_pct": 4.0026,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.657933+00:00"
+    },
+    {
+      "handle": "natfriedman",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "developer",
+        "viewpoint"
+      ],
+      "followers_count": 428741,
+      "following_count": 825,
+      "delta_1d": 2944,
+      "growth_1d_pct": 0.6914,
+      "delta_7d": 10297,
+      "growth_7d_pct": 2.4608,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:00.922891+00:00"
+    },
+    {
+      "handle": "danielgross",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "venture",
+        "viewpoint"
+      ],
+      "followers_count": 332645,
+      "following_count": 0,
+      "delta_1d": 3614,
+      "growth_1d_pct": 1.0984,
+      "delta_7d": 12897,
+      "growth_7d_pct": 4.0335,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:43Z"
+    },
+    {
+      "handle": "karpathy",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "developer",
+        "viewpoint"
+      ],
+      "followers_count": 3751575,
+      "following_count": 1124,
+      "delta_1d": 25786,
+      "growth_1d_pct": 0.6921,
+      "delta_7d": 64213,
+      "growth_7d_pct": 1.7414,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:46Z"
+    },
+    {
+      "handle": "AndrewYNg",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "enterprise_ai",
+        "viewpoint"
+      ],
+      "followers_count": 1774777,
+      "following_count": 1102,
+      "delta_1d": 5084,
+      "growth_1d_pct": 0.2873,
+      "delta_7d": 18181,
+      "growth_7d_pct": 1.035,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:50Z"
+    },
+    {
+      "handle": "drfeifei",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "vision_ai",
+        "viewpoint"
+      ],
+      "followers_count": 957882,
+      "following_count": 1179,
+      "delta_1d": 6795,
+      "growth_1d_pct": 0.7144,
+      "delta_7d": 23142,
+      "growth_7d_pct": 2.4758,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:53Z"
+    },
+    {
+      "handle": "ylecun",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "models",
+        "viewpoint"
+      ],
+      "followers_count": 1267872,
+      "following_count": 789,
+      "delta_1d": 1899,
+      "growth_1d_pct": 0.15,
+      "delta_7d": 7079,
+      "growth_7d_pct": 0.5615,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:00:57Z"
+    },
+    {
+      "handle": "fchollet",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "models",
+        "viewpoint"
+      ],
+      "followers_count": 715547,
+      "following_count": 828,
+      "delta_1d": 535,
+      "growth_1d_pct": 0.0748,
+      "delta_7d": 2339,
+      "growth_7d_pct": 0.328,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:01Z"
+    },
+    {
+      "handle": "DrJimFan",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "robotics",
+        "viewpoint"
+      ],
+      "followers_count": 541886,
+      "following_count": 3143,
+      "delta_1d": 3479,
+      "growth_1d_pct": 0.6462,
+      "delta_7d": 12470,
+      "growth_7d_pct": 2.3554,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:04Z"
+    },
+    {
+      "handle": "swyx",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_engineering",
+        "developer",
+        "viewpoint"
+      ],
+      "followers_count": 180997,
+      "following_count": 3897,
+      "delta_1d": 451,
+      "growth_1d_pct": 0.2498,
+      "delta_7d": 1542,
+      "growth_7d_pct": 0.8593,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:08Z"
+    },
+    {
+      "handle": "simonw",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_engineering",
+        "developer",
+        "viewpoint"
+      ],
+      "followers_count": 204298,
+      "following_count": 5656,
+      "delta_1d": 448,
+      "growth_1d_pct": 0.2198,
+      "delta_7d": 1459,
+      "growth_7d_pct": 0.7193,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:12Z"
+    },
+    {
+      "handle": "JeffDean",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_infra",
+        "ai_research",
+        "viewpoint"
+      ],
+      "followers_count": 515418,
+      "following_count": 6434,
+      "delta_1d": 1473,
+      "growth_1d_pct": 0.2866,
+      "delta_7d": 43502,
+      "growth_7d_pct": 9.2182,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:19Z"
+    },
+    {
+      "handle": "LisaSu",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "hardware",
+        "executive"
+      ],
+      "followers_count": 291494,
+      "following_count": 457,
+      "delta_1d": 1161,
+      "growth_1d_pct": 0.3999,
+      "delta_7d": 4163,
+      "growth_7d_pct": 1.4489,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:23Z"
+    },
+    {
+      "handle": "cristianoamon",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "edge_ai",
+        "executive"
+      ],
+      "followers_count": 113847,
+      "following_count": 918,
+      "delta_1d": 1116,
+      "growth_1d_pct": 0.99,
+      "delta_7d": 3828,
+      "growth_7d_pct": 3.4794,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:26Z"
+    },
+    {
+      "handle": "jimkxa",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "hardware",
+        "viewpoint"
+      ],
+      "followers_count": 56248,
+      "following_count": 168,
+      "delta_1d": 172,
+      "growth_1d_pct": 0.3067,
+      "delta_7d": 678,
+      "growth_7d_pct": 1.2201,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:29Z"
+    },
+    {
+      "handle": "realGeorgeHotz",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "hardware",
+        "viewpoint"
+      ],
+      "followers_count": 303477,
+      "following_count": 203,
+      "delta_1d": -33,
+      "growth_1d_pct": -0.0109,
+      "delta_7d": -184,
+      "growth_7d_pct": -0.0606,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:33Z"
+    },
+    {
+      "handle": "jordanschneider",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "china_tech",
+        "industrial_policy",
+        "viewpoint"
+      ],
+      "followers_count": 54659,
+      "following_count": 4088,
+      "delta_1d": -11,
+      "growth_1d_pct": -0.0201,
+      "delta_7d": 5,
+      "growth_7d_pct": 0.0091,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:43Z"
+    },
+    {
+      "handle": "natolambert",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai_research",
+        "models",
+        "viewpoint"
+      ],
+      "followers_count": 97844,
+      "following_count": 934,
+      "delta_1d": 272,
+      "growth_1d_pct": 0.2788,
+      "delta_7d": 903,
+      "growth_7d_pct": 0.9315,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:47Z"
+    },
+    {
+      "handle": "anshelsag",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "semiconductors",
+        "hardware",
+        "viewpoint"
+      ],
+      "followers_count": 13356,
+      "following_count": 6320,
+      "delta_1d": -4,
+      "growth_1d_pct": -0.0299,
+      "delta_7d": -1,
+      "growth_7d_pct": -0.0075,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:50Z"
+    },
+    {
+      "handle": "danielnewmanUV",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "enterprise_tech",
+        "semiconductors",
+        "viewpoint"
+      ],
+      "followers_count": 77438,
+      "following_count": 3666,
+      "delta_1d": 23,
+      "growth_1d_pct": 0.0297,
+      "delta_7d": 84,
+      "growth_7d_pct": 0.1086,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:54Z"
+    },
+    {
+      "handle": "skorusARK",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "innovation",
+        "autonomy",
+        "viewpoint"
+      ],
+      "followers_count": 149618,
+      "following_count": 438,
+      "delta_1d": -8,
+      "growth_1d_pct": -0.0053,
+      "delta_7d": 48,
+      "growth_7d_pct": 0.0321,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:01:58Z"
+    },
+    {
+      "handle": "TashaARK",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "innovation",
+        "tech_equities",
+        "viewpoint"
+      ],
+      "followers_count": 205081,
+      "following_count": 546,
+      "delta_1d": -14,
+      "growth_1d_pct": -0.0068,
+      "delta_7d": -44,
+      "growth_7d_pct": -0.0215,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:01Z"
+    },
+    {
+      "handle": "EconomyApp",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "app_economy",
+        "technology",
+        "viewpoint"
+      ],
+      "followers_count": 240978,
+      "following_count": 391,
+      "delta_1d": 17,
+      "growth_1d_pct": 0.0071,
+      "delta_7d": 222,
+      "growth_7d_pct": 0.0922,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:05Z"
+    },
+    {
+      "handle": "eric_seufert",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "advertising",
+        "technology",
+        "viewpoint"
+      ],
+      "followers_count": 48726,
+      "following_count": 2101,
+      "delta_1d": 28,
+      "growth_1d_pct": 0.0575,
+      "delta_7d": 63,
+      "growth_7d_pct": 0.1295,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:08Z"
+    },
+    {
+      "handle": "hhhypergrowth",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "software",
+        "tech_equities",
+        "viewpoint"
+      ],
+      "followers_count": 53470,
+      "following_count": 715,
+      "delta_1d": 1,
+      "growth_1d_pct": 0.0019,
+      "delta_7d": -16,
+      "growth_7d_pct": -0.0299,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:11Z"
+    },
+    {
+      "handle": "pmarca",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "technology",
+        "viewpoint"
+      ],
+      "followers_count": 5598538,
+      "following_count": 32401,
+      "delta_1d": 53239,
+      "growth_1d_pct": 0.9601,
+      "delta_7d": 190534,
+      "growth_7d_pct": 3.5232,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:15Z"
+    },
+    {
+      "handle": "bgurley",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "technology",
+        "viewpoint"
+      ],
+      "followers_count": 790732,
+      "following_count": 2150,
+      "delta_1d": 1423,
+      "growth_1d_pct": 0.1803,
+      "delta_7d": 5222,
+      "growth_7d_pct": 0.6648,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:19Z"
+    },
+    {
+      "handle": "fredwilson",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "venture",
+        "technology",
+        "viewpoint"
+      ],
+      "followers_count": 640820,
+      "following_count": 1345,
+      "delta_1d": -24,
+      "growth_1d_pct": -0.0037,
+      "delta_7d": -68,
+      "growth_7d_pct": -0.0106,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:22Z"
+    },
+    {
+      "handle": "jaminball",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "software",
+        "tech_equities",
+        "viewpoint"
+      ],
+      "followers_count": 92352,
+      "following_count": 1458,
+      "delta_1d": 133,
+      "growth_1d_pct": 0.1442,
+      "delta_7d": 246,
+      "growth_7d_pct": 0.2671,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:26Z"
+    },
+    {
+      "handle": "sama",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "executive",
+        "viewpoint"
+      ],
+      "followers_count": 5823351,
+      "following_count": 1021,
+      "delta_1d": 19773,
+      "growth_1d_pct": 0.3407,
+      "delta_7d": 73027,
+      "growth_7d_pct": 1.27,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:29Z"
+    },
+    {
+      "handle": "gdb",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "ai",
+        "executive",
+        "viewpoint"
+      ],
+      "followers_count": 1031487,
+      "following_count": 8,
+      "delta_1d": 1102,
+      "growth_1d_pct": 0.107,
+      "delta_7d": 5174,
+      "growth_7d_pct": 0.5041,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:33Z"
+    },
+    {
+      "handle": "tomtunguz",
+      "tier": 2,
+      "tags": [
+        "ai_semis",
+        "software",
+        "venture",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "aleabitorreddit",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "wsb",
+        "memes",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "168XMIZ",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "equities",
+        "tech_equities",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "XXY177",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "value_investing",
+        "viewpoint"
+      ],
+      "followers_count": 97863,
+      "following_count": 77,
+      "delta_1d": 111,
+      "growth_1d_pct": 0.1136,
+      "delta_7d": 82,
+      "growth_7d_pct": 0.0839,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:04.042371+00:00"
+    },
+    {
+      "handle": "artinmemes",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "us_stocks",
+        "viewpoint"
+      ],
+      "followers_count": 83940,
+      "following_count": 38,
+      "delta_1d": 425,
+      "growth_1d_pct": 0.5089,
+      "delta_7d": 487,
+      "growth_7d_pct": 0.5836,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:04.368801+00:00"
+    },
+    {
+      "handle": "tychozzz",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "tech_equities",
+        "viewpoint"
+      ],
+      "followers_count": 91369,
+      "following_count": 450,
+      "delta_1d": 3,
+      "growth_1d_pct": 0.0033,
+      "delta_7d": 142,
+      "growth_7d_pct": 0.1557,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:04.636578+00:00"
+    },
+    {
+      "handle": "xiamujistock",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "options",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "BTCdayu",
+      "tier": 1,
+      "tags": [
+        "ai_semis",
+        "crypto",
+        "equities",
+        "viewpoint"
+      ],
+      "followers_count": 317794,
+      "following_count": 4554,
+      "delta_1d": 111,
+      "growth_1d_pct": 0.0349,
+      "delta_7d": 571,
+      "growth_7d_pct": 0.18,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:04.981364+00:00"
+    },
+    {
+      "handle": "hanking66",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "us_stocks",
+        "viewpoint"
+      ],
+      "followers_count": 45666,
+      "following_count": 193,
+      "delta_1d": 114,
+      "growth_1d_pct": 0.2503,
+      "delta_7d": 312,
+      "growth_7d_pct": 0.6879,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:05.171156+00:00"
+    },
+    {
+      "handle": "darrencao2024",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "credit",
+        "viewpoint"
+      ],
+      "followers_count": 24429,
+      "following_count": 205,
+      "delta_1d": 44,
+      "growth_1d_pct": 0.1804,
+      "delta_7d": 178,
+      "growth_7d_pct": 0.734,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:05.047330+00:00"
+    },
+    {
+      "handle": "bitfoo11",
+      "tier": 1,
+      "tags": [
+        "crypto",
+        "equities",
+        "ai_semis",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "oragines",
+      "tier": 1,
+      "tags": [
+        "crypto",
+        "bitcoin",
+        "equities",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "Shanghain",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "institutional",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "PhyrexNI",
+      "tier": 1,
+      "tags": [
+        "crypto",
+        "bitcoin",
+        "equities",
+        "viewpoint"
+      ],
+      "followers_count": 399255,
+      "following_count": 5572,
+      "delta_1d": 234,
+      "growth_1d_pct": 0.0586,
+      "delta_7d": 724,
+      "growth_7d_pct": 0.1817,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:05.468084+00:00"
+    },
+    {
+      "handle": "bboczz",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "equities",
+        "us_stocks",
+        "viewpoint"
+      ],
+      "followers_count": null,
+      "following_count": null,
+      "delta_1d": null,
+      "growth_1d_pct": null,
+      "delta_7d": null,
+      "growth_7d_pct": null,
+      "source": "missing",
+      "fetched_at": null
+    },
+    {
+      "handle": "Steve_Hanke",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "monetary",
+        "fx",
+        "commodities",
+        "viewpoint"
+      ],
+      "followers_count": 853221,
+      "following_count": 6338,
+      "delta_1d": -140,
+      "growth_1d_pct": -0.0164,
+      "delta_7d": 498,
+      "growth_7d_pct": 0.0584,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:05.752971+00:00"
+    },
+    {
+      "handle": "globalmacro",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "framing",
+        "viewpoint"
+      ],
+      "followers_count": 528,
+      "following_count": 289,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 2,
+      "growth_7d_pct": 0.3802,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:06.039327+00:00"
+    },
+    {
+      "handle": "CiovaccoCapital",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "market_research",
+        "viewpoint"
+      ],
+      "followers_count": 79044,
+      "following_count": 577,
+      "delta_1d": -7,
+      "growth_1d_pct": -0.0089,
+      "delta_7d": 5,
+      "growth_7d_pct": 0.0063,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:06.322368+00:00"
+    },
+    {
+      "handle": "Fxflow",
+      "tier": 1,
+      "tags": [
+        "fx",
+        "macro",
+        "strategy",
+        "viewpoint"
+      ],
+      "followers_count": 44246,
+      "following_count": 902,
+      "delta_1d": 7,
+      "growth_1d_pct": 0.0158,
+      "delta_7d": -14,
+      "growth_7d_pct": -0.0316,
+      "source": "fxtwitter_public_api",
+      "fetched_at": "2026-08-13T03:03:06.597730+00:00"
+    },
+    {
+      "handle": "HenrikZeberg",
+      "tier": 1,
+      "tags": [
+        "macro",
+        "technical",
+        "cross_asset",
+        "viewpoint"
+      ],
+      "followers_count": 217057,
+      "following_count": 1235,
+      "delta_1d": -27,
+      "growth_1d_pct": -0.0124,
+      "delta_7d": -11,
+      "growth_7d_pct": -0.0051,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:28Z"
+    },
+    {
+      "handle": "RickRuleRulz",
+      "tier": 1,
+      "tags": [
+        "commodities",
+        "mining",
+        "precious_metals",
+        "viewpoint"
+      ],
+      "followers_count": 25047,
+      "following_count": 188,
+      "delta_1d": 8,
+      "growth_1d_pct": 0.032,
+      "delta_7d": 17,
+      "growth_7d_pct": 0.0679,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:31Z"
+    },
+    {
+      "handle": "bullionanalytic",
+      "tier": 1,
+      "tags": [
+        "precious_metals",
+        "mining",
+        "viewpoint"
+      ],
+      "followers_count": 387,
+      "following_count": 0,
+      "delta_1d": 0,
+      "growth_1d_pct": 0.0,
+      "delta_7d": 0,
+      "growth_7d_pct": 0.0,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T02:45:34Z"
+    },
+    {
+      "handle": "mkt_intl",
+      "tier": 2,
+      "tags": [
+        "commodities",
+        "agri_softs",
+        "soft_commodities",
+        "research",
+        "viewpoint"
+      ],
+      "followers_count": 3707,
+      "following_count": 179,
+      "delta_1d": 6,
+      "growth_1d_pct": 0.1621,
+      "delta_7d": 6,
+      "growth_7d_pct": 0.1621,
+      "source": "x_profile_response",
+      "fetched_at": "2026-08-13T03:02:47Z"
+    }
+  ],
+  "method": {
+    "delta_1d": "current followers minus the latest prior daily snapshot",
+    "growth_1d_pct": "delta_1d / prior followers * 100",
+    "growth_leader_floor": "current followers >= 1,000 and delta_1d > 0",
+    "interpretation_zh": "粉丝增长衡量观点传播与关注扩散，不代表观点正确性。",
+    "interpretation_en": "Follower growth measures attention diffusion, not forecast accuracy."
+  }
+}
