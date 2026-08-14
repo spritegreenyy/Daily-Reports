@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-en="Search &amp; AI · Research Workbench">检索问答 · 研究工作台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* —— 检索问答页专属样式（沿用 site.css 变量） —— */
+.modebar{display:inline-flex;background:var(--line2,#eef0f5);border-radius:10px;padding:3px;margin:6px 0 18px;}
+.modebar button{border:0;background:none;padding:8px 20px;border-radius:8px;font-size:14px;font-weight:600;
+  color:var(--faint);cursor:pointer;font-family:inherit;transition:all .15s;}
+.modebar button:hover{color:var(--accent);}
+.modebar button.active{background:#fff;color:var(--accent);box-shadow:0 1px 2px rgba(17,24,39,.10);}
+
+.searchbox{display:flex;gap:10px;align-items:stretch;margin-bottom:14px;flex-wrap:wrap;}
+.searchbox .field,.chat-input .field{flex:1;min-width:240px;display:flex;align-items:center;gap:9px;background:var(--panel);
+  border:1px solid var(--line);border-radius:11px;padding:0 14px;transition:border-color .15s,box-shadow .15s;}
+.searchbox .field:focus-within,.chat-input .field:focus-within{border-color:rgba(79,70,229,.5);box-shadow:0 0 0 3px rgba(79,70,229,.10);}
+.searchbox .field svg,.chat-input .field svg{width:18px;height:18px;color:var(--faint);flex:none;}
+.searchbox input,.chat-input input{flex:1;min-width:0;border:0;outline:0;background:none;font-family:inherit;font-size:15px;color:var(--text);
+  padding:13px 0;line-height:1.4;}
+.searchbox input::placeholder,.chat-input input::placeholder{color:var(--faint);}
+.btn-primary{border:0;background:var(--accent);color:#fff;font-family:inherit;font-size:14.5px;font-weight:600;
+  padding:0 22px;border-radius:11px;cursor:pointer;transition:filter .15s,opacity .15s;white-space:nowrap;}
+.btn-primary:hover{filter:brightness(1.06);}
+.btn-primary:disabled{opacity:.55;cursor:not-allowed;}
+
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+.filters select{appearance:none;-webkit-appearance:none;background:var(--panel)
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>")
+  no-repeat right 11px center;
+  border:1px solid var(--line);border-radius:9px;padding:8px 30px 8px 12px;font-family:inherit;font-size:13px;
+  color:var(--text);cursor:pointer;max-width:240px;}
+.filters select:focus{outline:0;border-color:rgba(79,70,229,.5);}
+.filters .clear{background:none;border:0;color:var(--faint);font-family:inherit;font-size:12.5px;cursor:pointer;padding:8px 4px;}
+.filters .clear:hover{color:var(--accent);}
+
+.result-meta{font-size:12.5px;color:var(--faint);margin:14px 2px 12px;}
+
+/* 结果列表 */
+.rlist{display:flex;flex-direction:column;gap:11px;}
+.ritem{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .15s,box-shadow .15s;}
+.ritem:hover{border-color:rgba(79,70,229,.35);box-shadow:0 6px 18px rgba(17,24,39,.05);}
+.ritem.open{border-color:rgba(79,70,229,.45);}
+.rhead{padding:15px 18px;cursor:pointer;}
+.rtitle{font-size:15.5px;font-weight:600;color:var(--text);line-height:1.45;display:flex;align-items:flex-start;gap:8px;}
+.rtitle .caret{flex:none;margin-top:3px;transition:transform .18s;color:var(--faint);}
+.ritem.open .rtitle .caret{transform:rotate(90deg);color:var(--accent);}
+.rtags{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:9px 0 0 22px;font-size:12px;color:var(--sub);}
+.rtags .tag{display:inline-flex;align-items:center;gap:4px;}
+.rtags .sep{color:var(--line);}
+.chip{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--soft);color:var(--accent);}
+.chip.src{background:#f3f4f6;color:var(--sub);}
+.chip.dir-up{background:#fdecec;color:var(--red);}
+.chip.dir-down{background:var(--green-bg);color:var(--green);}
+.chip.dir-flat{background:#fff7ed;color:var(--amber);}
+.rsnip{font-size:13px;color:var(--sub);line-height:1.65;margin:10px 0 0 22px;}
+.rsnip mark{background:rgba(79,70,229,.16);color:var(--accent);border-radius:3px;padding:0 2px;font-weight:600;}
+.rbody{border-top:1px solid var(--line2);padding:4px 22px 20px;display:none;}
+.ritem.open .rbody{display:block;}
+.rbody .linkrow{margin:14px 0 2px;}
+.rbody .linkrow a{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--accent);}
+.rbody .linkrow a:hover{text-decoration:underline;}
+
+/* markdown 正文 */
+.md-body{font-size:14px;line-height:1.8;color:#374151;padding-top:8px;}
+.md-body h1{font-size:19px;font-weight:700;margin:18px 0 10px;color:var(--text);}
+.md-body h2{font-size:16.5px;font-weight:700;margin:20px 0 9px;color:var(--text);padding-bottom:5px;border-bottom:1px solid var(--line2);}
+.md-body h3{font-size:14.5px;font-weight:700;margin:15px 0 7px;color:var(--text);}
+.md-body h4{font-size:13.5px;font-weight:700;margin:13px 0 6px;color:var(--sub);}
+.md-body p{margin:9px 0;}
+.md-body ul,.md-body ol{margin:8px 0 8px 22px;}
+.md-body li{margin:4px 0;}
+.md-body strong{font-weight:700;color:var(--text);}
+.md-body code{font-family:var(--mono);font-size:12.5px;background:var(--soft);border-radius:4px;padding:1px 5px;}
+.md-body blockquote{border-left:3px solid var(--accent);background:var(--soft);border-radius:0 8px 8px 0;
+  padding:8px 14px;margin:12px 0;color:var(--sub);}
+.md-body a{color:var(--accent);}.md-body a:hover{text-decoration:underline;}
+.md-body hr{border:0;border-top:1px solid var(--line);margin:16px 0;}
+.md-body table{border-collapse:collapse;width:100%;margin:12px 0;font-size:12.8px;display:block;overflow-x:auto;}
+.md-body th,.md-body td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;}
+.md-body th{background:var(--soft);font-weight:600;color:var(--text);white-space:nowrap;}
+/* 正文命中高亮 */
+.md-body mark{background:rgba(79,70,229,.16);color:var(--accent);border-radius:3px;padding:0 2px;font-weight:600;}
+.md-body mark.mark-first{background:#fde68a;color:#92400e;box-shadow:0 0 0 2px rgba(245,158,11,.5);}
+
+/* AI 问答 */
+.ask-hint{font-size:12.5px;color:var(--faint);margin:0 2px 14px;line-height:1.7;}
+.ask-samples{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 20px;}
+.ask-samples button{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:6px 14px;
+  font-family:inherit;font-size:12.5px;color:var(--sub);cursor:pointer;transition:all .15s;}
+.ask-samples button:hover{border-color:rgba(79,70,229,.4);color:var(--accent);}
+.answer{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:6px;}
+.answer .a-kick{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.answer .a-kick .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.cites{margin-top:16px;padding-top:14px;border-top:1px solid var(--line2);}
+.cites .lab{font-size:11.5px;font-weight:600;color:var(--faint);letter-spacing:.4px;margin-bottom:8px;}
+.cites .row{display:flex;flex-wrap:wrap;gap:8px;}
+.cite{background:var(--soft);border:1px solid rgba(79,70,229,.15);border-radius:8px;padding:6px 12px;
+  font-family:inherit;font-size:12.5px;font-weight:500;color:var(--accent);cursor:pointer;text-align:left;transition:all .15s;}
+.cite:hover{background:var(--accent);color:#fff;}
+.cand{font-size:12px;color:var(--faint);margin-top:14px;line-height:1.7;}
+
+/* —— 多轮对话 —— */
+.chat-bar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.chat-bar .ask-hint{margin:0;flex:1;}
+.chat-newbtn{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--sub);font-family:inherit;
+  font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:9px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.chat-newbtn:hover{border-color:rgba(79,70,229,.4);color:var(--accent);}
+.chat-log{height:54vh;min-height:300px;overflow-y:auto;padding:6px 2px;display:flex;flex-direction:column;gap:16px;}
+.chat-log:empty{display:none;}
+.chat-empty{text-align:center;color:var(--faint);font-size:13.5px;padding:44px 20px;line-height:1.8;}
+.msg{display:flex;flex-direction:column;max-width:100%;}
+.msg-user{align-items:flex-end;}
+.msg-user .bubble{background:var(--accent);color:#fff;border-radius:14px 14px 4px 14px;padding:11px 16px;
+  font-size:14.5px;line-height:1.6;max-width:82%;white-space:pre-wrap;word-break:break-word;}
+.msg-ai .answer{margin-top:0;width:100%;}
+.chat-input{position:sticky;bottom:0;display:flex;gap:10px;align-items:stretch;padding:14px 0 4px;
+  background:linear-gradient(to top,var(--bg) 78%,rgba(247,248,250,0));margin-top:8px;}
+.chat-input .field{flex:1;min-width:0;}
+
+.spinner{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;
+  border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;}
+.answer .spinner{border:2px solid var(--soft);border-top-color:var(--accent);}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.empty{text-align:center;color:var(--faint);font-size:13.5px;padding:50px 20px;line-height:1.8;}
+.err{background:#fdecec;border:1px solid rgba(220,38,38,.25);color:var(--red);border-radius:10px;padding:12px 16px;font-size:13px;margin-top:8px;}
+.quota-note{display:flex;align-items:flex-start;gap:10px;background:#fff7ed;border:1px solid rgba(192,125,10,.28);
+  color:#92400e;border-radius:12px;padding:13px 16px;font-size:13.5px;line-height:1.65;width:100%;}
+.quota-note svg{flex:none;margin-top:1px;color:var(--amber);}
+.hide{display:none !important;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="../">
+    <span class="nav-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg></span>
+    <b>研究工作台</b>
+  </a>
+  <div class="nav-links">
+    <a href="../macro/">宏观</a>
+    <a href="../fundamentals/">工业品基本面</a>
+    <a href="../capital/">资金分析</a>
+    <a href="../sentiment/">舆情分析</a>
+    <a href="../knowledge/">知识库</a>
+    <a href="../search/" class="active">检索问答</a>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="zh" type="button" onclick="WRLang.set('zh')">中</button>
+    <button class="lang-btn" data-lang="en" type="button" onclick="WRLang.set('en')">EN</button>
+  </div>
+  <span class="nav-status"><span class="dot"></span>数据截至 2026-07-14</span>
+</nav>
+
+<div class="wrap">
+  <div class="crumb" data-en="<a href='../'>Research Workbench</a> · <a href='../knowledge/'>Knowledge Base</a> · Search &amp; AI"><a href="../">研究工作台</a> · <a href="../knowledge/">知识库</a> · 检索问答</div>
+  <div class="sec-head">
+    <h1 data-en="Search &amp; AI Q&amp;A">知识库检索 · AI 问答</h1>
+    <div class="sub" data-en="Full-text search across all research notes, or ask the AI — every answer cites the notes it draws from.">全库研究笔记检索，或直接问 AI —— 每个回答都标注引用了哪几篇笔记。</div>
+  </div>
+
+  <div class="modebar" role="tablist">
+    <button id="tab-search" class="active" type="button" onclick="WR.setMode('search')" data-en="Search">检索</button>
+    <button id="tab-ask" type="button" onclick="WR.setMode('ask')" data-en="Ask AI">问 AI</button>
+  </div>
+
+  <!-- ————— 检索模式 ————— -->
+  <section id="pane-search">
+    <div class="searchbox">
+      <label class="field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="搜索标题、品种、机构、摘要、正文…" data-ph-en="Search titles, varieties, institutions, summaries, full text…" autocomplete="off">
+      </label>
+    </div>
+    <div class="filters">
+      <select id="f-board"><option value="" data-en="All sections">全部板块</option></select>
+      <select id="f-src"><option value="" data-en="All sources">全部来源</option></select>
+      <select id="f-pv"><option value="" data-en="All varieties / institutions">全部品种·机构</option></select>
+      <button class="clear" type="button" onclick="WR.clearFilters()" data-en="Reset">重置</button>
+    </div>
+    <div id="result-meta" class="result-meta"></div>
+    <div id="rlist" class="rlist"></div>
+  </section>
+
+  <!-- ————— 问 AI 模式（多轮对话） ————— -->
+  <section id="pane-ask" class="hide">
+    <div class="chat-bar">
+      <div class="ask-hint" data-en="The AI answers only from the knowledge base, and remembers the conversation so you can ask follow-ups. Each turn it retrieves the most relevant notes and cites the ones it used; if the knowledge base doesn't cover it, it says so. Your chat is saved on this device.">AI 只依据知识库作答，并记住上下文、支持追问：每轮检索最相关的笔记、据此推理并标注引用来源；知识库没有就直说没有、不编造。聊天记录保存在本机。</div>
+      <button id="new-chat" class="chat-newbtn" type="button" onclick="WR.newChat()" data-en="＋ New chat">＋ 新对话</button>
+    </div>
+    <div id="chat-log" class="chat-log"></div>
+    <div class="ask-samples" id="ask-samples"></div>
+    <div class="chat-input">
+      <label class="field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 1 0 18c-1.4 0-2.7-.3-3.9-.9L3 21l1.9-5.1A9 9 0 0 1 12 3z"/></svg>
+        <input id="ask-q" type="text" placeholder="问一个问题，例如：铜的核心矛盾是什么？（可继续追问）" data-ph-en="Ask a question, e.g.: What's the key contradiction for copper? (follow-ups OK)" autocomplete="off">
+      </label>
+      <button id="ask-btn" class="btn-primary" type="button" onclick="WR.ask()" data-en="Send">发送</button>
+    </div>
+  </section>
+
+  <div class="foot" data-en="Research Workbench · Search &amp; AI Q&amp;A. Answers are generated from internal research notes for reference only and do not constitute investment advice.">研究工作台 · 检索问答。回答由内部研究笔记生成，仅供研究参考，不构成投资建议。</div>
+</div>
+
+<script src="../assets/i18n.js"></script>
+<script>
+(function () {
+  var T = function (zh) { return (window.WRLang && WRLang.get() === 'en') ? WRLang.t(zh) : zh; };
+  var isEN = function () { return window.WRLang && WRLang.get() === 'en'; };
+
+  var DATA = [];              // 索引（kb-index.json，含全文「正文」+ 摘要等字段）
+  var mode = 'search';
+  var lastResults = [];       // 当前检索结果（用于语言切换重渲染）
+  var MAX_RESULTS = 30;       // 列表最多渲染条数，避免主线程卡顿
+
+  // 来源类型的英文标签
+  var SRC_EN = { '研报': 'Report', '公众号': 'WeChat', '公众号文章': 'WeChat' };
+  function srcLabel(s) { return isEN() ? (SRC_EN[s] || s) : s; }
+
+  // —————————————— 轻量 Markdown 渲染 ——————————————
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function inline(s) {
+    // 先转义，再还原受控的行内语法
+    s = esc(s);
+    s = s.replace(/`([^`]+)`/g, function (_, c) { return '<code>' + c + '</code>'; });
+    s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (_, txt, url) {
+      var u = url.replace(/"/g, '%22');
+      return '<a href="' + u + '" target="_blank" rel="noopener">' + txt + '</a>';
+    });
+    s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
+    return s;
+  }
+  function renderMarkdown(md) {
+    if (!md) return '';
+    var lines = String(md).replace(/\r\n/g, '\n').split('\n');
+    var html = '', i = 0;
+    function flushList(tag, items) {
+      html += '<' + tag + '>' + items.map(function (x) { return '<li>' + inline(x) + '</li>'; }).join('') + '</' + tag + '>';
+    }
+    while (i < lines.length) {
+      var line = lines[i];
+      var t = line.trim();
+      if (!t) { i++; continue; }
+      // 表格：连续以 | 开头的行
+      if (/^\|(.+)\|\s*$/.test(t) && i + 1 < lines.length && /^\|?[\s:|-]+\|?\s*$/.test(lines[i + 1].trim()) && lines[i + 1].indexOf('-') > -1) {
+        var head = t.replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); });
+        i += 2;
+        var rows = [];
+        while (i < lines.length && /^\|(.+)\|\s*$/.test(lines[i].trim())) {
+          rows.push(lines[i].trim().replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); }));
+          i++;
+        }
+        html += '<table><thead><tr>' + head.map(function (h) { return '<th>' + inline(h) + '</th>'; }).join('') + '</tr></thead><tbody>';
+        html += rows.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + inline(c) + '</td>'; }).join('') + '</tr>'; }).join('');
+        html += '</tbody></table>';
+        continue;
+      }
+      // 标题
+      var h = /^(#{1,6})\s+(.*)$/.exec(t);
+      if (h) { var lv = h[1].length; html += '<h' + lv + '>' + inline(h[2]) + '</h' + lv + '>'; i++; continue; }
+      // 分隔线
+      if (/^(-{3,}|\*{3,}|_{3,})$/.test(t)) { html += '<hr>'; i++; continue; }
+      // 引用块
+      if (/^>\s?/.test(t)) {
+        var quote = [];
+        while (i < lines.length && /^>\s?/.test(lines[i].trim())) { quote.push(lines[i].trim().replace(/^>\s?/, '')); i++; }
+        html += '<blockquote>' + inline(quote.join(' ')) + '</blockquote>';
+        continue;
+      }
+      // 无序列表
+      if (/^[-*+]\s+/.test(t)) {
+        var ul = [];
+        while (i < lines.length && /^[-*+]\s+/.test(lines[i].trim())) { ul.push(lines[i].trim().replace(/^[-*+]\s+/, '')); i++; }
+        flushList('ul', ul);
+        continue;
+      }
+      // 有序列表
+      if (/^\d+[.)]\s+/.test(t)) {
+        var ol = [];
+        while (i < lines.length && /^\d+[.)]\s+/.test(lines[i].trim())) { ol.push(lines[i].trim().replace(/^\d+[.)]\s+/, '')); i++; }
+        flushList('ol', ol);
+        continue;
+      }
+      // 段落（合并连续非空、非特殊行）
+      var para = [t]; i++;
+      while (i < lines.length) {
+        var nt = lines[i].trim();
+        if (!nt || /^(#{1,6}\s|[-*+]\s|\d+[.)]\s|>\s?|\|)/.test(nt) || /^(-{3,}|\*{3,}|_{3,})$/.test(nt)) break;
+        para.push(nt); i++;
+      }
+      html += '<p>' + inline(para.join(' ')) + '</p>';
+    }
+    return html;
+  }
+
+  // —————————————— 方向 → chip 类 ——————————————
+  function dirChip(dir) {
+    if (!dir) return '';
+    var up = /多|涨|强|升/.test(dir), down = /空|跌|弱|降/.test(dir);
+    var cls = up ? 'dir-up' : down ? 'dir-down' : 'dir-flat';
+    return '<span class="chip ' + cls + '">' + esc(T(dir)) + '</span>';
+  }
+
+  // —————————————— 检索（匹配范围含「正文」全文）——————————————
+  // 标题/品种/机构 重复计入以提高其权重；正文放最后，能搜到正文里的产量/价格等具体内容。
+  function searchable(n) {
+    return [n.标题, n.标题, n.品种, n.品种, n.机构, n.机构, n.相关品种, n.作者, n.摘要, n.正文]
+      .filter(Boolean).join('\n');
+  }
+  // 每篇的可搜索文本只在加载时算一次并缓存为小写串（n._hay），避免每次输入都重拼大字符串
+  function haystack(n) {
+    if (n._hay == null) n._hay = searchable(n).toLowerCase();
+    return n._hay;
+  }
+  function terms(q) {
+    q = String(q || '').trim();
+    if (!q) return [];
+    var out = [];
+    // 英文/数字词
+    (q.match(/[A-Za-z0-9]+/g) || []).forEach(function (w) { if (w.length > 1) out.push(w.toLowerCase()); });
+    // 中文：整段 + 2~3 字 n-gram
+    var cjk = q.match(/[一-龥]{2,}/g) || [];
+    cjk.forEach(function (seg) {
+      out.push(seg);
+      if (seg.length > 3) for (var k = 0; k < seg.length - 1; k++) out.push(seg.substr(k, 2));
+    });
+    // 去重
+    return out.filter(function (v, idx, a) { return a.indexOf(v) === idx; });
+  }
+
+  // —————————————— 高亮：按空格分词，逐词高亮，大小写/中文都匹配 ——————————————
+  function queryWords(q) {
+    return String(q || '').trim().split(/\s+/).filter(function (w) { return w.length > 0; });
+  }
+  function escRe(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  // forEscaped=true：正则作用在已 HTML 转义的字符串上（词也要先转义，才能匹配到 &amp; 等）
+  function wordsRegex(words, forEscaped) {
+    var parts = words.map(function (w) { return escRe(forEscaped ? esc(w) : w); }).filter(Boolean);
+    if (!parts.length) return null;
+    return new RegExp('(' + parts.join('|') + ')', 'gi');
+  }
+  // 在「已转义」的纯文本片段上给命中词包 <mark>（用于摘要片段）
+  function markEscaped(escaped, words) {
+    var re = wordsRegex(words, true);
+    return re ? escaped.replace(re, '<mark>$1</mark>') : escaped;
+  }
+  // 在渲染好的 DOM 里，只对文本节点高亮命中词（不碰标签/属性），返回第一个 <mark>
+  function highlightNodes(root, words) {
+    var re = wordsRegex(words, false);
+    if (!re) return null;
+    var first = null;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p = node.parentNode ? node.parentNode.nodeName : '';
+        if (p === 'MARK' || p === 'SCRIPT' || p === 'STYLE' || p === 'CODE') return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var targets = [], node;
+    while ((node = walker.nextNode())) { re.lastIndex = 0; if (re.test(node.nodeValue)) targets.push(node); }
+    targets.forEach(function (n) {
+      re.lastIndex = 0;
+      var text = n.nodeValue, frag = document.createDocumentFragment(), last = 0, m;
+      while ((m = re.exec(text))) {
+        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var mk = document.createElement('mark');
+        mk.textContent = m[0];
+        frag.appendChild(mk);
+        if (!first) { first = mk; mk.className = 'mark-first'; }
+        last = m.index + m[0].length;
+        if (re.lastIndex === m.index) re.lastIndex++; // 防零长匹配死循环
+      }
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      n.parentNode.replaceChild(frag, n);
+    });
+    return first;
+  }
+
+  function runSearch() {
+    var q = document.getElementById('q').value.trim();
+    var fb = document.getElementById('f-board').value;
+    var fs = document.getElementById('f-src').value;
+    var fp = document.getElementById('f-pv').value;
+    var ts = terms(q);
+    var qlow = q.toLowerCase();
+
+    var res = DATA.filter(function (n) {
+      if (fb && n.板块 !== fb) return false;
+      if (fs && n.来源类型 !== fs) return false;
+      if (fp && n.品种 !== fp && n.机构 !== fp) return false;
+      if (!q) return true;
+      var hay = haystack(n);
+      if (hay.indexOf(qlow) > -1) return true;              // 整串命中
+      return ts.every(function (t) { return hay.indexOf(t) > -1; }); // 或所有词各自命中
+    });
+
+    // 排序：有关键词按命中次数，否则按日期倒序
+    if (q) {
+      res.forEach(function (n) {
+        var hay = haystack(n);
+        var sc = hay.indexOf(qlow) > -1 ? 100 : 0;
+        ts.forEach(function (t) { var m = hay.split(t).length - 1; sc += m; });
+        n._sc = sc;
+      });
+      res.sort(function (a, b) { return b._sc - a._sc || (b.日期 || '').localeCompare(a.日期 || ''); });
+    } else {
+      res.sort(function (a, b) { return (b.日期 || '').localeCompare(a.日期 || ''); });
+    }
+    lastResults = res;
+    renderResults(res, q);
+  }
+
+  function snippet(n, q) {
+    var text = n.摘要 || '';
+    if (!text) return '';
+    var words = queryWords(q);
+    if (!words.length) return esc(text.slice(0, 160)) + (text.length > 160 ? '…' : '');
+    // 取窗口：定位到第一个命中词处，居中截取
+    var low = text.toLowerCase();
+    var pos = -1;
+    words.forEach(function (w) { var p = low.indexOf(w.toLowerCase()); if (p > -1 && (pos < 0 || p < pos)) pos = p; });
+    var frag, pre = false, suf = false;
+    if (pos < 0) { frag = text.slice(0, 160); suf = text.length > 160; }
+    else {
+      var start = Math.max(0, pos - 50), end = Math.min(text.length, pos + 120);
+      frag = text.slice(start, end); pre = start > 0; suf = end < text.length;
+    }
+    // 命中词全部高亮（作用在转义后的片段上）
+    return (pre ? '…' : '') + markEscaped(esc(frag), words) + (suf ? '…' : '');
+  }
+
+  // id → 轻索引笔记的映射，供懒加载展开时取 原文链接/标题
+  var byId = {};
+  // id 安全传参（含斜杠/引号），用短 key 映射
+  var idMap = {};
+  function encId(id) { var k = 'k' + Object.keys(idMap).length; idMap[k] = id; return k; }
+  function cssEsc(s) { return String(s).replace(/["\\]/g, '\\$&'); }
+
+  function renderResults(res, q) {
+    var meta = document.getElementById('result-meta');
+    var list = document.getElementById('rlist');
+    if (!res.length) {
+      meta.textContent = '';
+      list.innerHTML = '<div class="empty">' +
+        (isEN() ? 'No matching notes. Try different keywords or clear the filters.' : '没有匹配的笔记，换个关键词或清除筛选试试。') + '</div>';
+      return;
+    }
+    var shown = res.slice(0, MAX_RESULTS);
+    var more = res.length - shown.length;
+    meta.innerHTML = isEN()
+      ? (res.length + ' notes' + (more > 0 ? ' · showing first ' + MAX_RESULTS : '') + (q ? ' · keyword “' + esc(q) + '”' : ''))
+      : ('共 ' + res.length + ' 篇' + (more > 0 ? ' · 显示前 ' + MAX_RESULTS + ' 条' : '') + (q ? ' · 关键词「' + esc(q) + '」' : ''));
+
+    // 只渲染标题+标签+摘要，不含任何正文（正文点开时懒加载）
+    list.innerHTML = shown.map(function (n) {
+      var tags = [];
+      if (n.机构) tags.push('<span class="tag">' + esc(T(n.机构)) + '</span>');
+      if (n.日期) tags.push('<span class="tag">' + esc(n.日期) + '</span>');
+      if (n.板块) tags.push('<span class="chip">' + esc(T(n.板块)) + '</span>');
+      if (n.来源类型) tags.push('<span class="chip src">' + esc(srcLabel(n.来源类型)) + '</span>');
+      if (n.方向) tags.push(dirChip(n.方向));
+      var snip = snippet(n, q);
+      return '<div class="ritem" data-id="' + esc(n.id) + '">' +
+          '<div class="rhead" onclick="WR.toggle(\'' + encId(n.id) + '\')">' +
+            '<div class="rtitle"><span class="caret"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>' + esc(n.标题 || '(无标题)') + '</div>' +
+            '<div class="rtags">' + tags.join('<span class="sep">·</span>') + '</div>' +
+            (snip ? '<div class="rsnip">' + snip + '</div>' : '') +
+          '</div>' +
+          '<div class="rbody" data-loaded="0"></div>' +
+        '</div>';
+    }).join('');
+    // 注意：不要在这里调用 WRLang.apply()——它会触发 onChange 回调再次进入 renderResults，
+    // 造成无限递归卡死。结果项已在渲染时按当前语言用 isEN()/T() 生成，无需再翻译。
+  }
+
+  // 展开/收起：正文随索引已在内存，首次展开该篇时才渲染它的 Markdown（懒渲染）
+  function toggle(key) {
+    var id = idMap[key] || key;
+    var item = document.querySelector('.ritem[data-id="' + cssEsc(id) + '"]');
+    if (!item) return;
+    var body = item.querySelector('.rbody');
+    var willOpen = !item.classList.contains('open');
+    item.classList.toggle('open', willOpen);
+    if (!willOpen) return;
+    var freshOpen = body.getAttribute('data-loaded') !== '1';
+    if (freshOpen) {
+      body.setAttribute('data-loaded', '1');
+      // 正文已随索引载入内存（byId），此处只在展开该篇时才渲染它的 Markdown（懒渲染，不在加载时渲染全部正文）
+      body.innerHTML = bodyHtml(id);
+      // 高亮正文里所有命中的关键词，并把第一个命中处滚动到视野中央
+      var words = queryWords(document.getElementById('q').value.trim());
+      var mdRoot = body.querySelector('.md-body');
+      var firstMark = (words.length && mdRoot) ? highlightNodes(mdRoot, words) : null;
+      if (firstMark) {
+        // 即时定位到第一个命中处（不用 smooth，本页环境下 smooth 会落空；不用 rAF，
+        // 后台标签页里 rAF 会被挂起不触发）。setTimeout 稳定触发，60ms 让正文布局先稳定。
+        setTimeout(function () { firstMark.scrollIntoView({ block: 'center' }); }, 60);
+        return;
+      }
+    }
+    item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function bodyHtml(id) {
+    var n = byId[id] || {};
+    var h = '<div class="md-body">' + renderMarkdown(n.正文 || (isEN() ? '_No full text._' : '_暂无正文。_')) + '</div>';
+    if (n.原文链接) {
+      h += '<div class="linkrow"><a href="' + esc(n.原文链接) + '" target="_blank" rel="noopener">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>' +
+        (isEN() ? 'Original article' : '原文链接') + '</a></div>';
+    }
+    return h;
+  }
+
+  // 从引用/外部打开某篇笔记：切到检索、清筛选、按标题定位并展开
+  function openNoteByTitle(title) {
+    var n = DATA.find(function (x) { return x.标题 === title; }) ||
+            DATA.find(function (x) { return (x.标题 || '').indexOf(title) > -1 || title.indexOf(x.标题 || '') > -1; });
+    setMode('search');
+    document.getElementById('q').value = '';
+    document.getElementById('f-board').value = '';
+    document.getElementById('f-src').value = '';
+    document.getElementById('f-pv').value = '';
+    runSearch();
+    if (n) {
+      setTimeout(function () {
+        var item = document.querySelector('.ritem[data-id="' + cssEsc(n.id) + '"]');
+        if (item) {
+          item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (!item.classList.contains('open')) item.querySelector('.rhead').click();
+        }
+      }, 60);
+    }
+  }
+
+  // —————————————— 问 AI：候选笔记检索 ——————————————
+  var ASK_MAX_CANDS = 8;
+
+  // 「关于什么」的字段（品种/标题/摘要）——用于判断某笔记是否真的在讲某品种，避免无关品种混入
+  function aboutText(n) { return [n.品种, n.标题, n.摘要].filter(Boolean).join(' '); }
+
+  // 机构简称匹配：问题里的「永安/中信/国君/国泰君安」等能对上笔记的机构全名
+  function instMatches(q, inst) {
+    if (!inst) return false;
+    if (q.indexOf(inst) > -1) return true;
+    // 去掉「期货/证券/建投/研究所/括注」等尾缀后的核心词
+    var core = inst.replace(/期货|证券|建投|研究(所|院)?|股份|有限公司|（[^）]*）|\([^)]*\)/g, '');
+    if (core.length >= 2 && q.indexOf(core) > -1) return true;
+    // 别名：国泰君安 <-> 国君
+    if (inst.indexOf('国泰君安') > -1 && (q.indexOf('国君') > -1 || q.indexOf('国泰君安') > -1)) return true;
+    return false;
+  }
+
+  function pickCandidates(question, contextText) {
+    var q = question.trim();
+    var qlow = q.toLowerCase();
+    var words = queryWords(q); // 空格分词，含单字（如「铜」），修复单字品种不计分的漏洞
+    // 品种/机构 的识别范围 = 本轮问题 + 上文（多轮里追问「永安怎么看」时仍能对上上文的「铜」）；
+    // 关键词重合打分仍以本轮问题为准，避免历史噪音。
+    var scopeQ = (q + ' ' + (contextText || '')).trim();
+
+    // 1) 解析命中的「品种」（对照索引 品种 字段，单字也算；结合上文）
+    var hitV = {};
+    DATA.forEach(function (n) { if (n.品种 && scopeQ.indexOf(n.品种) > -1) hitV[n.品种] = 1; });
+    var hasVariety = Object.keys(hitV).length > 0;
+
+    // 2) 打分
+    DATA.forEach(function (n) {
+      var hay = haystack(n);
+      var tit = (n.标题 || '').toLowerCase();
+      var sc = 0;
+      if (n.品种 && hitV[n.品种]) sc += 1000;              // 命中品种：极高权重（强制层）
+      if (instMatches(scopeQ, n.机构)) sc += 30;           // 机构命中：加权（结合上文）
+      if (qlow && hay.indexOf(qlow) > -1) sc += 15;        // 整串命中
+      words.forEach(function (w) {                          // 关键词/全文重合
+        var wl = w.toLowerCase();
+        if (hay.indexOf(wl) > -1) sc += 2;
+        if (tit.indexOf(wl) > -1) sc += 3;
+      });
+      var ab = aboutText(n);
+      Object.keys(hitV).forEach(function (v) { if (ab.indexOf(v) > -1) sc += 8; }); // 与命中品种相关
+      n._as = sc;
+    });
+
+    var chosen = [], seen = {};
+
+    // 3) 强制纳入：命中品种的「全部机构版本」（问「铜」→ 铜_永安 + 铜_中信 + 铜_国君 全进，跨机构对比才成立）
+    if (hasVariety) {
+      var forced = DATA.filter(function (n) { return n.品种 && hitV[n.品种]; });
+      forced.sort(function (a, b) {
+        var am = instMatches(scopeQ, a.机构) ? 1 : 0, bm = instMatches(scopeQ, b.机构) ? 1 : 0;
+        return bm - am || (b.日期 || '').localeCompare(a.日期 || '');
+      });
+      forced.forEach(function (n) { if (!seen[n.id]) { seen[n.id] = 1; chosen.push(n); } });
+    }
+
+    // 4) 补足到 6-8 篇：按分数从高到低；命中品种时只补「确实与该品种相关」的（关于字段含命中品种），
+    //    不让甲醇/塑料等无关品种挤占候选位；无品种时按关键词/全文重合度补。
+    var ranked = DATA.slice().sort(function (a, b) { return b._as - a._as || (b.日期 || '').localeCompare(a.日期 || ''); });
+    for (var i = 0; i < ranked.length && chosen.length < ASK_MAX_CANDS; i++) {
+      var n = ranked[i];
+      if (seen[n.id]) continue;
+      if (hasVariety) {
+        var ab = aboutText(n);
+        var related = Object.keys(hitV).some(function (v) { return ab.indexOf(v) > -1; });
+        if (!related) continue;                            // 无关品种不补
+      } else {
+        if (n._as <= 0) continue;                          // 无品种时只补有重合度的
+      }
+      seen[n.id] = 1; chosen.push(n);
+    }
+
+    // 兜底：极冷门问题也至少给几篇
+    if (!chosen.length) chosen = ranked.slice(0, 6);
+    return chosen.slice(0, ASK_MAX_CANDS);
+  }
+
+  // —— 多轮对话状态 + 本机按用户保存 ——
+  var CHAT_KEY = 'wr_chat:_local'; // boot 时按登录邮箱改写
+  var thread = [];                 // [{role:'user'|'assistant', content, cites?, cands?, pending?, error?}]
+  var chatBusy = false;
+  var MAX_HISTORY_MSGS = 16;       // 传给 worker 的最近历史条数上限（控制上下文长度）
+
+  function loadThread() {
+    try { var s = localStorage.getItem(CHAT_KEY); thread = s ? JSON.parse(s) : []; }
+    catch (e) { thread = []; }
+    if (!Array.isArray(thread)) thread = [];
+  }
+  function saveThread() {
+    try { localStorage.setItem(CHAT_KEY, JSON.stringify(thread)); } catch (e) {}
+  }
+
+  function bubbleUser(content) {
+    return '<div class="msg msg-user"><div class="bubble">' + esc(content) + '</div></div>';
+  }
+  function answerBlock(m) {
+    if (m.pending) {
+      return '<div class="msg msg-ai"><div class="answer"><div class="a-kick"><span class="spinner"></span>' +
+        (isEN() ? 'AI is reading ' + (m.candCount || 0) + ' notes…' : 'AI 正在阅读 ' + (m.candCount || 0) + ' 篇相关笔记…') + '</div></div></div>';
+    }
+    if (m.error) {
+      return '<div class="msg msg-ai"><div class="err">' + (isEN() ? 'Request failed: ' : '请求失败：') + esc(m.content) + '</div></div>';
+    }
+    if (m.quota) {
+      return '<div class="msg msg-ai"><div class="quota-note">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>' +
+        '<span>' + esc(m.content) + '</span></div></div>';
+    }
+    var citeBtns = (m.cites || []).map(function (t) {
+      return '<button class="cite" onclick="WR.openNote(' + JSON.stringify(t).replace(/"/g, '&quot;') + ')">' + esc(t) + '</button>';
+    }).join('');
+    var citesBlock = citeBtns
+      ? '<div class="cites"><div class="lab">' + (isEN() ? 'Based on these notes (click to open):' : '依据（点击查看原笔记）：') + '</div><div class="row">' + citeBtns + '</div></div>'
+      : '';
+    var candLine = (m.cands && m.cands.length)
+      ? '<div class="cand">' + (isEN() ? 'Retrieved candidates: ' : '检索候选：') + m.cands.map(function (t) { return esc(t); }).join(' · ') + '</div>'
+      : '';
+    return '<div class="msg msg-ai"><div class="answer">' +
+      '<div class="a-kick"><span class="dot"></span>' + (isEN() ? 'AI Answer' : 'AI 回答') + '</div>' +
+      '<div class="md-body">' + renderMarkdown(m.content || '') + '</div>' +
+      citesBlock + candLine + '</div></div>';
+  }
+
+  function renderChat(scrollToEnd) {
+    var log = document.getElementById('chat-log');
+    var samples = document.getElementById('ask-samples');
+    if (!thread.length) {
+      log.innerHTML = '';
+      if (samples) samples.style.display = '';
+      return;
+    }
+    if (samples) samples.style.display = 'none';
+    log.innerHTML = thread.map(function (m) {
+      return m.role === 'user' ? bubbleUser(m.content) : answerBlock(m);
+    }).join('');
+    if (scrollToEnd !== false) log.scrollTop = log.scrollHeight;
+  }
+
+  function newChat() {
+    thread = [];
+    saveThread();
+    renderChat();
+    document.getElementById('ask-q').focus();
+  }
+
+  function ask() {
+    if (chatBusy) return;
+    var input = document.getElementById('ask-q');
+    var q = input.value.trim();
+    if (!q) { input.focus(); return; }
+    var btn = document.getElementById('ask-btn');
+
+    // 本轮候选：按新问题重新检索，结合上文提到的品种/机构
+    var contextText = thread.filter(function (m) { return m.role === 'user'; })
+      .map(function (m) { return m.content; }).join(' ');
+    var cands = pickCandidates(q, contextText);
+    var ids = cands.map(function (n) { return n.id; });
+    var candTitles = cands.map(function (n) { return n.标题; });
+
+    // 入列：用户消息 + 占位的 AI 消息（spinner）
+    thread.push({ role: 'user', content: q });
+    var aiMsg = { role: 'assistant', content: '', pending: true, candCount: cands.length };
+    thread.push(aiMsg);
+    saveThread();
+    input.value = '';
+    renderChat();
+
+    chatBusy = true;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>';
+
+    // 传整段对话历史（user/assistant 交替，仅 role+content）——不含正在 pending 的这条
+    var messages = thread.filter(function (m) { return !m.pending; })
+      .map(function (m) { return { role: m.role, content: m.content }; })
+      .slice(-MAX_HISTORY_MSGS);
+
+    fetch('/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: messages, ids: ids })
+    }).then(function (r) {
+      // 先读文本再尝试解析 JSON——即便后端异常返回了 HTML（如登录页），也不会抛 "Unexpected token '<'"
+      return r.text().then(function (t) {
+        var j = null; try { j = JSON.parse(t); } catch (e) {}
+        return { ok: r.ok, status: r.status, j: j };
+      });
+    }).then(function (r) {
+      if (!r.j) {
+        // 非 JSON：多半是未登录被下发了登录页 HTML，或运行时错误页
+        throw new Error((r.status === 401 || r.status === 302 || r.status === 0)
+          ? (isEN() ? 'Please sign in first.' : '请先登录后使用')
+          : (isEN() ? 'Service error (HTTP ' + r.status + '). Please try again.' : '服务异常（HTTP ' + r.status + '），请稍后重试'));
+      }
+      if (!r.ok) throw new Error(r.j.error || ('HTTP ' + r.status));
+      // 额度用尽（HTTP 200 + code）：不显示答案，改显示升级提示
+      if (r.j.code === 'QUOTA_EXCEEDED') {
+        aiMsg.pending = false;
+        aiMsg.quota = true;
+        aiMsg.content = quotaMsg(r.j.cap);
+        if (window.WRAccount) WRAccount.setQuota(0, r.j.cap);
+        return;
+      }
+      aiMsg.pending = false;
+      aiMsg.content = r.j.answer || '';
+      aiMsg.cites = r.j['引用标题'] || [];
+      aiMsg.cands = candTitles;
+      // 同步账户菜单里的今日剩余
+      if (window.WRAccount && typeof r.j.remaining === 'number') WRAccount.setQuota(r.j.remaining, r.j.cap);
+    }).catch(function (e) {
+      aiMsg.pending = false;
+      aiMsg.error = true;
+      aiMsg.content = e.message || String(e);
+    }).then(function () {
+      chatBusy = false;
+      btn.disabled = false;
+      btn.innerHTML = isEN() ? 'Send' : '发送';
+      saveThread();
+      renderChat();
+    });
+  }
+
+  // 额度用尽文案（统一 5 次/天，北京时间次日 0 点恢复）。检索不受限。
+  function quotaMsg(cap) {
+    cap = cap || 5;
+    return isEN()
+      ? 'You have used all ' + cap + ' free Q&As today; they reset tomorrow. Full-text search stays available.'
+      : '今日免费 ' + cap + ' 次已用完，明天恢复。检索不受限，照常可用。';
+  }
+
+  // —————————————— 模式切换 & 初始化 ——————————————
+  function setMode(m) {
+    mode = m;
+    document.getElementById('tab-search').classList.toggle('active', m === 'search');
+    document.getElementById('tab-ask').classList.toggle('active', m === 'ask');
+    document.getElementById('pane-search').classList.toggle('hide', m !== 'search');
+    document.getElementById('pane-ask').classList.toggle('hide', m !== 'ask');
+  }
+
+  function fillSelect(id, values, allZh) {
+    var sel = document.getElementById(id);
+    values.forEach(function (v) {
+      var o = document.createElement('option'); o.value = v; o.textContent = v; o.setAttribute('data-en', v);
+      sel.appendChild(o);
+    });
+  }
+
+  function initFilters() {
+    var boards = {}, srcs = {}, pv = {};
+    DATA.forEach(function (n) {
+      if (n.板块) boards[n.板块] = 1;
+      if (n.来源类型) srcs[n.来源类型] = 1;
+      if (n.品种) pv[n.品种] = 1;
+      if (n.机构) pv[n.机构] = 1;
+    });
+    fillSelect('f-board', Object.keys(boards).sort());
+    // 来源类型：中文值，label 用 data-en 映射
+    var sSel = document.getElementById('f-src');
+    Object.keys(srcs).sort().forEach(function (v) {
+      var o = document.createElement('option'); o.value = v; o.textContent = v;
+      if (SRC_EN[v]) o.setAttribute('data-en', SRC_EN[v]);
+      sSel.appendChild(o);
+    });
+    fillSelect('f-pv', Object.keys(pv).sort(function (a, b) { return a.localeCompare(b, 'zh'); }));
+  }
+
+  function initSamples() {
+    var samples = ['铜的核心矛盾是什么？', '哪些品种提示了累库风险？', 'AI 半导体存储最新观点', '各机构对黄金的方向分歧'];
+    var samplesEn = ['What is the key contradiction for copper?', 'Which varieties flag inventory-build risk?', 'Latest view on AI semiconductor memory', 'How do institutions differ on gold?'];
+    var box = document.getElementById('ask-samples');
+    box.innerHTML = samples.map(function (s, i) {
+      return '<button type="button" data-en="' + esc(samplesEn[i]) + '" onclick="WR.useSample(this)">' + esc(s) + '</button>';
+    }).join('');
+    if (window.WRLang) WRLang.apply();
+  }
+
+  function boot() {
+    fetch('/data/kb-index.json').then(function (r) { return r.json(); }).then(function (d) {
+      DATA = Array.isArray(d) ? d : [];
+      DATA.forEach(function (n) { byId[n.id] = n; });
+      initFilters();
+      initSamples();
+      runSearch();
+    }).catch(function (e) {
+      document.getElementById('rlist').innerHTML = '<div class="err">' +
+        (isEN() ? 'Failed to load knowledge base index.' : '知识库索引加载失败。') + ' ' + esc(e.message || '') + '</div>';
+    });
+
+    // 取当前登录邮箱作为聊天记录的存储键（按用户各自保存）；失败则退回本机默认键
+    fetch('/api/me').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (j && j.email) CHAT_KEY = 'wr_chat:' + j.email;
+      loadThread();
+      renderChat();
+    }).catch(function () { loadThread(); renderChat(); });
+
+    // 事件绑定
+    var qEl = document.getElementById('q');
+    var deb;
+    qEl.addEventListener('input', function () { clearTimeout(deb); deb = setTimeout(runSearch, 200); });
+    ['f-board', 'f-src', 'f-pv'].forEach(function (id) {
+      document.getElementById(id).addEventListener('change', runSearch);
+    });
+    document.getElementById('ask-q').addEventListener('keydown', function (e) { if (e.key === 'Enter') ask(); });
+
+    // 语言切换时重渲染动态内容
+    if (window.WRLang) WRLang.onChange(function () {
+      if (DATA.length) { renderResults(lastResults, qEl.value.trim()); }
+      renderChat(false);
+    });
+  }
+
+  // 暴露给内联事件
+  window.WR = {
+    setMode: setMode,
+    toggle: toggle,
+    clearFilters: function () {
+      document.getElementById('q').value = '';
+      document.getElementById('f-board').value = '';
+      document.getElementById('f-src').value = '';
+      document.getElementById('f-pv').value = '';
+      runSearch();
+    },
+    ask: ask,
+    newChat: newChat,
+    openNote: openNoteByTitle,
+    useSample: function (btn) { document.getElementById('ask-q').value = btn.textContent; ask(); }
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+</body>
+</html>

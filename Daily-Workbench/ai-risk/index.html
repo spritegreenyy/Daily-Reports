@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-en="AI Infrastructure Risk Monitor · v3">AI 基建风险监控 · v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root {
+    --bg: #f4f6fb; --bg-card: #FFFFFF; --bg-soft: #eef1f8;
+    --border: #e5e7eb; --border-dark: #cbd5e1;
+    --text: #1A1A1A; --text-mid: #555555; --text-soft: #888888; --text-faint: #B5B0A5;
+    --navy: #0B2545; --accent: #2563EB;
+    --green: #15803D; --green-soft: #DCFCE7;
+    --amber: #B45309; --amber-soft: #FEF3C7;
+    --red: #B91C1C; --red-soft: #FEE2E2;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'Menlo', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: var(--sans);
+    font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  body { padding: 32px 28px; max-width: 1180px; margin: 0 auto; }
+  a { color: inherit; }
+
+  .masthead { display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  .brand { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--navy); letter-spacing: -0.01em; }
+  .brand-sub { font-size: 11px; color: var(--text-soft); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 2px; }
+  .masthead-right { text-align: right; font-size: 12px; color: var(--text-mid); }
+  .pulse { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+    margin-right: 6px; animation: pulse 2.5s ease-in-out infinite; vertical-align: middle; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(21,128,61,0.5); } 50% { box-shadow: 0 0 0 8px rgba(21,128,61,0); } }
+
+  /* sell banner */
+  .sell-banner { background: #6B0000; color: #fff; border-radius: 4px; padding: 12px 18px;
+    margin-bottom: 16px; font-weight: 600; font-size: 14px; letter-spacing: 0.02em; }
+
+  /* verdict */
+  .verdict { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px;
+    padding: 40px 44px; margin-bottom: 32px; position: relative; overflow: hidden; }
+  .verdict::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--vc, var(--green)); }
+  .verdict-label { font-size: 11px; color: var(--text-soft); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px; font-weight: 500; }
+  .verdict-main { display: flex; align-items: baseline; gap: 24px; margin-bottom: 18px; flex-wrap: wrap; }
+  .verdict-status { font-family: var(--serif); font-size: 64px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+  .verdict-status-zh { font-family: var(--serif); font-size: 30px; font-weight: 500; color: var(--text); font-style: italic; }
+  .verdict-summary { font-family: var(--serif); font-size: 19px; line-height: 1.55; color: var(--text); max-width: 820px; font-weight: 400; }
+  .verdict-summary em { color: var(--red); font-style: normal; font-weight: 600; font-family: var(--sans); font-size: 17px; }
+  .verdict-reasons { margin-top: 20px; padding: 16px 20px; background: var(--bg-soft); border-radius: 4px; }
+  .vr-label { font-size: 11px; color: var(--text-soft); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+  .verdict-reasons ol { margin: 0; padding-left: 20px; }
+  .verdict-reasons li { font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 4px; }
+  .verdict-reasons a { color: var(--accent); text-decoration: none; }
+  .verdict-reasons a:hover { text-decoration: underline; }
+
+  .signals-strip { display: flex; gap: 32px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .signal { display: flex; align-items: baseline; gap: 10px; }
+  .signal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .signal-dot.green { background: var(--green); } .signal-dot.amber { background: var(--amber); } .signal-dot.red { background: var(--red); }
+  .signal-count { font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--text); }
+  .signal-label { font-size: 13px; color: var(--text-mid); }
+  .signals-right { margin-left: auto; font-size: 13px; color: var(--text-mid); font-style: italic; }
+
+  .ticker-bar { background: var(--navy); color: white; border-radius: 4px; margin-bottom: 18px; padding: 12px 18px; overflow: hidden; position: relative; display: flex; align-items: center; gap: 16px; }
+  .ticker-label { font-size: 10px; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .ticker-viewport { flex: 1; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
+  .ticker-track { display: inline-flex; gap: 28px; align-items: center; white-space: nowrap; animation: ticker-scroll 45s linear infinite; will-change: transform; }
+  .ticker-bar:hover .ticker-track { animation-play-state: paused; }
+  @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-item { display: inline-flex; align-items: baseline; gap: 8px; flex-shrink: 0; }
+  .ticker-symbol { font-family: var(--mono); font-size: 13px; font-weight: 600; color: #CADCFC; }
+  .ticker-price { font-family: var(--mono); font-size: 13px; color: white; font-weight: 500; }
+  .ticker-change { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+  .ticker-change.up { color: #4ADE80; } .ticker-change.down { color: #F87171; } .ticker-change.flat { color: var(--text-faint); }
+  .ticker-empty { color: var(--text-faint); font-size: 12px; font-style: italic; }
+
+  .alerts { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .alerts-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  .alerts-title { font-size: 11px; color: var(--text-soft); letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; }
+  .alerts-hint { font-size: 11px; color: var(--text-faint); font-style: italic; }
+  .alerts-empty { font-size: 13px; color: var(--green); font-style: italic; padding: 12px 0; }
+  .alert-row { display: grid; grid-template-columns: 6px 1fr auto auto; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--bg-soft); }
+  .alert-row:last-child { border-bottom: none; }
+  .alert-bar { width: 4px; height: 40px; border-radius: 2px; }
+  .alert-bar.red { background: var(--red); } .alert-bar.amber { background: var(--amber); }
+  .alert-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .alert-name { font-size: 14px; color: var(--text); font-weight: 500; }
+  .alert-context { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
+  .alert-value { font-family: var(--mono); font-size: 18px; font-weight: 600; color: var(--text); text-align: right; white-space: nowrap; }
+  .alert-value.red { color: var(--red); } .alert-value.amber { color: var(--amber); }
+  .alert-pillar { font-size: 10px; color: var(--text-soft); background: var(--bg-soft); padding: 3px 8px; border-radius: 100px; white-space: nowrap; letter-spacing: 0.05em; }
+
+  /* source links / stale badge */
+  .src { color: var(--accent); text-decoration: none; font-size: 11px; }
+  .src:hover { text-decoration: underline; }
+  .src-date { font-family: var(--mono); font-size: 10px; color: var(--text-faint); }
+  .stale { font-size: 10px; color: var(--amber); background: var(--amber-soft); padding: 1px 6px; border-radius: 100px; margin-left: 4px; }
+
+  .chart-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 24px 26px 20px; }
+  .chart-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; flex-wrap: wrap; gap: 12px; }
+  .chart-title { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--text); }
+  .chart-tag { display: inline-block; padding: 3px 10px; background: var(--bg-soft); color: var(--text-soft); font-size: 10px; border-radius: 100px; letter-spacing: 0.05em; }
+  .chart-footnote { font-size: 10px; color: var(--text-faint); font-style: italic; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--bg-soft); line-height: 1.6; }
+
+  .section-title { font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 6px; }
+  .section-sub { font-size: 13px; color: var(--text-mid); margin-bottom: 20px; }
+  .section { margin-bottom: 44px; }
+
+  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(540px, 1fr)); gap: 20px; }
+  .pillar { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 24px 26px; transition: border-color 0.15s ease; }
+  .pillar:hover { border-color: var(--border-dark); }
+  .pillar-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .pillar-num { font-family: var(--serif); font-size: 13px; color: var(--text-soft); font-weight: 600; letter-spacing: 0.15em; }
+  .pillar-title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--text); margin-top: 2px; letter-spacing: -0.01em; }
+  .pillar-status { padding: 4px 12px; font-size: 11px; font-weight: 600; border-radius: 100px; letter-spacing: 0.05em; }
+  .pillar-status.green { background: var(--green-soft); color: var(--green); }
+  .pillar-status.amber { background: var(--amber-soft); color: var(--amber); }
+  .pillar-status.red { background: var(--red-soft); color: var(--red); }
+  .pillar-metric { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  .metric-value { font-family: var(--mono); font-size: 40px; font-weight: 600; color: var(--navy); line-height: 1; letter-spacing: -0.02em; }
+  .metric-label { font-size: 13px; color: var(--text-mid); margin-bottom: 14px; }
+  .pillar-takeaway { font-family: var(--serif); font-size: 16px; line-height: 1.55; color: var(--text); padding: 14px 0; border-top: 1px solid var(--border); font-style: italic; }
+  details.pillar-details { margin-top: 6px; }
+  details.pillar-details summary { list-style: none; cursor: pointer; font-size: 12px; color: var(--text-soft); padding: 12px 0 6px; user-select: none; border-top: 1px solid var(--border); transition: color 0.15s ease; }
+  details.pillar-details summary:hover { color: var(--accent); }
+  details.pillar-details summary::-webkit-details-marker { display: none; }
+  details.pillar-details summary::before { content: "▸ "; margin-right: 4px; transition: transform 0.2s ease; display: inline-block; }
+  details.pillar-details[open] summary::before { transform: rotate(90deg); }
+  .detail-row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; font-size: 13px; border-bottom: 1px solid var(--bg-soft); }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-label { color: var(--text); flex: 1; }
+  .detail-note { color: var(--text-faint); font-size: 11px; }
+  .detail-rv { text-align: right; white-space: normal; max-width: 60%; line-height: 1.5; }
+  .detail-value { font-family: var(--mono); color: var(--text); font-weight: 500; }
+  .detail-status { margin-left: 8px; font-size: 11px; }
+  .detail-status.green { color: var(--green); } .detail-status.amber { color: var(--amber); }
+  .detail-status.red { color: var(--red); } .detail-status.gray { color: var(--text-faint); }
+
+  .news-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 24px 26px; }
+  .news-item { padding: 14px 0; border-bottom: 1px solid var(--border); display: flex; gap: 14px; align-items: baseline; }
+  .news-item:last-child { border-bottom: none; } .news-item:first-child { padding-top: 0; }
+  .news-date { font-family: var(--mono); font-size: 11px; color: var(--text-soft); min-width: 78px; flex-shrink: 0; }
+  .news-title-link { color: var(--text); text-decoration: none; font-size: 14px; line-height: 1.5; flex: 1; }
+  .news-title-link:hover { color: var(--accent); }
+  .news-sent { font-size: 10px; padding: 2px 8px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; font-weight: 600; }
+  .news-sent.pos { background: var(--green-soft); color: var(--green); }
+  .news-sent.neg { background: var(--red-soft); color: var(--red); }
+  .news-sent.neu { background: var(--bg-soft); color: var(--text-soft); }
+  .news-tag { font-size: 10px; color: var(--text-soft); padding: 2px 8px; border: 1px solid var(--border); border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+
+  details.triggers-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 0; margin-bottom: 32px; }
+  details.triggers-block summary { cursor: pointer; padding: 18px 26px; list-style: none; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  details.triggers-block summary::-webkit-details-marker { display: none; }
+  details.triggers-block summary::after { content: "▸"; color: var(--text-soft); transition: transform 0.2s ease; font-size: 12px; }
+  details.triggers-block[open] summary::after { transform: rotate(90deg); }
+  .triggers-title-inline { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--navy); }
+  .triggers-sub-inline { font-size: 12px; color: var(--text-soft); margin-left: 12px; }
+  .triggers-content { padding: 0 26px 26px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .trigger-card { padding: 16px 18px; border-left: 3px solid; background: var(--bg-soft); border-radius: 0 4px 4px 0; }
+  .trigger-card.amber { border-color: var(--amber); } .trigger-card.red { border-color: var(--red); } .trigger-card.crit { border-color: #6B0000; }
+  .trigger-name { font-family: var(--serif); font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .trigger-card.amber .trigger-name { color: var(--amber); } .trigger-card.red .trigger-name { color: var(--red); } .trigger-card.crit .trigger-name { color: #6B0000; }
+  .trigger-desc { font-size: 12px; color: var(--text-mid); line-height: 1.6; }
+
+  .foot { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-soft); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 720px) {
+    body { padding: 20px 16px; }
+    .verdict { padding: 24px 20px; } .verdict-status { font-size: 48px; } .verdict-status-zh { font-size: 22px; } .verdict-summary { font-size: 16px; }
+    .signals-strip { flex-wrap: wrap; gap: 20px; } .signals-right { margin-left: 0; width: 100%; }
+    .pillars { grid-template-columns: 1fr; } .pillar { padding: 20px; } .pillar-title { font-size: 19px; } .metric-value { font-size: 34px; }
+  }
+
+</style>
+</head>
+<body>
+
+<style>.wr-lang{position:fixed;top:12px;right:14px;z-index:9999;display:inline-flex;background:rgba(255,255,255,.92);border:1px solid rgba(20,29,55,.14);border-radius:8px;padding:2px;box-shadow:0 1px 5px rgba(0,0,0,.1)}.wr-lang .lang-btn{border:0;background:none;padding:4px 10px;border-radius:6px;font:600 12px/1.4 inherit;color:#5a6478;cursor:pointer}.wr-lang .lang-btn.active{background:#2a6bef;color:#fff}</style>
+<div class="wr-lang"><button class="lang-btn" data-lang="zh" type="button" onclick="WRLang.set('zh')">中</button><button class="lang-btn" data-lang="en" type="button" onclick="WRLang.set('en')">EN</button></div>
+
+<header class="masthead">
+  <div>
+    <div class="brand" data-en="AI Infrastructure Risk Monitor">AI 基建风险监控</div>
+    <div class="brand-sub" data-en="v3.0 · Internal · Manual">v3.0 · Internal · 手动触发</div>
+  </div>
+  <div class="masthead-right">
+    <div data-en='<span class="pulse"></span>Soft-indicator Assessment <strong>2026-07-06</strong>'><span class="pulse"></span>软指标研判 <strong>2026-07-06</strong></div>
+    <div style="font-size:11px;color:var(--text-faint);" data-en="Stock px 2026-07-06 10:03 CST">股价 2026-07-06 10:03 CST</div>
+  </div>
+</header>
+
+<div class="ticker-bar">
+  <span class="ticker-label" data-en="Live Stock Prices">实时股价</span>
+  <div class="ticker-viewport"><div class="ticker-track" id="ticker-track">
+    <span class="ticker-empty" id="ticker-empty" data-en="Loading…">加载中…</span>
+  </div></div>
+</div>
+
+
+
+<div class="verdict" style="--vc:var(--amber);">
+  <div class="verdict-label" data-en="Today's Verdict">今日结论</div>
+  <div class="verdict-main">
+    <div class="verdict-status" style="color:var(--amber);">INTACT</div>
+    <div class="verdict-status-zh" data-en="Cycle intact, red lights still at zero; watch items: CoreWeave credit deteriorating again at the margin + memory super-cycle topping with rising volatility">周期完好、红灯仍清零；关注点：CoreWeave 信用边际再转坏 + 内存超级周期见顶波动加大</div>
+  </div>
+  <p class="verdict-summary" data-en="The core variables across the four pillars — <em>as of 7-3, no hyperscaler has cut its 2026 capex guidance</em> (the big four total ~$725B / +77% YoY) — remain intact, the sell signal has not triggered, and <em>all red lights are cleared (0 red, 6 amber)</em>. But marginal risk is building: <em>CoreWeave junk bonds kept sliding on 7-3</em> and its market cap fell below $50B (7-3 Bloomberg), reversing the earlier 'credit easing, red-to-green' narrative — watch its refinancing cost; Oracle CDS is still at a record-high 198bps, funded entirely by debt (FY26 negative FCF -$23.7B); the memory super-cycle continues (Samsung plans a 20% Q3 price hike, Goldman estimates a 4.9% shortfall, DRAM ~130% YoY) but is already showing topping volatility — SK Hynix/Samsung fell −9% in a single day on 7-2, with a 'price hikes starting to cool' signal on 7-4. Strong demand-side signal: Anthropic filed for IPO on 7-3 at a $965B valuation, surpassing OpenAI.">四大支柱核心变量——<em>7-3 确认无任何 hyperscaler 下调 2026 capex 指引</em>（四大合计约 $725B/+77% YoY）——保持完好，卖出信号未触发，<em>全场红灯清零（0 红 6 黄）</em>。但边际风险在累积：<em>CoreWeave 垃圾债 7-3 继续下滑</em>、市值跌破 $50B（7-3 Bloomberg），此前"信用转松红转绿"的叙事出现反向，需盯其再融资成本；Oracle CDS 仍 198bps 历史高位、靠全债务融资（FY26 负 FCF -$23.7B）；内存超级周期继续（三星拟 Q3 涨价 20%、Goldman 估缺口 4.9%、DRAM ~130% YoY），但已现见顶波动——SK Hynix/三星 7-2 单日 −9%、7-4"涨价开始降温"。需求侧强信号：Anthropic 7-3 递交 IPO、$965B 估值超 OpenAI。</p>
+
+  <div class="verdict-reasons">
+    <div class="vr-label" data-en="Why (conclusion-first · sourced)">为什么（结论先行 · 挂来源）</div>
+    <ol>
+      <li data-en="<strong>Most critical variable intact</strong>: as of 7-3, all five hyperscalers (MSFT/GOOGL/AMZN/META/ORCL) maintained or raised their 2026 capex guidance and none cut it — the sell signal has not triggered (assessment). <a href='https://247wallst.com/investing/2026/07/03/vgt-investors-watch-hyperscaler-capex-guidance-in-h2-2026/' target='_blank'>Source: 24/7 Wall St. 2026-07-03</a>"><strong>最关键变量完好</strong>：截至 7-3，五家 hyperscaler（MSFT/GOOGL/AMZN/META/ORCL）全部维持或上调 2026 capex 指引，无一家下调——卖出信号未触发（综合判断）。<a href="https://247wallst.com/investing/2026/07/03/vgt-investors-watch-hyperscaler-capex-guidance-in-h2-2026/" target="_blank">来源：24/7 Wall St. 2026-07-03</a></li>
+      <li data-en="<strong>The key marginal change to watch: CoreWeave credit worsening again</strong>: junk bonds kept sliding on 7-3 as investors questioned the AI boom, and market cap fell below $50B; although it issued another $3.5B of debt on 7-5 and the stock rebounded with the broad market, 'levering up to survive' and 'credit improving' now coexist, so the 7-1 red-to-green narrative needs re-examination (assessment). <a href='https://www.bloomberg.com/news/articles/coreweave-junk-bonds-slide-further' target='_blank'>Source: Bloomberg 2026-07-03</a>"><strong>本次最需盯的边际变化：CoreWeave 信用再转坏</strong>：垃圾债 7-3 继续下滑、投资者质疑 AI 繁荣，市值跌破 $50B；虽 7-5 再发 $3.5B 债且股价随大盘反弹，但"加杠杆续命"与"信用改善"并存，7-1 的红转绿叙事需重新观察（综合判断）。<a href="https://www.bloomberg.com/news/articles/coreweave-junk-bonds-slide-further" target="_blank">来源：Bloomberg 2026-07-03</a></li>
+      <li data-en="<strong>Oracle remains the tightest name on the debt side</strong>: 5Y CDS at a record-high 198bps, FY26 capex of $55.7B funded entirely by debt, negative FCF of -$23.7B — replacing CoreWeave as the credit point most worth watching. <a href='https://www.cnbc.com/2026/06/10/oracle-orcl-q4-earnings-report-2026.html' target='_blank'>Source: CNBC 2026-06-10</a>"><strong>Oracle 仍是债务侧最紧的名字</strong>：5Y CDS 198bps 历史高位、FY26 capex $55.7B 全债务融资、负 FCF -$23.7B——取代 CoreWeave 成为最需盯的信用点。<a href="https://www.cnbc.com/2026/06/10/oracle-orcl-q4-earnings-report-2026.html" target="_blank">来源：CNBC 2026-06-10</a></li>
+      <li data-en="<strong>Memory super-cycle continues, but topping volatility is rising</strong>: Samsung plans a 20% Q3 DRAM price hike, Goldman estimates a 4.9% shortfall (tightest in 15 years), DRAM ~130% YoY; meanwhile SK Hynix/Samsung fell −9% in a single day on 7-2 and a 'price hikes starting to cool' signal appeared on 7-4 — capital is swinging violently at the top of the memory chain (assessment). <a href='https://www.tomshardware.com/pc-components/dram/dram-and-nand-contract-prices-to-climb-again-in-q2' target='_blank'>Source: Tom&#39;s Hardware 2026-03-31</a>"><strong>内存超级周期继续、但见顶波动加大</strong>：三星拟 Q3 DRAM 涨价 20%、Goldman 估缺口 4.9%（15年最严）、DRAM ~130% YoY；同时 7-2 SK Hynix/三星单日 −9%、7-4 出现"涨价开始降温"信号——资金在内存链高位剧烈波动（综合判断）。<a href="https://www.tomshardware.com/pc-components/dram/dram-and-nand-contract-prices-to-climb-again-in-q2" target="_blank">来源：Tom's Hardware 2026-03-31</a></li>
+      <li data-en="<strong>Demand side still strong</strong>: Anthropic filed for IPO on 7-3 at a $965B valuation, surpassing OpenAI and resetting the AI funding race — private-market pricing for top model companies shows no sign of ebbing (assessment). <a href='https://www.qz.com/anthropic-ipo-filing-history' target='_blank'>Source: qz.com 2026-07-04</a>"><strong>需求侧仍强</strong>：Anthropic 7-3 递交 IPO、以 $965B 估值超过 OpenAI，AI 融资竞赛重置——一级市场对头部模型公司的定价未见退潮（综合判断）。<a href="https://www.qz.com/anthropic-ipo-filing-history" target="_blank">来源：qz.com 2026-07-04</a></li>
+    </ol>
+  </div>
+  <div class="signals-strip">
+    <div class="signal"><span class="signal-dot green"></span><span class="signal-count">16</span><span class="signal-label" data-en="Green Lights">绿灯</span></div>
+    <div class="signal"><span class="signal-dot amber"></span><span class="signal-count">6</span><span class="signal-label" data-en="Amber Lights">黄灯</span></div>
+    <div class="signal"><span class="signal-dot red"></span><span class="signal-count">0</span><span class="signal-label" data-en="Red Lights">红灯</span></div>
+    <div class="signals-right" data-en="22 indicators · across 4 pillars">22 个监控指标 · 跨 4 个支柱</div>
+  </div>
+  <div class="alerts">
+    <div class="alerts-header">
+      <span class="alerts-title" data-en="Indicators to Watch">需关注的指标</span>
+      <span class="alerts-hint" data-en="Sorted by severity · red first">按严重程度排序 · 红灯在先</span>
+    </div>
+
+    <div class="alert-row">
+      <div class="alert-bar amber"></div>
+      <div class="alert-body">
+        <div class="alert-name" data-en="Enterprise Customers &gt;$1M ARR">企业客户 &gt;$1M ARR</div>
+        <div class="alert-context" data-en="6-27 reporting still cites &quot;1,000+ customers paying $1M+/yr&quot; (April data); no updated count. <a class='src' href='https://letsdatascience.com/news/anthropic-hits-50-billion-annual-revenue-f1e10978' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-04-15</span> <span class='stale'>Stale</span>">6-27 报道仍引用&quot;1,000+ 家年付$1M+&quot;（4月数据），无更新计数。 <a class="src" href="https://letsdatascience.com/news/anthropic-hits-50-billion-annual-revenue-f1e10978" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-04-15</span> <span class="stale" data-en="Stale">待更新</span></div>
+      </div>
+      <div class="alert-value amber">~1,000</div>
+      <span class="alert-pillar">01 · Claude</span>
+    </div>
+
+    <div class="alert-row">
+      <div class="alert-bar amber"></div>
+      <div class="alert-body">
+        <div class="alert-name">Oracle 5Y CDS</div>
+        <div class="alert-context" data-en="Latest public quote still at a record-high 198bps; briefly fell to ~152bps in March, but no updated June–July CDS quote. <a class='src' href='https://www.fool.com/investing/2026/04/10/oracles-credit-risk-is-at-an-all-time-high/' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-04-10</span> <span class='stale'>Stale</span>">最新公开报价仍为198bps历史高位；3月一度回落~152bps，但无更新的6-7月 CDS 报价。 <a class="src" href="https://www.fool.com/investing/2026/04/10/oracles-credit-risk-is-at-an-all-time-high/" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-04-10</span> <span class="stale" data-en="Stale">待更新</span></div>
+      </div>
+      <div class="alert-value amber">198 bps</div>
+      <span class="alert-pillar">02 · OpenAI</span>
+    </div>
+
+    <div class="alert-row">
+      <div class="alert-bar amber"></div>
+      <div class="alert-body">
+        <div class="alert-name" data-en="OpenAI 2026 Cash-Burn Forecast">OpenAI 2026 烧钱预测</div>
+        <div class="alert-context" data-en="Kept at ~$25B. Interim reporting revised 2026 cash-burn up to ~$27B (2027 ~$57-63B), but that is a forward forecast, not a disclosed actual. <a class='src' href='https://sherwood.news/markets/openais-planned-cash-burn-unlike-anything-ever-seen-now-doubling-it/' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-02-02</span> <span class='stale'>Stale</span>">保留 ~$25B。中期报道上修2026烧钱至~$27B（2027 ~$57-63B），但属前瞻预测非已披露实际值。 <a class="src" href="https://sherwood.news/markets/openais-planned-cash-burn-unlike-anything-ever-seen-now-doubling-it/" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-02-02</span> <span class="stale" data-en="Stale">待更新</span></div>
+      </div>
+      <div class="alert-value amber">~$25B</div>
+      <span class="alert-pillar">02 · OpenAI</span>
+    </div>
+
+    <div class="alert-row">
+      <div class="alert-bar amber"></div>
+      <div class="alert-body">
+        <div class="alert-name" data-en="Enterprise Churn Announcements">企业流失公告</div>
+        <div class="alert-context" data-en="No newly named enterprise defections in June–July; at the macro level OpenAI's enterprise LLM share is slipping and Anthropic leads, but no new countable events. <a class='src' href='https://www.getpanto.ai/blog/openai-statistics' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-06-15</span> <span class='stale'>Stale</span>">6-7月无新增具名企业倒戈；宏观上 OpenAI 企业 LLM 份额下滑、Anthropic 领先，但无新增可计数事件。 <a class="src" href="https://www.getpanto.ai/blog/openai-statistics" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-06-15</span> <span class="stale" data-en="Stale">待更新</span></div>
+      </div>
+      <div class="alert-value amber">1</div>
+      <span class="alert-pillar">02 · OpenAI</span>
+    </div>
+
+    <div class="alert-row">
+      <div class="alert-bar amber"></div>
+      <div class="alert-body">
+        <div class="alert-name" data-en="AMZN Free Cash Flow">AMZN 自由现金流</div>
+        <div class="alert-context" data-en="Q1CY26 TTM FCF (most conservative basis); Amazon Q2 earnings due end of July. <a class='src' href='https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-05-05</span> <span class='stale'>Stale</span>">Q1CY26 TTM FCF（最保守口径）；Amazon Q2 财报7月底。 <a class="src" href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-05-05</span> <span class="stale" data-en="Stale">待更新</span></div>
+      </div>
+      <div class="alert-value amber" data-en="Turned negative -$17.2B">转负 -$17.2B</div>
+      <span class="alert-pillar">03 · Capex</span>
+    </div>
+
+    <div class="alert-row">
+      <div class="alert-bar amber"></div>
+      <div class="alert-body">
+        <div class="alert-name" data-en="Oracle Capex (debt-financed)">Oracle capex（债务融资）</div>
+        <div class="alert-context" data-en="FY2026 full-year capex $55.7B (+162% YoY, above the ~$50.9B consensus), negative FCF -$23.7B. Confirmed in the 6-10 Q4 earnings. <a class='src' href='https://www.cnbc.com/2026/06/10/oracle-orcl-q4-earnings-report-2026.html' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-06-10</span>">FY2026 全年 capex $55.7B（+162%YoY、超~$50.9B共识），负FCF -$23.7B。6-10 Q4财报确认。 <a class="src" href="https://www.cnbc.com/2026/06/10/oracle-orcl-q4-earnings-report-2026.html" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-06-10</span></div>
+      </div>
+      <div class="alert-value amber">$55.7B</div>
+      <span class="alert-pillar">03 · Capex</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title" data-en="Four Pillars">四个支柱</h2>
+  <p class="section-sub" data-en="Each pillar gives the single most important current judgment. Expand ▸ for sub-indicators (each value sourced + dated).">每个支柱给出当前最重要的判断。展开 ▸ 查看细分指标（每个值挂来源+日期）。</p>
+  <div class="pillars">
+
+    <div class="pillar">
+      <div class="pillar-head">
+        <div>
+          <div class="pillar-num">01 — Claude</div>
+          <div class="pillar-title" data-en="Revenue Engine">营收引擎</div>
+        </div>
+        <span class="pillar-status amber" data-en="1 Amber">1 黄灯</span>
+      </div>
+      <div class="pillar-metric">
+        <div class="metric-value">$47B</div>
+      </div>
+      <div class="metric-label" data-en="Anthropic annualized run-rate · Series H confirmed the run-rate passed $47B; July third-party reports say &quot;approaching $50B&quot; but with no official confirmation, so conservatively take $47B.">Anthropic 年化 run-rate · Series H 确认 run-rate 破 $47B；7月三方报道称&quot;逼近$50B&quot;但无官方确认，保守取 $47B。</div>
+      <p class="pillar-takeaway" data-en="Rapid growth continues, Claude Code is the main engine, and the ~20× valuation multiple sits in a reasonable range with no repricing pressure. The only thing to watch is whether the count of &gt;$1M ARR enterprise customers stalls.">高速增长仍在持续，Claude Code 是主引擎，估值倍数约 20× 处合理区间、无重定价压力。唯一需盯的是 &gt;$1M ARR 企业客户数是否停滞。</p>
+      <details class="pillar-details">
+        <summary data-en="Expand 5 sub-indicators">展开 5 个细分指标</summary>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Anthropic annualized run-rate<br><span class='detail-note'>Series H confirmed the run-rate passed $47B; July third-party reports say &quot;approaching $50B&quot; but no official confirmation, so conservatively take $47B. <a class='src' href='https://www.anthropic.com/news/series-h' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-05-28</span></span>">Anthropic 年化 run-rate<br><span class="detail-note">Series H 确认 run-rate 破 $47B；7月三方报道称&quot;逼近$50B&quot;但无官方确认，保守取 $47B。 <a class="src" href="https://www.anthropic.com/news/series-h" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-05-28</span></span></span>
+          <span class="detail-rv"><span class="detail-value">$47B</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Claude Code run-rate<br><span class='detail-note'>No new disclosure since February's &quot;over $2.5B&quot;; Series H/IPO materials do not break out Claude Code separately. <a class='src' href='https://www.mindstudio.ai/blog/claude-code-2-5-billion-annualized-revenue-saas-comparison' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-02-15</span> <span class='stale'>Stale</span></span>">Claude Code run-rate<br><span class="detail-note">自2月&quot;超$2.5B&quot;后无新披露；Series H/IPO 材料未单列 Claude Code。 <a class="src" href="https://www.mindstudio.ai/blog/claude-code-2-5-billion-annualized-revenue-saas-comparison" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-02-15</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">$2.5B</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Enterprise customers &gt;$1M ARR<br><span class='detail-note'>6-27 reporting still cites &quot;1,000+ customers paying $1M+/yr&quot; (April data); no updated count. <a class='src' href='https://letsdatascience.com/news/anthropic-hits-50-billion-annual-revenue-f1e10978' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-04-15</span> <span class='stale'>Stale</span></span>">企业客户 &gt;$1M ARR<br><span class="detail-note">6-27 报道仍引用&quot;1,000+ 家年付$1M+&quot;（4月数据），无更新计数。 <a class="src" href="https://letsdatascience.com/news/anthropic-hits-50-billion-annual-revenue-f1e10978" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-04-15</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">~1,000</span><span class="detail-status amber" data-en="● Watch">● 关注</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Valuation / run-rate multiple<br><span class='detail-note'>$965B Series H valuation / $47B run-rate ≈ 20.5×; both inputs unchanged since 5-28. <a class='src' href='https://www.anthropic.com/news/series-h' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-05-28</span></span>">估值 / run-rate 倍数<br><span class="detail-note">$965B Series H 估值 / $47B run-rate ≈ 20.5×，两输入自5-28未变。 <a class="src" href="https://www.anthropic.com/news/series-h" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-05-28</span></span></span>
+          <span class="detail-rv"><span class="detail-value">20.5×</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Claude.ai web MAU<br><span class='detail-note'>Anthropic does not officially disclose MAU; third-party estimates range 18.9M–33M, with no more authoritative new figure. <a class='src' href='https://www.demandsage.com/claude-ai-statistics/' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-05-15</span> <span class='stale'>Stale</span></span>">Claude.ai 网页 MAU<br><span class="detail-note">Anthropic 不官方披露 MAU；三方估 18.9M~33M 不等，无更权威新值。 <a class="src" href="https://www.demandsage.com/claude-ai-statistics/" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-05-15</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">~30M</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+      </details>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head">
+        <div>
+          <div class="pillar-num">02 — OpenAI</div>
+          <div class="pillar-title" data-en="Blow-up Monitor">暴雷监控</div>
+        </div>
+        <span class="pillar-status amber" data-en="3 Amber">3 黄灯</span>
+      </div>
+      <div class="pillar-metric">
+        <div class="metric-value">≈452 bps</div>
+      </div>
+      <div class="metric-label" data-en="CoreWeave 5Y CDS · reported 452bps on 6-11 (down sharply from last year's 881 high). But on 7-3 Bloomberg said CoreWeave junk bonds &quot;kept sliding&quot; and its market cap fell below $50B — credit worsening again at the margin; with no new CDS quote, we keep 452 and flag it.">CoreWeave 5Y CDS · 6-11 报 452bps（较去年881高点大降）。但7-3 Bloomberg 称 CoreWeave 垃圾债&quot;继续下滑&quot;、市值跌破$50B——信用边际再转坏，惟无新 CDS 报价，保留452并标注。</div>
+      <p class="pillar-takeaway" data-en="The earlier distress pricing on the credit side has eased — CoreWeave CDS narrowed from ~881bps to ~452bps (red to green). The tightest name now is Oracle CDS approaching its record high. OpenAI's valuation multiple has fallen back to 34× (revenue doubled) and Microsoft reducing its reliance is the first churn signal — risk has not spread across pillars.">信用侧此前的困境定价已缓解——CoreWeave CDS 从约 881bps 收窄至约 452bps（红转绿）。当前最紧的是 Oracle CDS 逼近历史高位。OpenAI 估值倍数回落至 34×（收入翻倍）、微软减少依赖为首个流失信号——风险未跨支柱扩散。</p>
+      <details class="pillar-details">
+        <summary data-en="Expand 6 sub-indicators">展开 6 个细分指标</summary>
+        <div class="detail-row">
+          <span class="detail-label" data-en="CoreWeave 5Y CDS<br><span class='detail-note'>Reported 452bps on 6-11 (down sharply from last year's 881 high). But on 7-3 Bloomberg said CoreWeave junk bonds &quot;kept sliding&quot; and its market cap fell below $50B — credit worsening again at the margin; with no new CDS quote, we keep 452 and flag it. <a class='src' href='https://thenextweb.com/news/coreweave-credit-rebound-applied-digital-junk-bond-data-center' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-06-11</span> <span class='stale'>Stale</span></span>">CoreWeave 5Y CDS<br><span class="detail-note">6-11 报 452bps（较去年881高点大降）。但7-3 Bloomberg 称 CoreWeave 垃圾债&quot;继续下滑&quot;、市值跌破$50B——信用边际再转坏，惟无新 CDS 报价，保留452并标注。 <a class="src" href="https://thenextweb.com/news/coreweave-credit-rebound-applied-digital-junk-bond-data-center" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-06-11</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">≈452 bps</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Oracle 5Y CDS<br><span class='detail-note'>Latest public quote still at a record-high 198bps; briefly fell to ~152bps in March, but no updated June–July CDS quote. <a class='src' href='https://www.fool.com/investing/2026/04/10/oracles-credit-risk-is-at-an-all-time-high/' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-04-10</span> <span class='stale'>Stale</span></span>">Oracle 5Y CDS<br><span class="detail-note">最新公开报价仍为198bps历史高位；3月一度回落~152bps，但无更新的6-7月 CDS 报价。 <a class="src" href="https://www.fool.com/investing/2026/04/10/oracles-credit-risk-is-at-an-all-time-high/" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-04-10</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">198 bps</span><span class="detail-status amber" data-en="● Watch">● 关注</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="OpenAI valuation/revenue multiple<br><span class='detail-note'>$852B post-money (3-31 closed) / ~$25B run-rate. No new funding round or valuation reset since March. <a class='src' href='https://www.cnbc.com/2026/03/31/openai-funding-round-ipo.html' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-06-15</span> <span class='stale'>Stale</span></span>">OpenAI 估值/营收倍数<br><span class="detail-note">$852B post-money（3-31 closed）/ ~$25B run-rate。3月后无新一轮融资或估值重置。 <a class="src" href="https://www.cnbc.com/2026/03/31/openai-funding-round-ipo.html" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-06-15</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">34.1×</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="OpenAI 2026 cash-burn forecast<br><span class='detail-note'>Kept at ~$25B. Interim reporting revised 2026 cash-burn up to ~$27B (2027 ~$57-63B), but that is a forward forecast, not a disclosed actual. <a class='src' href='https://sherwood.news/markets/openais-planned-cash-burn-unlike-anything-ever-seen-now-doubling-it/' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-02-02</span> <span class='stale'>Stale</span></span>">OpenAI 2026 烧钱预测<br><span class="detail-note">保留 ~$25B。中期报道上修2026烧钱至~$27B（2027 ~$57-63B），但属前瞻预测非已披露实际值。 <a class="src" href="https://sherwood.news/markets/openais-planned-cash-burn-unlike-anything-ever-seen-now-doubling-it/" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-02-02</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">~$25B</span><span class="detail-status amber" data-en="● Watch">● 关注</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="ChatGPT weekly actives<br><span class='detail-note'>Official WAU still 900M (February). In June ChatGPT monthly actives topped 1 billion (Reuters/Sensor Tower), but the weekly-active figure was not updated. <a class='src' href='https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-02-27</span> <span class='stale'>Stale</span></span>">ChatGPT 周活<br><span class="detail-note">官方 WAU 仍 900M（2月）。6月 ChatGPT 月活破10亿（Reuters/Sensor Tower），但未更新周活口径。 <a class="src" href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-02-27</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">900M</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Enterprise churn announcements<br><span class='detail-note'>No newly named enterprise defections in June–July; at the macro level OpenAI's enterprise LLM share is slipping and Anthropic leads, but no new countable events. <a class='src' href='https://www.getpanto.ai/blog/openai-statistics' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-06-15</span> <span class='stale'>Stale</span></span>">企业流失公告<br><span class="detail-note">6-7月无新增具名企业倒戈；宏观上 OpenAI 企业 LLM 份额下滑、Anthropic 领先，但无新增可计数事件。 <a class="src" href="https://www.getpanto.ai/blog/openai-statistics" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-06-15</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">1</span><span class="detail-status amber" data-en="● Watch">● 关注</span></span>
+        </div>
+      </details>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head">
+        <div>
+          <div class="pillar-num">03 — Capex</div>
+          <div class="pillar-title" data-en="Buyer Commitment">买家承诺</div>
+        </div>
+        <span class="pillar-status amber" data-en="2 Amber">2 黄灯</span>
+      </div>
+      <div class="pillar-metric">
+        <div class="metric-value" data-en="None">无</div>
+      </div>
+      <div class="metric-label" data-en="Any hyperscaler cutting capex guidance · as of 7-3: zero hyperscalers cut 2026 capex guidance, all five maintained or raised it (Meta ~$145B, Amazon ~$200B, big four total ~$725B/+77% YoY). The sell signal has not triggered; next update at the end-July Q2CY26 earnings.">是否有 hyperscaler 下调 capex 指引 · 截至7-3：零家 hyperscaler 下调2026 capex 指引，五家全部维持或上调（Meta~$145B、Amazon~$200B、四大合计~$725B/+77%YoY）。卖出信号未触发；下次更新看7月底 Q2CY26 财报。</div>
+      <p class="pillar-takeaway" data-en="Not a single one cut its stated guidance — this is the most important single variable, and it remains intact. Google Cloud backlog nearly doubled in one quarter and Microsoft commercial RPO topped $627B; the lurking concern is Oracle/Amazon funding their expansion with debt and negative FCF.">无任何一家下调既定指引——这是最重要的单一变量，保持完好。Google Cloud 待履行订单一季近翻倍、微软商业 RPO 破 $627B；隐忧在 Oracle/亚马逊靠债务与负 FCF 撑扩张。</p>
+      <details class="pillar-details">
+        <summary data-en="Expand 5 sub-indicators">展开 5 个细分指标</summary>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Any hyperscaler cutting capex guidance<br><span class='detail-note'>As of 7-3: zero hyperscalers cut 2026 capex guidance, all five maintained or raised it (Meta ~$145B, Amazon ~$200B, big four total ~$725B/+77% YoY). The sell signal has not triggered; next update at the end-July Q2CY26 earnings. <a class='src' href='https://247wallst.com/investing/2026/07/03/vgt-investors-watch-hyperscaler-capex-guidance-in-h2-2026/' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-07-03</span></span>">是否有 hyperscaler 下调 capex 指引<br><span class="detail-note">截至7-3：零家 hyperscaler 下调2026 capex 指引，五家全部维持或上调（Meta~$145B、Amazon~$200B、四大合计~$725B/+77%YoY）。卖出信号未触发；下次更新看7月底 Q2CY26 财报。 <a class="src" href="https://247wallst.com/investing/2026/07/03/vgt-investors-watch-hyperscaler-capex-guidance-in-h2-2026/" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-07-03</span></span></span>
+          <span class="detail-rv"><span class="detail-value" data-en="None">无</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Google Cloud backlog<br><span class='detail-note'>Q1CY26 figure; Alphabet Q2 earnings not until end of July, still the latest public value. <a class='src' href='https://abc.xyz/investor/' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-04-29</span> <span class='stale'>Stale</span></span>">Google Cloud 待履行订单<br><span class="detail-note">Q1CY26 值；Alphabet Q2 财报要等7月底，仍为最新公开值。 <a class="src" href="https://abc.xyz/investor/" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-04-29</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">$462B</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Microsoft commercial RPO (total, incl. Azure, not Azure-specific)<br><span class='detail-note'>FY26-Q3 (end April) commercial RPO $627B; Q4 earnings not until end of July. <a class='src' href='https://www.microsoft.com/en-us/investor' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-04-29</span> <span class='stale'>Stale</span></span>">微软商业 RPO 总额（含 Azure，非 Azure 专项）<br><span class="detail-note">FY26-Q3（4月底）商业 RPO $627B；Q4 财报要等7月底。 <a class="src" href="https://www.microsoft.com/en-us/investor" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-04-29</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value" data-en="$627B (total commercial RPO)">$627B（商业 RPO 总额）</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="AMZN free cash flow<br><span class='detail-note'>Q1CY26 TTM FCF (most conservative basis); Amazon Q2 earnings end of July. <a class='src' href='https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-05-05</span> <span class='stale'>Stale</span></span>">AMZN 自由现金流<br><span class="detail-note">Q1CY26 TTM FCF（最保守口径）；Amazon Q2 财报7月底。 <a class="src" href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-05-05</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value" data-en="Turned negative -$17.2B">转负 -$17.2B</span><span class="detail-status amber" data-en="● Watch">● 关注</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Oracle capex (debt-financed)<br><span class='detail-note'>FY2026 full-year capex $55.7B (+162% YoY, above the ~$50.9B consensus), negative FCF -$23.7B. Confirmed in the 6-10 Q4 earnings. <a class='src' href='https://www.cnbc.com/2026/06/10/oracle-orcl-q4-earnings-report-2026.html' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-06-10</span></span>">Oracle capex（债务融资）<br><span class="detail-note">FY2026 全年 capex $55.7B（+162%YoY、超~$50.9B共识），负FCF -$23.7B。6-10 Q4财报确认。 <a class="src" href="https://www.cnbc.com/2026/06/10/oracle-orcl-q4-earnings-report-2026.html" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-06-10</span></span></span>
+          <span class="detail-rv"><span class="detail-value">$55.7B</span><span class="detail-status amber" data-en="● Watch">● 关注</span></span>
+        </div>
+      </details>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head">
+        <div>
+          <div class="pillar-num" data-en="04 — Hardware">04 — 硬件</div>
+          <div class="pillar-title" data-en="Leading Indicators">领先指标</div>
+        </div>
+        <span class="pillar-status green" data-en="Healthy">健康</span>
+      </div>
+      <div class="pillar-metric">
+        <div class="metric-value">72%</div>
+      </div>
+      <div class="metric-label" data-en="SK Hynix operating margin · Q1 2026 record-high 72% is still the latest; Q2 earnings due ~July 29.">SK Hynix 营业利润率 · Q1 2026 历史高72%仍为最新；Q2 财报~7月29日出。</div>
+      <p class="pillar-takeaway" data-en="The memory market is in a historic boom, HBM/DRAM shortages persist, and contract prices are +130% YoY. These are 'still rising' leading indicators — when the turning point comes, this is where it loosens first; NVDA is +21% QoQ but the stock has already fallen, the earliest sign of cooling.">内存市场处于历史性繁荣，HBM/DRAM 短缺持续、合约价同比 +130%。这些是‘还在涨’的领先指标——拐点出现时这里会最先松动；NVDA 环比虽 +21% 但股价已跌，是最早的降温迹象。</p>
+      <details class="pillar-details">
+        <summary data-en="Expand 6 sub-indicators">展开 6 个细分指标</summary>
+        <div class="detail-row">
+          <span class="detail-label" data-en="SK Hynix operating margin<br><span class='detail-note'>Q1 2026 record-high 72% is still the latest; Q2 earnings due ~July 29. <a class='src' href='https://www.cnbc.com/2026/04/23/sk-hynix-earnings-ai-memory-shortage-hbm-demand.html' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-04-23</span> <span class='stale'>Stale</span></span>">SK Hynix 营业利润率<br><span class="detail-note">Q1 2026 历史高72%仍为最新；Q2 财报~7月29日出。 <a class="src" href="https://www.cnbc.com/2026/04/23/sk-hynix-earnings-ai-memory-shortage-hbm-demand.html" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-04-23</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">72%</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="NVDA data-center QoQ<br><span class='detail-note'>Q1 FY27 data-center revenue $75.2B, +92% YoY / +21% QoQ, the latest reported quarter. <a class='src' href='https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2027' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-05-20</span></span>">NVDA 数据中心环比<br><span class="detail-note">Q1 FY27 数据中心营收$75.2B，+92%YoY/+21%QoQ，为最新已报季度。 <a class="src" href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2027" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-05-20</span></span></span>
+          <span class="detail-rv"><span class="detail-value">+21%</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="B200 backlog<br><span class='detail-note'>No updated backlog volume since 2025-12; Blackwell still &quot;sold out through mid-2026&quot;. <a class='src' href='https://markets.financialcontent.com/stocks/article/tokenring-2025-12-29-nvidias-blackwell-dynasty-b200-and-gb200-sold-out-through-mid-2026-as-backlog-hits-36-million-units' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2025-12-29</span> <span class='stale'>Stale</span></span>">B200 在手订单<br><span class="detail-note">自2025-12以来无更新积压单量；Blackwell 仍&quot;售罄至2026年中&quot;。 <a class="src" href="https://markets.financialcontent.com/stocks/article/tokenring-2025-12-29-nvidias-blackwell-dynasty-b200-and-gb200-sold-out-through-mid-2026-as-backlog-hits-36-million-units" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2025-12-29</span> <span class="stale" data-en="Stale">待更新</span></span></span>
+          <span class="detail-rv"><span class="detail-value">3.6M</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="B200 rental price (reserved vs on-demand)<br><span class='detail-note'>Real-time aggregators confirm a reserved low of $2.25/hr (36-month), RunPod on-demand $5.89/hr, roughly flat vs March (on-demand range $3.70-16.11). Still above the $2 oversupply line. <a class='src' href='https://getdeploying.com/gpus/nvidia-b200' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-07-06</span></span>">B200 租赁价（预留 vs 按需）<br><span class="detail-note">实时聚合器确认预留最低$2.25/hr（36月）、RunPod 按需$5.89/hr，较3月基本持平（按需区间$3.70-16.11）。仍高于$2供给过剩线。 <a class="src" href="https://getdeploying.com/gpus/nvidia-b200" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-07-06</span></span></span>
+          <span class="detail-rv"><span class="detail-value" data-en="Reserved $2.25 / on-demand ~$5.89">预留 $2.25 / 按需 ~$5.89</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="DRAM contract price (2026 full-year YoY · forecast)<br><span class='detail-note'>Gartner reiterates 2026 DRAM ~130% YoY; sequential gains continue (Q1 +90~98%, Q2 +58~63%, Q3 Samsung plans another 20% hike). Goldman's conventional-DRAM basis is higher at ~176%. <a class='src' href='https://www.tomshardware.com/pc-components/dram/dram-and-nand-contract-prices-to-climb-again-in-q2' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-03-31</span></span>">DRAM 合约价（2026全年 YoY·预测）<br><span class="detail-note">Gartner 重申2026 DRAM ~130%YoY；单季环比续升（Q1 +90~98%、Q2 +58~63%、Q3 三星拟再涨20%）。Goldman 常规DRAM口径更高~176%。 <a class="src" href="https://www.tomshardware.com/pc-components/dram/dram-and-nand-contract-prices-to-climb-again-in-q2" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-03-31</span></span></span>
+          <span class="detail-rv"><span class="detail-value" data-en="+125~130% YoY (Gartner · full-year; Goldman est. ~176%)">+125~130% YoY（Gartner·全年；Goldman 估~176%）</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label" data-en="Goldman DRAM gap<br><span class='detail-note'>Goldman 2026 DRAM shortfall 4.9% (tightest in 15 years), 2027 ~2.5%, reiterated in 6-17 reporting, no longer stale. <a class='src' href='https://finance.biggo.com/news/853cb658-c593-48a9-a743-ffaa215f23e9' target='_blank' rel='noopener'>Source</a> <span class='src-date'>2026-06-17</span></span>">Goldman DRAM 缺口<br><span class="detail-note">Goldman 2026 DRAM 缺口 4.9%（15年最严）、2027~2.5%，6-17 报道重申，已非 stale。 <a class="src" href="https://finance.biggo.com/news/853cb658-c593-48a9-a743-ffaa215f23e9" target="_blank" rel="noopener" data-en="Source">来源</a> <span class="src-date">2026-06-17</span></span></span>
+          <span class="detail-rv"><span class="detail-value">4.9%</span><span class="detail-status green" data-en="● Normal">● 正常</span></span>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title" data-en="GPU Compute Prices">GPU 算力价格</h2>
+  <p class="section-sub" data-en="Cloud on-demand rental as a compute supply/demand proxy · below threshold = supply loosening · B200 &lt; $2/hr = oversupply red alert">云 on-demand 租赁价作为算力供需代理 · 跌破阈值=供给宽松 · B200 &lt; $2/hr = 供给过剩红警</p>
+  <div class="chart-block">
+    <div class="chart-head">
+      <div class="chart-title" data-en='Mainstream GPU current <strong>on-demand</strong> cloud rental · $/hr'>主流 GPU 当前<strong>按需(on-demand)</strong>云租赁价 · $/小时</div>
+      <span class="chart-tag" data-en="Real transaction prices">真实成交价</span>
+    </div>
+    <div id="gpu-chart" style="width:100%;height:340px;"></div>
+    <div class="chart-footnote" data-en="Trend: per getdeploying real-time aggregation (2026-07-06): B200 reserved floor ~$2.25/hr, RunPod on-demand ~$5.89/hr, roughly flat vs March, still above the $2 oversupply line with no glut; H100 flat, A100 trending toward &lt;$1 (low-end generational oversupply).<br>Data note: sourced from RunPod / Lambda / Vast.ai public pricing pages (scraped 2026-07-01; Vast.ai H100 confidence slightly lower). Current prices are the lowest available on-demand quotes from each public pricing page; a 12-month history requires a price index (Silicon Data / OCPI), currently unavailable.<br>Key threshold: B200 reserved <strong>below $2 = oversupply red alert</strong> · A100 trending toward &lt;$1 reflects prior-gen chip obsolescence.">
+      趋势：据 getdeploying 实时聚合（2026-07-06）：B200 预留底价约 $2.25/hr、RunPod 按需约 $5.89/hr，较3月基本持平，仍高于 $2 供给过剩线、未见过剩；H100 走平、A100 趋向 &lt;$1（低端换代过剩）。<br>
+      数据说明：来源 RunPod / Lambda / Vast.ai 公开价格页（2026-07-01 抓取；Vast.ai H100 置信度略低）。 当前价为各家公开价格页最低可得 on-demand 报价；12 个月历史走势需接价格指数（Silicon Data / OCPI），暂缺。<br>
+      关键阈值：B200 reserved <strong>跌破 $2 = 供给过剩红警</strong> · A100 趋向 &lt;$1 反映上代芯片淘汰。
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title" data-en="Recent News Flow · Sentiment">近期新闻流 · 舆情</h2>
+  <p class="section-sub" data-en="Monitored keywords: OpenAI funding · Oracle bonds · CoreWeave debt · hyperscaler capex · NVDA · HBM · DRAM · Anthropic">监控关键词：OpenAI 融资 · Oracle 债券 · CoreWeave 债务 · hyperscaler capex · NVDA · HBM · DRAM · Anthropic</p>
+  <div class="news-block">
+
+    <div class="news-item">
+      <span class="news-date">2026-07-03</span>
+      <a class="news-title-link" href="https://news.google.com/rss/articles/CBMitgFBVV95cUxNc2RwbW1TQkxoZU5ZbnktcFRFLXpOVzRCRndWOHY2Y2J4NE14bGRWQkVMY3pON004cUtNZXJUSHBYei1NWkJaanJQOXZhOFZEY3JMTUdMck92UWFvS1RlbkJpaFNFOXVOcGF6Y1hFU2J4OHd2SnZCTzhXT05MaFRTMWo2dUJuMVBwc2xCUW1RTXJsSkdoVHdpWTBwYVlKM0ViRnQ3VUFyQW9Cc1pGWWxlRkU4MHUydw?oc=5" target="_blank" rel="noopener">CoreWeave Junk Bonds Slide Further as Investors Question AI Boom - Bloomberg.com</a>
+      <span class="news-sent neg" data-en="Negative">利空</span>
+      <span class="news-tag" data-en="CoreWeave Debt">CoreWeave 债务</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2026-07-05</span>
+      <a class="news-title-link" href="https://news.google.com/rss/articles/CBMi6wFBVV95cUxOa2JGNW9kRzA0S1VpQjJiSzhGd0RDa0FmNjVOR1VDMm1pUlh4VXdWZXg0eVZpRy1aRjFnR29ybXAxdldLcEp1RzVwQ1BQUEhzOXduWjdETk01SWR5RzRIOFhtSTFOOGRpb0pmN3Ribk8xa0ROdV9CcDZFMFVvOGl4X0JhMVk1RUdBU3dPYWh3TldXeDB0dGxmZXEwOG9oLW9FRml5S1c4UzRZakZoYlNHZU92cGNqTmVDcGg1Wm5lcmxzcWhlelVDY2p0RkRPeEt6SGpEYTAzdkpiRDJHUHhiMlA2VGRsaUdiVjBv?oc=5" target="_blank" rel="noopener">CRWV Stock Gains Premarket Amid Market Rebound: Neocloud Operator Announces $3.5B Debt Raise - Stocktwits</a>
+      <span class="news-sent neu" data-en="Neutral">中性</span>
+      <span class="news-tag" data-en="CoreWeave Debt">CoreWeave 债务</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2026-07-03</span>
+      <a class="news-title-link" href="https://news.google.com/rss/articles/CBMiakFVX3lxTE02cVBCZkF5cGZpcTc1SUNiU2hFd2xFTHM4Z0tMMmxrRC1LMWhGRnNEckxmbVFrZ1BPN3dFZFdHT3VuMFJuLVVyVGhnbGxWSDNOLTVKZzlHc3dMNC1OSkNTNjBBVkJmY1N1bUE?oc=5" target="_blank" rel="noopener">Anthropic Tops OpenAI With $965B Valuation As AI Funding Race Resets - Yellow.com</a>
+      <span class="news-sent neu" data-en="Neutral">中性</span>
+      <span class="news-tag">Anthropic</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2026-07-03</span>
+      <a class="news-title-link" href="https://news.google.com/rss/articles/CBMizgFBVV95cUxPR2JQSWU2bzlJNVZlYVpZSHdpeVdzNTZFMzNVSFQtYUVpcE9SbjNNWWp3SE9jUFZVbWlPWG9kOW1EX0tYMWxfMkNCdFpSQUxLOEt1cVdhN2xPZ0lrdDVvZXdNMjVYTGZCSk1haU1ITVo0ajUzX2FQUE0yNUZMMmZTUjhVQm9ZcFc2Nm1EWk14bWFPWkY5VnhsS2J6c3pyUVdmNVRNaUlvUGJfNFFORFhqWndnU1BsY21wOVRYeFNrbE5GekU2OVpxZHhHUTc5QQ?oc=5" target="_blank" rel="noopener">[News] Samsung Reportedly Seeks Up to 20% 3Q26 DRAM Price Increase; LPDDR Hikes May Exceed 20% - TrendForce</a>
+      <span class="news-sent pos" data-en="Positive">利多</span>
+      <span class="news-tag" data-en="Memory/DRAM">内存/DRAM</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2026-07-04</span>
+      <a class="news-title-link" href="https://news.google.com/rss/articles/CBMikwJBVV95cUxPbjB0NlFYY1g3X3pkX1FWd0xJcjJJMUVuQlBZb01XQXhxUUoxVGZscDFVenZsQ2Uwa0UtRWgyVzVaTUthUnFsRkhGc3VWV2pjRDFTVDNZUlFUVDFkLTdzZnZrVDMxcG9UMVl6T1NiQ0N2d1VWbjYxakpVY2RKS1dWNldnTzVTWmpvMUxpamxTTUZQYmg1Y0lLd3paZXc3ZkhiczVydTFUNHdOS3ZRZVdFeEpVckJ1RVQ5RWowVGNrUHFoR0E1V21rRWpLdTdyUnJwLWVaeFg0WmxLRUI3UFJzUmI1VDZOVzExbEp6SzRrM0c2cV95eUsxS0VkQUNZa2dyZ0NYN01rNXYwdVNEbE82NzM2WQ?oc=5" target="_blank" rel="noopener">Memory price surge begins to cool as consumers hit affordability limit — AI demand still keeps DRAM and NAND prices climbing through Q3 2026 - Tom&#x27;s Hardware</a>
+      <span class="news-sent neg" data-en="Negative">利空</span>
+      <span class="news-tag" data-en="Memory/DRAM">内存/DRAM</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2026-07-02</span>
+      <a class="news-title-link" href="https://news.google.com/rss/articles/CBMilwFBVV95cUxNRFU0NWhkYzZuZG9IRTd6cmpiUGhyRjFoWm1aSDdLNS0xQTRuUTFpS2JZSmM1b053aV9URXhrS3RFTVdYYUpIa3ZVbFhfWmlLbVRVdEJFckN1RTdJVXBYaHU5Q2tuaDVPeGFfTWFveTRfMjFiTU1YaTJfQXFES3Myb3EwUWZzSTRfSDU3dUYxYnQzcTMxZDNZ0gGcAUFVX3lxTE5VaUJOSWVBQm9jVlZyUjRZeC16NGFpdXNDNEMwMlNEQk1Nb3FhLXJmNTlKTFJUR3Rza293STRQOVJaNXRGUWVEUXFqMTRYZWE1RVNIY24tOFJvaFFmNmNmclhLdjJ4dHJNZkd5WTJHdW5aWXNJT05oYk91ckFKVVZ5RExWa0llcXdncWRMQTY5YnNLNUhQa0wyUFNENg?oc=5" target="_blank" rel="noopener">Samsung Electronics, SK Hynix shares tumble over 9% as chip rout spreads from Wall Street - CNBC</a>
+      <span class="news-sent neg" data-en="Negative">利空</span>
+      <span class="news-tag" data-en="Hardware/Memory">硬件/内存</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2026-07-03</span>
+      <a class="news-title-link" href="https://news.google.com/rss/articles/CBMiowFBVV95cUxPaUlCWFlOdkV2c1B2UkRQWjRSOUZBRFdrbmYzdDB3ZzgxQjRKem00eUF4ODc3RnAxYXJJcEQ1RVBPcnllM0RVemlZSEVlSm40ekJNdnI5emFOUHR6dm5iN1ZjZlV6eWdOUlBHQll6c0NoYUlKMUdMamJhamplYzVlTEhRek80SHNuTUNYU3RZOXg4M0d1eG50ZWtnTjAtT3lQZjF3?oc=5" target="_blank" rel="noopener">VGT Investors: Watch Hyperscaler Capex Guidance in H2 2026 - 24/7 Wall St.</a>
+      <span class="news-sent neu" data-en="Neutral">中性</span>
+      <span class="news-tag">capex</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-date">2026-07-02</span>
+      <a class="news-title-link" href="https://news.google.com/rss/articles/CBMivAFBVV95cUxOb1Y2MDZrY2Q4bzU5ZEQ5b1hlQXAxTlB3dWVLVkNUMUwtRXVXbjdGSEtaMUIyN21HTnZJLXZ3RW5YV3FxUGlmUG40bm5Nc1ZVbU1rSzJVa1R1cTBPZjdEall5SFdHRHZtNFgyU19sa3BlZjZVTUFrVXk3YzBndHVaWnk5czlGVmhyZTZ5WjlSLWxOYkNSU0NGR0hqM1lwVDVzbU9kVFRKSkdXVGx2blFEX3BRbHVGUjYzYjdOdA?oc=5" target="_blank" rel="noopener">Nvidia acts as backstop for customer GPUs in return for cut of cloud revenue - Data Center Dynamics</a>
+      <span class="news-sent neg" data-en="Negative">利空</span>
+      <span class="news-tag">NVDA</span>
+    </div>
+  </div>
+</div>
+
+<details class="triggers-block">
+  <summary><span><span class="triggers-title-inline" data-en="Action Triggers">行动触发器</span><span class="triggers-sub-inline" data-en="Three-tier mechanical thresholds · reference">三档机械式判定阈值 · 参考</span></span></summary>
+  <div class="triggers-content">
+    <div class="trigger-card amber">
+      <div class="trigger-name" data-en="Amber · Watch Closely">黄灯 · 密切关注</div>
+      <div class="trigger-desc" data-en="Oracle CDS &gt; 150bps · CoreWeave CDS &gt; 500bps · OpenAI multiple compresses 30%+ · cash-burn exceeds guidance · memory price gain &lt; 15%">Oracle CDS &gt; 150bps · CoreWeave CDS &gt; 500bps · OpenAI 倍数压缩 30%+ · 烧钱超指引 · 内存涨幅 &lt; 15%</div>
+    </div>
+    <div class="trigger-card red">
+      <div class="trigger-name" data-en="Red · Risk Emerging">红灯 · 风险显现</div>
+      <div class="trigger-desc" data-en="Oracle CDS &gt; 200bps · CoreWeave CDS &gt; 700bps · OpenAI down-round financing · 2+ enterprise churn · NVDA QoQ &lt; 10%">Oracle CDS &gt; 200bps · CoreWeave CDS &gt; 700bps · OpenAI 估值缩水融资 · 2+ 企业流失 · NVDA 环比 &lt; 10%</div>
+    </div>
+    <div class="trigger-card crit">
+      <div class="trigger-name" data-en="Critical · Sell Signal">关键 · 卖出信号</div>
+      <div class="trigger-desc" data-en="CoreWeave CDS &gt; 1000bps · Oracle credit downgrade · OpenAI API price cut &gt; 30% · any hyperscaler cuts capex guidance">CoreWeave CDS &gt; 1000bps · Oracle 信用降级 · OpenAI API 降价 &gt; 30% · 任一 hyperscaler 下调 capex 指引</div>
+    </div>
+  </div>
+</details>
+
+<footer class="foot">
+  <div data-en='In the "报告整理" folder, tell Claude <code style="font-family:var(--mono);color:var(--accent);">更新风险监控</code> to re-run · <strong>Not investment advice</strong>'>在「报告整理」文件夹对 Claude 打 <code style="font-family:var(--mono);color:var(--accent);">更新风险监控</code> 即重跑一遍 · <strong>不构成投资建议</strong></div>
+  <div data-en='v3.0 · revived &amp; upgraded from trista512/ai-risk-monitor · all values carry a real source + date; unavailable ones are marked "Stale" and keep the last value'>v3.0 · 复活并升级自 trista512/ai-risk-monitor · 数值均附真实来源+日期，查不到标“待更新”并保留上次值</div>
+</footer>
+
+<script src="../assets/i18n.js"></script>
+<script>
+const LIVE = {"stocks": {"NVDA": {"symbol": "NVDA", "name": "Nvidia", "currency": "USD", "price": 194.83, "change_1d_pct": -1.39, "change_30d_pct": -12.71, "sparkline": [223.21, 219.25, 215.08, 214.61, 212.35, 214.0, 210.89, 224.1, 222.56, 214.5, 218.66, 205.1, 208.64, 208.19, 200.42, 204.87, 205.19, 212.45, 207.41, 204.65, 210.69, 208.65, 200.04, 199.0, 195.74, 192.53, 194.97, 200.09, 197.58, 194.83]}, "ORCL": {"symbol": "ORCL", "name": "Oracle", "currency": "USD", "price": 140.27, "change_1d_pct": -1.56, "change_30d_pct": -25.45, "sparkline": [188.16, 189.77, 192.08, 193.06, 190.96, 203.7, 225.78, 248.15, 244.58, 230.33, 236.34, 213.68, 211.82, 205.81, 201.26, 184.1, 184.13, 192.64, 188.33, 183.53, 184.29, 175.07, 165.16, 157.53, 152.46, 148.53, 147.76, 146.55, 142.5, 140.27]}, "CRWV": {"symbol": "CRWV", "name": "CoreWeave", "currency": "USD", "price": 81.75, "change_1d_pct": -4.59, "change_30d_pct": -19.28, "sparkline": [101.28, 107.58, 105.49, 105.89, 104.27, 106.86, 109.53, 124.82, 119.27, 110.93, 108.03, 100.39, 102.37, 98.45, 95.61, 95.74, 100.55, 106.71, 117.03, 115.21, 117.95, 111.29, 105.72, 100.88, 98.76, 96.58, 95.51, 99.54, 85.68, 81.75]}, "AMD": {"symbol": "AMD", "name": "AMD", "currency": "USD", "price": 517.82, "change_1d_pct": -4.26, "change_30d_pct": 15.69, "sparkline": [447.58, 449.59, 467.51, 503.89, 495.54, 518.09, 516.1, 510.13, 521.54, 542.52, 523.2, 466.38, 490.33, 475.51, 452.4, 488.45, 511.57, 547.26, 507.29, 512.48, 537.37, 551.63, 519.85, 519.74, 532.57, 521.58, 539.49, 580.91, 540.88, 517.82]}, "TSM": {"symbol": "TSM", "name": "TSMC", "currency": "USD", "price": 434.16, "change_1d_pct": -2.27, "change_30d_pct": 8.36, "sparkline": [400.68, 406.2, 403.57, 411.36, 421.74, 423.87, 417.47, 434.61, 445.65, 435.67, 443.88, 414.2, 425.8, 426.92, 407.8, 421.07, 423.93, 441.4, 425.83, 432.15, 462.12, 467.67, 436.39, 440.83, 434.99, 432.35, 455.1, 477.57, 444.23, 434.16]}, "AVGO": {"symbol": "AVGO", "name": "Broadcom", "currency": "USD", "price": 360.45, "change_1d_pct": -2.41, "change_30d_pct": -13.58, "sparkline": [417.1, 413.91, 413.49, 421.34, 421.19, 425.91, 446.06, 459.24, 480.81, 478.47, 418.25, 385.12, 395.97, 391.54, 371.51, 384.96, 381.47, 393.32, 376.11, 392.28, 410.7, 392.13, 380.15, 382.07, 378.91, 365.02, 372.45, 377.75, 369.34, 360.45]}, "MU": {"symbol": "MU", "name": "Micron", "currency": "USD", "price": 975.56, "change_1d_pct": -5.49, "change_30d_pct": 33.28, "sparkline": [731.99, 762.1, 751.0, 895.88, 928.41, 923.52, 971.0, 1035.5, 1064.1, 1079.57, 996.0, 864.01, 949.28, 935.89, 891.88, 995.87, 981.61, 1087.99, 1020.76, 1043.19, 1133.99, 1211.38, 1051.77, 1048.51, 1213.56, 1132.33, 1145.28, 1154.29, 1032.28, 975.56]}, "MSFT": {"symbol": "MSFT", "name": "Microsoft", "currency": "USD", "price": 390.49, "change_1d_pct": 1.62, "change_30d_pct": -7.06, "sparkline": [420.15, 419.09, 418.57, 416.03, 412.67, 426.99, 450.24, 460.52, 441.31, 427.34, 428.05, 416.67, 411.74, 403.41, 397.36, 390.34, 390.74, 399.76, 393.83, 378.91, 379.4, 367.34, 373.94, 365.46, 352.83, 372.97, 368.57, 373.02, 384.28, 390.49]}, "GOOGL": {"symbol": "GOOGL", "name": "Alphabet", "currency": "USD", "price": 359.91, "change_1d_pct": -0.36, "change_30d_pct": -7.4, "sparkline": [388.68, 387.43, 382.74, 388.65, 388.6, 389.9, 380.11, 376.15, 361.63, 358.78, 371.97, 368.31, 363.31, 364.26, 356.38, 357.77, 359.68, 369.35, 373.25, 363.79, 368.03, 349.68, 346.13, 345.29, 343.71, 337.39, 353.65, 357.37, 361.21, 359.91]}, "AMZN": {"symbol": "AMZN", "name": "Amazon", "currency": "USD", "price": 242.67, "change_1d_pct": 0.4, "change_30d_pct": -8.43, "sparkline": [265.01, 268.46, 266.32, 265.29, 271.85, 274.0, 270.64, 261.26, 256.52, 250.02, 253.79, 246.03, 245.22, 244.19, 238.0, 241.51, 238.55, 246.02, 246.0, 237.5, 244.39, 232.79, 234.11, 234.27, 227.01, 232.69, 240.14, 238.34, 241.7, 242.67]}, "META": {"symbol": "META", "name": "Meta", "currency": "USD", "price": 582.9, "change_1d_pct": -4.9, "change_30d_pct": -3.57, "sparkline": [604.5, 606.82, 609.69, 611.77, 634.67, 634.7, 631.92, 599.91, 597.08, 622.4, 626.99, 592.45, 584.85, 584.05, 570.45, 567.9, 566.45, 593.48, 600.21, 567.58, 577.22, 563.85, 562.2, 557.67, 542.87, 550.25, 562.6, 563.29, 612.91, 582.9]}, "SKHYNIX": {"symbol": "000660.KS", "name": "SK Hynix", "currency": "KRW", "price": 2418000.0, "change_1d_pct": -0.29, "change_30d_pct": 24.6, "sparkline": [1940675.5, 2051656.88, 2242625.0, 2289000.0, 2333000.0, 2363000.0, 2360000.0, 2298000.0, 2070000.0, 1911000.0, 2215000.0, 2048000.0, 2101000.0, 2150000.0, 2288000.0, 2382000.0, 2521000.0, 2685000.0, 2764000.0, 2919000.0, 2555000.0, 2621000.0, 2917000.0, 2673000.0, 2628000.0, 2650000.0, 2560000.0, 2187000.0, 2425000.0, 2418000.0]}}, "stock_order": ["NVDA", "ORCL", "CRWV", "AMD", "TSM", "AVGO", "MU", "MSFT", "GOOGL", "AMZN", "META", "SKHYNIX"], "gpu": {"as_of": "2026-07-06", "source_note": "来源 RunPod / Lambda / Vast.ai 公开价格页（2026-07-01 抓取；Vast.ai H100 置信度略低）。", "trend_note": "据 getdeploying 实时聚合（2026-07-06）：B200 预留底价约 $2.25/hr、RunPod 按需约 $5.89/hr，较3月基本持平，仍高于 $2 供给过剩线、未见过剩；H100 走平、A100 趋向 <$1（低端换代过剩）。", "prices": [{"gpu": "B200", "usd_per_hr": 5.89, "provider": "RunPod", "source_url": "https://www.runpod.io/pricing", "found": true}, {"gpu": "H200", "usd_per_hr": 4.39, "provider": "RunPod", "source_url": "https://www.runpod.io/pricing", "found": true}, {"gpu": "H100", "usd_per_hr": 2.0, "provider": "Vast.ai", "source_url": "https://vast.ai/pricing/gpu/H100-PCIE", "found": true}, {"gpu": "A100", "usd_per_hr": 1.39, "provider": "RunPod", "source_url": "https://www.runpod.io/pricing", "found": true}]}};
+
+// 固定标签中英切换助手（数据值不动，仅切换 UI 文案）
+function L(zh, en){ return (window.WRLang && WRLang.lang() === 'en') ? en : zh; }
+
+// ---- 顶部股价滚动条 ----
+function renderTicker(){
+  const track = document.getElementById('ticker-track');
+  if (!track) return;
+  track.innerHTML = '';
+  const st = LIVE.stocks || {};
+  if (!Object.keys(st).length){
+    const e = document.createElement('span');
+    e.className = 'ticker-empty';
+    e.textContent = L('加载中…', 'Loading…');
+    track.appendChild(e);
+    return;
+  }
+  (LIVE.stock_order || []).forEach(sym => {
+    const d = st[sym]; if (!d) return;
+    const chg = (d.change_1d_pct !== undefined ? d.change_1d_pct : d.change_30d_pct) || 0;
+    let cls='flat', arr='─';
+    if (chg > 0.05) { cls='up'; arr='↑'; } else if (chg < -0.05) { cls='down'; arr='↓'; }
+    const cur = d.currency === 'KRW' ? '₩' : '$';
+    const px = d.currency === 'KRW' ? Math.round(d.price).toLocaleString() : d.price.toFixed(2);
+    const el = document.createElement('div');
+    el.className = 'ticker-item';
+    el.innerHTML = `<span class="ticker-symbol">${sym}</span><span class="ticker-price">${cur}${px}</span>`
+      + `<span class="ticker-change ${cls}">${arr} ${chg>=0?'+':''}${chg.toFixed(2)}%</span>`;
+    el.title = (d.name||sym) + L(' · 当日涨跌（较前一交易日收盘）', ' · Daily change (vs prior close)');
+    track.appendChild(el);
+  });
+  // 复制一份，实现无缝循环滚动（配合 CSS translateX(-50%)）
+  Array.from(track.children).forEach(n => track.appendChild(n.cloneNode(true)));
+}
+
+// ---- GPU 价格柱状图 (ECharts) ----
+var gpuChart = null;
+function renderGpuChart(){
+  const dom = document.getElementById('gpu-chart');
+  if (!dom || !window.echarts) return;
+  const g = (LIVE.gpu && LIVE.gpu.prices) || [];
+  const cats = g.map(p => p.gpu);
+  const vals = g.map(p => p.usd_per_hr);
+  const provs = g.map(p => p.provider || '');
+  const COLOR = {B200:'#0B2545', H200:'#2563EB', H100:'#B45309', A100:'#888888'};
+  if (!gpuChart) gpuChart = echarts.init(dom);
+  gpuChart.setOption({
+    grid: {left: 48, right: 24, top: 24, bottom: 40},
+    tooltip: {trigger:'axis', formatter: p => {
+      const i = p[0].dataIndex;
+      return `${cats[i]}<br/>$${vals[i]!=null?vals[i]:'—'}/hr` + (provs[i]?` · ${provs[i]}`:'') ;
+    }},
+    xAxis: {type:'category', data:cats, axisLabel:{fontFamily:'JetBrains Mono', color:'#555'}},
+    yAxis: {type:'value', name:'$/hr', axisLabel:{formatter:'${value}', color:'#888'},
+             splitLine:{lineStyle:{color:'#E5E0D5', type:'dashed'}}},
+    series: [{
+      type:'bar', data: g.map(p => ({value:p.usd_per_hr, itemStyle:{color:COLOR[p.gpu]||'#0B2545'}})),
+      barWidth: '46%',
+      label: {show:true, position:'top', fontFamily:'JetBrains Mono', fontWeight:600,
+               formatter: p => p.value!=null ? ('$'+p.value) : L('待接','TBD')},
+      markLine: { silent:true, symbol:'none', data:[{yAxis:2, name:L('B200 预留价供给过剩线','B200 reserved oversupply line')}],
+        lineStyle:{color:'#B91C1C', type:'dashed'},
+        label:{formatter:L('B200 预留价 <$2 = 供给过剩（阈值针对预留价，柱为按需价）','B200 reserved <$2 = oversupply (threshold on reserved price; bars are on-demand)'), color:'#B91C1C', fontSize:10, position:'insideEndTop'} }
+    }]
+  }, true);
+}
+window.addEventListener('resize', () => { if (gpuChart) gpuChart.resize(); });
+
+// ---- 中英切换：注册即渲染一次，之后每次切换语言重绘图表/滚动条 ----
+if (window.WRLang && WRLang.onChange) {
+  WRLang.onChange(function(){ renderTicker(); renderGpuChart(); });
+} else {
+  renderTicker(); renderGpuChart();
+}
+</script>
+</body>
+</html>

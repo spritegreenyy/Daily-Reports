@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title data-en="AI Hardware & Model Indicators">AI硬件与模型领先指标</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="research.css">
+</head>
+<body data-page="hardware">
+<nav class="nav"><a class="nav-brand" href="../"><span class="nav-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg></span><b data-en="Research Workbench">研究工作台</b></a><div class="nav-links"><a href="../macro/">宏观</a><a href="../fundamentals/">工业品基本面</a><a href="../capital/">资金分析</a><a href="../sentiment/">舆情分析</a><a href="../knowledge/">知识库</a><a href="../search/">检索问答</a><a href="./" class="active" data-en="AI Semiconductors">AI 半导体</a></div><div class="lang-toggle"><button class="lang-btn" data-lang="zh" onclick="WRLang.set('zh')">中</button><button class="lang-btn" data-lang="en" onclick="WRLang.set('en')">EN</button></div><span class="nav-status"><span class="dot"></span>多源数据 · 分别标注日期</span></nav>
+<div class="research-nav" id="ai-research-nav"></div>
+
+<main class="research-wrap">
+  <section class="mast hardware-mast">
+    <div class="mast-main">
+      <div class="eyebrow">AI SUPPLY CHAIN PULSE</div>
+      <h1 data-en="AI Hardware & Model Leading Indicators">AI 硬件与模型领先指标</h1>
+      <p data-en="Follow hardware price, output and utilization signals together with model capability and inference cost.">把硬件价格、产量和产能利用率，与模型能力和推理成本放在同一页面观察。</p>
+      <span class="asof">OFFICIAL DATA · 2026-06 / MARKET DATA · 2026-08-10</span>
+    </div>
+    <aside class="mast-side">
+      <div class="eyebrow">CURRENT READ</div>
+      <div class="signal" data-en="Storage prices rise while model-use costs fall">存储涨价，模型使用成本下降</div>
+      <div class="signal-note" data-en="Storage-device PPI rose 31.8% YoY, while flagship API list prices remain far below the 2023 GPT-4 starting point. Hardware scarcity and software deflation can coexist.">存储设备价格指数同比上涨 31.8%；旗舰模型 API 标价仍显著低于 2023 年 GPT-4 起点。硬件稀缺与软件通缩可以同时发生。</div>
+    </aside>
+  </section>
+
+  <div class="reading-guide">
+    <b data-en="How to read">如何阅读</b>
+    <p data-en="The page separates official monthly indices, cross-cloud quotes and user-preference rankings. Their units and dates differ, so compare trends within each chart rather than absolute levels across charts.">页面分为官方月度指数、跨云报价和用户偏好榜单。三类数据的单位与日期不同，应在单张图内比较趋势，不应跨图直接比较绝对值。</p>
+  </div>
+
+  <section class="kpis hardware-kpis" aria-label="领先指标摘要">
+    <article class="kpi"><span data-en="Storage-device PPI · Jun 2026">存储设备价格指数 · 2026-06</span><b>64.183</b><small class="metric-up" data-en="YoY +31.8% · storage prices rising">同比 +31.8% · 存储涨价</small></article>
+    <article class="kpi"><span data-en="Semiconductor output · Jun 2026">半导体工业产出 · 2026-06</span><b>181.9</b><small class="metric-up" data-en="YoY +11.5% · output expanding">同比 +11.5% · 产出扩张</small></article>
+    <article class="kpi"><span data-en="Capacity utilization · Jun 2026">产能利用率 · 2026-06</span><b>72.2%</b><small class="metric-down" data-en="YoY −4.1ppt · spare capacity rising">同比 −4.1pct · 闲置增加</small></article>
+    <article class="kpi"><span data-en="LM Arena leader · Aug 10">LM Arena 榜首 · 08-10</span><b class="kpi-model" id="arena-leader-name">—</b><small id="arena-leader-meta">—</small></article>
+  </section>
+
+  <section class="section market-snapshot" id="market-snapshot">
+    <div class="section-head"><div><h2 data-en="Hardware indicator snapshot">硬件领先指标快照</h2><p data-en="Latest verified observations from official series and reproducible public quote snapshots">官方序列与可复现公开报价的最新观察值</p></div><span class="verification-chip verified" data-en="Source-linked">逐项可溯源</span></div>
+    <div class="panel table-scroll">
+      <table class="snapshot-table verified-snapshot-table">
+        <thead><tr><th data-en="Indicator">指标</th><th data-en="Source / series">来源 / 系列</th><th data-en="Latest period">最新观察期</th><th data-en="Latest value">最新值</th><th data-en="Prior period">上期值</th><th data-en="MoM change">环比变化</th><th data-en="YoY change">同比变化</th><th data-en="Unit / method">单位 / 方法</th></tr></thead>
+        <tbody id="verified-snapshot-body"></tbody>
+      </table>
+      <div class="source-note snapshot-source"><b data-en="Sources">数据来源</b><span data-en="BLS Producer Price Index and Federal Reserve G.17 series distributed through FRED; GPU quotes from OpenComputePrices. Click each series name in the table to open the original source.">BLS 生产者价格指数与美联储 G.17（经 FRED 发布）；GPU 报价来自 OpenComputePrices。点击表内系列名称可打开原始出处。</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2 data-en="Leading fundamentals">领先基本面</h2><p data-en="Hover for values; drag to zoom; expand for detail">悬停看数值 · 拖动缩放 · 点击右上角放大</p></div>
+    <div class="dashboard-grid">
+      <article class="chart-card chart-card-wide">
+        <div class="chart-card-head"><div><span class="chart-kicker">OFFICIAL PRICE INDEX</span><h3 data-en="Semiconductor & Storage-Device Prices">半导体与存储设备价格</h3><p data-en="Each series is rebased to 100 at its first observation in 2024 to remove differences in base periods.">为消除基期不同的影响，各序列以 2024 年首个值归一化为 100。</p></div><button class="expand-chart" data-expand-chart="ppi-chart" aria-label="放大价格指数图">↗</button></div>
+        <div id="ppi-chart" class="interactive-chart" role="img" aria-label="半导体和存储设备生产者价格指数趋势图"></div>
+        <div class="chart-insight"><b data-en="Current signal">当前信号</b><span data-en="The storage-device price index rose 8.8% MoM and 31.8% YoY in June 2026, while the semiconductor-device PPI fell 0.6% YoY. Price increases remain concentrated in storage.">存储设备价格指数 2026 年 6 月环比 +8.8%、同比 +31.8%；同期半导体器件价格指数同比 −0.6%，涨价集中在存储环节。</span></div>
+        <div class="source-note inline-source"><b data-en="Data source">数据来源</b><span><a href="https://fred.stlouisfed.org/series/PCU3341123341121" target="_blank" rel="noreferrer">BLS/FRED PCU3341123341121</a> · <a href="https://fred.stlouisfed.org/series/PCU334413334413" target="_blank" rel="noreferrer">PCU334413334413</a> · <a href="https://fred.stlouisfed.org/series/PCU334111334111" target="_blank" rel="noreferrer">PCU334111334111</a><small data-en="Monthly, not seasonally adjusted; each line is rebased to 100 at its first 2024 observation for comparability.">月度、未季调；为便于比较，图中各序列以 2024 年首个观察值归一化为 100。</small></span></div>
+      </article>
+      <article class="chart-card chart-card-wide">
+        <div class="chart-card-head"><div><span class="chart-kicker">OUTPUT & UTILIZATION</span><h3 data-en="Semiconductor Output & Capacity Utilization">半导体产量与产能利用率</h3><p data-en="Output is rising while utilization is falling, indicating that supply capacity is expanding faster than current production.">产量上升而利用率回落，意味着供给能力扩张快于当期产出。</p></div><button class="expand-chart" data-expand-chart="activity-chart" aria-label="放大产量图">↗</button></div>
+        <div id="activity-chart" class="interactive-chart" role="img" aria-label="半导体工业产出和产能利用率趋势图"></div>
+        <div class="chart-insight"><b data-en="Current signal">当前信号</b><span data-en="Industrial output rose 11.5% YoY, while capacity utilization fell 4.1 percentage points. Demand is still growing, but the industry is not facing a broad-based shortage.">工业产出同比 +11.5%，产能利用率同比下降 4.1 个百分点。需求仍在增长，但全行业并非全面短缺。</span></div>
+        <div class="source-note inline-source"><b data-en="Data source">数据来源</b><span><a href="https://fred.stlouisfed.org/series/IPG3344S" target="_blank" rel="noreferrer">Federal Reserve G.17 / FRED IPG3344S</a> · <a href="https://fred.stlouisfed.org/series/CAPUTLG3344S" target="_blank" rel="noreferrer">CAPUTLG3344S</a><small data-en="NAICS 3344 semiconductor and other electronic components; monthly, seasonally adjusted.">NAICS 3344 半导体及其他电子元件；月度、季调。</small></span></div>
+      </article>
+      <article class="chart-card">
+        <div class="chart-card-head"><div><span class="chart-kicker">CROSS-CLOUD QUOTES · 2026-03-31</span><h3 data-en="On-Demand AI GPU Rental Quotes">AI GPU 按需租赁报价</h3><p data-en="Take the median within each source, then the median across sources; error bars show the 25th–75th percentile across sources.">每个数据源先取中位数，再跨来源取中位数；误差线为来源间 25%–75% 区间。</p></div><button class="expand-chart" data-expand-chart="gpu-chart" aria-label="放大 GPU 报价图">↗</button></div>
+        <div id="gpu-chart" class="interactive-chart" role="img" aria-label="跨云 GPU 每卡每小时报价"></div>
+        <div class="chart-insight"><b data-en="How to read">如何理解</b><span data-en="B200 has the highest median quote, while H100 quotes vary more across providers. Region, networking and availability differ by cloud, so the median is not a futures price for identical specifications.">B200 中位报价最高，H100 的供应商报价分散度更大。不同云商的地区、网络和可用性不同，不能把中位数当作同一规格期货价格。</span></div>
+        <div class="source-note inline-source"><b data-en="Data source">数据来源</b><span><a href="https://github.com/thatkavish/OpenComputePrices" target="_blank" rel="noreferrer">OpenComputePrices</a><small data-en="Public cross-provider quote snapshots. This page first takes the median within each provider and then the median across providers; the whisker shows the 25th–75th percentile.">公开云商报价快照。本页先取各供应商内部中位数，再取跨供应商中位数；误差线显示 25%–75% 分位区间。</small></span></div>
+      </article>
+      <article class="chart-card">
+        <div class="chart-card-head"><div><span class="chart-kicker">MODEL API ECONOMICS</span><h3 data-en="Flagship Model API List-Price History">旗舰模型 API 标价演进</h3><p data-en="Converted to USD per 1M tokens, using representative OpenAI launch prices.">统一换算为美元 / 百万 Token，显示 OpenAI 代表性代际的发布标价。</p></div><button class="expand-chart" data-expand-chart="model-price-chart" aria-label="放大模型价格图">↗</button></div>
+        <div id="model-price-chart" class="interactive-chart" role="img" aria-label="模型 API 输入输出价格演进"></div>
+        <div class="chart-insight"><b data-en="How to read">如何理解</b><span data-en="Input prices fell from $30 for GPT-4 to $1.25 for GPT-5; output prices declined more slowly, so generation remains the main cost for complex reasoning.">输入价格从 GPT-4 的 30 美元降至 GPT-5 的 1.25 美元；输出价格下降较慢，复杂推理的生成成本仍是主要费用。</span></div>
+        <div class="source-note inline-source"><b data-en="Data source">数据来源</b><span><a href="https://openai.com/api/pricing/" target="_blank" rel="noreferrer">OpenAI API Pricing</a><small data-en="Official launch list prices, normalized to USD per 1 million tokens; the chart preserves the price stated at each model launch.">官方发布标价，统一换算为美元 / 百万 Token；图中保留各代模型发布时的标价。</small></span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="model-ranking">
+    <div class="section-head"><div><h2 data-en="LLM model ranking">LLM 模型排名</h2><p data-en="LM Arena Text Leaderboard · Aug 10, 2026">LM Arena 文本榜 · 2026-08-10</p></div><div class="ranking-tabs" role="tablist"><button class="ranking-tab active" data-ranking="overall" data-en="Overall">综合榜</button><button class="ranking-tab" data-ranking="open" data-en="Open-license Models">开放许可模型</button></div></div>
+    <div class="ranking-explainer">
+      <div><b data-en="What is an Arena score?">Arena 分数是什么</b><p data-en="Users blindly compare two model responses, and the leaderboard estimates relative scores from their preferences. A higher score means a response is selected more often in head-to-head comparisons.">用户盲选两个模型回答，榜单根据偏好结果估计相对得分。分数越高，表示回答在真实比较中更常被选中。</p></div>
+      <div><b data-en="How to read the confidence interval">置信区间怎么看</b><p data-en="The interval reflects estimation uncertainty. When two models' intervals overlap substantially, rank alone does not establish a meaningful capability gap.">区间反映评分估计的不确定性。两款模型区间大量重叠时，不能仅凭名次断言能力存在显著差距。</p></div>
+      <div><b data-en="What it does not show">它不代表什么</b><p data-en="Overall preference does not imply leadership in coding, mathematics or enterprise tasks, and it excludes price, speed, privacy and deployment cost.">综合偏好不等于代码、数学或企业任务均领先，也不包含价格、速度、隐私与部署成本。</p></div>
+    </div>
+    <div class="panel ranking-panel table-scroll">
+      <table class="ranking-table">
+        <thead><tr><th data-en="Rank">名次</th><th data-en="Model">模型</th><th data-en="Organization">机构</th><th data-en="Arena Score">Arena 分数</th><th data-en="95% Interval">95% 区间</th><th data-en="Preference Votes">偏好投票</th><th data-en="License">许可</th></tr></thead>
+        <tbody id="model-ranking-body"></tbody>
+      </table>
+      <div class="source-note" data-en="Methodology: LM Arena `text_style_control / latest / overall`. The leaderboard is continuously updated; this page preserves a snapshot from the stated date. “Open-license Models” means only that the dataset's license field is not Proprietary. Check each model's license for weight availability and commercial terms; scores are not recalculated separately."><b>榜单口径：</b>LM Arena `text_style_control / latest / overall`。榜单持续更新，本页保留抓取日快照；“开放许可模型”仅表示数据集的 license 字段不是 Proprietary，是否开放权重及商用条件仍需查阅各模型许可，并非单独重算评分。</div>
+      <div class="source-note inline-source"><b data-en="Data source">数据来源</b><span><a href="https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset" target="_blank" rel="noreferrer">LM Arena Official Leaderboard Dataset</a><small data-en="text_style_control / latest / overall snapshot; publication date shown above.">text_style_control / latest / overall 快照；抓取日期见本表标题。</small></span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2 data-en="Key variables in model selection">模型选择的关键变量</h2><p data-en="Capability, unit economics, service performance and deployment constraints should be assessed together.">能力、成本、服务性能与部署条件需要综合评估</p></div>
+    <div class="signal-architecture model-framework">
+      <article class="architecture-card"><span class="architecture-no">01 · CAPABILITY</span><b data-en="Overall capability">综合能力</b><p data-en="Arena captures broad user preference, while coding, mathematics and long-context tasks require dedicated benchmarks.">Arena 反映广泛用户偏好；代码、数学与长文本任务仍需专项评测验证。</p><strong data-en="Focus: score stability across tasks and confidence intervals">关注：跨任务表现与评分置信区间</strong></article>
+      <article class="architecture-card"><span class="architecture-no">02 · ECONOMICS</span><b data-en="Unit economics">单位经济性</b><p data-en="Input, cached-input and output prices should be combined with the token volume required to complete an equivalent task.">输入、缓存输入和输出价格，需要结合完成同类任务所需的 Token 数量比较。</p><strong data-en="Focus: total cost for an equivalent workload">关注：同等工作负载的综合成本</strong></article>
+      <article class="architecture-card"><span class="architecture-no">03 · THROUGHPUT</span><b data-en="Service performance">服务性能</b><p data-en="Time to first token, sustained generation speed, concurrency and tool-call reliability determine production efficiency.">首次响应、持续生成速度、并发能力与工具调用稳定性共同决定生产环境效率。</p><strong data-en="Focus: latency, throughput and availability">关注：延迟、吞吐量与可用性</strong></article>
+      <article class="architecture-card verify-card"><span class="architecture-no">04 · DEPLOYMENT</span><b data-en="Deployment constraints">部署条件</b><p data-en="Licensing, memory requirements, data residency and service continuity shape enterprise adoption and switching costs.">许可条件、显存要求、数据驻留与服务连续性会影响企业采用和切换成本。</p><strong data-en="Focus: compliance, infrastructure and vendor lock-in">关注：合规、基础设施与供应商锁定</strong></article>
+    </div>
+  </section>
+
+  <div class="callout"><b data-en="Current conclusion">本期结论</b><p data-en="Rising storage-device prices are the clearest hardware signal, but semiconductor prices have not strengthened broadly. Output growth alongside lower utilization indicates that supply expansion is absorbing demand. On the model side, Arena preferences, API cost and deployment conditions should be assessed separately; a single rank cannot replace procurement analysis.">存储设备价格上涨是当前最明确的硬件信号，但半导体整体价格并未同步走强；产出增长与利用率回落说明供给扩张正在吸收需求。模型侧应把 Arena 偏好、API 成本和部署条件分开比较，不能用单一名次代替采购判断。</p></div>
+  <footer class="footer-note" data-en="Data is provided for industry-trend analysis and does not constitute investment advice. Publication dates vary by source; refer to the date shown on each chart and leaderboard.">数据用于产业趋势观察，不构成投资建议。不同来源发布时间不同，以每张图和榜单标注为准。</footer>
+</main>
+
+<div class="chart-modal" id="chart-modal" hidden aria-hidden="true"><div class="chart-modal-backdrop" data-close-modal></div><div class="chart-modal-panel" role="dialog" aria-modal="true" aria-label="放大图表"><button class="chart-modal-close" data-close-modal aria-label="关闭">×</button><div id="chart-modal-title" class="chart-modal-title"></div><div id="chart-modal-canvas" class="chart-modal-canvas"></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="data/hardware-data.js?v=20260813"></script>
+<script src="research.js"></script>
+<script src="../assets/i18n.js"></script>
+<script src="hardware-dashboard.js?v=20260813-2"></script>
+</body>
+</html>
