@@ -9,7 +9,8 @@ import math
 import numpy as np
 
 
-COHORTS = ("机构", "外资", "杭州")
+COHORTS = ("机构", "外资", "杭州", "中财")
+REQUIRED_DETAILS = {"中财": {"黄金", "白银"}}
 DISPLAY_ALIASES = {"铁矿石": "铁矿", "燃油": "燃料油", "橡胶": "天然橡胶"}
 HORIZONS = (1, 3, 5)
 LOOKBACK = 60
@@ -348,10 +349,13 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
     )
     scans = []
     for cohort in COHORTS:
+        available_contracts = [
+            row for row in contracts if cohort in data.get(row[2], {})
+        ]
         qualified = []
         rankings = []
         analyzed = 0
-        for canonical_name, source_name, variety in contracts:
+        for canonical_name, source_name, variety in available_contracts:
             dates, flows, returns = _daily_series(
                 data, cohort, "contract", source_name, display, sectors, multipliers
             )
@@ -369,7 +373,12 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
                 "effective_correlation": round(effective_correlation, 4),
                 "samples": result["oos"]["samples"],
             })
-            if effective_correlation < DISPLAY_MIN_CORRELATION or result["oos"]["samples"] < DISPLAY_MIN_SAMPLES:
+            passes_threshold = (
+                effective_correlation >= DISPLAY_MIN_CORRELATION
+                and result["oos"]["samples"] >= DISPLAY_MIN_SAMPLES
+            )
+            required_detail = canonical_name in REQUIRED_DETAILS.get(cohort, set())
+            if not passes_threshold and not required_detail:
                 continue
             item = data.get(variety, {}).get(cohort)
             if not item:
@@ -386,11 +395,17 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
             qualified.append({
                 "name": canonical_name,
                 "source_name": source_name,
+                "single_member": (
+                    cohort_members.get(cohort, [None])[0]
+                    if len(cohort_members.get(cohort, [])) == 1 else None
+                ),
                 "mode": result["mode"],
                 "horizon": result["horizon"],
                 "correlation": result["oos"]["ic"],
                 "effective_correlation": round(effective_correlation, 4),
                 "samples": result["oos"]["samples"],
+                "passes_threshold": passes_threshold,
+                "required_detail": required_detail,
                 "oos_start": result["oos_start"],
                 "latest_date": result["latest_date"],
                 **snapshot,
@@ -398,11 +413,15 @@ def build_cohort_backtests(data, display, sectors, multipliers, sector_order, br
                 "dates": item_dates,
                 "net_series": net_series,
             })
-        qualified.sort(key=lambda row: row["effective_correlation"], reverse=True)
+        if cohort == "中财":
+            required_order = {"黄金": 0, "白银": 1}
+            qualified.sort(key=lambda row: required_order.get(row["name"], 99))
+        else:
+            qualified.sort(key=lambda row: row["effective_correlation"], reverse=True)
         rankings.sort(key=lambda row: row["effective_correlation"], reverse=True)
         scans.append({
             "cohort": cohort,
-            "requested": len(contracts),
+            "requested": len(available_contracts),
             "analyzed": analyzed,
             "rankings": rankings,
             "results": qualified,
