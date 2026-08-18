@@ -4,7 +4,7 @@
 供资金潮汐"各类资金净流向"下拉展开每家席位用。数据源/口径同 pull_cohorts(qhkch 游客接口)。
 支持断点续跑: 已到目标日的 (品种,席位) 自动跳过。
 """
-import argparse, json, sys, time, threading, logging, urllib.parse
+import argparse, json, sys, time, threading, logging, subprocess, urllib.parse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
@@ -29,15 +29,15 @@ PRIORITY_DISPLAYS = {
     "沥青", "甲醇", "PP", "苯乙烯", "燃油", "棕榈油", "豆粕", "豆油",
     "橡胶",
 }
-URL = "https://www.qhkch.com/ajax/variety_net_position.php?v=251011-1"
+URL = "https://x.qhkch.com/ajax/variety_net_position"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36",
-    "Referer": "https://www.qhkch.com/",
+    "Referer": "https://x.qhkch.com/variety/net_position",
     "Content-Type": "application/x-www-form-urlencoded",
     "X-Requested-With": "XMLHttpRequest",
 }
-WORKERS = 3
-PACE = 0.45
+WORKERS = 1
+PACE = 2.0
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s',
     handlers=[logging.FileHandler(D / "logs" / f"brokers_{datetime.now():%Y%m%d_%H%M}.log", encoding='utf-8'),
@@ -51,7 +51,7 @@ def sess():
     if not hasattr(_tl, "s"):
         s = requests.Session()
         try:
-            s.get("https://www.qhkch.com/", headers=HEADERS, timeout=20)
+            s.get("https://x.qhkch.com/", headers=HEADERS, timeout=20)
         except Exception:
             pass
         _tl.s = s
@@ -59,11 +59,18 @@ def sess():
 
 
 def fetch(broker, variety, tries=4):
-    body = urllib.parse.urlencode([("brokers[]", broker), ("variety", variety)])
     for a in range(1, tries + 1):
         try:
-            r = sess().post(URL, headers=HEADERS, data=body, timeout=30)
-            j = r.json()
+            result = subprocess.run([
+                "curl", "-sS", "--max-time", "25",
+                "-A", HEADERS["User-Agent"],
+                "-e", HEADERS["Referer"],
+                "-H", "X-Requested-With: XMLHttpRequest",
+                "--data-urlencode", f"brokers[]={broker}",
+                "--data-urlencode", f"variety={variety}",
+                URL,
+            ], check=True, capture_output=True, text=True, timeout=30)
+            j = json.loads(result.stdout)
             if j.get("code") == 0:
                 return j
         except Exception as e:
@@ -80,7 +87,23 @@ def parse_args():
         default="all",
         help="priority 仅刷新日报重点观察的 18 个品种，适合云端限流环境",
     )
+    parser.add_argument(
+        "--target-date",
+        help="Lock the snapshot to YYYY-MM-DD; newer observations are trimmed.",
+    )
     return parser.parse_args()
+
+
+def trim_to_date(data, target):
+    dates = data.get("dates", [])
+    if not target or target not in dates:
+        return data
+    end = dates.index(target) + 1
+    trimmed = dict(data)
+    for key in ("dates", "values", "infos", "net_buy", "net_ss"):
+        if isinstance(data.get(key), list):
+            trimmed[key] = data[key][:end]
+    return trimmed
 
 
 def main():
@@ -89,7 +112,7 @@ def main():
     # 目标日 = cohort_today.json 里机构的最新日期(与分组数据对齐)
     try:
         cd = json.loads((D / "cohort_today.json").read_text(encoding='utf-8'))
-        target = max(cd[v]['机构']['dates'][-1] for v in cd if cd[v].get('机构', {}).get('dates'))
+        target = args.target_date or max(cd[v]['机构']['dates'][-1] for v in cd if cd[v].get('机构', {}).get('dates'))
     except Exception:
         target = None
     log.info(f"目标日: {target}")
@@ -134,7 +157,7 @@ def main():
             with lock:
                 done += 1
                 if j:
-                    d = j.get("data", {})
+                    d = trim_to_date(j.get("data", {}), args.target_date)
                     dates = d.get("dates", [])
                     if dates:
                         out.setdefault(v, {})[b] = {

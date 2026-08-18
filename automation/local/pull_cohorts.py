@@ -5,7 +5,7 @@
 五类席位(机构/外资/杭州/中财/散户)按组一次调用自动求和, 输出 cohort_today.json:
 {variety: {cohort: {dates, net, close}}} —— 与原服务器版格式完全一致。
 """
-import json, sys, time, logging, urllib.parse
+import argparse, json, sys, time, logging, urllib.parse
 from datetime import datetime
 from pathlib import Path
 import requests
@@ -22,10 +22,10 @@ GOLD_COHORT = {'中财': ['中财期货']}
 GOLD_VARS = ['沪金', '沪银']
 VARIETIES = list(json.load(open(D / "varieties.json", encoding="utf-8")))
 
-URL = "https://www.qhkch.com/ajax/variety_net_position.php?v=251011-1"
+URL = "https://x.qhkch.com/ajax/variety_net_position"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36",
-    "Referer": "https://www.qhkch.com/",
+    "Referer": "https://x.qhkch.com/variety/net_position",
     "Content-Type": "application/x-www-form-urlencoded",
     "X-Requested-With": "XMLHttpRequest",
 }
@@ -57,16 +57,38 @@ def fetch(session, brokers, variety, tries=4):
     return {"code": -1}
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--target-date",
+        help="Lock the snapshot to YYYY-MM-DD; newer observations are trimmed.",
+    )
+    return parser.parse_args()
+
+
+def trim_to_date(data, target):
+    dates = data.get("dates", [])
+    if not target or target not in dates:
+        return data
+    end = dates.index(target) + 1
+    trimmed = dict(data)
+    for key in ("dates", "values", "infos", "net_buy", "net_ss"):
+        if isinstance(data.get(key), list):
+            trimmed[key] = data[key][:end]
+    return trimmed
+
+
 def main():
+    args = parse_args()
     out = json.loads(OUT.read_text(encoding='utf-8')) if OUT.exists() else {}
     s = requests.Session()
     try:
-        s.get("https://www.qhkch.com/", headers=HEADERS, timeout=20)
+        s.get("https://x.qhkch.com/", headers=HEADERS, timeout=20)
     except Exception:
         pass
     # 断点续跑: 目标日=今天(只用于同日内重跑续传; 跨日必然重采, 修复"昨天已齐误判今天不用采"的bug)
     from datetime import date
-    tgt = date.today().isoformat()
+    tgt = args.target_date or date.today().isoformat()
     ok = fail = 0
     for vi, v in enumerate(VARIETIES, 1):
         out.setdefault(v, {})
@@ -83,7 +105,7 @@ def main():
                 fail += 1
                 log.warning(f"[{vi}/{len(VARIETIES)}] {v}/{cname} 失败")
                 continue
-            d = j.get("data", {})
+            d = trim_to_date(j.get("data", {}), args.target_date)
             dates = d.get("dates", [])
             vals = d.get("values", [])
             infos = d.get("infos", [])
